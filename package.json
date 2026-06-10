@@ -1,0 +1,23 @@
+{
+  "name": "jjing-express",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/obabo0801/Jjing-Express#readme",
+  "bugs": {
+    "url": "https://github.com/obabo0801/Jjing-Express/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/obabo0801/Jjing-Express.git"
+  },
+  "license": "MIT",
+  "author": "unjongjjing",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
