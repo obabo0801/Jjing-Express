@@ -17,6 +17,9 @@
   "scripts": {
     "start": "node app.js"
   },
+  "imports": {
+    "#utils/*": "./src/utils/*.js"
+  },
   "dependencies": {
     "express": "^5.2.1"
   }
