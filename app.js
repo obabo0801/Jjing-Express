@@ -1,12 +1,15 @@
 import express from 'express';
 
+import * as file from '#utils/file';
+import * as log from '#utils/log';
+
 const app = express();
-const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+const PORT = 3000;
+const PUBLIC_PATH = file.get('public');
 
-app.listen(port, () => {
-  console.log(`http://localhost:${port}/`);
+app.use(express.static(PUBLIC_PATH));
+
+app.listen(PORT, () => {
+    log.info(`http://localhost:${PORT}/`);
 });
