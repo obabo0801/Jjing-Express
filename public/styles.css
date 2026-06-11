@@ -6,6 +6,13 @@
     --height: 72px;
 }
 
+[data-theme="light"] {
+    --bg: #ffffff;
+    --bar: rgba(255, 255, 255, 0.92);
+    --line: rgba(0, 0, 0, 0.08);
+    --text: #111111;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -45,6 +52,20 @@ a {
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.theme-button {
+    width: 40px;
+    height: 40px;
+
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text);
+
+    font-size: 20px;
+    cursor: pointer;
 }
 
 .logo {
