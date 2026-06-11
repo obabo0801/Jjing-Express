@@ -59,13 +59,40 @@ a {
     width: 40px;
     height: 40px;
 
+    display: grid;
+    place-items: center;
+
     border: 1px solid var(--line);
     border-radius: 50%;
     background: transparent;
     color: var(--text);
 
-    font-size: 20px;
     cursor: pointer;
+}
+
+.theme-icon {
+    display: block;
+
+    width: 20px;
+    height: 20px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.theme-icon-sun {
+    display: none;
+}
+
+[data-theme="light"] .theme-icon-moon {
+    display: none;
+}
+
+[data-theme="light"] .theme-icon-sun {
+    display: block;
 }
 
 .logo {

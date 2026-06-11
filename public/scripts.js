@@ -16,8 +16,4 @@ button?.addEventListener('click', () => {
 function setTheme(theme) {
     root.dataset.theme = theme;
     localStorage.setItem('theme', theme);
-
-    if (button) {
-        button.textContent = theme === 'dark' ? '🌙' : '☀️';
-    }
 }
