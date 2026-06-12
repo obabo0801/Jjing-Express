@@ -50,6 +50,11 @@ const SETTINGS_PAGES = {
     notification: '/components/settings/notification.html'
 };
 
+const SETTINGS_TITLES = {
+    general: '일반',
+    notification: '알림'
+};
+
 const settingsCache = new Map();
 
 settingsButton?.addEventListener('click', (event) => {
@@ -172,6 +177,12 @@ async function loadSettingsContent(type) {
         );
     });
 
+    const title = layer.querySelector('[data-settings-title]');
+
+    if (title) {
+        title.textContent = SETTINGS_TITLES[type] || '설정';
+    }
+
     content.innerHTML = `
         <div class="settings-loading">
             <span class="settings-spinner icon icon-setting"></span>
@@ -218,8 +229,4 @@ if (!normalizeSettingsHash()) {
             loadSettingsContent(initialSettingsType);
         });
     }
-}
-
-if (location.hash === '#settings') {
-    openSettingsPopup();
 }
