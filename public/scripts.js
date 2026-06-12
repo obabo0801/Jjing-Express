@@ -62,7 +62,20 @@ settingsButton?.addEventListener('click', (event) => {
     openSettingsType(type || 'general');
 });
 
+function normalizeSettingsHash() {
+    if (location.hash === '#settings') {
+        location.hash = 'settings?type=general';
+        return true;
+    }
+
+    return false;
+}
+
 window.addEventListener('hashchange', async () => {
+    if (normalizeSettingsHash()) {
+        return;
+    }
+
     const type = getSettingsType();
 
     if (!type) {
@@ -197,12 +210,14 @@ function closeSettingsPopup(updateHash = true) {
     }
 }
 
-const initialSettingsType = getSettingsType();
+if (!normalizeSettingsHash()) {
+    const initialSettingsType = getSettingsType();
 
-if (initialSettingsType) {
-    openSettingsPopup().then(() => {
-        loadSettingsContent(initialSettingsType);
-    });
+    if (initialSettingsType) {
+        openSettingsPopup().then(() => {
+            loadSettingsContent(initialSettingsType);
+        });
+    }
 }
 
 if (location.hash === '#settings') {

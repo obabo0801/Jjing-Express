@@ -131,7 +131,7 @@ a {
 }
 
 .icon-button:active {
-    transform: scale(0.9);
+    transform: rotate(25deg) scale(0.9);
     opacity: 0.75;
 }
 
@@ -233,10 +233,24 @@ a {
     cursor: pointer;
     outline: none;
     -webkit-tap-highlight-color: transparent;
+
+    transition: background 0.15s ease,
+    transform 0.15s ease,
+    opacity 0.15s ease;
 }
 
 .notification-setting:hover {
     background: var(--hover);
+}
+
+.notification-setting:active {
+    transform: rotate(25deg) scale(0.9);
+    opacity: 0.75;
+}
+
+.notification-setting:focus-visible {
+    outline: 1px solid var(--text);
+    outline-offset: 3px;
 }
 
 .notification-list {
@@ -276,12 +290,12 @@ a {
     position: relative;
     z-index: 1;
 
-    width: min(630px, calc(100vw - 32px));
-    min-height: 390px;
+    width: min(760px, calc(100vw - 32px));
+    min-height: 430px;
     max-height: calc(100vh - 80px);
 
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 180px 1fr;
 
     background: var(--popup);
     border: 1px solid var(--line);
@@ -291,23 +305,49 @@ a {
     overflow: hidden;
 }
 
-.settings-header {
+.settings-sidebar {
+    padding: 18px 14px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    border-right: 1px solid var(--line);
+}
+
+.settings-main-header {
     height: 64px;
     padding: 0 22px;
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
     border-bottom: 1px solid var(--line);
 }
 
-.settings-header strong {
+.settings-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-title .icon {
+    width: 20px;
+    height: 20px;
+}
+
+.settings-title strong {
     font-size: 18px;
 }
 
 .settings-close {
-    padding: 8px 12px;
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
     border: 0;
     border-radius: 10px;
@@ -317,10 +357,23 @@ a {
     cursor: pointer;
     outline: none;
     -webkit-tap-highlight-color: transparent;
+
+    transition: background 0.15s ease,
+    opacity 0.15s ease;
 }
 
 .settings-close:hover {
     background: var(--hover);
+}
+
+.settings-close:active {
+    opacity: 0.7;
+}
+
+.settings-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .settings-tabs {
@@ -331,17 +384,24 @@ a {
 }
 
 .settings-tab {
-    height: 38px;
-    padding: 0 16px;
+    height: 42px;
+    padding: 0 12px;
 
-    border: 1px solid var(--line);
-    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    border: 0;
+    border-radius: 12px;
     background: transparent;
     color: var(--text);
 
     cursor: pointer;
     outline: none;
     -webkit-tap-highlight-color: transparent;
+
+    transition: background 0.15s ease,
+    opacity 0.15s ease;
 }
 
 .settings-tab:hover {
@@ -351,6 +411,13 @@ a {
 .settings-tab.is-active {
     background: var(--text);
     color: var(--bg);
+}
+
+.settings-main {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .settings-body {
@@ -375,19 +442,19 @@ a {
 }
 
 .settings-content {
-    min-height: 220px;
+    min-height: 240px;
 }
 
 .settings-loading {
-    min-height: 180px;
+    min-height: 220px;
 
     display: grid;
     place-items: center;
 }
 
 .settings-spinner {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
 
     animation: settings-spin 0.9s linear infinite;
     opacity: 0.75;
@@ -438,7 +505,27 @@ h1 {
         width: calc(100vw - 32px);
         min-height: 420px;
         max-height: calc(100vh - 48px);
+
+        grid-template-columns: 120px 1fr;
         border-radius: 22px;
+    }
+
+    .settings-sidebar {
+        padding: 14px 10px;
+    }
+
+    .settings-tab {
+        height: 40px;
+        padding: 0 10px;
+    }
+
+    .settings-main-header {
+        height: 58px;
+        padding: 0 16px;
+    }
+
+    .settings-body {
+        padding: 14px;
     }
 
     .notification-box {
