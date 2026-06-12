@@ -3,7 +3,7 @@
     --bar: rgba(0, 0, 0, 0.92);
     --line: rgba(255, 255, 255, 0.08);
     --text: #ffffff;
-    --height: 72px;
+    --height: clamp(72px, 4vw, 88px);
 }
 
 [data-theme="light"] {
@@ -61,8 +61,8 @@ a {
 }
 
 .icon-button {
-    width: 40px;
-    height: 40px;
+    width: clamp(40px, 2.1vw, 48px);
+    height: clamp(40px, 2.1vw, 48px);
 
     display: grid;
     place-items: center;
@@ -76,12 +76,16 @@ a {
 }
 
 .icon {
-    width: 20px;
-    height: 20px;
-    background: currentColor;
+    display: block;
 
-    mask: var(--icon) center / contain no-repeat;
-    -webkit-mask: var(--icon) center / contain no-repeat;
+    width: clamp(20px, 1.1vw, 25px);
+    height: clamp(20px, 1.1vw, 25px);
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .icon-bell {
@@ -106,9 +110,15 @@ a {
 }
 
 .logo {
-    font-size: 22px;
+    font-size: clamp(22px, 1.1vw, 30px);
     font-weight: 800;
     letter-spacing: -0.5px;
+}
+
+.logo-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
 }
 
 .page {
@@ -123,7 +133,7 @@ a {
 
 h1 {
     margin: 0;
-    font-size: 48px;
+    font-size: clamp(48px, 4vw, 88px);
     letter-spacing: -1.5px;
 }
 
@@ -138,6 +148,12 @@ h1 {
 
     .logo {
         font-size: 18px;
+    }
+
+    .logo-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 7px;
     }
 
     .hero {
