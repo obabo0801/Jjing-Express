@@ -63,6 +63,7 @@ a {
 .icon-button {
     width: clamp(40px, 2.1vw, 48px);
     height: clamp(40px, 2.1vw, 48px);
+    padding: 0;
 
     display: grid;
     place-items: center;
@@ -108,8 +109,15 @@ a {
 }
 
 .logo {
+    height: clamp(40px, 2.1vw, 48px);
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
     font-size: clamp(22px, 1.1vw, 30px);
     font-weight: 800;
+    line-height: 1;
     letter-spacing: -0.5px;
 }
 
