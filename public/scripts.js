@@ -55,6 +55,11 @@ const SETTINGS_TITLES = {
     notification: '알림'
 };
 
+const SETTINGS_ICONS = {
+    general: 'icon-setting',
+    notification: 'icon-bell'
+};
+
 const settingsCache = new Map();
 
 settingsButton?.addEventListener('click', (event) => {
@@ -176,6 +181,11 @@ async function loadSettingsContent(type) {
             tab.dataset.settingsType === type
         );
     });
+    const icon = layer.querySelector('[data-settings-title-icon]');
+
+    if (icon) {
+        icon.className = `icon ${SETTINGS_ICONS[type] || 'icon-setting'}`;
+    }
 
     const title = layer.querySelector('[data-settings-title]');
 

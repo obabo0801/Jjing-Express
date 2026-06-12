@@ -298,12 +298,12 @@ a {
     position: relative;
     z-index: 1;
 
-    width: min(760px, calc(100vw - 32px));
-    min-height: 430px;
-    max-height: calc(100vh - 80px);
+    width: min(900px, calc(100vw - 32px));
+    min-height: 800px;
+    max-height: calc(100vh - 60px);
 
     display: grid;
-    grid-template-columns: 180px 1fr;
+    grid-template-columns: 220px 1fr;
 
     background: var(--popup);
     border: 1px solid var(--line);
@@ -357,7 +357,7 @@ a {
     place-items: center;
 
     border: 0;
-    border-radius: 10px;
+    border-radius: 50%;
     background: transparent;
     color: var(--text);
 
@@ -388,13 +388,6 @@ a {
     display: flex;
     flex-direction: column;
     gap: 6px;
-}
-
-.settings-tabs {
-    padding: 14px 18px 0;
-
-    display: flex;
-    gap: 8px;
 }
 
 .settings-tab {
