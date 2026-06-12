@@ -45,7 +45,7 @@ document.addEventListener('keydown', (event) => {
 
 const settingsButton = document.querySelector('.settings-button');
 
-settingsButton?.addEventListener('click', async (event) => {
+settingsButton?.addEventListener('click', (event) => {
     event.stopPropagation();
 
     notification?.classList.remove('is-open');
@@ -93,11 +93,11 @@ async function openSettingsPopup() {
             if (tab) {
                 const name = tab.dataset.settingsTab;
 
-                document.querySelectorAll('.settings-tab').forEach((button) => {
+                layer.querySelectorAll('.settings-tab').forEach((button) => {
                     button.classList.toggle('is-active', button === tab);
                 });
 
-                document.querySelectorAll('.settings-panel').forEach((panel) => {
+                layer.querySelectorAll('.settings-panel').forEach((panel) => {
                     panel.classList.toggle(
                         'is-active',
                         panel.dataset.settingsPanel === name
