@@ -1,13 +1,15 @@
-const button = document.querySelector('.theme-button');
+const themeButton = document.querySelector('.theme-button');
 const root = document.documentElement;
 
-const savedTheme = localStorage.getItem('theme') === 'light'
-    ? 'light'
-    : 'dark';
+const savedTheme = localStorage.getItem('theme') || 'dark';
 
 setTheme(savedTheme);
 
-button?.addEventListener('click', () => {
+requestAnimationFrame(() => {
+    document.body.classList.add('is-ready');
+});
+
+themeButton?.addEventListener('click', () => {
     const nextTheme = root.dataset.theme === 'dark'
         ? 'light'
         : 'dark';

@@ -27,6 +27,13 @@ body {
     background: var(--bg);
     color: var(--text);
     font-family: Arial, "Malgun Gothic", sans-serif;
+
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+body.is-ready {
+    opacity: 1;
 }
 
 a {
