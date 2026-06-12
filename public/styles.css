@@ -66,18 +66,19 @@ a {
 }
 
 .logo {
-    width: clamp(40px, 2.1vw, 48px);
-    height: clamp(40px, 2.1vw, 48px);
+    width: min(52px, calc(var(--height) - 16px));
+    height: min(52px, calc(var(--height) - 16px));
 
     display: grid;
     place-items: center;
 
     flex-shrink: 0;
+    overflow: hidden;
 }
 
 .logo-icon {
-    width: 24px;
-    height: 24px;
+    width: min(36px, calc(var(--height) - 28px));
+    height: min(36px, calc(var(--height) - 28px));
 
     display: block;
 
@@ -86,7 +87,7 @@ a {
     background-position: center;
     background-repeat: no-repeat;
 
-    border-radius: 8px;
+    border-radius: 9px;
 }
 
 .topbar-actions {
@@ -266,9 +267,9 @@ a {
     position: absolute;
     inset: 0;
 
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
 }
 
 .settings-popup {
@@ -358,14 +359,6 @@ a {
     overflow-y: auto;
 }
 
-.settings-panel {
-    display: none;
-}
-
-.settings-panel.is-active {
-    display: block;
-}
-
 .settings-item {
     min-height: 54px;
 
@@ -379,6 +372,35 @@ a {
 
 .settings-item:last-child {
     border-bottom: 0;
+}
+
+.settings-content {
+    min-height: 220px;
+}
+
+.settings-loading {
+    min-height: 180px;
+
+    display: grid;
+    place-items: center;
+}
+
+.settings-spinner {
+    width: 24px;
+    height: 24px;
+
+    animation: settings-spin 0.9s linear infinite;
+    opacity: 0.75;
+}
+
+@keyframes settings-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .page {

@@ -45,22 +45,49 @@ document.addEventListener('keydown', (event) => {
 
 const settingsButton = document.querySelector('.settings-button');
 
+const SETTINGS_PAGES = {
+    general: '/components/settings/general.html',
+    notification: '/components/settings/notification.html'
+};
+
+const settingsCache = new Map();
+
 settingsButton?.addEventListener('click', (event) => {
     event.stopPropagation();
 
     notification?.classList.remove('is-open');
 
-    location.hash = 'settings';
+    const type = settingsButton.dataset.settingsOpen;
+
+    openSettingsType(type || 'general');
 });
 
-window.addEventListener('hashchange', () => {
-    if (location.hash === '#settings') {
-        openSettingsPopup();
+window.addEventListener('hashchange', async () => {
+    const type = getSettingsType();
+
+    if (!type) {
+        closeSettingsPopup(false);
         return;
     }
 
-    closeSettingsPopup(false);
+    await openSettingsPopup();
+    await loadSettingsContent(type);
 });
+
+function openSettingsType(type) {
+    location.hash = `settings?type=${type}`;
+}
+
+function getSettingsType() {
+    if (!location.hash.startsWith('#settings')) {
+        return null;
+    }
+
+    const query = location.hash.split('?')[1] || '';
+    const type = new URLSearchParams(query).get('type') || 'general';
+
+    return SETTINGS_PAGES[type] ? type : 'general';
+}
 
 async function openSettingsPopup() {
     if (document.querySelector('.settings-layer')) {
@@ -69,6 +96,11 @@ async function openSettingsPopup() {
 
     try {
         const response = await fetch('/components/settings.html');
+
+        if (!response.ok) {
+            throw new Error('설정 팝업을 불러오지 못했습니다.');
+        }
+
         const html = await response.text();
 
         document.body.insertAdjacentHTML('beforeend', html);
@@ -88,25 +120,69 @@ async function openSettingsPopup() {
                 return;
             }
 
-            const tab = target.closest('[data-settings-tab]');
+            const tab = target.closest('[data-settings-type]');
 
-            if (tab) {
-                const name = tab.dataset.settingsTab;
-
-                layer.querySelectorAll('.settings-tab').forEach((button) => {
-                    button.classList.toggle('is-active', button === tab);
-                });
-
-                layer.querySelectorAll('.settings-panel').forEach((panel) => {
-                    panel.classList.toggle(
-                        'is-active',
-                        panel.dataset.settingsPanel === name
-                    );
-                });
+            if (!tab) {
+                return;
             }
+
+            const type = tab.dataset.settingsType;
+
+            if (!SETTINGS_PAGES[type]) {
+                return;
+            }
+
+            if (getSettingsType() === type) {
+                loadSettingsContent(type);
+                return;
+            }
+
+            openSettingsType(type);
         });
     } catch (error) {
         console.error(error);
+    }
+}
+
+async function loadSettingsContent(type) {
+    const layer = document.querySelector('.settings-layer');
+    const content = layer?.querySelector('[data-settings-content]');
+
+    if (!layer || !content) {
+        return;
+    }
+
+    layer.querySelectorAll('.settings-tab').forEach((tab) => {
+        tab.classList.toggle(
+            'is-active',
+            tab.dataset.settingsType === type
+        );
+    });
+
+    content.innerHTML = `
+        <div class="settings-loading">
+            <span class="settings-spinner icon icon-setting"></span>
+        </div>
+    `;
+
+    try {
+        let html = settingsCache.get(type);
+
+        if (!html) {
+            const response = await fetch(SETTINGS_PAGES[type]);
+
+            if (!response.ok) {
+                throw new Error('설정 내용을 불러오지 못했습니다.');
+            }
+
+            html = await response.text();
+            settingsCache.set(type, html);
+        }
+
+        content.innerHTML = html;
+    } catch (error) {
+        console.error(error);
+        content.innerHTML = '<p class="settings-empty">설정을 불러오지 못했습니다.</p>';
     }
 }
 
@@ -114,9 +190,19 @@ function closeSettingsPopup(updateHash = true) {
     document.querySelector('.settings-layer')?.remove();
     document.body.style.overflow = '';
 
-    if (updateHash && location.hash === '#settings') {
-        history.back();
+    if (updateHash && location.hash.startsWith('#settings')) {
+        history.replaceState(null, '',
+            location.pathname + location.search
+        );
     }
+}
+
+const initialSettingsType = getSettingsType();
+
+if (initialSettingsType) {
+    openSettingsPopup().then(() => {
+        loadSettingsContent(initialSettingsType);
+    });
 }
 
 if (location.hash === '#settings') {
