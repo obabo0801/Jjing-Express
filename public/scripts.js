@@ -3,7 +3,7 @@ const root = document.documentElement;
 
 const savedTheme = localStorage.getItem('theme') === 'light'
     ? 'light'
-    : 'dark';;
+    : 'dark';
 
 setTheme(savedTheme);
 
