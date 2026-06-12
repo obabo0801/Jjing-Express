@@ -78,14 +78,12 @@ a {
 .icon {
     display: block;
 
-    width: clamp(20px, 1.1vw, 25px);
-    height: clamp(20px, 1.1vw, 25px);
+    width: 20px;
+    height: 20px;
+    background: currentColor;
 
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    mask: var(--icon) center / contain no-repeat;
+    -webkit-mask: var(--icon) center / contain no-repeat;
 }
 
 .icon-bell {
