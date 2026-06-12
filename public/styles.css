@@ -3,6 +3,7 @@
     --bar: rgba(0, 0, 0, 0.92);
     --line: rgba(255, 255, 255, 0.08);
     --text: #ffffff;
+    --hover: rgba(255, 255, 255, 0.08);
     --height: clamp(72px, 4vw, 88px);
 }
 
@@ -11,6 +12,7 @@
     --bar: rgba(255, 255, 255, 0.92);
     --line: rgba(0, 0, 0, 0.08);
     --text: #111111;
+    --hover: rgba(0, 0, 0, 0.06);
 }
 
 * {
@@ -74,6 +76,27 @@ a {
     color: var(--text);
 
     cursor: pointer;
+    outline: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.icon-button:focus {
+    outline: none;
+}
+
+.icon-button:focus-visible {
+    outline: 1px solid var(--text);
+    outline-offset: 3px;
+}
+
+.icon-button:hover {
+    background: var(--hover);
+}
+
+.icon-button:active {
+    transform: scale(0.9);
+    opacity: 0.75;
 }
 
 .icon {
@@ -122,8 +145,8 @@ a {
 }
 
 .logo-icon {
-    width: 40px;
-    height: 40px;
+    width: 24px;
+    height: 24px;
 
     display: block;
 
