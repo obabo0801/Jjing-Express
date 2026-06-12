@@ -39,5 +39,86 @@ document.addEventListener('click', (event) => {
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         notification?.classList.remove('is-open');
+        closeSettingsPopup();
     }
 });
+
+const settingsButton = document.querySelector('.settings-button');
+
+settingsButton?.addEventListener('click', async (event) => {
+    event.stopPropagation();
+
+    notification?.classList.remove('is-open');
+
+    location.hash = 'settings';
+});
+
+window.addEventListener('hashchange', () => {
+    if (location.hash === '#settings') {
+        openSettingsPopup();
+        return;
+    }
+
+    closeSettingsPopup(false);
+});
+
+async function openSettingsPopup() {
+    if (document.querySelector('.settings-layer')) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/components/settings.html');
+        const html = await response.text();
+
+        document.body.insertAdjacentHTML('beforeend', html);
+        document.body.style.overflow = 'hidden';
+
+        const layer = document.querySelector('.settings-layer');
+
+        layer?.addEventListener('click', (event) => {
+            const target = event.target;
+
+            if (!(target instanceof Element)) {
+                return;
+            }
+
+            if (target.closest('[data-settings-close]')) {
+                closeSettingsPopup();
+                return;
+            }
+
+            const tab = target.closest('[data-settings-tab]');
+
+            if (tab) {
+                const name = tab.dataset.settingsTab;
+
+                document.querySelectorAll('.settings-tab').forEach((button) => {
+                    button.classList.toggle('is-active', button === tab);
+                });
+
+                document.querySelectorAll('.settings-panel').forEach((panel) => {
+                    panel.classList.toggle(
+                        'is-active',
+                        panel.dataset.settingsPanel === name
+                    );
+                });
+            }
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function closeSettingsPopup(updateHash = true) {
+    document.querySelector('.settings-layer')?.remove();
+    document.body.style.overflow = '';
+
+    if (updateHash && location.hash === '#settings') {
+        history.back();
+    }
+}
+
+if (location.hash === '#settings') {
+    openSettingsPopup();
+}
