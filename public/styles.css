@@ -127,7 +127,8 @@ a {
 
 .icon-button,
 .notification-setting,
-.settings-close {
+.settings-close,
+.settings-page-back {
     cursor: pointer;
     outline: none;
     -webkit-tap-highlight-color: transparent;
@@ -139,13 +140,15 @@ a {
 
 .icon-button:hover,
 .notification-setting:hover,
-.settings-close:hover {
+.settings-close:hover,
+.settings-page-back:hover {
     background: var(--hover);
 }
 
 .icon-button .icon,
 .notification-setting .icon,
-.settings-close .icon {
+.settings-close .icon,
+.settings-page-back .icon {
     transition:
         transform 0.15s ease,
         opacity 0.15s ease;
@@ -153,7 +156,8 @@ a {
 
 .icon-button:active .icon,
 .notification-setting:active .icon,
-.settings-close:active .icon {
+.settings-close:active .icon,
+.settings-page-back:active .icon {
     transform: rotate(25deg) scale(0.9);
     opacity: 0.75;
 }
@@ -861,20 +865,6 @@ a {
     border-bottom: 1px solid var(--line);
 }
 
-.settings-close,
-.settings-page-back {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    min-height: 36px;
-    padding: 0;
-
-    display: grid;
-    place-items: center;
-
-    flex: 0 0 36px;
-}
-
 .settings-sidebar-title,
 .settings-title {
     height: 36px;
@@ -883,6 +873,7 @@ a {
     align-items: center;
     gap: 8px;
 
+    min-width: 0;
     line-height: 1;
 }
 
@@ -890,13 +881,14 @@ a {
 .settings-title .icon {
     width: 20px;
     height: 20px;
+
     flex-shrink: 0;
 }
 
 .settings-sidebar-title strong,
 .settings-title strong {
-    line-height: 1;
     font-size: 15px;
+    line-height: 1;
 }
 
 .settings-tab:focus-visible,
@@ -971,7 +963,8 @@ a {
     font-size: 18px;
 }
 
-.settings-close {
+.settings-close,
+.settings-page-back {
     width: 38px;
     height: 38px;
     padding: 0;
@@ -1274,6 +1267,12 @@ h1 {
     margin: 0;
     font-size: clamp(48px, 4vw, 88px);
     letter-spacing: -1.5px;
+}
+
+@media (min-width: 769px) {
+    .settings-page-back {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
