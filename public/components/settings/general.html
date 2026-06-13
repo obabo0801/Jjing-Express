@@ -1,22 +1,14 @@
 <div class="settings-section">
     <div class="settings-item">
         <div class="settings-item-info">
-            <strong>글자 크기</strong>
-            <span>화면 글자 크기를 조절합니다.</span>
+            <strong>화면 크기</strong>
+            <span>화면 전체 크기를 조절합니다.</span>
         </div>
 
-        <div class="settings-size-buttons">
-            <button class="settings-size-button" type="button" data-font-scale="0.9">
-                90%
-            </button>
-
-            <button class="settings-size-button is-active" type="button" data-font-scale="1">
-                100%
-            </button>
-
-            <button class="settings-size-button" type="button" data-font-scale="1.1">
-                110%
-            </button>
-        </div>
+        <select class="settings-size-select" data-screen-scale>
+            <option value="0.9">90%</option>
+            <option value="1">100%</option>
+            <option value="1.1">110%</option>
+        </select>
     </div>
 </div>

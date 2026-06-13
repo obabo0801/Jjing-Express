@@ -51,22 +51,19 @@ function getSystemTheme() {
         : 'light';
 }
 
-const savedFontScale = localStorage.getItem('fontScale');
+const savedScreenScale = localStorage.getItem('screenScale');
 
-setFontScale(savedFontScale || '1', false);
+setScreenScale(savedScreenScale || '1', false);
 
-function setFontScale(scale, save = true) {
-    root.style.setProperty('--font-scale', scale);
+function setScreenScale(scale, save = true) {
+    root.style.setProperty('--screen-scale', scale);
 
     if (save) {
-        localStorage.setItem('fontScale', scale);
+        localStorage.setItem('screenScale', scale);
     }
 
-    document.querySelectorAll('[data-font-scale]').forEach((button) => {
-        button.classList.toggle(
-            'is-active',
-            button.dataset.fontScale === scale
-        );
+    document.querySelectorAll('[data-screen-scale]').forEach((select) => {
+        select.value = scale;
     });
 }
 
@@ -625,17 +622,6 @@ async function openSettingsPopup() {
                 return;
             }
 
-            const fontScaleButton = target.closest(
-                '[data-font-scale]'
-            );
-
-            if (fontScaleButton) {
-                setFontScale(
-                    fontScaleButton.dataset.fontScale
-                );
-                return;
-            }
-
             if (target.closest('[data-settings-close]')) {
                 closeSettingsPopup();
                 return;
@@ -716,7 +702,7 @@ async function loadSettingsContent(type) {
 
         content.innerHTML = html;
 
-        setFontScale(localStorage.getItem('fontScale') || '1', false);
+        setScreenScale(localStorage.getItem('screenScale') || '1', false);
     } catch (error) {
         console.error(error);
         content.innerHTML = '<p class="settings-empty">설정을 불러오지 못했습니다.</p>';

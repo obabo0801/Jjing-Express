@@ -7,7 +7,7 @@
     --text: #ffffff;
     --hover: rgba(255, 255, 255, 0.1);
     --focus: #ffffff;
-    --font-scale: 1;
+    --screen-scale: 1;
     --height: clamp(72px, 4vw, 88px);
 }
 
@@ -32,7 +32,7 @@ body {
     background: var(--bg);
     color: var(--text);
     font-family: Arial, "Malgun Gothic", sans-serif;
-    font-size: calc(16px * var(--font-scale));
+    zoom: var(--screen-scale);
 
     opacity: 0;
     transition: opacity 0.25s ease;
@@ -1003,39 +1003,39 @@ a {
     font-size: 12px;
 }
 
-.settings-size-buttons {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.settings-size-button {
-    height: 30px;
-    padding: 0 10px;
+.settings-size-select {
+    width: 120px;
+    height: 34px;
+    padding: 0 34px 0 12px;
 
     border: 1px solid var(--line);
     border-radius: 999px;
-    background: transparent;
+    background: var(--popup);
     color: var(--text);
 
     cursor: pointer;
-    font-size: 12px;
+    font-size: 13px;
     outline: none;
     -webkit-tap-highlight-color: transparent;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--text) 50%),
+        linear-gradient(135deg, var(--text) 50%, transparent 50%);
+    background-position:
+        calc(100% - 16px) 14px,
+        calc(100% - 11px) 14px;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
 }
 
-.settings-size-button:hover {
-    background: var(--hover);
+.settings-size-select:hover {
+    background-color: var(--hover);
 }
 
-.settings-size-button.is-active {
-    background: var(--text);
-    color: var(--bg);
-    font-weight: 700;
-}
-
-.settings-size-button:focus-visible {
-    outline: none;
+.settings-size-select:focus-visible {
     box-shadow:
         0 0 0 2px var(--popup),
         0 0 0 4px var(--focus);
@@ -1107,26 +1107,78 @@ h1 {
         min-height: 0;
         max-height: none;
 
-        grid-template-columns: 120px 1fr;
+        display: flex;
+        flex-direction: column;
+
         border-radius: 22px;
     }
 
     .settings-sidebar {
-        padding: 14px 10px;
+        height: auto;
+        padding: 12px;
+
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .settings-menu {
+        flex: 1;
+
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
     }
 
     .settings-tab {
-        height: 40px;
-        padding: 0 10px;
+        width: auto;
+        min-width: 72px;
+        height: 38px;
+        padding: 0 12px;
+
+        flex-direction: row;
+        justify-content: center;
+
+        white-space: nowrap;
     }
 
-    .settings-main-header {
-        height: 58px;
-        padding: 0 16px;
+    .settings-tab span {
+        white-space: nowrap;
+    }
+
+    .settings-main {
+        flex: 1;
+        min-height: 0;
     }
 
     .settings-body {
+        flex: 1;
+        min-height: 0;
         padding: 14px;
+        overflow-y: auto;
+    }
+
+    .settings-item {
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .settings-item-info {
+        min-width: 0;
+    }
+
+    .settings-item-info strong,
+    .settings-item-info span {
+        white-space: normal;
+        word-break: keep-all;
+    }
+
+    .settings-size-select {
+        width: 110px;
+        flex-shrink: 0;
     }
 
     .notification-box {
