@@ -700,6 +700,33 @@ async function openSettingsPopup() {
                 return;
             }
 
+            const sizeTrigger = target.closest('[data-screen-scale-trigger]');
+
+            if (sizeTrigger) {
+                const dropdown = sizeTrigger.closest('[data-screen-scale-dropdown]');
+
+                document.querySelectorAll('[data-screen-scale-dropdown].is-open').forEach((item) => {
+                    if (item !== dropdown) {
+                        item.classList.remove('is-open');
+                    }
+                });
+
+                dropdown?.classList.toggle('is-open');
+                return;
+            }
+
+            const sizeButton = target.closest('[data-screen-scale]');
+
+            if (sizeButton) {
+                setScreenScale(sizeButton.dataset.screenScale);
+
+                sizeButton
+                    .closest('[data-screen-scale-dropdown]')
+                    ?.classList.remove('is-open');
+
+                return;
+            }
+
             const tab = target.closest('[data-settings-type]');
 
             if (!tab) {
@@ -714,33 +741,6 @@ async function openSettingsPopup() {
 
             openSettingsType(type);
         });
-
-        const sizeTrigger = target.closest('[data-screen-scale-trigger]');
-
-        if (sizeTrigger) {
-            const dropdown = sizeTrigger.closest('[data-screen-scale-dropdown]');
-
-            document.querySelectorAll('[data-screen-scale-dropdown].is-open').forEach((item) => {
-                if (item !== dropdown) {
-                    item.classList.remove('is-open');
-                }
-            });
-
-            dropdown?.classList.toggle('is-open');
-            return;
-        }
-
-        const sizeButton = target.closest('[data-screen-scale]');
-
-        if (sizeButton) {
-            setScreenScale(sizeButton.dataset.screenScale);
-
-            sizeButton
-                .closest('[data-screen-scale-dropdown]')
-                ?.classList.remove('is-open');
-
-            return;
-        }
     } catch (error) {
         console.error(error);
     }
