@@ -80,10 +80,7 @@ function addNotification({
     notifications.unshift({
         title,
         message,
-        time: new Date().toLocaleTimeString('ko-KR', {
-            hour: '2-digit',
-            minute: '2-digit'
-        })
+        createdAt: Date.now()
     });
 
     renderNotifications();
@@ -93,6 +90,28 @@ function addNotification({
         title,
         message
     });
+}
+
+function getTimeAgo(createdAt) {
+    const diff = Math.max(0, Date.now() - createdAt);
+    const sec = Math.floor(diff / 1000);
+    const min = Math.floor(sec / 60);
+    const hour = Math.floor(min / 60);
+    const day = Math.floor(hour / 24);
+
+    if (day > 0) {
+        return `${day}일 전`;
+    }
+
+    if (hour > 0) {
+        return `${hour}시간 전`;
+    }
+
+    if (min > 0) {
+        return `${min}분 전`;
+    }
+
+    return `${sec}초 전`;
 }
 
 function renderNotifications() {
@@ -111,7 +130,7 @@ function renderNotifications() {
         <div class="notification-item">
             <div class="notification-item-title">
                 <strong>${item.title}</strong>
-                <span>${item.time}</span>
+                <span>${getTimeAgo(item.createdAt)}</span>
             </div>
             <p>${item.message}</p>
         </div>
@@ -377,3 +396,9 @@ const testNotificationTimer = setInterval(() => {
         clearInterval(testNotificationTimer);
     }
 }, 2000);
+
+setInterval(() => {
+    if (notifications.length) {
+        renderNotifications();
+    }
+}, 60000);
