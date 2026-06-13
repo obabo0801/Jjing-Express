@@ -432,6 +432,28 @@ a {
     pointer-events: none;
 }
 
+.notification-item.is-unread {
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.notification-item.is-read {
+    opacity: 0.58;
+}
+
+.notification-item.is-unread
+.notification-info strong::after {
+    content: "";
+    width: 6px;
+    height: 6px;
+    margin-left: 6px;
+
+    display: inline-block;
+    vertical-align: middle;
+
+    border-radius: 50%;
+    background: currentColor;
+}
+
 .settings-layer {
     position: fixed;
     inset: 0;

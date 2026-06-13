@@ -56,34 +56,33 @@ const notificationButton = document.querySelector('.notification-button');
 const notificationBadge = document.querySelector('[data-notification-count]');
 const notificationList = document.querySelector('.notification-list');
 
-let notificationCount = 0;
 const notifications = [];
+
+let notificationIndex = 0;
 
 notificationButton?.addEventListener('click', (event) => {
     event.stopPropagation();
 
     notification?.classList.toggle('is-open');
-
-    if (notification?.classList.contains('is-open')) {
-        setNotificationCount(0);
-    }
 });
 
-function setNotificationCount(count) {
-    notificationCount = Math.max(0, count);
+function updateNotificationCount() {
+    const unreadCount = notifications
+        .filter((item) => !item.read).length;
 
     if (!notificationBadge) {
         return;
     }
 
-    if (notificationCount <= 0) {
+    if (unreadCount <= 0) {
         notificationBadge.textContent = '0';
         notificationBadge.style.display = 'none';
         return;
     }
 
-    notificationBadge.textContent = notificationCount > 99
-        ? '99+' : String(notificationCount);
+    notificationBadge.textContent = unreadCount > 99
+        ? '99+'
+        : String(unreadCount);
 
     notificationBadge.style.display = 'grid';
 }
@@ -97,6 +96,9 @@ function addNotification({
     createdAt = Date.now()
 } = {}) {
     const item = {
+        id: ++notificationIndex,
+        read: false,
+
         profile: {
             href: profile.href || '#',
             image: profile.image || '/favicon.ico'
@@ -116,7 +118,7 @@ function addNotification({
     notifications.unshift(item);
 
     renderNotifications();
-    setNotificationCount(notificationCount + 1);
+    updateNotificationCount();
 
 //    showServiceNotification({
 //        title: item.info.title,
@@ -191,7 +193,8 @@ function renderNotifications() {
         const dateKey = getDateKey(item.createdAt);
 
         const dateTitle = lastDateKey !== dateKey
-            ? `<div class="notification-date">${getNotificationDateLabel(item.createdAt)}</div>`
+            ? `<div class="notification-date">`
+                + `${getNotificationDateLabel(item.createdAt)}</div>`
             : '';
 
         lastDateKey = dateKey;
@@ -199,28 +202,48 @@ function renderNotifications() {
         return `
             ${dateTitle}
 
-            <div class="notification-item${hasThumbnail ? ' has-thumbnail' : ''}">
-                <a class="notification-profile" href="${item.profile.href}">
+            <div
+                class="notification-item${hasThumbnail
+                    ? ' has-thumbnail'
+                    : ''} ${item.read ? 'is-read' : 'is-unread'}"
+                data-notification-id="${item.id}"
+            >
+                <a class="notification-profile" href="${item.profile.href}" onclick="readNotification(${item.id})">
                     <img
                         src="${item.profile.image || '/favicon.ico'}"
                         onerror="this.src='/favicon.ico'"
                     >
                 </a>
 
-                <a class="notification-info" href="${item.info.href}">
+                <a class="notification-info" href="${item.info.href}" onclick="readNotification(${item.id})">
                     <strong>${item.info.title}</strong>
                     <p>${item.info.message}</p>
                     <span>${getTimeAgo(item.createdAt)}</span>
                 </a>
 
                 ${hasThumbnail ? `
-                    <a class="notification-thumbnail" href="${item.thumbnail.href}">
+                    <a class="notification-thumbnail" href="${item.thumbnail.href}" onclick="readNotification(${item.id})">
                         <img src="${item.thumbnail.image}">
                     </a>
                 ` : ''}
             </div>
         `;
     }).join('');
+}
+
+function readNotification(id) {
+    const item = notifications.find(
+        (notification) => notification.id === Number(id)
+    );
+
+    if (!item || item.read) {
+        return;
+    }
+
+    item.read = true;
+
+    renderNotifications();
+    updateNotificationCount();
 }
 
 document.addEventListener('click', (event) => {
