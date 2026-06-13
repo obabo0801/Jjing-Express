@@ -15,9 +15,15 @@ async function registerServiceWorker() {
     }
 }
 
-const savedTheme = localStorage.getItem('theme') || 'dark';
+const savedTheme = localStorage.getItem('theme');
 
-setTheme(savedTheme);
+setTheme(savedTheme || getSystemTheme(), false);
+
+const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+systemTheme.addEventListener('change', () => {
+    setTheme(getSystemTheme(), false);
+});
 
 requestAnimationFrame(() => {
     document.body.classList.add('is-ready');
@@ -31,9 +37,18 @@ themeButton?.addEventListener('click', () => {
     setTheme(nextTheme);
 });
 
-function setTheme(theme) {
+function setTheme(theme, save = true) {
     root.dataset.theme = theme;
-    localStorage.setItem('theme', theme);
+
+    if (save) {
+        localStorage.setItem('theme', theme);
+    }
+}
+
+function getSystemTheme() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light';
 }
 
 const notification = document.querySelector('.notification');
