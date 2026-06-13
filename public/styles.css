@@ -208,7 +208,7 @@ a {
     right: 0;
 
     width: 380px;
-    height: calc(56px + 42px + (68px * 6) + 10px);
+    height: calc(56px + 42px + 42px + (68px * 6) + 10px);
     max-height: calc(100dvh - var(--height) - 32px);
 
     display: none;
@@ -357,11 +357,11 @@ a {
     top: 50%;
     transform: translateY(-50%);
 
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
 
     border-radius: 50%;
-    background: var(--text);
+    background: #3b82f6;
 }
 
 .notification-item.has-thumbnail {
@@ -909,7 +909,7 @@ h1 {
         bottom: auto;
 
         width: auto;
-        height: calc(56px + 42px + (68px * 6) + 10px);
+        height: calc(56px + 42px + 42px + (68px * 6) + 10px);
         max-height: calc(100dvh - var(--height) - 26px);
     }
 
