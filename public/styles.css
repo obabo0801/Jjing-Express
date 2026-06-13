@@ -329,7 +329,7 @@ a {
     justify-content: center;
     align-items: flex-start;
 
-    gap: 3px;
+    gap: 2px;
 }
 
 .notification-info strong,
@@ -338,17 +338,12 @@ a {
     width: 100%;
     margin: 0;
     padding: 0;
+
     display: block;
     text-align: left;
 }
 
 .notification-info strong {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-
-    display: block;
-
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -358,12 +353,6 @@ a {
 }
 
 .notification-info p {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-
-    display: block;
-
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -375,12 +364,6 @@ a {
 }
 
 .notification-info span {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-
-    display: block;
-
     color: var(--text);
     opacity: 0.45;
     font-size: 11px;
@@ -408,41 +391,6 @@ a {
 
 .notification-item:last-child {
     border-bottom: 0;
-}
-
-.notification-item-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-}
-
-.notification-item-title strong,
-.notification-item p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.notification-item-title strong {
-    font-size: 14px;
-}
-
-.notification-item-title span {
-    flex-shrink: 0;
-
-    color: var(--text);
-    opacity: 0.45;
-    font-size: 12px;
-}
-
-.notification-item p {
-    margin: 6px 0 0;
-
-    color: var(--text);
-    opacity: 0.65;
-    font-size: 13px;
-    line-height: 1.4;
 }
 
 .notification-button {

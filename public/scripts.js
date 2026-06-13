@@ -442,7 +442,7 @@ const testNotificationTimer = setInterval(() => {
         } : null
     });
 
-    if (testNotificationIndex >= 5) {
+    if (testNotificationIndex >= 10) {
         clearInterval(testNotificationTimer);
     }
 }, 2000);
