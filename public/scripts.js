@@ -1,6 +1,20 @@
 const themeButton = document.querySelector('.theme-button');
 const root = document.documentElement;
 
+registerServiceWorker();
+
+async function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+        return null;
+    }
+
+    try {
+        return await navigator.serviceWorker.register('/service-worker.js');
+    } catch {
+        return null;
+    }
+}
+
 const savedTheme = localStorage.getItem('theme') || 'dark';
 
 setTheme(savedTheme);
@@ -27,8 +41,48 @@ const notificationButton = document.querySelector('.notification-button');
 
 notificationButton?.addEventListener('click', (event) => {
     event.stopPropagation();
+
     notification?.classList.toggle('is-open');
+
+    if (notification?.classList.contains('is-open')) {
+        setNotificationCount(0);
+    }
 });
+
+const notificationBadge = document.querySelector('[data-notification-count]');
+
+let notificationCount = 0;
+
+function setNotificationCount(count) {
+    notificationCount = Math.max(0, count);
+
+    if (!notificationBadge) {
+        return;
+    }
+
+    if (notificationCount <= 0) {
+        notificationBadge.textContent = '0';
+        notificationBadge.style.display = 'none';
+        return;
+    }
+
+    notificationBadge.textContent = notificationCount > 99
+        ? '99+' : String(notificationCount);
+
+    notificationBadge.style.display = 'grid';
+}
+
+function addNotification({
+    title = '알림',
+    message = '새 알림이 도착했습니다.'
+} = {}) {
+    setNotificationCount(notificationCount + 1);
+
+    showServiceNotification({
+        title,
+        message
+    });
+}
 
 document.addEventListener('click', (event) => {
     if (!notification?.contains(event.target)) {
@@ -241,3 +295,44 @@ if (!normalizeSettingsHash()) {
         });
     }
 }
+
+async function showServiceNotification({
+    title = '알림',
+    message = ''
+} = {}) {
+    if (!('serviceWorker' in navigator)) {
+        return;
+    }
+
+    if (!('Notification' in window)) {
+        return;
+    }
+
+    if (Notification.permission === 'default') {
+        const permission = await Notification.requestPermission();
+
+        if (permission !== 'granted') {
+            return;
+        }
+    }
+
+    if (Notification.permission !== 'granted') {
+        return;
+    }
+
+    const registration = await navigator.serviceWorker.ready;
+
+    registration.showNotification(title, {
+        body: message,
+        icon: '/favicon.ico',
+        badge: '/favicon.ico',
+        tag: 'jjing-notification'
+    });
+}
+
+setTimeout(() => {
+    addNotification({
+        title: '테스트 알림',
+        message: '새 알림이 도착했습니다.'
+    });
+}, 2000);

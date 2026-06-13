@@ -203,7 +203,7 @@ a {
     min-height: 220px;
     max-height: calc(100dvh - var(--height) - 32px);
 
-    display: none;
+    display: grid;
     flex-direction: column;
 
     background: var(--popup);
@@ -270,6 +270,33 @@ a {
     color: var(--text);
     opacity: 0.55;
     font-size: 14px;
+}
+
+.notification-button {
+    position: relative;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+
+    display: none;
+    place-items: center;
+
+    border-radius: 999px;
+    background: #ff3b3b;
+    color: #ffffff;
+
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 18px;
+
+    pointer-events: none;
 }
 
 .settings-layer {
