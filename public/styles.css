@@ -826,8 +826,8 @@ a {
     position: relative;
     z-index: 1;
 
-    width: 80%;
-    height: 80%;
+    width: 90%;
+    height: 90%;
     max-width: calc(100vw - 32px);
     max-height: calc(100vh - 60px);
 
@@ -1102,8 +1102,8 @@ h1 {
     }
 
     .settings-popup {
-        width: 100%;
-        height: calc(100dvh - 24px);
+        width: 90%;
+        height: 90%;
         min-height: 0;
         max-height: none;
 
