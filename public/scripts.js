@@ -74,21 +74,37 @@ function setNotificationCount(count) {
 }
 
 function addNotification({
-    title = '알림',
-    message = '새 알림이 도착했습니다.'
+    title,
+    message,
+    profile = {},
+    info = {},
+    thumbnail = null
 } = {}) {
-    notifications.unshift({
-        title,
-        message,
+    const item = {
+        profile: {
+            href: profile.href || '#',
+            image: profile.image || '/favicon.ico'
+        },
+        info: {
+            href: info.href || '#',
+            title: info.title || title || '알림',
+            message: info.message || message || ''
+        },
+        thumbnail: thumbnail?.image ? {
+            href: thumbnail.href || info.href || '#',
+            image: thumbnail.image
+        } : null,
         createdAt: Date.now()
-    });
+    };
+
+    notifications.unshift(item);
 
     renderNotifications();
     setNotificationCount(notificationCount + 1);
 
     showServiceNotification({
-        title,
-        message
+        title: item.info.title,
+        message: item.info.message
     });
 }
 
@@ -126,15 +142,32 @@ function renderNotifications() {
         return;
     }
 
-    notificationList.innerHTML = notifications.map((item) => `
-        <div class="notification-item">
-            <div class="notification-item-title">
-                <strong>${item.title}</strong>
-                <span>${getTimeAgo(item.createdAt)}</span>
+    notificationList.innerHTML = notifications.map((item) => {
+        const hasThumbnail = item.thumbnail?.image;
+
+        return `
+            <div class="notification-item${hasThumbnail ? ' has-thumbnail' : ''}">
+                <a class="notification-profile" href="${item.profile.href}">
+                    <img
+                        src="${item.profile.image || '/favicon.ico'}"
+                        onerror="this.src='/favicon.ico'"
+                    >
+                </a>
+
+                <a class="notification-info" href="${item.info.href}">
+                    <strong>${item.info.title}</strong>
+                    <p>${item.info.message}</p>
+                    <span>${getTimeAgo(item.createdAt)}</span>
+                </a>
+
+                ${hasThumbnail ? `
+                    <a class="notification-thumbnail" href="${item.thumbnail.href}">
+                        <img src="${item.thumbnail.image}">
+                    </a>
+                ` : ''}
             </div>
-            <p>${item.message}</p>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 document.addEventListener('click', (event) => {
@@ -382,23 +415,34 @@ async function showServiceNotification({
     });
 }
 
+setInterval(() => {
+    if (notifications.length) {
+        renderNotifications();
+    }
+}, 60000);
+
 let testNotificationIndex = 0;
 
 const testNotificationTimer = setInterval(() => {
     testNotificationIndex += 1;
 
     addNotification({
-        title: `테스트 알림 ${testNotificationIndex}`,
-        message: `${testNotificationIndex}번째 알림입니다.`
+        profile: {
+            href: '/',
+            image: ''
+        },
+        info: {
+            href: '/',
+            title: `테스트 알림 ${testNotificationIndex}`,
+            message: `${testNotificationIndex}번째 알림입니다.`
+        },
+        thumbnail: testNotificationIndex % 2 === 0 ? {
+            href: '/',
+            image: '/assets/dog.png'
+        } : null
     });
 
-    if (testNotificationIndex >= 10) {
+    if (testNotificationIndex >= 5) {
         clearInterval(testNotificationTimer);
     }
 }, 2000);
-
-setInterval(() => {
-    if (notifications.length) {
-        renderNotifications();
-    }
-}, 60000);
