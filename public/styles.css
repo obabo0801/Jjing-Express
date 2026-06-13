@@ -546,21 +546,23 @@ a {
 
 .notification-badge.is-pop {
     animation: notification-badge-pop 0.35s ease;
+    box-shadow: 0 0 0 6px rgba(255, 59, 59, 0.18),
+        0 0 18px rgba(255, 59, 59, 0.65);
 }
 
 .notification-badge.is-pop::after {
     content: "";
 
     position: absolute;
-    inset: -5px;
+    inset: -7px;
 
     border-radius: 999px;
-    background: rgba(255, 59, 59, 0.35);
+    background: rgba(255, 90, 90, 0.55);
 
     opacity: 0;
     pointer-events: none;
 
-    animation: notification-badge-ring 0.35s ease forwards;
+    animation: notification-badge-ring 0.38s ease forwards;
 }
 
 @keyframes notification-badge-pop {
@@ -579,13 +581,13 @@ a {
 
 @keyframes notification-badge-ring {
     0% {
-        opacity: 0.8;
-        transform: scale(0.7);
+        opacity: 0.9;
+        transform: scale(0.65);
     }
 
     100% {
         opacity: 0;
-        transform: scale(1.8);
+        transform: scale(2);
     }
 }
 
