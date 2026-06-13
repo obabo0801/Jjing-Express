@@ -622,6 +622,13 @@ async function openSettingsPopup() {
                 return;
             }
 
+            const mobileBack = target.closest('[data-settings-mobile-back]');
+
+            if (mobileBack) {
+                layer.classList.remove('is-detail');
+                return;
+            }
+
             const tab = target.closest('[data-settings-type]');
 
             if (!tab) {
@@ -630,13 +637,8 @@ async function openSettingsPopup() {
 
             const type = tab.dataset.settingsType;
 
-            if (!SETTINGS[type]) {
-                return;
-            }
-
-            if (getSettingsType() === type) {
-                loadSettingsContent(type);
-                return;
+            if (window.matchMedia('(max-width: 768px)').matches) {
+                layer.classList.add('is-detail');
             }
 
             openSettingsType(type);
