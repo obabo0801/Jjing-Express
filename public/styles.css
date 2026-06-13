@@ -208,7 +208,7 @@ a {
     right: 0;
 
     width: 380px;
-    height: calc(56px + 42px + (68px * 6));
+    height: calc(56px + 42px + (68px * 6) + 10px);
     max-height: calc(100dvh - var(--height) - 32px);
 
     display: none;
@@ -313,22 +313,40 @@ a {
 
     width: 100%;
     height: 68px;
-    padding: 0;
+    padding: 0 8px;
 
     display: grid;
     grid-template-columns: 42px minmax(0, 1fr) 28px;
     align-items: center;
     gap: 10px;
 
-    border-bottom: 1px solid var(--line);
+    border-bottom: 0;
+    border-radius: 12px;
 
     transition:
         background 0.15s ease,
         opacity 0.15s ease;
 }
 
+.notification-item
++ .notification-item {
+    margin-top: 2px;
+}
+
 .notification-item:hover {
     background: var(--hover);
+}
+
+.notification-item.is-unread {
+    background: color-mix(
+        in srgb, var(--hover) 55%, transparent
+    );
+}
+
+.notification-item.is-unread:hover {
+    background: color-mix(
+        in srgb, var(--hover) 85%, var(--text) 6%
+        );
 }
 
 .notification-item.is-unread::before {
@@ -472,10 +490,6 @@ a {
     line-height: 18px;
 
     pointer-events: none;
-}
-
-.notification-item.is-unread {
-    background: var(--hover);
 }
 
 .notification-item.is-read
@@ -895,7 +909,7 @@ h1 {
         bottom: auto;
 
         width: auto;
-        height: calc(56px + 42px + (68px * 6));
+        height: calc(56px + 42px + (68px * 6) + 10px);
         max-height: calc(100dvh - var(--height) - 26px);
     }
 
