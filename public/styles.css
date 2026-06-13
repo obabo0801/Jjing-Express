@@ -813,6 +813,28 @@ a {
     overflow: hidden;
 }
 
+.settings-popup:focus {
+    outline: none;
+}
+
+.settings-tab:focus-visible,
+.settings-close:focus-visible {
+    outline: none;
+    background: var(--hover);
+    opacity: 1;
+    box-shadow:
+        0 0 0 2px var(--popup),
+        0 0 0 4px var(--focus);
+}
+
+.settings-tab.is-active:focus-visible {
+    background: var(--text);
+    color: var(--bg);
+    box-shadow:
+        0 0 0 2px var(--popup),
+        0 0 0 4px var(--focus);
+}
+
 .settings-sidebar {
     padding: 18px 14px;
 

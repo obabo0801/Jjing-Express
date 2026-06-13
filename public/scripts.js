@@ -394,6 +394,11 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         notification?.classList.remove('is-open');
         closeSettingsPopup();
+        return;
+    }
+
+    if (event.key === 'Tab') {
+        trapSettingsTab(event);
     }
 });
 
@@ -445,6 +450,68 @@ notificationClearAllButton?.addEventListener('click', () => {
 });
 
 const settingsCache = new Map();
+
+const SETTINGS_FOCUSABLE_SELECTOR = [
+    'a[href]',
+    'button:not([disabled])',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])'
+].join(',');
+
+let beforeSettingsFocus = null;
+
+function getSettingsFocusableElements() {
+    const layer = document.querySelector('.settings-layer');
+
+    if (!layer) {
+        return [];
+    }
+
+    return [...layer.querySelectorAll(SETTINGS_FOCUSABLE_SELECTOR)]
+        .filter((element) => {
+            return element instanceof HTMLElement
+                && element.offsetParent !== null;
+        });
+}
+
+function trapSettingsTab(event) {
+    const layer = document.querySelector('.settings-layer');
+
+    if (!layer) {
+        return;
+    }
+
+    const focusableElements = getSettingsFocusableElements();
+
+    if (!focusableElements.length) {
+        event.preventDefault();
+
+        layer.querySelector('.settings-popup')?.focus();
+        return;
+    }
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (!layer.contains(document.activeElement)) {
+        event.preventDefault();
+        firstElement.focus();
+        return;
+    }
+
+    if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+        return;
+    }
+
+    if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+    }
+}
 
 document.querySelectorAll('.settings-button').forEach((button) => {
     button.addEventListener('click', (event) => {
@@ -512,10 +579,25 @@ async function openSettingsPopup() {
 
         const html = await response.text();
 
+        beforeSettingsFocus = document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null;
+
         document.body.insertAdjacentHTML('beforeend', html);
         document.body.style.overflow = 'hidden';
 
         const layer = document.querySelector('.settings-layer');
+
+        requestAnimationFrame(() => {
+            const firstElement = getSettingsFocusableElements()[0];
+
+            if (firstElement) {
+                firstElement.focus();
+                return;
+            }
+
+            layer?.querySelector('.settings-popup')?.focus();
+        });
 
         layer?.addEventListener('click', (event) => {
             const target = event.target;
@@ -610,8 +692,15 @@ async function loadSettingsContent(type) {
 }
 
 function closeSettingsPopup(updateHash = true) {
+    const hadSettingsPopup = !!document.querySelector('.settings-layer');
+
     document.querySelector('.settings-layer')?.remove();
     document.body.style.overflow = '';
+
+    if (hadSettingsPopup && beforeSettingsFocus) {
+        beforeSettingsFocus.focus();
+        beforeSettingsFocus = null;
+    }
 
     if (updateHash && location.hash.startsWith('#settings')) {
         history.replaceState(null, '',
