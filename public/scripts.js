@@ -51,6 +51,44 @@ function getSystemTheme() {
         : 'light';
 }
 
+const settingsMobileQuery = window.matchMedia('(max-width: 768px)');
+
+function syncSettingsMobileView() {
+    const layer = document.querySelector('.settings-layer');
+
+    if (!layer) {
+        return;
+    }
+
+    if (!settingsMobileQuery.matches) {
+        layer.classList.remove('is-detail');
+        return;
+    }
+
+    const type = getSettingsType();
+
+    if (type) {
+        layer.classList.add('is-detail');
+    }
+}
+
+settingsMobileQuery.addEventListener('change', syncSettingsMobileView);
+
+settingsMobileQuery.addEventListener('change', () => {
+    const layer = document.querySelector('.settings-layer');
+
+    if (!layer) {
+        return;
+    }
+
+    if (settingsMobileQuery.matches) {
+        layer.classList.add('is-detail');
+        return;
+    }
+
+    layer.classList.remove('is-detail');
+});
+
 const savedScreenScale = localStorage.getItem('screenScale');
 
 setScreenScale(savedScreenScale || '1', false);
@@ -564,6 +602,17 @@ window.addEventListener('hashchange', async () => {
 
     await openSettingsPopup();
     await loadSettingsContent(type);
+
+    syncSettingsMobileView();
+
+    const layer = document.querySelector('.settings-layer');
+
+    if (
+        window.matchMedia('(max-width: 768px)').matches
+        && type === 'notification'
+    ) {
+        layer?.classList.add('is-detail');
+    }
 });
 
 function openSettingsType(type) {

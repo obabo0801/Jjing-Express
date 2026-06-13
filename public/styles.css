@@ -848,6 +848,10 @@ a {
     outline: none;
 }
 
+.settings-page-back {
+    display: none;
+}
+
 .settings-tab:focus-visible,
 .settings-close:focus-visible {
     outline: none;
@@ -875,6 +879,24 @@ a {
 
     background: var(--popup-sub);
     border-right: 1px solid var(--line);
+}
+
+.settings-sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-sidebar-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--text);
+}
+
+.settings-sidebar-title strong {
+    font-size: 15px;
 }
 
 .settings-main-header {
@@ -1120,6 +1142,17 @@ h1 {
 
         border-right: 0;
         background: var(--popup);
+    }
+
+    .settings-sidebar-header {
+        height: 56px;
+        padding: 0 14px;
+
+        border-bottom: 1px solid var(--line);
+    }
+
+    .settings-sidebar-title {
+        flex: 1;
     }
 
     .settings-menu {
