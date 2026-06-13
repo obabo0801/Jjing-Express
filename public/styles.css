@@ -292,6 +292,8 @@ a {
 }
 
 .notification-item {
+    position: relative;
+
     width: 100%;
     height: 68px;
     padding: 0;
@@ -302,6 +304,21 @@ a {
     gap: 10px;
 
     border-bottom: 1px solid var(--line);
+}
+
+.notification-item.is-unread::before {
+    content: "";
+
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+    background: var(--text);
 }
 
 .notification-item.has-thumbnail {
@@ -440,19 +457,6 @@ a {
     opacity: 0.58;
 }
 
-.notification-item.is-unread
-.notification-info strong::after {
-    content: "";
-    width: 6px;
-    height: 6px;
-    margin-left: 6px;
-
-    display: inline-block;
-    vertical-align: middle;
-
-    border-radius: 50%;
-    background: currentColor;
-}
 
 .notification-menu {
     height: 42px;

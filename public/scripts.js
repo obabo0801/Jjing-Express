@@ -186,7 +186,9 @@ function renderNotifications() {
     if (!visibleNotifications.length) {
         notificationList.innerHTML = `
             <p class="notification-empty">
-                ${notificationFilter === 'unread' ? '미확인 알림이 없습니다.' : '받은 알림이 없습니다.'}
+                ${notificationFilter === 'unread'
+                    ? '미확인 알림이 없습니다.'
+                    : '받은 알림이 없습니다.'}
             </p>
         `;
         return;
