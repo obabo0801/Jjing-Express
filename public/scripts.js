@@ -605,14 +605,9 @@ async function openSettingsPopup() {
         const layer = document.querySelector('.settings-layer');
 
         requestAnimationFrame(() => {
-            const firstElement = getSettingsFocusableElements()[0];
-
-            if (firstElement) {
-                firstElement.focus();
-                return;
-            }
-
-            layer?.querySelector('.settings-popup')?.focus();
+            layer?.querySelector('.settings-popup')?.focus({
+                preventScroll: true
+            });
         });
 
         layer?.addEventListener('click', (event) => {
@@ -645,6 +640,20 @@ async function openSettingsPopup() {
             }
 
             openSettingsType(type);
+        });
+
+        layer?.addEventListener('change', (event) => {
+            const target = event.target;
+
+            if (!(target instanceof HTMLSelectElement)) {
+                return;
+            }
+
+            if (!target.matches('[data-screen-scale]')) {
+                return;
+            }
+
+            setScreenScale(target.value);
         });
     } catch (error) {
         console.error(error);
@@ -716,7 +725,7 @@ function closeSettingsPopup(updateHash = true) {
     document.body.style.overflow = '';
 
     if (hadSettingsPopup && beforeSettingsFocus) {
-        beforeSettingsFocus.focus();
+        beforeSettingsFocus.blur();
         beforeSettingsFocus = null;
     }
 
