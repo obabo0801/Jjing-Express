@@ -130,9 +130,9 @@ a {
     outline: none;
     -webkit-tap-highlight-color: transparent;
 
-    transition: background 0.15s ease,
-    transform 0.15s ease,
-    opacity 0.15s ease;
+    transition:
+        background 0.15s ease,
+        opacity 0.15s ease;
 }
 
 .icon-button:hover,
@@ -141,9 +141,17 @@ a {
     background: var(--hover);
 }
 
-.icon-button:active,
-.notification-setting:active,
-.settings-close:active {
+.icon-button .icon,
+.notification-setting .icon,
+.settings-close .icon {
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.icon-button:active .icon,
+.notification-setting:active .icon,
+.settings-close:active .icon {
     transform: rotate(25deg) scale(0.9);
     opacity: 0.75;
 }
