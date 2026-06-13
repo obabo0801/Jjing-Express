@@ -77,8 +77,9 @@ a {
     place-items: center;
 
     flex-shrink: 0;
-    overflow: hidden;
+    overflow: visible;
 
+    border-radius: 14px;
     outline: none;
     background: transparent;
     box-shadow: none;
@@ -86,11 +87,18 @@ a {
 }
 
 .logo:focus,
-.logo:focus-visible,
 .logo:active {
     outline: none;
     background: transparent;
     box-shadow: none;
+}
+
+.logo:focus-visible {
+    outline: none;
+    background: var(--hover);
+    box-shadow:
+        0 0 0 2px var(--popup),
+        0 0 0 4px var(--focus);
 }
 
 .logo-icon {
@@ -99,7 +107,7 @@ a {
 
     display: block;
 
-    background-image: url("/favicon.svg");
+    background-image: url("/favicon.ico");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
