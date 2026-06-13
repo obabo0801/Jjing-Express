@@ -113,6 +113,24 @@ notificationList?.addEventListener('click', (event) => {
     }
 });
 
+function playNotificationBadgePop() {
+    if (!notificationBadge) {
+        return;
+    }
+
+    notificationBadge.classList.remove('is-pop');
+
+    void notificationBadge.offsetWidth;
+
+    notificationBadge.classList.add('is-pop');
+
+    notificationBadge.addEventListener('animationend', () => {
+        notificationBadge.classList.remove('is-pop');
+    }, {
+        once: true
+    });
+}
+
 function updateNotificationCount() {
     const unreadCount = notifications
         .filter((item) => !item.read).length;
@@ -132,6 +150,8 @@ function updateNotificationCount() {
         : String(unreadCount);
 
     notificationBadge.style.display = 'grid';
+
+    playNotificationBadgePop();
 }
 
 function addNotification({
@@ -147,6 +167,7 @@ function addNotification({
         id: ++notificationIndex,
         read: false,
         href,
+        isNew: true,
 
         profile: {
             href: profile.href || '',
@@ -260,7 +281,7 @@ function renderNotifications() {
             <div
                 class="notification-item${hasThumbnail
                     ? ' has-thumbnail'
-                    : ''} ${item.read ? 'is-read' : 'is-unread'}"
+                    : ''} ${item.read ? 'is-read' : 'is-unread'} ${item.isNew ? 'is-new' : ''}"
                 data-notification-id="${item.id}"
             >
                 ${item.profile.href ? `
@@ -311,6 +332,10 @@ function renderNotifications() {
             </div>
         `;
     }).join('');
+
+    visibleNotifications.forEach((item) => {
+        item.isNew = false;
+    });
 }
 
 function readNotification(id) {
@@ -671,17 +696,16 @@ const testTimer = setInterval(() => {
     const item = testNotifications[testCount % testNotifications.length];
 
     addNotification({
+        href: '#',
         profile: {
-            href: profile.href || '',
-            image: profile.image || '/favicon.ico'
+            href: '',
+            image: ''
         },
         info: {
-            href: '/',
             title: `${item.title} ${testCount + 1}`,
             message: item.message
         },
         thumbnail: testCount % 2 === 1 ? {
-            href: '/',
             image: '/favicon.ico'
         } : null,
         createdAt: item.createdAt

@@ -544,6 +544,73 @@ a {
     pointer-events: none;
 }
 
+.notification-badge.is-pop {
+    animation: notification-badge-pop 0.35s ease;
+}
+
+.notification-badge.is-pop::after {
+    content: "";
+
+    position: absolute;
+    inset: -5px;
+
+    border-radius: 999px;
+    background: rgba(255, 59, 59, 0.35);
+
+    opacity: 0;
+    pointer-events: none;
+
+    animation: notification-badge-ring 0.35s ease forwards;
+}
+
+@keyframes notification-badge-pop {
+    0% {
+        transform: scale(0.8);
+    }
+
+    55% {
+        transform: scale(1.25);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes notification-badge-ring {
+    0% {
+        opacity: 0.8;
+        transform: scale(0.7);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.8);
+    }
+}
+
+.notification-item.is-new {
+    animation: notification-item-pop 0.28s ease;
+    transform-origin: center;
+}
+
+@keyframes notification-item-pop {
+    0% {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+
+    65% {
+        opacity: 1;
+        transform: scale(1.025);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .notification-item.is-read
 .notification-profile,
 .notification-item.is-read
