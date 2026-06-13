@@ -66,6 +66,53 @@ notificationButton?.addEventListener('click', (event) => {
     notification?.classList.toggle('is-open');
 });
 
+notificationList?.addEventListener('click', (event) => {
+    const target = event.target;
+
+    if (!(target instanceof Element)) {
+        return;
+    }
+
+    const moreButton = target.closest('[data-notification-more]');
+
+    if (moreButton) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const more = moreButton.closest('.notification-more');
+
+        document.querySelectorAll('.notification-more.is-open').forEach((item) => {
+            if (item !== more) {
+                item.classList.remove('is-open');
+            }
+        });
+
+        more?.classList.toggle('is-open');
+        return;
+    }
+
+    const readButton = target.closest('[data-notification-read]');
+
+    if (readButton) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        readNotification(readButton.dataset.notificationRead);
+        closeNotificationDropdowns();
+        return;
+    }
+
+    const removeButton = target.closest('[data-notification-remove]');
+
+    if (removeButton) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        removeNotification(removeButton.dataset.notificationRemove);
+        closeNotificationDropdowns();
+    }
+});
+
 function updateNotificationCount() {
     const unreadCount = notifications
         .filter((item) => !item.read).length;
@@ -234,6 +281,24 @@ function renderNotifications() {
                         <img src="${item.thumbnail.image}">
                     </a>
                 ` : ''}
+
+                <div class="notification-more">
+                    <button class="notification-more-button" type="button" data-notification-more="${item.id}">
+                        ⋮
+                    </button>
+
+                    <div class="notification-dropdown">
+                        <button type="button" data-notification-read="${item.id}">
+                            <span class="dropdown-icon icon-read"></span>
+                            알림 읽기
+                        </button>
+
+                        <button type="button" data-notification-remove="${item.id}">
+                            <span class="dropdown-icon icon-delete"></span>
+                            알림 지우기
+                        </button>
+                    </div>
+                </div>
             </div>
         `;
     }).join('');
@@ -254,9 +319,40 @@ function readNotification(id) {
     updateNotificationCount();
 }
 
+function removeNotification(id) {
+    const index = notifications.findIndex(
+        (notification) => notification.id === Number(id)
+    );
+
+    if (index < 0) {
+        return;
+    }
+
+    notifications.splice(index, 1);
+
+    renderNotifications();
+    updateNotificationCount();
+}
+
+function closeNotificationDropdowns() {
+    document.querySelectorAll(
+        '.notification-more.is-open'
+    ).forEach((item) => {
+        item.classList.remove('is-open');
+    });
+}
+
 document.addEventListener('click', (event) => {
     if (!notification?.contains(event.target)) {
         notification?.classList.remove('is-open');
+    }
+
+    if (!(event.target instanceof Element)) {
+        return;
+    }
+
+    if (!event.target.closest('.notification-more')) {
+        closeNotificationDropdowns();
     }
 });
 
