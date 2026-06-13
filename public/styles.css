@@ -1,10 +1,10 @@
 :root {
     --bg: #000000;
     --bar: rgba(0, 0, 0, 0.92);
-    --popup: #050505;
-    --line: rgba(255, 255, 255, 0.08);
+    --popup: #111111;
+    --line: rgba(255, 255, 255, 0.14);
     --text: #ffffff;
-    --hover: rgba(255, 255, 255, 0.08);
+    --hover: rgba(255, 255, 255, 0.1);
     --height: clamp(72px, 4vw, 88px);
 }
 
@@ -98,6 +98,38 @@ a {
     flex-shrink: 0;
 }
 
+.icon-button,
+.notification-setting,
+.settings-close {
+    cursor: pointer;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+
+    transition: background 0.15s ease,
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.icon-button:hover,
+.notification-setting:hover,
+.settings-close:hover {
+    background: var(--hover);
+}
+
+.icon-button:active,
+.notification-setting:active,
+.settings-close:active {
+    transform: rotate(25deg) scale(0.9);
+    opacity: 0.75;
+}
+
+.icon-button:focus-visible,
+.notification-setting:focus-visible,
+.settings-close:focus-visible {
+    outline: 1px solid var(--text);
+    outline-offset: 3px;
+}
+
 .icon-button {
     width: clamp(40px, 2.1vw, 48px);
     height: clamp(40px, 2.1vw, 48px);
@@ -111,32 +143,11 @@ a {
     background: transparent;
     color: var(--text);
 
-    cursor: pointer;
-    outline: none;
     user-select: none;
-    -webkit-tap-highlight-color: transparent;
-
-    transition: background 0.15s ease,
-    transform 0.15s ease,
-    opacity 0.15s ease;
 }
 
 .icon-button:focus {
     outline: none;
-}
-
-.icon-button:focus-visible {
-    outline: 1px solid var(--text);
-    outline-offset: 3px;
-}
-
-.icon-button:hover {
-    background: var(--hover);
-}
-
-.icon-button:active {
-    transform: rotate(25deg) scale(0.9);
-    opacity: 0.75;
 }
 
 .icon {
@@ -198,7 +209,9 @@ a {
     background: var(--popup);
     border: 1px solid var(--line);
     border-radius: 18px;
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.04);
     overflow: hidden;
 }
 
@@ -239,28 +252,6 @@ a {
     border-radius: 50%;
     background: transparent;
     color: var(--text);
-
-    cursor: pointer;
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
-
-    transition: background 0.15s ease,
-    transform 0.15s ease,
-    opacity 0.15s ease;
-}
-
-.notification-setting:hover {
-    background: var(--hover);
-}
-
-.notification-setting:active {
-    transform: rotate(25deg) scale(0.9);
-    opacity: 0.75;
-}
-
-.notification-setting:focus-visible {
-    outline: 1px solid var(--text);
-    outline-offset: 3px;
 }
 
 .notification-list {
@@ -294,9 +285,9 @@ a {
     position: absolute;
     inset: 0;
 
-    background: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(1px);
-    -webkit-backdrop-filter: blur(1px);
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 .settings-popup {
@@ -314,7 +305,9 @@ a {
     background: var(--popup);
     border: 1px solid var(--line);
     border-radius: 24px;
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+    box-shadow:
+        0 24px 90px rgba(0, 0, 0, 0.75),
+        0 0 0 1px rgba(255, 255, 255, 0.04);
 
     overflow: hidden;
 }
@@ -326,6 +319,7 @@ a {
     flex-direction: column;
     gap: 18px;
 
+    background: var(--popup-sub);
     border-right: 1px solid var(--line);
 }
 
@@ -366,28 +360,6 @@ a {
     border-radius: 50%;
     background: transparent;
     color: var(--text);
-
-    cursor: pointer;
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
-
-    transition: background 0.15s ease,
-    transform 0.15s ease,
-    opacity 0.15s ease;
-}
-
-.settings-close:hover {
-    background: var(--hover);
-}
-
-.settings-close:active {
-    transform: rotate(25deg) scale(0.9);
-    opacity: 0.75;
-}
-
-.settings-close:focus-visible {
-    outline: 1px solid var(--text);
-    outline-offset: 3px;
 }
 
 .settings-menu {

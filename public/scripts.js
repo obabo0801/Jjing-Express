@@ -43,33 +43,31 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-const settingsButton = document.querySelector('.settings-button');
-
-const SETTINGS_PAGES = {
-    general: '/components/settings/general.html',
-    notification: '/components/settings/notification.html'
-};
-
-const SETTINGS_TITLES = {
-    general: '일반',
-    notification: '알림'
-};
-
-const SETTINGS_ICONS = {
-    general: 'icon-setting',
-    notification: 'icon-bell'
+const SETTINGS = {
+    general: {
+        title: '일반',
+        icon: 'icon-setting',
+        page: '/components/settings/general.html'
+    },
+    notification: {
+        title: '알림',
+        icon: 'icon-bell',
+        page: '/components/settings/notification.html'
+    }
 };
 
 const settingsCache = new Map();
 
-settingsButton?.addEventListener('click', (event) => {
-    event.stopPropagation();
+document.querySelectorAll('.settings-button').forEach((button) => {
+    button.addEventListener('click', (event) => {
+        event.stopPropagation();
 
-    notification?.classList.remove('is-open');
+        notification?.classList.remove('is-open');
 
-    const type = settingsButton.dataset.settingsOpen;
+        const type = button.dataset.settingsOpen || 'general';
 
-    openSettingsType(type || 'general');
+        openSettingsType(type);
+    });
 });
 
 function normalizeSettingsHash() {
@@ -109,7 +107,7 @@ function getSettingsType() {
     const query = location.hash.split('?')[1] || '';
     const type = new URLSearchParams(query).get('type') || 'general';
 
-    return SETTINGS_PAGES[type] ? type : 'general';
+    return SETTINGS[type] ? type : 'general';
 }
 
 async function openSettingsPopup() {
@@ -151,7 +149,7 @@ async function openSettingsPopup() {
 
             const type = tab.dataset.settingsType;
 
-            if (!SETTINGS_PAGES[type]) {
+            if (!SETTINGS[type]) {
                 return;
             }
 
@@ -181,16 +179,19 @@ async function loadSettingsContent(type) {
             tab.dataset.settingsType === type
         );
     });
+
+    const setting = SETTINGS[type] || SETTINGS.general;
+
     const icon = layer.querySelector('[data-settings-title-icon]');
 
     if (icon) {
-        icon.className = `icon ${SETTINGS_ICONS[type] || 'icon-setting'}`;
+        icon.className = `icon ${setting.icon}`;
     }
 
     const title = layer.querySelector('[data-settings-title]');
 
     if (title) {
-        title.textContent = SETTINGS_TITLES[type] || '설정';
+        title.textContent = setting.title;
     }
 
     content.innerHTML = `
@@ -203,7 +204,7 @@ async function loadSettingsContent(type) {
         let html = settingsCache.get(type);
 
         if (!html) {
-            const response = await fetch(SETTINGS_PAGES[type]);
+            const response = await fetch(setting.page);
 
             if (!response.ok) {
                 throw new Error('설정 내용을 불러오지 못했습니다.');

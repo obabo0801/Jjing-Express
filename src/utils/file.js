@@ -37,7 +37,7 @@ export function read(name) {
     const file = get(name);
 
     if (fs.existsSync(file)) {
-        return fs.readFileSync(file);
+        return fs.readFileSync(file, 'utf8');
     }
 }
 

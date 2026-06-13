@@ -32,12 +32,17 @@ const COLORS = Object.freeze({
     RESET: '\x1b[0m'
 });
 
+function formatArgs(args) {
+    return (args
+        .map(a => typeof a === 'object'
+            ? stringify(a) : String(a))
+        .join(' ')
+    );
+}
+
 export function append(level, ...args) {
     const type = String(level);
-    const arg = args
-        .map(a => typeof a === 'object' 
-        ? stringify(a) : String(a))
-        .join(' ');
+    const arg = formatArgs(args);
 
     const data = 
         `[${time.getTime()}] ${arg}`;
@@ -48,10 +53,7 @@ export function append(level, ...args) {
 
 export function send(level, ...args) {
     const type = String(level);
-    const arg = args
-        .map(a => typeof a === 'object' 
-        ? stringify(a) : String(a))
-        .join(' ');
+    const arg = formatArgs(args);
 
     const data = 
         `[${time.getTime()}] ${arg}`;
@@ -66,10 +68,7 @@ export function send(level, ...args) {
 
 export function print(level, ...args) {
     const type = String(level);
-    const arg = args
-        .map(a => typeof a === 'object' 
-        ? stringify(a) : String(a))
-        .join(' ');
+    const arg = formatArgs(args);
 
     const l = CONSOLE[type] ?? console.log;
     const c = COLORS[type] ?? COLORS.RESET;
