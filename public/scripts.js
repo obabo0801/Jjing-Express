@@ -100,8 +100,19 @@ function setScreenScale(scale, save = true) {
         localStorage.setItem('screenScale', scale);
     }
 
-    document.querySelectorAll('[data-screen-scale]').forEach((select) => {
-        select.value = scale;
+    document.querySelectorAll('[data-screen-scale-dropdown]').forEach((dropdown) => {
+        const text = dropdown.querySelector('[data-screen-scale-text]');
+
+        if (text) {
+            text.textContent = `${Math.round(Number(scale) * 100)}%`;
+        }
+
+        dropdown.querySelectorAll('[data-screen-scale]').forEach((button) => {
+            button.classList.toggle(
+                'is-active',
+                button.dataset.screenScale === scale
+            );
+        });
     });
 }
 
@@ -442,6 +453,12 @@ document.addEventListener('click', (event) => {
     if (!event.target.closest('.notification-more')) {
         closeNotificationDropdowns();
     }
+
+    if (!event.target.closest('[data-screen-scale-dropdown]')) {
+        document.querySelectorAll('[data-screen-scale-dropdown].is-open').forEach((item) => {
+            item.classList.remove('is-open');
+        });
+    }
 });
 
 document.addEventListener('keydown', (event) => {
@@ -452,8 +469,13 @@ document.addEventListener('keydown', (event) => {
     }
 
     if (event.key === 'Tab') {
+        document.body.classList.add('is-tab-mode');
         trapSettingsTab(event);
     }
+});
+
+document.addEventListener('pointerdown', () => {
+    document.body.classList.remove('is-tab-mode');
 });
 
 const SETTINGS = {
@@ -693,19 +715,32 @@ async function openSettingsPopup() {
             openSettingsType(type);
         });
 
-        layer?.addEventListener('change', (event) => {
-            const target = event.target;
+        const sizeTrigger = target.closest('[data-screen-scale-trigger]');
 
-            if (!(target instanceof HTMLSelectElement)) {
-                return;
-            }
+        if (sizeTrigger) {
+            const dropdown = sizeTrigger.closest('[data-screen-scale-dropdown]');
 
-            if (!target.matches('[data-screen-scale]')) {
-                return;
-            }
+            document.querySelectorAll('[data-screen-scale-dropdown].is-open').forEach((item) => {
+                if (item !== dropdown) {
+                    item.classList.remove('is-open');
+                }
+            });
 
-            setScreenScale(target.value);
-        });
+            dropdown?.classList.toggle('is-open');
+            return;
+        }
+
+        const sizeButton = target.closest('[data-screen-scale]');
+
+        if (sizeButton) {
+            setScreenScale(sizeButton.dataset.screenScale);
+
+            sizeButton
+                .closest('[data-screen-scale-dropdown]')
+                ?.classList.remove('is-open');
+
+            return;
+        }
     } catch (error) {
         console.error(error);
     }
