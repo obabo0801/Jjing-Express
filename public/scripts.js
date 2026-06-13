@@ -93,7 +93,8 @@ function addNotification({
     message,
     profile = {},
     info = {},
-    thumbnail = null
+    thumbnail = null,
+    createdAt = Date.now()
 } = {}) {
     const item = {
         profile: {
@@ -109,7 +110,7 @@ function addNotification({
             href: thumbnail.href || info.href || '#',
             image: thumbnail.image
         } : null,
-        createdAt: Date.now()
+        createdAt
     };
 
     notifications.unshift(item);
@@ -117,10 +118,10 @@ function addNotification({
     renderNotifications();
     setNotificationCount(notificationCount + 1);
 
-    showServiceNotification({
-        title: item.info.title,
-        message: item.info.message
-    });
+//    showServiceNotification({
+//        title: item.info.title,
+//        message: item.info.message
+//    });
 }
 
 function getTimeAgo(createdAt) {
@@ -145,6 +146,32 @@ function getTimeAgo(createdAt) {
     return `${sec}초 전`;
 }
 
+function getDateKey(createdAt) {
+    const date = new Date(createdAt);
+
+    return [
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate()
+    ].join('-');
+}
+
+function getNotificationDateLabel(createdAt) {
+    const date = new Date(createdAt);
+    const today = new Date();
+
+    const isToday =
+        date.getFullYear() === today.getFullYear()
+        && date.getMonth() === today.getMonth()
+        && date.getDate() === today.getDate();
+
+    if (isToday) {
+        return '오늘';
+    }
+
+    return `${date.getMonth() + 1}월 ${date.getDate()}일`;
+}
+
 function renderNotifications() {
     if (!notificationList) {
         return;
@@ -157,10 +184,21 @@ function renderNotifications() {
         return;
     }
 
+    let lastDateKey = '';
+
     notificationList.innerHTML = notifications.map((item) => {
         const hasThumbnail = item.thumbnail?.image;
+        const dateKey = getDateKey(item.createdAt);
+
+        const dateTitle = lastDateKey !== dateKey
+            ? `<div class="notification-date">${getNotificationDateLabel(item.createdAt)}</div>`
+            : '';
+
+        lastDateKey = dateKey;
 
         return `
+            ${dateTitle}
+
             <div class="notification-item${hasThumbnail ? ' has-thumbnail' : ''}">
                 <a class="notification-profile" href="${item.profile.href}">
                     <img
@@ -436,10 +474,31 @@ setInterval(() => {
     }
 }, 60000);
 
-let testNotificationIndex = 0;
+const DAY = 1000 * 60 * 60 * 24;
+const now = Date.now();
 
-const testNotificationTimer = setInterval(() => {
-    testNotificationIndex += 1;
+const testNotifications = [
+    {
+        title: '3일 전 알림',
+        message: '3일 전 날짜 테스트입니다.',
+        createdAt: now - (DAY * 3)
+    },
+    {
+        title: '어제 알림',
+        message: '어제 날짜 테스트입니다.',
+        createdAt: now - DAY
+    },
+    {
+        title: '오늘 알림',
+        message: '오늘 날짜 테스트입니다.',
+        createdAt: now
+    }
+];
+
+let testCount = 0;
+
+const testTimer = setInterval(() => {
+    const item = testNotifications[testCount % testNotifications.length];
 
     addNotification({
         profile: {
@@ -448,16 +507,19 @@ const testNotificationTimer = setInterval(() => {
         },
         info: {
             href: '/',
-            title: `테스트 알림 ${testNotificationIndex}`,
-            message: `${testNotificationIndex}번째 알림입니다.`
+            title: `${item.title} ${testCount + 1}`,
+            message: item.message
         },
-        thumbnail: testNotificationIndex % 2 === 0 ? {
+        thumbnail: testCount % 2 === 1 ? {
             href: '/',
-            image: '/assets/dog.png'
-        } : null
+            image: '/favicon.ico'
+        } : null,
+        createdAt: item.createdAt
     });
 
-    if (testNotificationIndex >= 10) {
-        clearInterval(testNotificationTimer);
+    testCount += 1;
+
+    if (testCount >= 10) {
+        clearInterval(testTimer);
     }
 }, 2000);
