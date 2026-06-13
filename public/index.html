@@ -34,17 +34,29 @@
                                 <strong>알림</strong>
                             </div>
 
-                            <button
-                                class="notification-setting settings-button"
-                                type="button"
-                                data-settings-open="notification"
-                            >
+                            <button class="notification-setting settings-button" type="button" data-settings-open="notification">
                                 <span class="icon icon-setting"></span>
                             </button>
                         </div>
 
-                        <div class="notification-list">
-                            <p class="notification-empty">받은 알림이 없습니다.</p>
+                        <div class="notification-menu">
+                            <div class="notification-tabs">
+                                <button class="notification-tab is-active" type="button" data-notification-filter="all">
+                                    전체
+                                </button>
+                                <button class="notification-tab" type="button" data-notification-filter="unread">
+                                    미확인
+                                </button>
+                            </div>
+
+                            <div class="notification-actions">
+                                <button class="notification-action" type="button" data-notification-read-all>
+                                    모두 읽음
+                                </button>
+                                <button class="notification-action" type="button" data-notification-clear-all>
+                                    모두 지우기
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -178,17 +178,23 @@ function renderNotifications() {
     if (!notificationList) {
         return;
     }
+    
+    const visibleNotifications = notificationFilter === 'unread'
+        ? notifications.filter((item) => !item.read)
+        : notifications;
 
-    if (!notifications.length) {
+    if (!visibleNotifications.length) {
         notificationList.innerHTML = `
-            <p class="notification-empty">받은 알림이 없습니다.</p>
+            <p class="notification-empty">
+                ${notificationFilter === 'unread' ? '미확인 알림이 없습니다.' : '받은 알림이 없습니다.'}
+            </p>
         `;
         return;
     }
 
     let lastDateKey = '';
 
-    notificationList.innerHTML = notifications.map((item) => {
+    notificationList.innerHTML = visibleNotifications.map((item) => {
         const hasThumbnail = item.thumbnail?.image;
         const dateKey = getDateKey(item.createdAt);
 
@@ -271,6 +277,40 @@ const SETTINGS = {
         page: '/components/settings/notification.html'
     }
 };
+
+let notificationFilter = 'all';
+
+const notificationFilterButtons = document.querySelectorAll('[data-notification-filter]');
+const notificationReadAllButton = document.querySelector('[data-notification-read-all]');
+const notificationClearAllButton = document.querySelector('[data-notification-clear-all]');
+
+notificationFilterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        notificationFilter = button.dataset.notificationFilter;
+
+        notificationFilterButtons.forEach((item) => {
+            item.classList.toggle('is-active', item === button);
+        });
+
+        renderNotifications();
+    });
+});
+
+notificationReadAllButton?.addEventListener('click', () => {
+    notifications.forEach((item) => {
+        item.read = true;
+    });
+
+    renderNotifications();
+    updateNotificationCount();
+});
+
+notificationClearAllButton?.addEventListener('click', () => {
+    notifications.length = 0;
+
+    renderNotifications();
+    updateNotificationCount();
+});
 
 const settingsCache = new Map();
 
