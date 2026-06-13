@@ -78,20 +78,33 @@ a {
 
     flex-shrink: 0;
     overflow: hidden;
+
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.logo:focus,
+.logo:focus-visible,
+.logo:active {
+    outline: none;
+    background: transparent;
+    box-shadow: none;
 }
 
 .logo-icon {
-    width: min(36px, calc(var(--height) - 28px));
-    height: min(36px, calc(var(--height) - 28px));
+    width: min(42px, calc(var(--height) - 18px));
+    height: min(42px, calc(var(--height) - 18px));
 
     display: block;
 
-    background-image: url("/favicon.ico");
+    background-image: url("/favicon.svg");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 
-    border-radius: 9px;
+    border-radius: 0;
 }
 
 .topbar-actions {
@@ -1011,8 +1024,8 @@ h1 {
     }
 
     .logo-icon {
-        width: 24px;
-        height: 24px;
+        width: 28px;
+        height: 28px;
         border-radius: 7px;
     }
 
