@@ -642,14 +642,17 @@ const testNotifications = [
     {
         title: '3일 전 알림',
         message: '3일 전 날짜 테스트입니다.',
+        createdAt: now - (DAY * 3)
     },
     {
         title: '어제 알림',
         message: '어제 날짜 테스트입니다.',
+        createdAt: now - DAY
     },
     {
         title: '오늘 알림',
         message: '오늘 날짜 테스트입니다.',
+        createdAt: now
     }
 ];
 
