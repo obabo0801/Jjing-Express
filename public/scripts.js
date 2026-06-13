@@ -137,6 +137,7 @@ function updateNotificationCount() {
 function addNotification({
     title,
     message,
+    href = '#',
     profile = {},
     info = {},
     thumbnail = null,
@@ -145,18 +146,17 @@ function addNotification({
     const item = {
         id: ++notificationIndex,
         read: false,
+        href,
 
         profile: {
-            href: profile.href || '#',
+            href: profile.href || '',
             image: profile.image || '/favicon.ico'
         },
         info: {
-            href: info.href || '#',
             title: info.title || title || '알림',
             message: info.message || message || ''
         },
         thumbnail: thumbnail?.image ? {
-            href: thumbnail.href || info.href || '#',
             image: thumbnail.image
         } : null,
         createdAt
@@ -263,21 +263,30 @@ function renderNotifications() {
                     : ''} ${item.read ? 'is-read' : 'is-unread'}"
                 data-notification-id="${item.id}"
             >
-                <a class="notification-profile" href="${item.profile.href}" onclick="readNotification(${item.id})">
-                    <img
-                        src="${item.profile.image || '/favicon.ico'}"
-                        onerror="this.src='/favicon.ico'"
-                    >
-                </a>
+                ${item.profile.href ? `
+                    <a class="notification-profile" href="${item.profile.href}" onclick="readNotification(${item.id})">
+                        <img
+                            src="${item.profile.image || '/favicon.ico'}"
+                            onerror="this.src='/favicon.ico'"
+                        >
+                    </a>
+                ` : `
+                    <div class="notification-profile">
+                        <img
+                            src="${item.profile.image || '/favicon.ico'}"
+                            onerror="this.src='/favicon.ico'"
+                        >
+                    </div>
+                `}
 
-                <a class="notification-info" href="${item.info.href}" onclick="readNotification(${item.id})">
+                <a class="notification-info" href="${item.href}" onclick="readNotification(${item.id})">
                     <strong>${item.info.title}</strong>
                     <p>${item.info.message}</p>
                     <span>${getTimeAgo(item.createdAt)}</span>
                 </a>
 
                 ${hasThumbnail ? `
-                    <a class="notification-thumbnail" href="${item.thumbnail.href}" onclick="readNotification(${item.id})">
+                    <a class="notification-thumbnail" href="${item.href}" tabindex="-1" onclick="readNotification(${item.id})">
                         <img src="${item.thumbnail.image}">
                     </a>
                 ` : ''}
@@ -663,8 +672,8 @@ const testTimer = setInterval(() => {
 
     addNotification({
         profile: {
-            href: '/',
-            image: ''
+            href: profile.href || '',
+            image: profile.image || '/favicon.ico'
         },
         info: {
             href: '/',
