@@ -230,11 +230,11 @@ a {
 }
 
 .icon-read {
-    --icon: url("/assets/icons/sun.svg");
+    --icon: url("/assets/icons/read.svg");
 }
 
 .icon-delete {
-    --icon: url("/assets/icons/sun.svg");
+    --icon: url("/assets/icons/delete.svg");
 }
 
 [data-theme="light"] .icon-moon {
