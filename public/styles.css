@@ -920,12 +920,6 @@ a {
     border-right: 1px solid var(--line);
 }
 
-.settings-sidebar-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
 .settings-sidebar-title {
     display: flex;
     align-items: center;
