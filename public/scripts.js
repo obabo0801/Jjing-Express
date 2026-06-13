@@ -38,6 +38,11 @@ function setTheme(theme) {
 
 const notification = document.querySelector('.notification');
 const notificationButton = document.querySelector('.notification-button');
+const notificationBadge = document.querySelector('[data-notification-count]');
+const notificationList = document.querySelector('.notification-list');
+
+let notificationCount = 0;
+const notifications = [];
 
 notificationButton?.addEventListener('click', (event) => {
     event.stopPropagation();
@@ -48,10 +53,6 @@ notificationButton?.addEventListener('click', (event) => {
         setNotificationCount(0);
     }
 });
-
-const notificationBadge = document.querySelector('[data-notification-count]');
-
-let notificationCount = 0;
 
 function setNotificationCount(count) {
     notificationCount = Math.max(0, count);
@@ -76,12 +77,45 @@ function addNotification({
     title = '알림',
     message = '새 알림이 도착했습니다.'
 } = {}) {
+    notifications.unshift({
+        title,
+        message,
+        time: new Date().toLocaleTimeString('ko-KR', {
+            hour: '2-digit',
+            minute: '2-digit'
+        })
+    });
+
+    renderNotifications();
     setNotificationCount(notificationCount + 1);
 
     showServiceNotification({
         title,
         message
     });
+}
+
+function renderNotifications() {
+    if (!notificationList) {
+        return;
+    }
+
+    if (!notifications.length) {
+        notificationList.innerHTML = `
+            <p class="notification-empty">받은 알림이 없습니다.</p>
+        `;
+        return;
+    }
+
+    notificationList.innerHTML = notifications.map((item) => `
+        <div class="notification-item">
+            <div class="notification-item-title">
+                <strong>${item.title}</strong>
+                <span>${item.time}</span>
+            </div>
+            <p>${item.message}</p>
+        </div>
+    `).join('');
 }
 
 document.addEventListener('click', (event) => {
@@ -325,14 +359,21 @@ async function showServiceNotification({
     registration.showNotification(title, {
         body: message,
         icon: '/favicon.ico',
-        badge: '/favicon.ico',
-        tag: 'jjing-notification'
+        badge: '/favicon.ico'
     });
 }
 
-setTimeout(() => {
+let testNotificationIndex = 0;
+
+const testNotificationTimer = setInterval(() => {
+    testNotificationIndex += 1;
+
     addNotification({
-        title: '테스트 알림',
-        message: '새 알림이 도착했습니다.'
+        title: `테스트 알림 ${testNotificationIndex}`,
+        message: `${testNotificationIndex}번째 알림입니다.`
     });
+
+    if (testNotificationIndex >= 10) {
+        clearInterval(testNotificationTimer);
+    }
 }, 2000);
