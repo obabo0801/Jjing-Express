@@ -910,7 +910,7 @@ a {
 }
 
 .settings-sidebar {
-    padding: 18px 14px;
+    padding: 0px 14px;
 
     display: flex;
     flex-direction: column;
@@ -930,16 +930,6 @@ a {
 
 .settings-sidebar-title strong {
     font-size: 15px;
-}
-
-.settings-main-header {
-    height: 64px;
-    padding: 0 22px;
-
-    display: flex;
-    align-items: center;
-
-    border-bottom: 1px solid var(--line);
 }
 
 .settings-title {
@@ -1027,6 +1017,7 @@ body.is-tab-mode .settings-size-trigger:focus {
 }
 
 .settings-main {
+    padding: 0px 14px;
     min-width: 0;
 
     display: flex;
@@ -1352,7 +1343,8 @@ h1 {
         transition: transform 0.25s ease;
     }
 
-    .settings-layer.is-detail .settings-main {
+    .settings-layer.is-detail
+    .settings-main {
         transform: translateX(0);
     }
 
