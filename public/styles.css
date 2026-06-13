@@ -7,6 +7,7 @@
     --text: #ffffff;
     --hover: rgba(255, 255, 255, 0.1);
     --focus: #ffffff;
+    --font-scale: 1;
     --height: clamp(72px, 4vw, 88px);
 }
 
@@ -31,6 +32,7 @@ body {
     background: var(--bg);
     color: var(--text);
     font-family: Arial, "Malgun Gothic", sans-serif;
+    font-size: calc(16px * var(--font-scale));
 
     opacity: 0;
     transition: opacity 0.25s ease;
@@ -983,6 +985,60 @@ a {
 
 .settings-item:last-child {
     border-bottom: 0;
+}
+
+.settings-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.settings-item-info strong {
+    font-size: 14px;
+}
+
+.settings-item-info span {
+    color: var(--text);
+    opacity: 0.55;
+    font-size: 12px;
+}
+
+.settings-size-buttons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.settings-size-button {
+    height: 30px;
+    padding: 0 10px;
+
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text);
+
+    cursor: pointer;
+    font-size: 12px;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.settings-size-button:hover {
+    background: var(--hover);
+}
+
+.settings-size-button.is-active {
+    background: var(--text);
+    color: var(--bg);
+    font-weight: 700;
+}
+
+.settings-size-button:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 2px var(--popup),
+        0 0 0 4px var(--focus);
 }
 
 .settings-content {

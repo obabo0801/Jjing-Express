@@ -51,6 +51,25 @@ function getSystemTheme() {
         : 'light';
 }
 
+const savedFontScale = localStorage.getItem('fontScale');
+
+setFontScale(savedFontScale || '1', false);
+
+function setFontScale(scale, save = true) {
+    root.style.setProperty('--font-scale', scale);
+
+    if (save) {
+        localStorage.setItem('fontScale', scale);
+    }
+
+    document.querySelectorAll('[data-font-scale]').forEach((button) => {
+        button.classList.toggle(
+            'is-active',
+            button.dataset.fontScale === scale
+        );
+    });
+}
+
 const notification = document.querySelector('.notification');
 const notificationButton = document.querySelector('.notification-button');
 const notificationBadge = document.querySelector('[data-notification-count]');
@@ -606,6 +625,17 @@ async function openSettingsPopup() {
                 return;
             }
 
+            const fontScaleButton = target.closest(
+                '[data-font-scale]'
+            );
+
+            if (fontScaleButton) {
+                setFontScale(
+                    fontScaleButton.dataset.fontScale
+                );
+                return;
+            }
+
             if (target.closest('[data-settings-close]')) {
                 closeSettingsPopup();
                 return;
@@ -685,6 +715,8 @@ async function loadSettingsContent(type) {
         }
 
         content.innerHTML = html;
+
+        setFontScale(localStorage.getItem('fontScale') || '1', false);
     } catch (error) {
         console.error(error);
         content.innerHTML = '<p class="settings-empty">설정을 불러오지 못했습니다.</p>';
