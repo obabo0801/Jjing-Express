@@ -1,0 +1,38 @@
+.icon {
+    width: 20px;
+    height: 20px;
+
+    display: block;
+
+    background-color: currentColor;
+
+    mask:
+        var(--icon)
+        center / contain
+        no-repeat;
+
+    -webkit-mask:
+        var(--icon)
+        center / contain
+        no-repeat;
+}
+
+.icon-moon {
+    --icon: url("/assets/icons/moon.svg");
+}
+
+.icon-sun {
+    --icon: url("/assets/icons/sun.svg");
+}
+
+.theme-icon-light {
+    display: none;
+}
+
+[data-theme="light"] .theme-dark {
+    display: none;
+}
+
+[data-theme="light"] .theme-light {
+    display: block;
+}

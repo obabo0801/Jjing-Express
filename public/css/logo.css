@@ -8,10 +8,14 @@
     border-radius: 14px;
     outline: none;
     -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background-color var(--speed) var(--ease),
+        box-shadow var(--speed) var(--ease);
 }
 
 .logo:hover {
-    background: var(--hover);
+    background-color: var(--hover);
 }
 
 .logo:focus-visible {
@@ -30,42 +34,6 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.theme-icon {
-    width: 20px;
-    height: 20px;
-
-    display: block;
-
-    background: currentColor;
-    mask-position: center;
-    mask-size: contain;
-    mask-repeat: no-repeat;
-
-    -webkit-mask-position: center;
-    -webkit-mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-}
-
-.theme-icon-dark {
-    mask-image: url("/assets/icons/moon.svg");
-    -webkit-mask-image: url("/assets/icons/moon.svg");
-}
-
-.theme-icon-light {
-    display: none;
-
-    mask-image: url("/assets/icons/sun.svg");
-    -webkit-mask-image: url("/assets/icons/sun.svg");
-}
-
-[data-theme="light"] .theme-icon-dark {
-    display: none;
-}
-
-[data-theme="light"] .theme-icon-light {
-    display: block;
 }
 
 @media (max-width: 768px) {

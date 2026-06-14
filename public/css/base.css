@@ -10,7 +10,7 @@ body {
     min-height: 100%;
     margin: 0;
 
-    background: var(--bg);
+    background-color: var(--bg);
     color: var(--text);
 
     font-family: Arial, "Malgun Gothic", sans-serif;

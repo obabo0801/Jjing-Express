@@ -11,7 +11,7 @@ body {
     width: 100%;
     height: var(--topbar-height);
 
-    background: var(--bar);
+    background-color: var(--bar);
     border-bottom: 1px solid var(--line);
 
     transition:
@@ -63,7 +63,7 @@ body {
 }
 
 .icon-button:hover {
-    background: var(--hover);
+    background-color: var(--hover);
 }
 
 .icon-button:active {
