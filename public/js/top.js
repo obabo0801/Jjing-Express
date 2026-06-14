@@ -3,13 +3,13 @@ import { $, on } from './dom.js';
 export function initTop() {
     const top = $('.top');
 
-    on(top, 'contextmenu', blockImageMenu);
+    on(top, 'contextmenu', blockMenu);
     on(top, 'dragstart', blockDrag);
 }
 
-function blockImageMenu(event) {
+function blockMenu(event) {
     const image = event.target.closest(
-        'img, .logo-icon'
+        'img, .logo-icon, .icon-button'
     );
 
     if (!image) {
@@ -21,7 +21,7 @@ function blockImageMenu(event) {
 
 function blockDrag(event) {
     const image = event.target.closest(
-        '.logo, .logo-icon, img'
+        'img, .logo'
     );
 
     if (!image) {
