@@ -80,6 +80,10 @@ body {
     min-height: calc(100vh - var(--topbar-height));
 }
 
+.bottom {
+    min-height: 80px;
+}
+
 .hero {
     max-width: 1200px;
     margin: 0 auto;
