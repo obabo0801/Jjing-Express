@@ -1,6 +1,6 @@
 .logo {
-    width: 52px;
-    height: 52px;
+    width: 64x;
+    height: 64px;
 
     display: grid;
     place-items: center;
@@ -30,8 +30,8 @@
 }
 
 .logo-icon {
-    width: 42px;
-    height: 42px;
+    width: 64px;
+    height: 64px;
 
     display: block;
     object-fit: contain;
@@ -42,12 +42,12 @@
 
 @media (max-width: 768px) {
     .logo {
-        width: 44px;
-        height: 44px;
+        width: 64px;
+        height: 64x;
     }
 
     .logo-icon {
-        width: 32px;
-        height: 32px;
+        width: 64px;
+        height: 64x;
     }
 }
