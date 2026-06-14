@@ -32,6 +32,12 @@
 .logo-icon {
     width: 42px;
     height: 42px;
+
+    display: block;
+    object-fit: contain;
+
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 @media (max-width: 768px) {

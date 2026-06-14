@@ -1,12 +1,25 @@
-const key = 'theme';
+import { $, on } from './dom.js';
+
 const root = document.documentElement;
 const darkQuery = '(prefers-color-scheme: dark)';
 
-const theme = localStorage.getItem(key)
-    || (
-        matchMedia(darkQuery).matches
-            ? 'dark'
-            : 'light'
-    );
+export function initTheme() {
+    setSystemTheme();
+    watchSystemTheme();
+}
 
-root.dataset.theme = theme;
+function setSystemTheme() {
+    const theme = matchMedia(darkQuery).matches
+        ? 'dark'
+        : 'light';
+
+    root.dataset.theme = theme;
+}
+
+function watchSystemTheme() {
+    on(
+        matchMedia(darkQuery),
+        'change',
+        setSystemTheme
+    );
+}
