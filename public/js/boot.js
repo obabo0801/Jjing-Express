@@ -1,9 +1,10 @@
 const key = 'theme';
 const root = document.documentElement;
+const darkQuery = '(prefers-color-scheme: dark)';
 
 const theme = localStorage.getItem(key)
     || (
-        matchMedia('(prefers-color-scheme: dark)').matches
+        matchMedia(darkQuery).matches
             ? 'dark'
             : 'light'
     );

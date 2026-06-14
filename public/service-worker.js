@@ -1,4 +1,6 @@
-self.addEventListener('notificationclick', (event) => {
+import { on } from './dom.js';
+
+on(self, 'notificationclick', (event) => {
     event.notification.close();
 
     event.waitUntil(

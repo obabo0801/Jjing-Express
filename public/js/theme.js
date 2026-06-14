@@ -1,13 +1,16 @@
+import { $, on } from './dom.js';
+
 const root = document.documentElement;
 const key = 'theme';
+const darkQuery = '(prefers-color-scheme: dark)';
 
 export function initTheme() {
-    const button = document.querySelector('.theme-button');
+    const button = $('.theme-button');
 
     setTheme(getTheme(), false);
     watchTheme();
 
-    button?.addEventListener('click', toggleTheme);
+    on(button, 'click', toggleTheme);
 }
 
 function toggleTheme() {
@@ -32,15 +35,15 @@ function getTheme() {
 }
 
 function systemTheme() {
-    return matchMedia('(prefers-color-scheme: dark)').matches
+    return matchMedia(darkQuery).matches
         ? 'dark'
         : 'light';
 }
 
 function watchTheme() {
-    const query = matchMedia('(prefers-color-scheme: dark)');
+    const query = matchMedia(darkQuery);
 
-    query.addEventListener('change', () => {
+    on(query, 'change', () => {
         if (localStorage.getItem(key)) {
             return;
         }
