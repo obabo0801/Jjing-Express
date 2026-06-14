@@ -23,6 +23,7 @@ function toggleTheme() {
 
 function setTheme(theme, save = true) {
     root.dataset.theme = theme;
+    window.setFaviconTheme?.(theme);
 
     if (save) {
         localStorage.setItem(key, theme);
@@ -44,10 +45,6 @@ function watchTheme() {
     const query = matchMedia(darkQuery);
 
     on(query, 'change', () => {
-        if (localStorage.getItem(key)) {
-            return;
-        }
-
-        setTheme(systemTheme(), false);
+        setTheme(systemTheme());
     });
 }
