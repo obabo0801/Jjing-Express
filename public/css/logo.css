@@ -6,11 +6,13 @@
     place-items: center;
 
     border-radius: 14px;
+    color: var(--text);
     outline: none;
     -webkit-tap-highlight-color: transparent;
 
     transition:
         background-color var(--speed) var(--ease),
+        color var(--speed) var(--ease),
         box-shadow var(--speed) var(--ease);
 
     user-select: none;
@@ -30,13 +32,6 @@
 .logo-icon {
     width: 42px;
     height: 42px;
-
-    display: block;
-
-    background-image: url("/favicon.svg");
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 @media (max-width: 768px) {

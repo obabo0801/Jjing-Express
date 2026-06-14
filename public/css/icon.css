@@ -17,6 +17,10 @@
         no-repeat;
 }
 
+.icon-favicon {
+    --icon: url("/favicon.svg");
+}
+
 .icon-logo {
     --icon: url("/assets/icons/logo.svg");
 }

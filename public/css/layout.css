@@ -15,8 +15,8 @@ body {
     border-bottom: 1px solid var(--line);
 
     transition:
-        background-color var(--speed) var(--ease),
-        border-color var(--speed) var(--ease);
+        background-color var(--motion),
+        border-color var(--motion);
 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -56,9 +56,9 @@ body {
     -webkit-tap-highlight-color: transparent;
 
     transition:
-        background-color var(--speed) var(--ease),
-        border-color var(--speed) var(--ease),
-        color var(--speed) var(--ease),
+        background-color var(--motion),
+        border-color var(--motion),
+        color var(--motion),
         transform 0.15s ease;
 }
 

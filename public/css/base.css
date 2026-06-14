@@ -13,12 +13,19 @@ body {
     background-color: var(--bg);
     color: var(--text);
 
-    font-family: Arial, "Malgun Gothic", sans-serif;
+    font-family:
+        Arial,
+        "Malgun Gothic",
+        sans-serif;
 
     opacity: 0;
     transition:
-        background-color var(--speed) var(--ease),
-        color var(--speed) var(--ease),
+        background-color
+            var(--speed)
+            var(--ease),
+        color
+            var(--speed)
+            var(--ease),
         opacity 0.2s ease;
 }
 
