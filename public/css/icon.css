@@ -17,6 +17,10 @@
         no-repeat;
 }
 
+.icon-logo {
+    --icon: url("/assets/icons/logo.svg");
+}
+
 .icon-moon {
     --icon: url("/assets/icons/moon.svg");
 }

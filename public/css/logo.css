@@ -33,7 +33,7 @@
 
     display: block;
 
-    background-image: url("/favicon.ico");
+    background-image: url("/favicon.svg");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
