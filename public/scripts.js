@@ -196,7 +196,7 @@ function playNotificationBadgePop() {
     });
 }
 
-function updateNotificationCount() {
+function updateNotificationCount({ animate = false } = {}) {
     const unreadCount = notifications
         .filter((item) => !item.read).length;
 
@@ -216,7 +216,9 @@ function updateNotificationCount() {
 
     notificationBadge.style.display = 'grid';
 
-    playNotificationBadgePop();
+    if (animate) {
+        playNotificationBadgePop();
+    }
 }
 
 function addNotification({
@@ -251,7 +253,7 @@ function addNotification({
     notifications.unshift(item);
 
     renderNotifications();
-    updateNotificationCount();
+    updateNotificationCount({ animate: true });
 
 //    showServiceNotification({
 //        title: item.info.title,
@@ -366,8 +368,8 @@ function renderNotifications() {
                 `}
 
                 <a class="notification-info" href="${item.href}" onclick="readNotification(${item.id})">
-                    <strong>${item.info.title}</strong>
-                    <p>${item.info.message}</p>
+                    <strong>${escapeHTML(item.info.title)}</strong>
+                    <p>${escapeHTML(item.info.message)}</p>
                     <span>${getTimeAgo(item.createdAt)}</span>
                 </a>
 
@@ -401,6 +403,31 @@ function renderNotifications() {
     visibleNotifications.forEach((item) => {
         item.isNew = false;
     });
+}
+
+function escapeHTML(value) {
+    return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+}
+
+function safeHref(href) {
+    if (!href) return '#';
+
+    try {
+        const url = new URL(href, location.origin);
+
+        if (!['http:', 'https:'].includes(url.protocol)) {
+            return '#';
+        }
+
+        return url.href;
+    } catch {
+        return '#';
+    }
 }
 
 function readNotification(id) {
@@ -871,51 +898,53 @@ setInterval(() => {
     }
 }, 60000);
 
-const DAY = 1000 * 60 * 60 * 24;
-const now = Date.now();
+if (location.search.includes('test=notification')) {
+    const DAY = 1000 * 60 * 60 * 24;
+    const now = Date.now();
 
-const testNotifications = [
-    {
-        title: '3일 전 알림',
-        message: '3일 전 날짜 테스트입니다.',
-        createdAt: now - (DAY * 3)
-    },
-    {
-        title: '어제 알림',
-        message: '어제 날짜 테스트입니다.',
-        createdAt: now - DAY
-    },
-    {
-        title: '오늘 알림',
-        message: '오늘 날짜 테스트입니다.',
-        createdAt: now
-    }
-];
-
-let testCount = 0;
-
-const testTimer = setInterval(() => {
-    const item = testNotifications[testCount % testNotifications.length];
-
-    addNotification({
-        href: '#',
-        profile: {
-            href: '',
-            image: ''
+    const testNotifications = [
+        {
+            title: '3일 전 알림',
+            message: '3일 전 날짜 테스트입니다.',
+            createdAt: now - (DAY * 3)
         },
-        info: {
-            title: `${item.title} ${testCount + 1}`,
-            message: item.message
+        {
+            title: '어제 알림',
+            message: '어제 날짜 테스트입니다.',
+            createdAt: now - DAY
         },
-        thumbnail: testCount % 2 === 1 ? {
-            image: '/favicon.ico'
-        } : null,
-        createdAt: item.createdAt
-    });
+        {
+            title: '오늘 알림',
+            message: '오늘 날짜 테스트입니다.',
+            createdAt: now
+        }
+    ];
 
-    testCount += 1;
+    let testCount = 0;
 
-    if (testCount >= 10) {
-        clearInterval(testTimer);
-    }
-}, 2000);
+    const testTimer = setInterval(() => {
+        const item = testNotifications[testCount % testNotifications.length];
+
+        addNotification({
+            href: '#',
+            profile: {
+                href: '',
+                image: ''
+            },
+            info: {
+                title: `${item.title} ${testCount + 1}`,
+                message: item.message
+            },
+            thumbnail: testCount % 2 === 1 ? {
+                image: '/favicon.ico'
+            } : null,
+            createdAt: item.createdAt
+        });
+
+        testCount += 1;
+
+        if (testCount >= 10) {
+            clearInterval(testTimer);
+        }
+    }, 2000);
+}

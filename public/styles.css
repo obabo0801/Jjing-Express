@@ -1277,21 +1277,16 @@ h1 {
 
     .settings-popup {
         position: relative;
-
         width: 90%;
         height: 90%;
-
         display: block;
         overflow: hidden;
     }
 
     .settings-sidebar {
-        width: 90%;
-        height: 90%;
-
-        display: flex;
-        flex-direction: column;
-
+        width: 100%;
+        height: 100%;
+        padding: 0;
         border-right: 0;
         background: var(--popup);
     }
@@ -1332,10 +1327,9 @@ h1 {
     .settings-main {
         position: absolute;
         inset: 0;
-        z-index: 2;
-
-        display: flex;
-        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        padding: 0;
 
         background: var(--popup);
 
@@ -1409,7 +1403,8 @@ h1 {
         height: 100%;
     }
 
-    .settings-layer.is-detail .settings-main {
+    .settings-layer.is-detail
+    .settings-main {
         left: 0;
     }
 
