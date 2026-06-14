@@ -12,6 +12,9 @@
     transition:
         background-color var(--speed) var(--ease),
         box-shadow var(--speed) var(--ease);
+
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .logo:hover {
