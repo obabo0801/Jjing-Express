@@ -12,7 +12,6 @@ body {
     height: var(--top-height);
 
     background-color: var(--bar);
-    border-bottom: 1px solid var(--line);
 
     transition:
         background-color var(--motion),
@@ -20,6 +19,22 @@ body {
 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+}
+
+.top::after {
+    content: "";
+
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 0;
+
+    height: 1px;
+
+    background-color: var(--line);
+
+    transition:
+        background-color var(--motion);
 }
 
 .top-inner {
@@ -39,8 +54,8 @@ body {
 }
 
 .icon-button {
-    width: 44px;
-    height: 44px;
+    width: 64px;
+    height: 64px;
     padding: 0;
 
     display: grid;
@@ -98,18 +113,6 @@ body {
 }
 
 @media (max-width: 768px) {
-    :root {
-        --top-height: 64px;
-    }
-
-    .top-inner {
-        padding: 0 16px;
-    }
-
-    .icon-button {
-        width: 40px;
-        height: 40px;
-    }
 
     .hero {
         padding: 64px 20px;
