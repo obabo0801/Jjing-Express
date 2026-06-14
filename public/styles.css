@@ -1390,6 +1390,29 @@ h1 {
         word-break: keep-all;
     }
 
+    .settings-popup {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .settings-sidebar {
+        width: 100%;
+        flex: 0 0 100%;
+    }
+
+    .settings-main {
+        position: absolute;
+        top: 0;
+        left: 100%;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    .settings-layer.is-detail .settings-main {
+        left: 0;
+    }
+
     .notification-box {
         position: fixed;
         top: calc(var(--height) + 10px);
