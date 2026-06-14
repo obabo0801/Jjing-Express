@@ -2,8 +2,6 @@ const root = document.documentElement;
 const key = 'theme';
 const darkQuery = '(prefers-color-scheme: dark)';
 
-let faviconBlobUrl = '';
-
 const savedTheme = localStorage.getItem(key);
 
 const theme = savedTheme
@@ -15,25 +13,36 @@ const theme = savedTheme
 
 root.dataset.theme = theme;
 
+let faviconUrls = {};
+
 window.setFaviconTheme = (
-    async function setFaviconTheme(theme)
+    function setFaviconTheme(theme)
 {
     const icon = document.querySelector(
         'link[rel="icon"]'
     );
 
-    if (!icon) {
+    if (!icon || !faviconUrls[theme]) {
         return;
     }
 
-    const color = theme === 'dark'
-        ? '#ffffff'
-        : '#c98e5f';
+    icon.href = faviconUrls[theme];
+});
 
+async function initFavicon() {
     const response = await fetch('/favicon.svg');
-    let svg = await response.text();
+    const svg = await response.text();
 
-    svg = svg.replace(
+    faviconUrls = {
+        dark: createFaviconUrl(svg, '#ffffff'),
+        light: createFaviconUrl(svg, '#c98e5f')
+    };
+
+    window.setFaviconTheme(theme);
+}
+
+function createFaviconUrl(svg, color) {
+    const favicon = svg.replace(
         '</svg>',
         `
             <style>
@@ -44,20 +53,12 @@ window.setFaviconTheme = (
         </svg>`
     );
 
-    if (faviconBlobUrl) {
-        URL.revokeObjectURL(faviconBlobUrl);
-    }
-
     const blob = new Blob(
-        [svg],
+        [favicon],
         { type: 'image/svg+xml' }
     );
 
-    faviconBlobUrl = (
-        URL.createObjectURL(blob)
-    );
+    return URL.createObjectURL(blob);
+}
 
-    icon.href = faviconBlobUrl;
-});
-
-window.setFaviconTheme(theme);
+initFavicon();
