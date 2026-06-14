@@ -20,12 +20,8 @@ body {
 
     opacity: 0;
     transition:
-        background-color
-            var(--speed)
-            var(--ease),
-        color
-            var(--speed)
-            var(--ease),
+        background-color var(--motion),
+        color var(--motion),
         opacity 0.2s ease;
 }
 

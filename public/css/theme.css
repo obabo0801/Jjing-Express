@@ -10,7 +10,9 @@
 
     --speed: 0.22s;
     --ease: ease;
-    --motion: var(--speed) var(--ease);
+    --motion:
+        var(--speed)
+        var(--ease);
 }
 
 [data-theme="light"] {
