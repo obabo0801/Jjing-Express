@@ -1,16 +1,17 @@
 <svg viewBox="352 97 398 309" xmlns="http://www.w3.org/2000/svg">
     <style>
-        path {
+        .favicon {
             fill: #c98e5f;
         }
 
         @media (prefers-color-scheme: dark) {
-            path {
+            .favicon {
                 fill: #ffffff;
             }
         }
     </style>
-    <path fill-rule="evenodd" d="
+
+    <path class="favicon" fill-rule="evenodd" d="
         M 553 124
         C 550 119 548 116 550 117
         C 541 121 531 132 524 144
