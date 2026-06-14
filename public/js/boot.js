@@ -13,8 +13,12 @@ const theme = savedTheme
 
 root.dataset.theme = theme;
 
-window.setFaviconTheme = async function setFaviconTheme(theme) {
-    const icon = document.querySelector('link[rel="icon"]');
+window.setFaviconTheme = (
+    async function setFaviconTheme(theme)
+{
+    const icon = document.querySelector(
+        'link[rel="icon"]'
+    );
 
     if (!icon) {
         return;
@@ -29,10 +33,19 @@ window.setFaviconTheme = async function setFaviconTheme(theme) {
 
     svg = svg.replace(
         '</svg>',
-        `<style>.favicon{fill:${color}!important;}</style></svg>`
+        `
+            <style>
+                .favicon {
+                    fill: ${color} !important;
+                }
+            </style>
+        </svg>`
     );
 
-    icon.href = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-};
+    icon.href = (
+        'data:image/svg+xml;charset=utf-8,'
+        + encodeURIComponent(svg)
+    );
+});
 
 window.setFaviconTheme(theme);
