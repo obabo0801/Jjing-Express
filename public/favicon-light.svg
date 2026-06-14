@@ -1,15 +1,4 @@
-<svg viewBox="352 97 398 309" xmlns="http://www.w3.org/2000/svg">
-    <style>
-        path {
-            fill: #c98e5f;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            path {
-                fill: #ffffff;
-            }
-        }
-    </style>
+<svg viewBox="352 97 398 309" xmlns="http://www.w3.org/2000/svg" fill="#c98e5f">
     <path fill-rule="evenodd" d="
         M 553 124
         C 550 119 548 116 550 117
