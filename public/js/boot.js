@@ -2,6 +2,8 @@ const root = document.documentElement;
 const key = 'theme';
 const darkQuery = '(prefers-color-scheme: dark)';
 
+let faviconBlobUrl = '';
+
 const savedTheme = localStorage.getItem(key);
 
 const theme = savedTheme
@@ -42,10 +44,20 @@ window.setFaviconTheme = (
         </svg>`
     );
 
-    icon.href = (
-        'data:image/svg+xml;charset=utf-8,'
-        + encodeURIComponent(svg)
+    if (faviconBlobUrl) {
+        URL.revokeObjectURL(faviconBlobUrl);
+    }
+
+    const blob = new Blob(
+        [svg],
+        { type: 'image/svg+xml' }
     );
+
+    faviconBlobUrl = (
+        URL.createObjectURL(blob)
+    );
+
+    icon.href = faviconBlobUrl;
 });
 
 window.setFaviconTheme(theme);
