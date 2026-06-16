@@ -260,6 +260,16 @@
     opacity: 0.5;
 }
 
+.notify-date {
+    margin: 10px 2px 4px;
+
+    color: var(--text);
+
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0.72;
+}
+
 @media (max-width: 768px) {
     .notify-panel {
         left: 16px;

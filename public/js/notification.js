@@ -12,7 +12,7 @@ let notifications = [
         id: 1,
         title: '알림 테스트',
         message: '새로운 알림이 도착했습니다.',
-        time: now,
+        time: now - DAY,
         unread: true
     },
     {
@@ -94,7 +94,16 @@ function renderNotification(list, badge, tabs) {
     if (!items.length) {
         list.append(createEmpty());
     } else {
+        let lastDate = '';
+
         items.forEach(item => {
+            const date = getDateKey(item.time);
+
+            if (date !== lastDate) {
+                list.append(createDate(item.time));
+                lastDate = date;
+            }
+
             list.append(createItem(item));
         });
     }
@@ -104,11 +113,13 @@ function renderNotification(list, badge, tabs) {
 }
 
 function getFilteredNotifications() {
-    if (filter === 'unread') {
-        return notifications.filter(item => item.unread);
-    }
+    const items = filter === 'unread'
+        ? notifications.filter(item => item.unread)
+        : notifications;
 
-    return notifications;
+    return [...items].sort(
+        (a, b) => b.time - a.time
+    );
 }
 
 function createItem(item) {
@@ -160,6 +171,40 @@ function createEmpty() {
     empty.textContent = '새로운 알림이 없습니다.';
 
     return empty;
+}
+
+function createDate(time) {
+    const date = document.createElement('div');
+    date.className = 'notify-date';
+    date.textContent = formatDate(time);
+
+    return date;
+}
+
+function getDateKey(time) {
+    const date = new Date(time);
+
+    return [
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate()
+    ].join('-');
+}
+
+function formatDate(time) {
+    const date = new Date(time);
+    const today = new Date();
+
+    const isToday =
+        date.getFullYear() === today.getFullYear()
+        && date.getMonth() === today.getMonth()
+        && date.getDate() === today.getDate();
+
+    if (isToday) {
+        return '오늘';
+    }
+
+    return `${date.getMonth() + 1}월 ${date.getDate()}일`;
 }
 
 function startNotificationClock() {
