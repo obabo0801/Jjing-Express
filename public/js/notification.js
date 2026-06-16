@@ -199,6 +199,7 @@ function createItem(item) {
 
     const more = document.createElement('div');
     more.className = 'notify-more';
+    more.dataset.id = String(item.id);
 
     const moreButton = document.createElement('button');
     moreButton.className = 'notify-more-button';
@@ -225,13 +226,6 @@ function createItem(item) {
 
     content.append(title, message, time);
     main.append(dot, profile, content);
-
-    const more = el(
-        'div',
-        'notify-more'
-    );
-
-    more.dataset.id = item.id;
 
     if (item.thumbnail) {
         main.append(createImage(

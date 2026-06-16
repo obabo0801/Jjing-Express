@@ -514,25 +514,6 @@
         transparent;
 }
 
-.notify-item a:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-.notify-content,
-.notify-profile,
-.notify-thumbnail {
-    -webkit-tap-highlight-color:
-        transparent;
-}
-
-.notify-content:focus,
-.notify-profile:focus,
-.notify-thumbnail:focus {
-    outline: none;
-    box-shadow: none;
-}
-
 @media (max-width: 768px) {
     .notify-panel {
         left: 16px;
