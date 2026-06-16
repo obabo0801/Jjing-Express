@@ -30,9 +30,12 @@ function popIcon(event) {
     });
 
     button.addEventListener(
-        'animationend', () => {
-        button.classList.remove(effect);
-    }, { once: true });
+        'animationend',
+        () => {
+            button.classList.remove(effect);
+        },
+        { once: true }
+    );
 }
 
 function blockMenu(event) {

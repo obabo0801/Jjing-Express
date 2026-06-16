@@ -1,11 +1,59 @@
 import { $, on } from './dom.js';
 
+const notifications = [
+    {
+        id: 1,
+        title: '알림 테스트',
+        message: '새로운 알림이 도착했습니다.',
+        time: '방금 전',
+        unread: true
+    },
+    {
+        id: 2,
+        title: '테마 변경',
+        message: '테마 버튼 효과가 적용되었습니다.',
+        time: '1분 전',
+        unread: true
+    },
+    {
+        id: 3,
+        title: 'Jjing Express',
+        message: '알림 패널 UI를 준비했습니다.',
+        time: '3분 전',
+        unread: false
+    }
+];
+
+let filter = 'all';
+
 export function initNotification() {
     const button = $('.notify-button');
     const panel = $('#notify-panel');
+    const list = $('.notify-list');
+    const badge = $('.notify-badge');
+    const clear = $('.notify-clear');
+    const tabs = document.querySelectorAll(
+        '.notify-tab'
+    );
+
+    renderNotification(list, badge, tabs);
 
     on(button, 'click', () => {
         toggleNotification(button, panel);
+    });
+
+    on(clear, 'click', () => {
+        readAll(list, badge, tabs);
+    });
+
+    tabs.forEach(tab => {
+        on(tab, 'click', () => {
+            changeFilter(tab, list, badge, tabs);
+        });
+    });
+
+    on(list, 'click', event => {
+        readNotification(event, list, badge, tabs);
     });
 
     on(document, 'click', event => {
@@ -15,6 +63,134 @@ export function initNotification() {
     on(document, 'keydown', event => {
         closeEscape(event, button, panel);
     });
+}
+
+function renderNotification(list, badge, tabs) {
+    if (!list) {
+        return;
+    }
+
+    list.replaceChildren();
+
+    const items = getFilteredNotifications();
+
+    if (!items.length) {
+        list.append(createEmpty());
+    } else {
+        items.forEach(item => {
+            list.append(createItem(item));
+        });
+    }
+
+    updateBadge(badge);
+    updateTabs(tabs);
+}
+
+function getFilteredNotifications() {
+    if (filter === 'unread') {
+        return notifications.filter(item => item.unread);
+    }
+
+    return notifications;
+}
+
+function createItem(item) {
+    const button = document.createElement('button');
+    button.className = item.unread
+        ? 'notify-item is-unread'
+        : 'notify-item';
+    button.type = 'button';
+    button.dataset.id = String(item.id);
+
+    const dot = document.createElement('span');
+    dot.className = 'notify-dot';
+
+    const content = document.createElement('span');
+    content.className = 'notify-content';
+
+    const title = document.createElement('strong');
+    title.className = 'notify-title';
+    title.textContent = item.title;
+
+    const message = document.createElement('span');
+    message.className = 'notify-message';
+    message.textContent = item.message;
+
+    const time = document.createElement('span');
+    time.className = 'notify-time';
+    time.textContent = item.time;
+
+    content.append(title, message, time);
+    button.append(dot, content);
+
+    return button;
+}
+
+function createEmpty() {
+    const empty = document.createElement('p');
+    empty.className = 'notify-empty';
+    empty.textContent = '새로운 알림이 없습니다.';
+
+    return empty;
+}
+
+function updateBadge(badge) {
+    if (!badge) {
+        return;
+    }
+
+    const count = notifications.filter(
+        item => item.unread
+    ).length;
+
+    badge.hidden = count <= 0;
+    badge.textContent = String(count);
+}
+
+function updateTabs(tabs) {
+    tabs.forEach(tab => {
+        tab.classList.toggle(
+            'is-active',
+            tab.dataset.filter === filter
+        );
+    });
+}
+
+function changeFilter(tab, list, badge, tabs) {
+    filter = tab.dataset.filter || 'all';
+
+    renderNotification(list, badge, tabs);
+}
+
+function readNotification(event, list, badge, tabs) {
+    const item = event.target.closest(
+        '.notify-item'
+    );
+
+    if (!item) {
+        return;
+    }
+
+    const id = Number(item.dataset.id);
+    const notification = notifications.find(
+        item => item.id === id
+    );
+
+    if (!notification) {
+        return;
+    }
+
+    notification.unread = false;
+
+    renderNotification(list, badge, tabs);
+}
+
+function readAll(list, badge, tabs) {
+    notifications.forEach(item => {
+        item.unread = false;
+    });
+
+    renderNotification(list, badge, tabs);
 }
 
 function toggleNotification(button, panel) {
