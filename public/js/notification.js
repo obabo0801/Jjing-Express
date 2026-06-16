@@ -45,6 +45,8 @@ let notifications = [
 
 let filter = 'all';
 
+let notificationId = notifications.length;
+
 export function initNotification() {
     const button = $('.notify-button');
     const panel = $('#notify-panel');
@@ -58,6 +60,7 @@ export function initNotification() {
 
     renderNotification(list, badge, tabs);
     startNotificationClock();
+    startNotificationTest(list, badge, tabs);
 
     on(button, 'click', () => {
         toggleNotification(button, panel);
@@ -129,6 +132,10 @@ function renderNotification(list, badge, tabs) {
         });
     }
 
+    items.forEach(item => {
+        item.isNew = false;
+    });
+
     updateBadge(badge);
     updateTabs(tabs);
 }
@@ -148,6 +155,10 @@ function createItem(item) {
     wrap.className = item.unread
         ? 'notify-item is-unread'
         : 'notify-item';
+
+    if (item.isNew) {
+        wrap.classList.add('is-new');
+    }
 
     if (item.thumbnail) {
         wrap.classList.add('has-thumbnail');
@@ -353,7 +364,7 @@ function formatTime(time) {
     return `${Math.floor(diff / DAY)}일 전`;
 }
 
-function updateBadge(badge) {
+function updateBadge(badge, animate = false) {
     if (!badge) {
         return;
     }
@@ -364,6 +375,20 @@ function updateBadge(badge) {
 
     badge.hidden = count <= 0;
     badge.textContent = String(count);
+
+    if (!animate || count <= 0) {
+        return;
+    }
+
+    badge.classList.remove('is-pop');
+
+    requestAnimationFrame(() => {
+        badge.classList.add('is-pop');
+    });
+
+    badge.addEventListener('animationend', () => {
+        badge.classList.remove('is-pop');
+    }, { once: true });
 }
 
 function updateTabs(tabs) {
@@ -505,6 +530,49 @@ function deleteAll(list, badge, tabs) {
     notifications = [];
 
     renderNotification(list, badge, tabs);
+}
+
+function addNotification(data, list, badge, tabs) {
+    notifications.unshift({
+        id: ++notificationId,
+        title: data.title || '알림',
+        message: data.message || '',
+        href: data.href || '#',
+        profileHref: data.profileHref || '',
+        profile: data.profile || '',
+        thumbnail: data.thumbnail || null,
+        time: data.time || Date.now(),
+        unread: true,
+        isNew: true
+    });
+
+    renderNotification(list, badge, tabs);
+    updateBadge(badge, true);
+}
+
+function startNotificationTest(list, badge, tabs) {
+    if (!location.search.includes(
+        'test=notification'
+    )) {
+        return;
+    }
+
+    let count = 0;
+
+    setInterval(() => {
+        count += 1;
+
+        addNotification({
+            title: `테스트 알림 ${count}`,
+            message: '새 알림 추가 효과 테스트입니다.',
+            href: '#',
+            profileHref: '#',
+            profile: '/favicon.svg',
+            thumbnail: count % 2 === 0
+                ? '/favicon.svg'
+                : null
+        }, list, badge, tabs);
+    }, 3000);
 }
 
 function toggleNotification(button, panel) {
