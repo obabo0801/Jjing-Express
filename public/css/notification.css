@@ -409,11 +409,6 @@
         var(--hover);
 }
 
-.notify-item.has-thumbnail
-.notify-content {
-    padding-right: 10px;
-}
-
 .notify-profile img,
 .notify-thumbnail img {
     width: 100%;
@@ -437,7 +432,7 @@
     white-space:
         nowrap;
     text-overflow:
-        clip;
+        ellipsis;
 }
 
 .notify-time {
