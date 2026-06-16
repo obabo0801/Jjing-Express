@@ -226,6 +226,13 @@ function createItem(item) {
     content.append(title, message, time);
     main.append(dot, profile, content);
 
+    const more = el(
+        'div',
+        'notify-more'
+    );
+
+    more.dataset.id = item.id;
+
     if (item.thumbnail) {
         main.append(createImage(
             'notify-thumbnail notify-read',
@@ -474,6 +481,55 @@ function toggleNotificationMenu(event) {
     return true;
 }
 
+function getOpenMenuId() {
+    const more = document.querySelector(
+        '.notify-more.is-open'
+    );
+
+    return more
+        ? more.dataset.id
+        : '';
+}
+
+function restoreNotificationMenu(id) {
+    if (!id) {
+        return;
+    }
+
+    const more = document.querySelector(
+        `.notify-more[data-id="${id}"]`
+    );
+
+    if (!more) {
+        return;
+    }
+
+    more.classList.add('is-open');
+
+    const menu = more.querySelector(
+        '.notify-menu'
+    );
+    const list = document.querySelector(
+        '.notify-list'
+    );
+
+    if (!menu || !list) {
+        return;
+    }
+
+    requestAnimationFrame(() => {
+        const gap = 14;
+        const menuRect = menu.getBoundingClientRect();
+        const listRect = list.getBoundingClientRect();
+
+        more.classList.remove('is-up');
+
+        if (menuRect.bottom + gap > listRect.bottom) {
+            more.classList.add('is-up');
+        }
+    });
+}
+
 function readNotificationMenu(event, list, badge, tabs) {
     const button = event.target.closest(
         '.notify-menu-read'
@@ -558,6 +614,8 @@ function deleteAll(list, badge, tabs) {
 }
 
 function addNotification(data, list, badge, tabs) {
+    const openMenuId = getOpenMenuId();
+
     const holdScroll = list.scrollTop > 0;
     const beforeTop = list.scrollTop;
     const beforeHeight = list.scrollHeight;
@@ -584,6 +642,8 @@ function addNotification(data, list, badge, tabs) {
             + afterHeight
             - beforeHeight;
     }
+
+    restoreNotificationMenu(openMenuId);
 
     updateBadge(badge, true);
 }
