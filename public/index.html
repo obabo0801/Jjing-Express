@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jjing</title>
+    <title>J</title>
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
@@ -26,9 +26,45 @@
                     <span class="icon icon-moon theme-dark"></span>
                     <span class="icon icon-sun theme-light"></span>
                 </button>
+
+                <button
+                    class="notify-button icon-button"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="notify-panel"
+                >
+                    <span class="icon icon-bell"></span>
+                    <span class="notify-badge" hidden>0</span>
+                </button>
             </div>
         </div>
     </header>
+
+    <aside class="notify-panel" id="notify-panel" hidden>
+        <div class="notify-head">
+            <strong>알림</strong>
+
+            <button class="notify-clear" type="button">
+                모두 읽음
+            </button>
+        </div>
+
+        <div class="notify-tabs">
+            <button class="notify-tab is-active" type="button">
+                전체
+            </button>
+
+            <button class="notify-tab" type="button">
+                미확인
+            </button>
+        </div>
+
+        <div class="notify-list">
+            <p class="notify-empty">
+                새로운 알림이 없습니다.
+            </p>
+        </div>
+    </aside>
 
     <main class="middle">
         <section class="hero">

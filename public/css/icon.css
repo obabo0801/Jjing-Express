@@ -66,6 +66,12 @@
     color: #ffcc00;
 }
 
+.icon-bell {
+    --icon: url(
+        "/assets/icons/bell.svg"
+    );
+}
+
 .theme-light {
     display: none;
 }

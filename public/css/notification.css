@@ -1,0 +1,133 @@
+.notify-button {
+    position: relative;
+}
+
+.notify-badge {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+
+    min-width: 16px;
+    height: 16px;
+    padding: 0 5px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 999px;
+    background-color: #ff3b30;
+    color: #ffffff;
+
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.notify-panel {
+    position: fixed;
+    top: calc(
+        var(--top-height) + 12px
+    );
+    right: 24px;
+    z-index: 999;
+
+    width: min(
+        380px, calc(100vw - 32px)
+    );
+    padding: 16px;
+
+    border:
+        1px solid var(--line);
+    border-radius: 22px;
+    background-color:
+        var(--bar);
+    color: var(--text);
+
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.22);
+
+    backdrop-filter:
+        blur(12px);
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    transition:
+        background-color
+            var(--motion),
+        border-color
+            var(--motion),
+        color var(--motion);
+}
+
+.notify-panel[hidden] {
+    display: none;
+}
+
+.notify-head {
+    display: flex;
+    align-items: center;
+    justify-content:
+        space-between;
+
+    margin-bottom: 14px;
+}
+
+.notify-clear {
+    border: 0;
+    padding: 6px 8px;
+
+    border-radius: 999px;
+    background:
+        transparent;
+    color: var(--text);
+
+    cursor: pointer;
+}
+
+.notify-clear:hover {
+    background-color:
+        var(--hover);
+}
+
+.notify-tabs {
+    display: flex;
+    gap: 8px;
+
+    margin-bottom: 14px;
+}
+
+.notify-tab {
+    border: 1px solid var(--line);
+    padding: 7px 12px;
+
+    border-radius: 999px;
+    background:
+        transparent;
+    color: var(--text);
+
+    cursor: pointer;
+}
+
+.notify-tab.is-active {
+    background-color:
+        var(--text);
+    color: var(--bg);
+}
+
+.notify-empty {
+    margin: 0;
+    padding: 28px 0;
+
+    color: var(--text);
+    opacity: 0.6;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .notify-panel {
+        left: 16px;
+        right: 16px;
+
+        width: auto;
+    }
+}
