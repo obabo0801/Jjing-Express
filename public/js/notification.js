@@ -12,6 +12,8 @@ let notifications = [
         id: 1,
         title: '알림 테스트',
         message: '새로운 알림이 도착했습니다.',
+        href: '#',
+        profileHref: '#',
         profile: '/favicon.svg',
         thumbnail: '/favicon.svg',
         time: now - DAY,
@@ -21,6 +23,8 @@ let notifications = [
         id: 2,
         title: '테마 변경',
         message: '테마 버튼 효과가 적용되었습니다.',
+        href: '#',
+        profileHref: '#',
         profile: '/favicon.svg',
         thumbnail: null,
         time: now - MINUTE,
@@ -30,6 +34,8 @@ let notifications = [
         id: 3,
         title: 'Jjing Express',
         message: '알림 패널 UI를 준비했습니다.',
+        href: '#',
+        profileHref: '',
         profile: '',
         thumbnail: null,
         time: now - 3 * MINUTE,
@@ -138,21 +144,23 @@ function createItem(item) {
         wrap.classList.add('has-thumbnail');
     }
 
-    const main = document.createElement('button');
+    const main = document.createElement('div');
     main.className = 'notify-main';
-    main.type = 'button';
-    main.dataset.id = String(item.id);
 
     const dot = document.createElement('span');
     dot.className = 'notify-dot';
 
     const profile = createImage(
         'notify-profile',
-        item.profile
+        item.profile,
+        item.profileHref,
+        item.id
     );
 
-    const content = document.createElement('span');
-    content.className = 'notify-content';
+    const content = document.createElement('a');
+    content.className = 'notify-content notify-read';
+    content.href = safeHref(item.href);
+    content.dataset.id = String(item.id);
 
     const title = document.createElement('strong');
     title.className = 'notify-title';
@@ -178,8 +186,10 @@ function createItem(item) {
 
     if (item.thumbnail) {
         main.append(createImage(
-            'notify-thumbnail',
-            item.thumbnail
+            'notify-thumbnail notify-read',
+            item.thumbnail,
+            item.href,
+            item.id
         ));
     }
 
@@ -188,9 +198,17 @@ function createItem(item) {
     return wrap;
 }
 
-function createImage(className, src) {
-    const wrap = document.createElement('span');
+function createImage(className, src, href = '', id = '') {
+    const wrap = href
+        ? document.createElement('a')
+        : document.createElement('span');
+
     wrap.className = className;
+
+    if (href) {
+        wrap.href = safeHref(href);
+        wrap.dataset.id = String(id);
+    }
 
     const image = document.createElement('img');
     image.src = src || '/favicon.svg';
@@ -203,6 +221,30 @@ function createImage(className, src) {
     wrap.append(image);
 
     return wrap;
+}
+
+function safeHref(href) {
+    if (!href) {
+        return '#';
+    }
+
+    try {
+        const url = new URL(
+            href,
+            location.origin
+        );
+
+        if (
+            url.protocol !== 'http:'
+            && url.protocol !== 'https:'
+        ) {
+            return '#';
+        }
+
+        return url.href;
+    } catch {
+        return '#';
+    }
 }
 
 function createEmpty() {
@@ -312,7 +354,7 @@ function changeFilter(tab, list, badge, tabs) {
 
 function readNotification(event, list, badge, tabs) {
     const item = event.target.closest(
-        '.notify-main'
+        '.notify-read'
     );
 
     if (!item) {
