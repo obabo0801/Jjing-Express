@@ -5,11 +5,13 @@
 html {
     min-height: 100%;
 
-    background-color: var(--bg);
+    background-color:
+        var(--bg);
     color: var(--text);
 
     transition:
-        background-color var(--motion),
+        background-color
+            var(--motion),
         color var(--motion);
 }
 
@@ -21,13 +23,13 @@ body {
     color: var(--text);
 
     font-family:
-        Arial,
         "Malgun Gothic",
         sans-serif;
 
     opacity: 0;
     transition:
-        background-color var(--motion),
+        background-color
+            var(--motion),
         color var(--motion),
         opacity 0.2s ease;
 }

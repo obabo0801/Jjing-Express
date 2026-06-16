@@ -8,19 +8,23 @@
     border-radius: 14px;
     color: var(--logo);
     outline: none;
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color:
+        transparent;
 
     transition:
-        background-color var(--motion),
+        background-color
+            var(--motion),
         color var(--motion),
-        box-shadow var(--motion);
+        box-shadow
+            var(--motion);
 
     user-select: none;
     -webkit-user-drag: none;
 }
 
 .logo:hover {
-    background-color: var(--hover);
+    background-color:
+        var(--hover);
 }
 
 .logo:focus-visible {

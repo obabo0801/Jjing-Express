@@ -1,5 +1,6 @@
 body {
-    padding-top: var(--top-height);
+    padding-top:
+        var(--top-height);
 }
 
 .top {
@@ -11,14 +12,19 @@ body {
     width: 100%;
     height: var(--top-height);
 
-    background-color: var(--bar);
+    background-color:
+        var(--bar);
 
     transition:
-        background-color var(--motion),
-        border-color var(--motion);
+        background-color
+            var(--motion),
+        border-color
+            var(--motion);
 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter:
+        blur(12px);
+    -webkit-backdrop-filter:
+        blur(12px);
 }
 
 .top::after {
@@ -31,10 +37,12 @@ body {
 
     height: 1px;
 
-    background-color: var(--line);
+    background-color:
+        var(--line);
 
     transition:
-        background-color var(--motion);
+        background-color
+            var(--motion);
 }
 
 .top-inner {
@@ -44,7 +52,8 @@ body {
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content:
+        space-between;
 }
 
 .top-actions {
@@ -54,8 +63,8 @@ body {
 }
 
 .icon-button {
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
     padding: 0;
 
     display: grid;
@@ -68,17 +77,21 @@ body {
 
     cursor: pointer;
     outline: none;
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color:
+        transparent;
 
     transition:
-        background-color var(--motion),
-        border-color var(--motion),
+        background-color
+            var(--motion),
+        border-color
+            var(--motion),
         color var(--motion),
         transform 0.15s ease;
 }
 
 .icon-button:hover {
-    background-color: var(--hover);
+    background-color:
+         var(--hover);
 }
 
 .icon-button:active {
@@ -92,7 +105,9 @@ body {
 }
 
 .middle {
-    min-height: calc(100vh - var(--top-height));
+    min-height: calc(
+        100vh - var(--top-height)
+    );
 }
 
 .bottom {

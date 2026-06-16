@@ -1,10 +1,11 @@
 .icon {
-    width: 40px;
-    height: 40px;
+    width: 24px;
+    height: 24px;
 
     display: block;
 
-    background-color: currentColor;
+    background-color:
+        currentColor;
 
     mask:
         var(--icon)
@@ -18,19 +19,27 @@
 }
 
 .icon-favicon {
-    --icon: url("/favicon.svg");
+    --icon: url(
+        "/favicon.svg"
+    );
 }
 
 .icon-logo {
-    --icon: url("/assets/icons/logo.svg");
+    --icon: url(
+        "/assets/icons/logo.svg"
+    );
 }
 
 .icon-moon {
-    --icon: url("/assets/icons/moon.svg");
+    --icon: url(
+        "/assets/icons/moon.svg"
+    );
 }
 
 .icon-sun {
-    --icon: url("/assets/icons/sun.svg");
+    --icon: url(
+        "/assets/icons/sun.svg"
+    );
     color: #ff0000;
 }
 
@@ -38,10 +47,12 @@
     display: none;
 }
 
-[data-theme="light"] .theme-dark {
+[data-theme="light"]
+.theme-dark {
     display: none;
 }
 
-[data-theme="light"] .theme-light {
+[data-theme="light"]
+.theme-light {
     display: block;
 }
