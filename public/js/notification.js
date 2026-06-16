@@ -558,6 +558,10 @@ function deleteAll(list, badge, tabs) {
 }
 
 function addNotification(data, list, badge, tabs) {
+    const holdScroll = list.scrollTop > 0;
+    const beforeTop = list.scrollTop;
+    const beforeHeight = list.scrollHeight;
+
     notifications.unshift({
         id: ++notificationId,
         title: data.title || '알림',
@@ -572,6 +576,15 @@ function addNotification(data, list, badge, tabs) {
     });
 
     renderNotification(list, badge, tabs);
+
+    if (holdScroll) {
+        const afterHeight = list.scrollHeight;
+
+        list.scrollTop = beforeTop
+            + afterHeight
+            - beforeHeight;
+    }
+
     updateBadge(badge, true);
 }
 
