@@ -87,6 +87,22 @@
     margin-bottom: 14px;
 }
 
+.notify-head-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    min-width: 0;
+}
+
+.notify-head-title
+.icon {
+    width: 18px;
+    height: 18px;
+
+    flex-shrink: 0;
+}
+
 .notify-clear {
     border: 0;
     padding: 6px 8px;
@@ -472,6 +488,18 @@
         transform:
             scale(1);
     }
+}
+
+.notify-tab:focus,
+.notify-clear:focus,
+.notify-remove-all:focus,
+.notify-more-button:focus,
+.notify-menu button:focus,
+.notify-content:focus,
+.notify-profile:focus,
+.notify-thumbnail:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 @media (max-width: 768px) {
