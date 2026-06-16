@@ -78,6 +78,14 @@ export function initNotification() {
     });
 
     on(list, 'click', event => {
+        if (toggleNotificationMenu(event)) {
+            return;
+        }
+
+        if (readNotificationMenu(event, list, badge, tabs)) {
+            return;
+        }
+
         if (deleteNotification(event, list, badge, tabs)) {
             return;
         }
@@ -87,6 +95,7 @@ export function initNotification() {
 
     on(document, 'click', event => {
         closeOutside(event, button, panel);
+        closeNotificationMenus(event);
     });
 
     on(document, 'keydown', event => {
@@ -175,11 +184,31 @@ function createItem(item) {
     time.dataset.time = String(item.time);
     time.textContent = formatTime(item.time);
 
+    const more = document.createElement('div');
+    more.className = 'notify-more';
+
+    const moreButton = document.createElement('button');
+    moreButton.className = 'notify-more-button';
+    moreButton.type = 'button';
+    moreButton.textContent = '⋮';
+
+    const menu = document.createElement('div');
+    menu.className = 'notify-menu';
+
+    const read = document.createElement('button');
+    read.className = 'notify-menu-read';
+    read.type = 'button';
+    read.dataset.id = String(item.id);
+    read.textContent = '읽음';
+
     const remove = document.createElement('button');
     remove.className = 'notify-remove';
     remove.type = 'button';
     remove.dataset.id = String(item.id);
     remove.textContent = '삭제';
+
+    menu.append(read, remove);
+    more.append(moreButton, menu);
 
     content.append(title, message, time);
     main.append(dot, profile, content);
@@ -193,7 +222,7 @@ function createItem(item) {
         ));
     }
 
-    wrap.append(main, remove);
+    wrap.append(main, more);
 
     return wrap;
 }
@@ -361,7 +390,62 @@ function readNotification(event, list, badge, tabs) {
         return;
     }
 
-    const id = Number(item.dataset.id);
+    readNotificationById(
+        Number(item.dataset.id),
+        list,
+        badge,
+        tabs
+    );
+}
+
+function toggleNotificationMenu(event) {
+    const button = event.target.closest(
+        '.notify-more-button'
+    );
+
+    if (!button) {
+        return false;
+    }
+
+    const more = button.closest(
+        '.notify-more'
+    );
+
+    document.querySelectorAll(
+        '.notify-more.is-open'
+    ).forEach(item => {
+        if (item !== more) {
+            item.classList.remove('is-open');
+        }
+    });
+
+    more?.classList.toggle('is-open');
+
+    return true;
+}
+
+function readNotificationMenu(event, list, badge, tabs) {
+    const button = event.target.closest(
+        '.notify-menu-read'
+    );
+
+    if (!button) {
+        return false;
+    }
+
+    readNotificationById(
+        Number(button.dataset.id),
+        list,
+        badge,
+        tabs
+    );
+
+    closeNotificationMenus();
+
+    return true;
+}
+
+function readNotificationById(id, list, badge, tabs) {
     const notification = notifications.find(
         item => item.id === id
     );
@@ -373,6 +457,20 @@ function readNotification(event, list, badge, tabs) {
     notification.unread = false;
 
     renderNotification(list, badge, tabs);
+}
+
+function closeNotificationMenus(event) {
+    const target = event?.target;
+
+    if (target?.closest?.('.notify-more')) {
+        return;
+    }
+
+    document.querySelectorAll(
+        '.notify-more.is-open'
+    ).forEach(item => {
+        item.classList.remove('is-open');
+    });
 }
 
 function readAll(list, badge, tabs) {
