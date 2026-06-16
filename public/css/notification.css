@@ -389,6 +389,9 @@
 
 .notify-content {
     min-width: 0;
+    overflow: hidden;
+    box-sizing:
+        border-box;
 
     display: grid;
     gap: 4px;
@@ -404,6 +407,11 @@
     border-radius: 12px;
     background-color:
         var(--hover);
+}
+
+.notify-item.has-thumbnail
+.notify-content {
+    padding-right: 10px;
 }
 
 .notify-profile img,

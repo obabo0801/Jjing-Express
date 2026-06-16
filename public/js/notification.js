@@ -463,8 +463,9 @@ function toggleNotificationMenu(event) {
 
     const menuRect = menu.getBoundingClientRect();
     const panelRect = panel.getBoundingClientRect();
+    const gap = 14;
 
-    if (menuRect.bottom > panelRect.bottom) {
+    if (menuRect.bottom + gap > panelRect.bottom) {
         more.classList.add('is-up');
     }
 
