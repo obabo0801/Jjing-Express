@@ -81,6 +81,8 @@ export function initNotification() {
     });
 
     on(list, 'click', event => {
+        event.stopPropagation();
+
         if (toggleNotificationMenu(event)) {
             return;
         }
