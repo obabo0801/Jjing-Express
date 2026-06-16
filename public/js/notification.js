@@ -1,25 +1,32 @@
 import { $, on } from './dom.js';
 
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
+
+const now = Date.now();
+
 let notifications = [
     {
         id: 1,
         title: '알림 테스트',
         message: '새로운 알림이 도착했습니다.',
-        time: '방금 전',
+        time: now,
         unread: true
     },
     {
         id: 2,
         title: '테마 변경',
         message: '테마 버튼 효과가 적용되었습니다.',
-        time: '1분 전',
+        time: now - MINUTE,
         unread: true
     },
     {
         id: 3,
         title: 'Jjing Express',
         message: '알림 패널 UI를 준비했습니다.',
-        time: '3분 전',
+        time: now - 3 * MINUTE,
         unread: false
     }
 ];
@@ -38,6 +45,7 @@ export function initNotification() {
     );
 
     renderNotification(list, badge, tabs);
+    startNotificationClock();
 
     on(button, 'click', () => {
         toggleNotification(button, panel);
@@ -130,7 +138,8 @@ function createItem(item) {
 
     const time = document.createElement('span');
     time.className = 'notify-time';
-    time.textContent = item.time;
+    time.dataset.time = String(item.time);
+    time.textContent = formatTime(item.time);
 
     const remove = document.createElement('button');
     remove.className = 'notify-remove';
@@ -151,6 +160,41 @@ function createEmpty() {
     empty.textContent = '새로운 알림이 없습니다.';
 
     return empty;
+}
+
+function startNotificationClock() {
+    setInterval(updateTimes, 30 * SECOND);
+}
+
+function updateTimes() {
+    document.querySelectorAll(
+        '.notify-time'
+    ).forEach(time => {
+        time.textContent = formatTime(
+            Number(time.dataset.time)
+        );
+    });
+}
+
+function formatTime(time) {
+    const diff = Math.max(
+        0,
+        Date.now() - time
+    );
+
+    if (diff < MINUTE) {
+        return `${Math.floor(diff / SECOND)}초 전`;
+    }
+
+    if (diff < HOUR) {
+        return `${Math.floor(diff / MINUTE)}분 전`;
+    }
+
+    if (diff < DAY) {
+        return `${Math.floor(diff / HOUR)}시간 전`;
+    }
+
+    return `${Math.floor(diff / DAY)}일 전`;
 }
 
 function updateBadge(badge) {
