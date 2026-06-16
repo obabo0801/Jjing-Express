@@ -440,11 +440,33 @@ function toggleNotificationMenu(event) {
         '.notify-more.is-open'
     ).forEach(item => {
         if (item !== more) {
-            item.classList.remove('is-open');
+            item.classList.remove(
+                'is-open',
+                'is-up'
+            );
         }
     });
 
+    more?.classList.remove('is-up');
     more?.classList.toggle('is-open');
+
+    const menu = more?.querySelector(
+        '.notify-menu'
+    );
+    const panel = document.querySelector(
+        '.notify-panel'
+    );
+
+    if (!more?.classList.contains('is-open')) {
+        return true;
+    }
+
+    const menuRect = menu.getBoundingClientRect();
+    const panelRect = panel.getBoundingClientRect();
+
+    if (menuRect.bottom > panelRect.bottom) {
+        more.classList.add('is-up');
+    }
 
     return true;
 }

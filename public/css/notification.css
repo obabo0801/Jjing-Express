@@ -255,7 +255,7 @@
     grid-template-columns:
         8px 36px 1fr;
     gap: 10px;
-    align-items: start;
+    align-items: center;
 
     border: 0;
     background:
@@ -325,6 +325,12 @@
         rgba(0, 0, 0, 0.28);
 }
 
+.notify-more.is-up
+.notify-menu {
+    top: auto;
+    bottom: calc(100% + 6px);
+}
+
 .notify-more.is-open
 .notify-menu {
     display: grid;
@@ -355,7 +361,6 @@
 .notify-dot {
     width: 7px;
     height: 7px;
-    margin-top: 7px;
 
     border-radius: 50%;
     background-color:
@@ -422,7 +427,7 @@
     white-space:
         nowrap;
     text-overflow:
-        ellipsis;
+        clip;
 }
 
 .notify-time {
