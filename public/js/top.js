@@ -17,11 +17,22 @@ function popIcon(event) {
         return;
     }
 
-    button.classList.remove('is-pop');
+    const effect = button.classList.contains(
+        'notify-button'
+    )
+        ? 'is-shake'
+        : 'is-pop';
+
+    button.classList.remove(effect);
 
     requestAnimationFrame(() => {
-        button.classList.add('is-pop');
+        button.classList.add(effect);
     });
+
+    button.addEventListener(
+        'animationend', () => {
+        button.classList.remove(effect);
+    }, { once: true });
 }
 
 function blockMenu(event) {
