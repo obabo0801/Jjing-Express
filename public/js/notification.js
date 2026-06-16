@@ -12,6 +12,8 @@ let notifications = [
         id: 1,
         title: '알림 테스트',
         message: '새로운 알림이 도착했습니다.',
+        profile: '/favicon.svg',
+        thumbnail: '/favicon.svg',
         time: now - DAY,
         unread: true
     },
@@ -19,6 +21,8 @@ let notifications = [
         id: 2,
         title: '테마 변경',
         message: '테마 버튼 효과가 적용되었습니다.',
+        profile: '/favicon.svg',
+        thumbnail: null,
         time: now - MINUTE,
         unread: true
     },
@@ -26,6 +30,8 @@ let notifications = [
         id: 3,
         title: 'Jjing Express',
         message: '알림 패널 UI를 준비했습니다.',
+        profile: '',
+        thumbnail: null,
         time: now - 3 * MINUTE,
         unread: false
     }
@@ -128,6 +134,10 @@ function createItem(item) {
         ? 'notify-item is-unread'
         : 'notify-item';
 
+    if (item.thumbnail) {
+        wrap.classList.add('has-thumbnail');
+    }
+
     const main = document.createElement('button');
     main.className = 'notify-main';
     main.type = 'button';
@@ -135,6 +145,11 @@ function createItem(item) {
 
     const dot = document.createElement('span');
     dot.className = 'notify-dot';
+
+    const profile = createImage(
+        'notify-profile',
+        item.profile
+    );
 
     const content = document.createElement('span');
     content.className = 'notify-content';
@@ -159,8 +174,33 @@ function createItem(item) {
     remove.textContent = '삭제';
 
     content.append(title, message, time);
-    main.append(dot, content);
+    main.append(dot, profile, content);
+
+    if (item.thumbnail) {
+        main.append(createImage(
+            'notify-thumbnail',
+            item.thumbnail
+        ));
+    }
+
     wrap.append(main, remove);
+
+    return wrap;
+}
+
+function createImage(className, src) {
+    const wrap = document.createElement('span');
+    wrap.className = className;
+
+    const image = document.createElement('img');
+    image.src = src || '/favicon.svg';
+    image.draggable = false;
+
+    image.addEventListener('error', () => {
+        image.src = '/favicon.svg';
+    }, { once: true });
+
+    wrap.append(image);
 
     return wrap;
 }
