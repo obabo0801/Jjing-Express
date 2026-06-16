@@ -1,6 +1,6 @@
 import { $, on } from './dom.js';
 
-const notifications = [
+let notifications = [
     {
         id: 1,
         title: '알림 테스트',
@@ -32,6 +32,7 @@ export function initNotification() {
     const list = $('.notify-list');
     const badge = $('.notify-badge');
     const clear = $('.notify-clear');
+    const removeAll = $('.notify-remove-all');
     const tabs = document.querySelectorAll(
         '.notify-tab'
     );
@@ -46,6 +47,10 @@ export function initNotification() {
         readAll(list, badge, tabs);
     });
 
+    on(removeAll, 'click', () => {
+        deleteAll(list, badge, tabs);
+    });
+
     tabs.forEach(tab => {
         on(tab, 'click', () => {
             changeFilter(tab, list, badge, tabs);
@@ -53,6 +58,10 @@ export function initNotification() {
     });
 
     on(list, 'click', event => {
+        if (deleteNotification(event, list, badge, tabs)) {
+            return;
+        }
+
         readNotification(event, list, badge, tabs);
     });
 
@@ -95,12 +104,15 @@ function getFilteredNotifications() {
 }
 
 function createItem(item) {
-    const button = document.createElement('button');
-    button.className = item.unread
+    const wrap = document.createElement('div');
+    wrap.className = item.unread
         ? 'notify-item is-unread'
         : 'notify-item';
-    button.type = 'button';
-    button.dataset.id = String(item.id);
+
+    const main = document.createElement('button');
+    main.className = 'notify-main';
+    main.type = 'button';
+    main.dataset.id = String(item.id);
 
     const dot = document.createElement('span');
     dot.className = 'notify-dot';
@@ -120,10 +132,17 @@ function createItem(item) {
     time.className = 'notify-time';
     time.textContent = item.time;
 
-    content.append(title, message, time);
-    button.append(dot, content);
+    const remove = document.createElement('button');
+    remove.className = 'notify-remove';
+    remove.type = 'button';
+    remove.dataset.id = String(item.id);
+    remove.textContent = '삭제';
 
-    return button;
+    content.append(title, message, time);
+    main.append(dot, content);
+    wrap.append(main, remove);
+
+    return wrap;
 }
 
 function createEmpty() {
@@ -164,7 +183,7 @@ function changeFilter(tab, list, badge, tabs) {
 
 function readNotification(event, list, badge, tabs) {
     const item = event.target.closest(
-        '.notify-item'
+        '.notify-main'
     );
 
     if (!item) {
@@ -189,6 +208,32 @@ function readAll(list, badge, tabs) {
     notifications.forEach(item => {
         item.unread = false;
     });
+
+    renderNotification(list, badge, tabs);
+}
+
+function deleteNotification(event, list, badge, tabs) {
+    const button = event.target.closest(
+        '.notify-remove'
+    );
+
+    if (!button) {
+        return false;
+    }
+
+    const id = Number(button.dataset.id);
+
+    notifications = notifications.filter(
+        item => item.id !== id
+    );
+
+    renderNotification(list, badge, tabs);
+
+    return true;
+}
+
+function deleteAll(list, badge, tabs) {
+    notifications = [];
 
     renderNotification(list, badge, tabs);
 }

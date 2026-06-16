@@ -89,6 +89,29 @@
         var(--hover);
 }
 
+.notify-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.notify-remove-all {
+    border: 0;
+    padding: 6px 8px;
+
+    border-radius: 999px;
+    background:
+        transparent;
+    color: var(--text);
+
+    cursor: pointer;
+}
+
+.notify-remove-all:hover {
+    background-color:
+        var(--hover);
+}
+
 .notify-tabs {
     display: flex;
     gap: 8px;
@@ -130,20 +153,16 @@
 
 .notify-item {
     width: 100%;
-    padding: 12px;
 
     display: grid;
-    grid-template-columns: 8px 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr auto;
+    align-items: center;
 
     border: 1px solid var(--line);
     border-radius: 16px;
     background:
         transparent;
     color: var(--text);
-
-    text-align: left;
-    cursor: pointer;
 
     transition:
         background-color
@@ -156,6 +175,46 @@
 .notify-item:hover {
     background-color:
         var(--hover);
+}
+
+.notify-main {
+    min-width: 0;
+    padding: 12px;
+
+    display: grid;
+    grid-template-columns: 8px 1fr;
+    gap: 10px;
+    align-items: start;
+
+    border: 0;
+    background:
+        transparent;
+    color: inherit;
+
+    text-align: left;
+    cursor: pointer;
+}
+
+.notify-remove {
+    margin-right: 10px;
+    padding: 6px 8px;
+
+    border: 0;
+    border-radius: 999px;
+    background:
+        transparent;
+    color: var(--text);
+
+    font-size: 12px;
+    opacity: 0.48;
+
+    cursor: pointer;
+}
+
+.notify-remove:hover {
+    background-color:
+        var(--hover);
+    opacity: 1;
 }
 
 .notify-dot {
