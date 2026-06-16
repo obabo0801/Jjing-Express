@@ -20,6 +20,10 @@
             .favicon {
                 fill: #ffffff;
             }
+
+            .favicon-tongue {
+                fill: #ffffff;
+            }
         }
     </style>
 

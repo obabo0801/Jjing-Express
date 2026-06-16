@@ -16,6 +16,29 @@
         var(--icon)
         center / contain
         no-repeat;
+    
+    transition:
+        transform 0.15s ease;
+}
+
+.icon-button.is-pop
+.icon {
+    animation:
+        icon-pop 0.22s ease;
+}
+
+@keyframes icon-pop {
+    0% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(0.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .icon-favicon {
