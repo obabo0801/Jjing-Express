@@ -13,7 +13,7 @@ let notifications = [
         title: '알림 테스트',
         message: '새로운 알림이 도착했습니다.',
         href: '#',
-        profileHref: '',
+        profileHref: '#',
         profile: '/favicon.svg',
         thumbnail: '/favicon.svg',
         time: now - DAY,
@@ -233,10 +233,8 @@ function createItem(item) {
 
     if (item.thumbnail) {
         main.append(createImage(
-            'notify-thumbnail notify-read',
-            item.thumbnail,
-            item.href,
-            item.id
+            'notify-thumbnail',
+            item.thumbnail
         ));
     }
 
@@ -431,21 +429,21 @@ function readNotification(event, list, badge, tabs) {
 }
 
 function openNotificationMain(event) {
-    const main = event.target.closest(
-        '.notify-main'
+    const item = event.target.closest(
+        '.notify-item'
     );
 
-    if (!main) {
+    if (!item) {
         return false;
     }
 
     if (event.target.closest(
-        'a, button'
+        'a, button, .notify-menu'
     )) {
         return false;
     }
 
-    const link = main.querySelector(
+    const link = item.querySelector(
         '.notify-content'
     );
 

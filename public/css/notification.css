@@ -253,6 +253,8 @@ button:active {
         1fr auto;
     align-items: center;
 
+    cursor: pointer;
+
     border:
         1px solid
         var(--line);
@@ -537,13 +539,7 @@ button:active {
     }
 }
 
-.notify-tab:focus-visible {
-    outline: none;
 
-    box-shadow:
-        0 0 0 2px var(--bar),
-        0 0 0 4px var(--text);
-}
 
 @media (max-width: 768px) {
     .notify-panel {
