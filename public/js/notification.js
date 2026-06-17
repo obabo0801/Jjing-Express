@@ -217,9 +217,17 @@ function restoreNotificationFocus(focus) {
     const selector = selectorMap[focus.type];
 
     requestAnimationFrame(() => {
-        document.querySelector(
+        const target = document.querySelector(
             selector
-        )?.focus();
+        );
+
+        if (!target) {
+            return;
+        }
+
+        target.focus({
+            preventScroll: true
+        });
     });
 }
 

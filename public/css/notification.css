@@ -277,6 +277,8 @@ button:active {
     gap: 8px;
 
     overflow-y: auto;
+    scroll-behavior:
+        smooth;
     overscroll-behavior:
         contain;
 }
