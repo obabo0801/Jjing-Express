@@ -52,6 +52,18 @@
     );
 }
 
+.icon-read {
+    --icon: url(
+        "/assets/icons/read.svg"
+    );
+}
+
+.icon-delete {
+    --icon: url(
+        "/assets/icons/delete.svg"
+    );
+}
+
 .theme-light {
     display: none;
 }

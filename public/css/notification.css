@@ -24,6 +24,11 @@
     line-height: 1;
 }
 
+.notify-badge[hidden] {
+    display:
+        none;
+}
+
 .notify-panel {
     position: fixed;
     top: calc(
@@ -416,6 +421,13 @@ button:active {
         rgba(0, 0, 0, 0.28);
 }
 
+.notify-menu-icon {
+    width: 14px;
+    height: 14px;
+
+    flex-shrink: 0;
+}
+
 .notify-more.is-up
 .notify-menu {
     top: auto;
@@ -444,6 +456,10 @@ button:active {
     cursor: pointer;
     font-size: 12px;
     text-align: left;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .notify-menu button:hover {

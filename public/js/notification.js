@@ -223,13 +223,19 @@ function createItem(item) {
     read.className = 'notify-menu-read';
     read.type = 'button';
     read.dataset.id = String(item.id);
-    read.textContent = '읽음';
+    read.append(
+        createIcon('read'),
+        '읽음'
+    );
 
     const remove = document.createElement('button');
     remove.className = 'notify-remove';
     remove.type = 'button';
     remove.dataset.id = String(item.id);
-    remove.textContent = '삭제';
+    remove.append(
+        createIcon('delete'),
+        '삭제'
+    );
 
     menu.append(read, remove);
     more.append(moreButton, menu);
@@ -247,6 +253,14 @@ function createItem(item) {
     wrap.append(main, more);
 
     return wrap;
+}
+
+function createMenuIcon(name) {
+    const icon = document.createElement('span');
+
+    icon.className = `icon icon-${name} notify-menu-icon`;
+
+    return icon;
 }
 
 function createImage(className, src, href = '', id = '') {
@@ -777,6 +791,29 @@ function addNotification(data, list, badge, tabs) {
     restoreNotificationMenu(openMenuId);
 
     updateBadge(badge, true);
+    shakeNotifyButton();
+}
+
+function shakeNotifyButton() {
+    const button = $('.notify-button');
+
+    if (!button) {
+        return;
+    }
+
+    button.classList.remove('is-shake');
+
+    requestAnimationFrame(() => {
+        button.classList.add('is-shake');
+    });
+
+    button.addEventListener(
+        'animationend',
+        () => {
+            button.classList.remove('is-shake');
+        },
+        { once: true }
+    );
 }
 
 function startNotificationTest(list, badge, tabs) {
