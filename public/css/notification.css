@@ -99,9 +99,7 @@
             var(--motion),
         border-color
             var(--motion),
-        color var(--motion),
-        box-shadow
-            var(--motion);
+        color var(--motion);
 }
 
 .notify-panel
@@ -172,17 +170,15 @@ button:active {
     outline: none;
 
     border-bottom-color:
-        currentColor;
+        transparent;
     background:
         transparent;
     color: var(--text);
     opacity: 1;
 
     box-shadow:
-        0 2px 0 0 currentColor;
-
-    transition:
-        none;
+        0 0 0 2px var(--bar),
+        0 0 0 4px var(--focus);
 }
 
 .notify-tabs {
@@ -612,15 +608,6 @@ button:active {
     box-shadow:
         0 0 0 2px var(--bar),
         0 0 0 4px var(--text);
-
-    transition:
-        none;
-}
-
-.notify-tab:focus-visible,
-.notify-more-button:focus-visible {
-    transition:
-        none;
 }
 
 @media (max-width: 768px) {
