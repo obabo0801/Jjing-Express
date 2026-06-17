@@ -4,6 +4,7 @@ const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
+const CLEAR_GRACE = 10000;
 
 const now = Date.now();
 
@@ -613,6 +614,34 @@ function readAll(list, badge, tabs) {
     renderNotification(list, badge, tabs);
 }
 
+function clearNotification(item, index = 0) {
+    const side = index % 2 === 0
+        ? -1
+        : 1;
+
+    item.style.setProperty(
+        '--clear-index',
+        index
+    );
+
+    item.style.setProperty(
+        '--clear-x',
+        `${side * 90}px`
+    );
+
+    item.style.setProperty(
+        '--clear-y',
+        `${30 + index * 8}px`
+    );
+
+    item.style.setProperty(
+        '--clear-rotate',
+        `${side * 12}deg`
+    );
+
+    item.classList.add('is-clear');
+}
+
 function deleteNotification(event, list, badge, tabs) {
     const button = event.target.closest(
         '.notify-remove'
@@ -623,57 +652,71 @@ function deleteNotification(event, list, badge, tabs) {
     }
 
     const id = Number(button.dataset.id);
-
-    notifications = notifications.filter(
-        item => item.id !== id
+    const item = button.closest(
+        '.notify-item'
     );
 
-    renderNotification(list, badge, tabs);
+    if (!item) {
+        notifications = notifications.filter(
+            item => item.id !== id
+        );
+
+        renderNotification(list, badge, tabs);
+
+        return true;
+    }
+
+    clearNotification(item);
+
+    setTimeout(() => {
+        notifications = notifications.filter(
+            item => item.id !== id
+        );
+
+        renderNotification(list, badge, tabs);
+    }, 520);
 
     return true;
 }
 
 function deleteAll(list, badge, tabs) {
+    const limit = Date.now() - CLEAR_GRACE;
+
+    const ids = notifications
+        .filter(item => item.time <= limit)
+        .map(item => item.id);
+
     const items = list.querySelectorAll(
         '.notify-item'
     );
 
-    if (!items.length) {
-        notifications = [];
-        renderNotification(list, badge, tabs);
+    if (!ids.length) {
         return;
     }
 
     items.forEach((item, index) => {
-        const side = index % 2 === 0
-            ? -1
-            : 1;
-
-        item.style.setProperty(
-            '--clear-index',
-            index
+        const link = item.querySelector(
+            '.notify-read'
         );
 
-        item.style.setProperty(
-            '--clear-x',
-            `${side * 90}px`
-        );
+        if (!link) {
+            return;
+        }
 
-        item.style.setProperty(
-            '--clear-y',
-            `${30 + index * 8}px`
-        );
+        const id = Number(link.dataset.id);
 
-        item.style.setProperty(
-            '--clear-rotate',
-            `${side * 12}deg`
-        );
+        if (!ids.includes(id)) {
+            return;
+        }
 
-        item.classList.add('is-clear');
+        clearNotification(item, index);
     });
 
     setTimeout(() => {
-        notifications = [];
+        notifications = notifications.filter(
+            item => !ids.includes(item.id)
+        );
+
         renderNotification(list, badge, tabs);
     }, 520);
 }
