@@ -167,6 +167,19 @@ button:active {
     opacity: 1;
 }
 
+.notify-clear:focus-visible,
+.notify-remove-all:focus-visible {
+    outline: none;
+    box-shadow: none;
+
+    border-bottom-color:
+        currentColor;
+    background:
+        transparent;
+    color: var(--text);
+    opacity: 1;
+}
+
 .notify-tabs {
     display: flex;
     gap: 8px;
@@ -418,12 +431,27 @@ button:active {
 
 .notify-content {
     min-width: 0;
-    overflow: hidden;
     box-sizing:
         border-box;
 
     display: grid;
     gap: 4px;
+}
+
+.notify-title,
+.notify-message,
+.notify-time {
+    min-width: 0;
+    overflow: hidden;
+
+    white-space:
+        nowrap;
+    text-overflow:
+        ellipsis;
+}
+
+.notify-time {
+    display: block;
 }
 
 .notify-thumbnail {
@@ -555,10 +583,19 @@ button:active {
     border-radius: 10px;
 }
 
-.notify-content:focus-visible {
+.notify-item:has(
+    .notify-content:focus-visible
+) {
+    border-color:
+        var(--text);
+
     box-shadow:
-        0 0 0 2px var(--bar),
-        0 0 0 4px var(--text);
+        inset 0 0 0 2px var(--text);
+}
+
+.notify-content:focus-visible {
+    outline: none;
+    box-shadow: none;
 }
 
 .notify-more-button:focus-visible {
@@ -569,6 +606,14 @@ button:active {
     box-shadow:
         0 0 0 2px var(--bar),
         0 0 0 4px var(--text);
+}
+
+.notify-panel
+.notify-tab,
+.notify-panel
+.notify-more-button {
+    transition:
+        none;
 }
 
 @media (max-width: 768px) {
