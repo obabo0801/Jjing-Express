@@ -170,7 +170,6 @@ button:active {
 .notify-clear:focus-visible,
 .notify-remove-all:focus-visible {
     outline: none;
-    box-shadow: none;
 
     border-bottom-color:
         currentColor;
@@ -178,6 +177,12 @@ button:active {
         transparent;
     color: var(--text);
     opacity: 1;
+
+    box-shadow:
+        0 2px 0 0 currentColor;
+
+    transition:
+        none;
 }
 
 .notify-tabs {
@@ -599,19 +604,21 @@ button:active {
 }
 
 .notify-more-button:focus-visible {
+    outline: none;
+    background:
+        transparent;
     opacity: 1;
-    background-color:
-        var(--hover);
 
     box-shadow:
         0 0 0 2px var(--bar),
         0 0 0 4px var(--text);
+
+    transition:
+        none;
 }
 
-.notify-panel
-.notify-tab,
-.notify-panel
-.notify-more-button {
+.notify-tab:focus-visible,
+.notify-more-button:focus-visible {
     transition:
         none;
 }
