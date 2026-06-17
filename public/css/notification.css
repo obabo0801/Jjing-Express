@@ -382,6 +382,17 @@ button:active {
     opacity: 1;
 }
 
+.notify-more-icon {
+    display: block;
+}
+
+.notify-more-button.is-pop
+.notify-more-icon {
+    animation:
+        icon-pop
+        0.22s ease;
+}
+
 .notify-menu {
     position: absolute;
     top: calc(100% + 6px);

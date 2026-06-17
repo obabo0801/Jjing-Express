@@ -209,7 +209,12 @@ function createItem(item) {
     const moreButton = document.createElement('button');
     moreButton.className = 'notify-more-button';
     moreButton.type = 'button';
-    moreButton.textContent = '⋮';
+
+    const moreIcon = document.createElement('span');
+    moreIcon.className = 'notify-more-icon';
+    moreIcon.textContent = '⋮';
+
+    moreButton.append(moreIcon);
 
     const menu = document.createElement('div');
     menu.className = 'notify-menu';
@@ -468,6 +473,8 @@ function toggleNotificationMenu(event) {
         return false;
     }
 
+    popMoreButton(button);
+
     const more = button.closest(
         '.notify-more'
     );
@@ -506,6 +513,22 @@ function toggleNotificationMenu(event) {
     }
 
     return true;
+}
+
+function popMoreButton(button) {
+    button.classList.remove('is-pop');
+
+    requestAnimationFrame(() => {
+        button.classList.add('is-pop');
+    });
+
+    button.addEventListener(
+        'animationend',
+        () => {
+            button.classList.remove('is-pop');
+        },
+        { once: true }
+    );
 }
 
 function getOpenMenuId() {
