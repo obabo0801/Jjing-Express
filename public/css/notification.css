@@ -80,13 +80,34 @@
         transparent;
 }
 
+.notify-panel[hidden] {
+    display: none;
+}
+
 .notify-panel button,
 .notify-panel a {
     appearance: none;
 }
 
-.notify-panel[hidden] {
-    display: none;
+.notify-panel button {
+    transition:
+        transform
+            0.16s ease,
+        opacity
+            var(--motion),
+        background-color
+            var(--motion),
+        border-color
+            var(--motion),
+        color var(--motion),
+        box-shadow
+            var(--motion);
+}
+
+.notify-panel
+button:active {
+    transform:
+        scale(0.90);
 }
 
 .notify-head {
@@ -114,6 +135,12 @@
     flex-shrink: 0;
 }
 
+.notify-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
 .notify-clear {
     border: 0;
     padding: 6px 8px;
@@ -129,12 +156,6 @@
 .notify-clear:hover {
     background-color:
         var(--hover);
-}
-
-.notify-actions {
-    display: flex;
-    align-items: center;
-    gap: 6px;
 }
 
 .notify-remove-all {
@@ -179,6 +200,16 @@
     background-color:
         var(--text);
     color: var(--bg);
+}
+
+.notify-tab:focus-visible {
+    outline: none;
+
+    box-shadow:
+        0 0 0 2px
+        var(--bar),
+        0 0 0 4px
+        var(--text);
 }
 
 .notify-empty {
