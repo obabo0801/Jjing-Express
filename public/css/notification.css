@@ -181,6 +181,40 @@ button:active {
         var(--focus);
 }
 
+.notify-item.is-clear {
+    pointer-events: none;
+
+    animation:
+        notify-clear
+        0.36s ease forwards;
+
+    animation-delay:
+        calc(var(--clear-index) * 35ms);
+}
+
+@keyframes notify-clear {
+    0% {
+        opacity: 1;
+        transform:
+            translate(0, 0)
+            rotate(0deg)
+            scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(
+                var(--clear-x),
+                var(--clear-y)
+            )
+            rotate(
+                var(--clear-rotate)
+            )
+            scale(0.72);
+    }
+}
+
 .notify-tabs {
     display: flex;
     gap: 8px;

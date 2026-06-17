@@ -634,9 +634,48 @@ function deleteNotification(event, list, badge, tabs) {
 }
 
 function deleteAll(list, badge, tabs) {
-    notifications = [];
+    const items = list.querySelectorAll(
+        '.notify-item'
+    );
 
-    renderNotification(list, badge, tabs);
+    if (!items.length) {
+        notifications = [];
+        renderNotification(list, badge, tabs);
+        return;
+    }
+
+    items.forEach((item, index) => {
+        const side = index % 2 === 0
+            ? -1
+            : 1;
+
+        item.style.setProperty(
+            '--clear-index',
+            index
+        );
+
+        item.style.setProperty(
+            '--clear-x',
+            `${side * 90}px`
+        );
+
+        item.style.setProperty(
+            '--clear-y',
+            `${30 + index * 8}px`
+        );
+
+        item.style.setProperty(
+            '--clear-rotate',
+            `${side * 12}deg`
+        );
+
+        item.classList.add('is-clear');
+    });
+
+    setTimeout(() => {
+        notifications = [];
+        renderNotification(list, badge, tabs);
+    }, 520);
 }
 
 function addNotification(data, list, badge, tabs) {
