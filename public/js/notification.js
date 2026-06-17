@@ -46,7 +46,9 @@ let notifications = [
 
 let filter = 'all';
 
-let notificationId = notifications.length;
+let length = (
+    notifications.length
+);
 
 export function initNotification() {
     const button = $('.notify-button');
@@ -373,7 +375,7 @@ function updateTimes() {
 function formatTime(time) {
     const diff = Math.max(
         0,
-        Date.now() - time
+        now - time
     );
 
     if (diff < MINUTE) {
@@ -727,7 +729,7 @@ function deleteNotification(event, list, badge, tabs) {
 }
 
 function deleteAll(list, badge, tabs) {
-    const limit = Date.now() - CLEAR_GRACE;
+    const limit = now - CLEAR_GRACE;
 
     const ids = notifications
         .filter(item => item.time <= limit)
@@ -776,14 +778,14 @@ function addNotification(data, list, badge, tabs) {
     const beforeHeight = list.scrollHeight;
 
     notifications.unshift({
-        id: ++notificationId,
+        id: ++length,
         title: data.title || '알림',
         message: data.message || '',
         href: data.href || '#',
         profileHref: data.profileHref || '',
         profile: data.profile || '',
         thumbnail: data.thumbnail || null,
-        time: data.time || Date.now(),
+        time: data.time || now,
         unread: true,
         isNew: true
     });
