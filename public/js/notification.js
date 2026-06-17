@@ -449,7 +449,7 @@ function updateTimes() {
 function formatTime(time) {
     const diff = Math.max(
         0,
-        now - time
+        Date.now() - time
     );
 
     if (diff < MINUTE) {
@@ -803,7 +803,7 @@ function deleteNotification(event, list, badge, tabs) {
 }
 
 function deleteAll(list, badge, tabs) {
-    const limit = now - CLEAR_GRACE;
+    const limit = Date.now() - CLEAR_GRACE;
 
     const ids = notifications
         .filter(item => item.time <= limit)
@@ -859,7 +859,7 @@ function addNotification(data, list, badge, tabs) {
         profileHref: data.profileHref || '',
         profile: data.profile || '',
         thumbnail: data.thumbnail || null,
-        time: data.time || now,
+        time: data.time || Date.now(),
         unread: true,
         isNew: true
     });
