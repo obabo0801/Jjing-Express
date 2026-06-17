@@ -74,10 +74,14 @@
         color var(--motion);
 }
 
-.notify-panel button,
-.notify-panel a {
+.notify-panel,
+.notify-panel * {
     -webkit-tap-highlight-color:
         transparent;
+}
+
+.notify-panel button,
+.notify-panel a {
     appearance: none;
 }
 
@@ -507,11 +511,6 @@
         transform:
             scale(1);
     }
-}
-
-.notify-item a {
-    -webkit-tap-highlight-color:
-        transparent;
 }
 
 @media (max-width: 768px) {
