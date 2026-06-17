@@ -141,38 +141,30 @@ button:active {
     gap: 6px;
 }
 
-.notify-clear {
-    border: 0;
-    padding: 6px 8px;
-
-    border-radius: 999px;
-    background:
-        transparent;
-    color: var(--text);
-
-    cursor: pointer;
-}
-
-.notify-clear:hover {
-    background-color:
-        var(--hover);
-}
-
+.notify-clear,
 .notify-remove-all {
     border: 0;
-    padding: 6px 8px;
+    border-bottom:
+        1px solid
+        transparent;
+    padding: 2px 0;
 
-    border-radius: 999px;
+    border-radius: 0;
     background:
         transparent;
     color: var(--text);
 
     cursor: pointer;
+    opacity: 0.72;
 }
 
+.notify-clear:hover,
 .notify-remove-all:hover {
-    background-color:
-        var(--hover);
+    border-bottom-color:
+        currentColor;
+    background:
+        transparent;
+    opacity: 1;
 }
 
 .notify-tabs {
@@ -489,7 +481,8 @@ button:active {
 .notify-profile,
 .notify-thumbnail {
     color: inherit;
-    text-decoration: none;
+    text-decoration:
+        none;
     outline: none;
 }
 
@@ -542,6 +535,14 @@ button:active {
         transform:
             scale(1);
     }
+}
+
+.notify-tab:focus-visible {
+    outline: none;
+
+    box-shadow:
+        0 0 0 2px var(--bar),
+        0 0 0 4px var(--text);
 }
 
 @media (max-width: 768px) {
