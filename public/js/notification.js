@@ -224,7 +224,7 @@ function createItem(item) {
     read.type = 'button';
     read.dataset.id = String(item.id);
     read.append(
-        createIcon('read'),
+        createMenuIcon('read'),
         '읽음'
     );
 
@@ -233,7 +233,7 @@ function createItem(item) {
     remove.type = 'button';
     remove.dataset.id = String(item.id);
     remove.append(
-        createIcon('delete'),
+        createMenuIcon('delete'),
         '삭제'
     );
 
@@ -639,7 +639,10 @@ function closeNotificationMenus(event) {
     document.querySelectorAll(
         '.notify-more.is-open'
     ).forEach(item => {
-        item.classList.remove('is-open');
+        item.classList.remove(
+            'is-open',
+            'is-up'
+        );
     });
 }
 
@@ -702,6 +705,13 @@ function deleteNotification(event, list, badge, tabs) {
 
         return true;
     }
+
+    item.querySelector(
+        '.notify-more'
+    )?.classList.remove(
+        'is-open',
+        'is-up'
+    );
 
     clearNotification(item);
 
