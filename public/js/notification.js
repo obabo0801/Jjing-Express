@@ -95,6 +95,10 @@ export function initNotification() {
             return;
         }
 
+        if (openNotificationMain(event)) {
+            return;
+        }
+
         readNotification(event, list, badge, tabs);
     });
 
@@ -424,6 +428,34 @@ function readNotification(event, list, badge, tabs) {
         badge,
         tabs
     );
+}
+
+function openNotificationMain(event) {
+    const main = event.target.closest(
+        '.notify-main'
+    );
+
+    if (!main) {
+        return false;
+    }
+
+    if (event.target.closest(
+        'a, button'
+    )) {
+        return false;
+    }
+
+    const link = main.querySelector(
+        '.notify-content'
+    );
+
+    if (!link) {
+        return false;
+    }
+
+    link.click();
+
+    return true;
 }
 
 function toggleNotificationMenu(event) {
