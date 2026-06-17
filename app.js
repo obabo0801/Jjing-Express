@@ -6,7 +6,7 @@ import * as log from '#utils/log';
 
 const app = express();
 
-const PORT = 3000;
+const PORT = 443;
 const PUBLIC_PATH = file.get('public');
 
 const HTTPS_OPTIONS = {
