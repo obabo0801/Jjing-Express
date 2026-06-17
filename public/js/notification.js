@@ -244,13 +244,15 @@ function createItem(item) {
 }
 
 function createImage(className, src, href = '', id = '') {
-    const wrap = href
+    const isLink = Boolean(href);
+
+    const wrap = isLink
         ? document.createElement('a')
         : document.createElement('span');
 
     wrap.className = className;
 
-    if (href) {
+    if (isLink) {
         wrap.href = safeHref(href);
         wrap.dataset.id = String(id);
     }

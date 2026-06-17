@@ -539,7 +539,37 @@ button:active {
     }
 }
 
+.notify-profile:focus-visible,
+.notify-content:focus-visible,
+.notify-more-button:focus-visible {
+    outline: none;
+}
 
+.notify-profile:focus-visible {
+    box-shadow:
+        0 0 0 2px var(--bar),
+        0 0 0 4px var(--text);
+}
+
+.notify-content {
+    border-radius: 10px;
+}
+
+.notify-content:focus-visible {
+    box-shadow:
+        0 0 0 2px var(--bar),
+        0 0 0 4px var(--text);
+}
+
+.notify-more-button:focus-visible {
+    opacity: 1;
+    background-color:
+        var(--hover);
+
+    box-shadow:
+        0 0 0 2px var(--bar),
+        0 0 0 4px var(--text);
+}
 
 @media (max-width: 768px) {
     .notify-panel {
