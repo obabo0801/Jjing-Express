@@ -64,6 +64,12 @@
     );
 }
 
+.icon-search {
+    --icon: url(
+        "/assets/icons/search.svg"
+    );
+}
+
 .theme-light {
     display: none;
 }

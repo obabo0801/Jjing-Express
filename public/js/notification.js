@@ -45,6 +45,7 @@ let notifications = [
 ];
 
 let filter = 'all';
+let keyword = '';
 
 let length = (
     notifications.length
@@ -60,6 +61,11 @@ export function initNotification() {
     const tabs = document.querySelectorAll(
         '.notify-tab'
     );
+
+    const searchButton = $('.notify-search-button');
+    const searchBox = $('.notify-search');
+    const searchInput = $('.notify-search-input');
+    const searchClose = $('.notify-search-close');
 
     renderNotification(list, badge, tabs);
     startNotificationClock();
@@ -81,6 +87,28 @@ export function initNotification() {
         on(tab, 'click', () => {
             changeFilter(tab, list, badge, tabs);
         });
+    });
+
+    on(searchButton, 'click', () => {
+        toggleSearch(searchBox, searchInput);
+    });
+
+    on(searchClose, 'click', () => {
+        closeSearch(
+            searchBox,
+            searchInput,
+            list,
+            badge,
+            tabs
+        );
+    });
+
+    on(searchInput, 'input', () => {
+        keyword = searchInput.value
+            .trim()
+            .toLowerCase();
+
+        renderNotification(list, badge, tabs);
     });
 
     on(list, 'click', event => {
@@ -225,10 +253,55 @@ function restoreNotificationFocus(focus) {
     });
 }
 
+function toggleSearch(searchBox, searchInput) {
+    if (!searchBox || !searchInput) {
+        return;
+    }
+
+    const open = searchBox.hidden;
+
+    searchBox.hidden = !open;
+
+    if (open) {
+        searchInput.focus();
+    }
+}
+
+function closeSearch(
+    searchBox,
+    searchInput,
+    list,
+    badge,
+    tabs
+) {
+    if (!searchBox || !searchInput) {
+        return;
+    }
+
+    keyword = '';
+    searchInput.value = '';
+    searchBox.hidden = true;
+
+    renderNotification(list, badge, tabs);
+}
+
 function getFilteredNotifications() {
-    const items = filter === 'unread'
+    let items = filter === 'unread'
         ? notifications.filter(item => item.unread)
         : notifications;
+
+    if (keyword) {
+        items = items.filter(item => {
+            const title = item.title
+                .toLowerCase();
+
+            const message = item.message
+                .toLowerCase();
+
+            return title.includes(keyword)
+                || message.includes(keyword);
+        });
+    }
 
     return [...items].sort(
         (a, b) => b.time - a.time

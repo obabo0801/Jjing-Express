@@ -66,12 +66,22 @@
             <button class="notify-tab" type="button" data-filter="unread">
                 미확인
             </button>
+
+            <button class="notify-search-button" type="button">
+                <span class="icon icon-search"></span>
+            </button>
         </div>
 
-        <div class="notify-list">
-            <p class="notify-empty">
-                새로운 알림이 없습니다.
-            </p>
+        <div class="notify-search" hidden>
+            <input
+                class="notify-search-input"
+                type="search"
+                placeholder="알림 검색"
+            >
+
+            <button class="notify-search-close" type="button">
+                닫기
+            </button>
         </div>
     </aside>
 
