@@ -2,8 +2,15 @@ import { $, on } from './dom.js';
 
 let layer = null;
 
+const SCREEN_SCALE_KEY = 'jjing-screen-scale';
+const DEFAULT_SCREEN_SCALE = '1';
+
 export function initSettings() {
     const button = $('.settings-button');
+
+    applyScreenScale(
+        getScreenScale()
+    );
 
     on(button, 'click', openSettings);
 
@@ -76,6 +83,10 @@ async function changeSettings(type) {
         `/components/settings/${type}.html`
     );
 
+    if (type === 'general') {
+        bindGeneralSettings();
+    }
+
     title.textContent = name;
     icon.className = iconName;
 
@@ -105,4 +116,87 @@ async function getHtml(url) {
     }
 
     return response.text();
+}
+
+function bindGeneralSettings() {
+    bindScreenScale();
+}
+
+function bindScreenScale() {
+    const dropdown = $('[data-screen-scale-dropdown]');
+    const trigger = $('[data-screen-scale-trigger]');
+    const text = $('[data-screen-scale-text]');
+    const buttons = document.querySelectorAll(
+        '[data-screen-scale]'
+    );
+
+    if (!dropdown || !trigger || !text) {
+        return;
+    }
+
+    const current = getScreenScale();
+
+    text.textContent = getScaleText(current);
+
+    buttons.forEach(button => {
+        const active = button.dataset.screenScale
+            === current;
+
+        button.classList.toggle(
+            'is-active',
+            active
+        );
+
+        on(button, 'click', () => {
+            const value = button.dataset.screenScale;
+
+            saveScreenScale(value);
+            applyScreenScale(value);
+
+            text.textContent = getScaleText(value);
+            dropdown.classList.remove('is-open');
+
+            buttons.forEach(item => {
+                item.classList.toggle(
+                    'is-active',
+                    item === button
+                );
+            });
+        });
+    });
+
+    on(trigger, 'click', event => {
+        event.stopPropagation();
+
+        dropdown.classList.toggle('is-open');
+    });
+
+    on(document, 'click', event => {
+        if (!dropdown.contains(event.target)) {
+            dropdown.classList.remove('is-open');
+        }
+    });
+}
+
+function getScreenScale() {
+    return localStorage.getItem(SCREEN_SCALE_KEY)
+        || DEFAULT_SCREEN_SCALE;
+}
+
+function saveScreenScale(value) {
+    localStorage.setItem(
+        SCREEN_SCALE_KEY,
+        value
+    );
+}
+
+function applyScreenScale(value) {
+    document.documentElement.style.setProperty(
+        '--screen-scale',
+        value
+    );
+}
+
+function getScaleText(value) {
+    return `${Math.round(Number(value) * 100)}%`;
 }

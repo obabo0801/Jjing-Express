@@ -32,6 +32,9 @@ body {
             var(--motion),
         color var(--motion),
         opacity 0.2s ease;
+
+    zoom:
+        var(--screen-scale);
 }
 
 body.is-ready {

@@ -16,6 +16,8 @@
     --motion:
         var(--speed)
         var(--ease);
+
+    --screen-scale: 1;
 }
 
 [data-theme="light"] {
