@@ -76,6 +76,12 @@
     );
 }
 
+.icon-setting {
+    --icon: url(
+        "/assets/icons/setting.svg"
+    );
+}
+
 .theme-light {
     display: none;
 }
