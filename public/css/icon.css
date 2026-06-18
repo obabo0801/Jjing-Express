@@ -70,6 +70,12 @@
     );
 }
 
+.icon-close {
+    --icon: url(
+        "/assets/icons/close.svg"
+    );
+}
+
 .theme-light {
     display: none;
 }

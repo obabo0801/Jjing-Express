@@ -90,6 +90,7 @@ export function initNotification() {
     });
 
     on(searchButton, 'click', () => {
+        popSearchButton(searchButton);
         toggleSearch(searchBox, searchInput);
     });
 
@@ -265,6 +266,24 @@ function toggleSearch(searchBox, searchInput) {
     if (open) {
         searchInput.focus();
     }
+}
+
+function popSearchButton(button) {
+    if (!button) {
+        return;
+    }
+
+    button.classList.remove('is-pop');
+
+    requestAnimationFrame(() => {
+        button.classList.add('is-pop');
+    });
+
+    button.addEventListener('animationend', () => {
+        button.classList.remove('is-pop');
+    }, {
+        once: true
+    });
 }
 
 function closeSearch(

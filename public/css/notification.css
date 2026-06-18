@@ -240,6 +240,12 @@ button:active {
     cursor: pointer;
 }
 
+.notify-search-button.is-pop
+.icon {
+    animation:
+        icon-pop 0.22s ease;
+}
+
 .notify-search-button:hover {
     background-color:
         var(--hover);
@@ -306,6 +312,31 @@ button:active {
     color: var(--text);
 
     cursor: pointer;
+}
+
+.notify-search-input { 
+    &::-webkit-search-cancel-button {
+        width: 14px;
+        height: 14px;
+
+        appearance: none;
+        -webkit-appearance: none;
+
+        background-color:
+            var(--text);
+
+        mask:
+            url("/assets/icons/close.svg")
+            center / contain
+            no-repeat;
+
+        -webkit-mask:
+            url("/assets/icons/close.svg")
+            center / contain
+            no-repeat;
+
+        cursor: pointer;
+    }
 }
 
 .notify-tabs {
