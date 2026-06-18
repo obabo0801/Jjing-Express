@@ -435,32 +435,6 @@ button:active {
     }
 }
 
-.notify-list-wrap {
-    position: relative;
-    min-height: 0;
-}
-
-.notify-list-wrap::after {
-    content: "";
-
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 10px;
-    z-index: 2;
-
-    height: 14px;
-
-    pointer-events: none;
-
-    background:
-        linear-gradient(
-            to bottom,
-            var(--bar),
-            transparent
-        );
-}
-
 .notify-item {
     width: 100%;
 
