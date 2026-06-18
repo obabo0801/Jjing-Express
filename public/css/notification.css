@@ -54,6 +54,12 @@
 
     display: flex;
     flex-direction: column;
+    
+    overflow:
+        hidden;
+
+    overscroll-behavior:
+        contain;
 
     border:
         1px solid var(--line);
@@ -387,9 +393,6 @@ button:active {
 
 .notify-list {
     min-height: 0;
-    max-height: calc(
-        83px * 6
-    );
     padding-right: 4px;
 
     display: grid;
@@ -807,11 +810,5 @@ button:active {
         right: 16px;
 
         width: auto;
-
-        max-height: calc(
-            100dvh - var(
-                --top-height
-            ) - 22px
-        );
     }
 }

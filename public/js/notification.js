@@ -142,6 +142,10 @@ export function initNotification() {
     on(document, 'keydown', event => {
         closeEscape(event, button, panel);
     });
+
+    on(panel, 'keydown', event => {
+        closeTabEnd(event, button, panel);
+    });
 }
 
 function renderNotification(list, badge, tabs) {
@@ -1076,6 +1080,37 @@ function closeOutside(event, button, panel) {
 
 function closeEscape(event, button, panel) {
     if (event.key !== 'Escape') {
+        return;
+    }
+
+    closeNotification(button, panel);
+}
+
+function closeTabEnd(event, button, panel) {
+    if (
+        event.key !== 'Tab'
+        || event.shiftKey
+        || !panel
+        || panel.hidden
+    ) {
+        return;
+    }
+
+    const focusList = [
+        ...panel.querySelectorAll(
+            'button, a, input'
+        )
+    ].filter(item => {
+        return !item.hidden
+            && !item.disabled
+            && item.offsetParent !== null;
+    });
+
+    const last = focusList[
+        focusList.length - 1
+    ];
+
+    if (document.activeElement !== last) {
         return;
     }
 
