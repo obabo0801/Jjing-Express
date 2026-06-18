@@ -219,7 +219,9 @@ function restoreNotificationFocus(focus) {
     requestAnimationFrame(() => {
         document.querySelector(
             selector
-        )?.focus();
+        )?.focus({
+            preventScroll: true
+        });
     });
 }
 
@@ -864,6 +866,10 @@ function addNotification(data, list, badge, tabs) {
         isNew: true
     });
 
+    if (holdScroll) {
+        list.classList.add('is-hold');
+    }
+
     renderNotification(list, badge, tabs);
 
     if (holdScroll) {
@@ -872,6 +878,10 @@ function addNotification(data, list, badge, tabs) {
         list.scrollTop = beforeTop
             + afterHeight
             - beforeHeight;
+
+        requestAnimationFrame(() => {
+            list.classList.remove('is-hold');
+        });
     }
 
     restoreNotificationMenu(openMenuId);

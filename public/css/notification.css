@@ -283,6 +283,11 @@ button:active {
         contain;
 }
 
+.notify-list.is-hold {
+    scroll-behavior:
+        auto;
+}
+
 .notify-list {
     &::-webkit-scrollbar {
         width: 6px;
