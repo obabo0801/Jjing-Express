@@ -10,7 +10,7 @@ const DEFAULT_FONT_SCALE = '1';
 const NOTIFY_ENABLE_KEY = 'jjing-notify-enable';
 const DEFAULT_NOTIFY_ENABLE = '1';
 const NOTIFY_SOUND_KEY = 'jjing-notify-sound';
-const DEFAULT_NOTIFY_SOUND = '1';
+const DEFAULT_NOTIFY_SOUND = '0';
 
 const SETTINGS_TYPE_KEY = 'jjing-settings-type';
 const DEFAULT_SETTINGS_TYPE = 'general';
