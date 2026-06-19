@@ -341,6 +341,9 @@ button.is-active {
 
         grid-template-columns:
             1fr;
+
+        overflow:
+            hidden;
     }
 
     .settings-sidebar {
@@ -349,6 +352,7 @@ button.is-active {
 
     .settings-main {
         display: none;
+        min-height: 0;
     }
 
     .settings-layer.is-page
@@ -376,6 +380,21 @@ button.is-active {
     .settings-reset-button,
     .settings-toggle {
         width: 100%;
+    }
+
+    .settings-body {
+        flex: 1;
+        min-height: 0;
+
+        overflow-y:
+            auto;
+    }
+
+    .settings-size-menu {
+        position: static;
+
+        width: 100%;
+        margin-top: 6px;
     }
 }
 
