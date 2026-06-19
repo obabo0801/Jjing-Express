@@ -33,36 +33,50 @@ function loadItems() {
             return [];
         }
 
-        return data.map(item => {
-            return {
-                ...item,
-                isNew: false
-            };
-        });
+        return data
+            .map(item => toItem(item))
+            .filter(item => item.id > 0);
     } catch {
         return [];
     }
 }
 
 function saveItems() {
-    const data = items.map(item => {
-        return {
-            id: item.id,
-            title: item.title,
-            message: item.message,
-            href: item.href,
-            profileHref: item.profileHref,
-            profile: item.profile,
-            thumbnail: item.thumbnail,
-            time: item.time,
-            unread: item.unread
-        };
-    });
+    const data = items.map(toSave);
 
     localStorage.setItem(
         STORE_KEY,
         JSON.stringify(data)
     );
+}
+
+function toItem(data = {}, isNew = false) {
+    return {
+        id: Number(data.id) || 0,
+        title: String(data.title || '알림'),
+        message: String(data.message || ''),
+        href: data.href || '#',
+        profileHref: data.profileHref || '',
+        profile: data.profile || '',
+        thumbnail: data.thumbnail || null,
+        time: Number(data.time) || Date.now(),
+        unread: data.unread !== false,
+        isNew
+    };
+}
+
+function toSave(item) {
+    return {
+        id: item.id,
+        title: item.title,
+        message: item.message,
+        href: item.href,
+        profileHref: item.profileHref,
+        profile: item.profile,
+        thumbnail: item.thumbnail,
+        time: item.time,
+        unread: item.unread
+    };
 }
 
 function getLastId() {
@@ -1030,18 +1044,11 @@ function addItem(data, list, badge, tabs) {
     const beforeTop = list.scrollTop;
     const beforeHeight = list.scrollHeight;
 
-    items.unshift({
+    items.unshift(toItem({
+        ...data,
         id: ++lastId,
-        title: data.title || '알림',
-        message: data.message || '',
-        href: data.href || '#',
-        profileHref: data.profileHref || '',
-        profile: data.profile || '',
-        thumbnail: data.thumbnail || null,
-        time: data.time || Date.now(),
-        unread: true,
-        isNew: true
-    });
+        unread: true
+    }, true));
 
     saveItems();
 
