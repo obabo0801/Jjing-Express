@@ -1224,14 +1224,7 @@ function togglePanel(button, panel) {
         return;
     }
 
-    const open = panel.hidden;
-
-    panel.hidden = !open;
-
-    button.setAttribute(
-        'aria-expanded',
-        String(open)
-    );
+    panel.hidden = !panel.hidden;
 }
 
 function closePanel(button, panel) {
@@ -1240,11 +1233,6 @@ function closePanel(button, panel) {
     }
 
     panel.hidden = true;
-
-    button.setAttribute(
-        'aria-expanded',
-        'false'
-    );
 }
 
 function closeOut(event, button, panel) {

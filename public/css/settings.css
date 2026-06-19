@@ -278,6 +278,8 @@
 .settings-size-menu
 button:hover,
 .settings-size-menu
+button:focus-visible,
+.settings-size-menu
 button.is-active {
     background-color:
         var(--hover);
