@@ -71,6 +71,14 @@ function bindSettings() {
         on(button, 'click', closeSettings);
     });
 
+    const back = layer.querySelector(
+        '[data-settings-mobile-back]'
+    );
+
+    on(back, 'click', () => {
+        layer.classList.remove('is-page');
+    });
+
     layer.querySelectorAll(
         '[data-settings-type]'
     ).forEach(tab => {
@@ -78,6 +86,8 @@ function bindSettings() {
             changeSettings(
                 tab.dataset.settingsType
             );
+
+            layer.classList.add('is-page');
         });
     });
 }
@@ -128,6 +138,7 @@ function closeSettings() {
     }
 
     layer.hidden = true;
+    layer.classList.remove('is-page');
 }
 
 async function getHtml(url) {

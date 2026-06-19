@@ -329,3 +329,52 @@ button.is-active {
         inset 0 0 0 1px
         var(--text);
 }
+
+.settings-page-back {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .settings-popup {
+        width: calc(100vw - 24px);
+        height: calc(100dvh - 24px);
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .settings-sidebar {
+        border-right: 0;
+    }
+
+    .settings-main {
+        display: none;
+    }
+
+    .settings-layer.is-page
+    .settings-sidebar {
+        display: none;
+    }
+
+    .settings-layer.is-page
+    .settings-main {
+        display: flex;
+    }
+
+    .settings-page-back {
+        display: grid;
+        place-items: center;
+    }
+
+    .settings-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .settings-size-dropdown,
+    .settings-size-trigger,
+    .settings-reset-button,
+    .settings-toggle {
+        width: 100%;
+    }
+}
