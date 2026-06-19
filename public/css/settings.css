@@ -378,3 +378,83 @@ button.is-active {
         width: 100%;
     }
 }
+
+.settings-layer.is-open
+.settings-backdrop {
+    animation:
+        settings-backdrop-in
+        0.18s ease;
+}
+
+.settings-layer.is-open
+.settings-popup {
+    animation:
+        settings-popup-in
+        0.2s ease;
+}
+
+.settings-layer.is-close
+.settings-backdrop {
+    animation:
+        settings-backdrop-out
+        0.16s ease forwards;
+}
+
+.settings-layer.is-close
+.settings-popup {
+    animation:
+        settings-popup-out
+        0.16s ease forwards;
+}
+
+@keyframes settings-backdrop-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes settings-backdrop-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes settings-popup-in {
+    0% {
+        opacity: 0;
+        transform:
+            translate(-50%, -48%)
+            scale(0.96);
+    }
+
+    100% {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+}
+
+@keyframes settings-popup-out {
+    0% {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(-50%, -48%)
+            scale(0.96);
+    }
+}

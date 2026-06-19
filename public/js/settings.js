@@ -44,6 +44,9 @@ async function openSettings() {
     }
 
     layer.hidden = false;
+    layer.classList.remove('is-close');
+    layer.classList.add('is-open');
+
     document.body.classList.add(
         'is-settings-open'
     );
@@ -143,22 +146,30 @@ async function changeSettings(type) {
 }
 
 function closeSettings() {
-    if (!layer) {
+    if (!layer || layer.hidden) {
         return;
     }
 
-    layer.hidden = true;
-    layer.classList.remove('is-page');
+    layer.classList.remove('is-open');
+    layer.classList.add('is-close');
 
-    document.body.classList.remove(
-        'is-settings-open'
-    );
+    setTimeout(() => {
+        layer.hidden = true;
+        layer.classList.remove(
+            'is-close',
+            'is-page'
+        );
 
-    lastFocus?.focus?.({
-        preventScroll: true
-    });
+        document.body.classList.remove(
+            'is-settings-open'
+        );
 
-    lastFocus = null;
+        lastFocus?.focus?.({
+            preventScroll: true
+        });
+
+        lastFocus = null;
+    }, 160);
 }
 
 function closeSettingsEscape(event) {
