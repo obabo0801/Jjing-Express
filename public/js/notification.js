@@ -6,6 +6,9 @@ const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 const CLEAR_GRACE = 10000;
 
+const NOTIFY_ENABLE_KEY = 'jjing-notify-enable';
+const NOTIFY_SOUND_KEY = 'jjing-notify-sound';
+
 const now = Date.now();
 
 let notifications = [
@@ -943,6 +946,10 @@ function deleteAll(list, badge, tabs) {
 }
 
 function addNotification(data, list, badge, tabs) {
+    if (!isNotifyEnabled()) {
+        return;
+    }
+
     const openMenuId = getOpenMenuId();
 
     const holdScroll = list.scrollTop > 0;
@@ -984,6 +991,7 @@ function addNotification(data, list, badge, tabs) {
 
     updateBadge(badge, true);
     shakeNotifyButton();
+    playNotifySound();
 }
 
 function shakeNotifyButton() {
@@ -1006,6 +1014,32 @@ function shakeNotifyButton() {
         },
         { once: true }
     );
+}
+
+function isNotifyEnabled() {
+    return localStorage.getItem(
+        NOTIFY_ENABLE_KEY
+    ) !== '0';
+}
+
+function isNotifySoundEnabled() {
+    return localStorage.getItem(
+        NOTIFY_SOUND_KEY
+    ) !== '0';
+}
+
+function playNotifySound() {
+    if (!isNotifySoundEnabled()) {
+        return;
+    }
+
+    const audio = new Audio(
+        '/assets/sounds/notify.mp3'
+    );
+
+    audio.volume = 0.35;
+
+    audio.play().catch(() => {});
 }
 
 function startNotificationTest(list, badge, tabs) {
