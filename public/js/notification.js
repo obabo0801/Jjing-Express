@@ -1224,15 +1224,39 @@ function togglePanel(button, panel) {
         return;
     }
 
-    panel.hidden = !panel.hidden;
+    if (panel.hidden) {
+        openPanel(panel);
+
+        return;
+    }
+
+    closePanel(button, panel);
+}
+
+function openPanel(panel) {
+    panel.hidden = false;
 }
 
 function closePanel(button, panel) {
-    if (!button || !panel) {
+    if (!button || !panel
+        || panel.hidden) {
         return;
     }
 
     panel.hidden = true;
+    resetPanel();
+}
+
+function resetPanel() {
+    closeMenus();
+
+    closeSearch(
+        $('.notify-search'),
+        $('.notify-search-input'),
+        viewBox.list,
+        viewBox.badge,
+        viewBox.tabs
+    );
 }
 
 function closeOut(event, button, panel) {
