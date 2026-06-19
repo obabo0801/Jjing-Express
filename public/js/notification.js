@@ -5,7 +5,7 @@ import {
     getOption
 } from './options.js';
 
-const STORE_KEY = 'jjing-items';
+const STORE_KEY = 'jjing-notifications';
 
 let items = loadItems();
 
@@ -194,14 +194,14 @@ function renderNotification(list, badge, tabs) {
 
     list.replaceChildren();
 
-    const items = getFilteredNotifications();
+    const view = getFilteredItems();
 
-    if (!items.length) {
+    if (!view.length) {
         list.append(createEmpty());
     } else {
         let lastDate = '';
 
-        items.forEach(item => {
+        view.forEach(item => {
             const date = getDateKey(item.time);
 
             if (date !== lastDate) {
@@ -345,13 +345,13 @@ function closeSearch(
     renderNotification(list, badge, tabs);
 }
 
-function getFilteredNotifications() {
-    let items = filter === 'unread'
+function getFilteredItems() {
+    let list = filter === 'unread'
         ? items.filter(item => item.unread)
         : items;
 
     if (keyword) {
-        items = items.filter(item => {
+        list = list.filter(item => {
             const title = item.title
                 .toLowerCase();
 
@@ -363,7 +363,7 @@ function getFilteredNotifications() {
         });
     }
 
-    return [...items].sort(
+    return [...list].sort(
         (a, b) => b.time - a.time
     );
 }
