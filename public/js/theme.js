@@ -7,21 +7,21 @@ const darkQuery = '(prefers-color-scheme: dark)';
 export function initTheme() {
     const button = $('.theme-button');
 
-    setTheme(getTheme(), false);
-    watchTheme();
+    set(get(), false);
+    watch();
 
-    on(button, 'click', toggleTheme);
+    on(button, 'click', toggle);
 }
 
-function toggleTheme() {
+function toggle() {
     const theme = root.dataset.theme === 'dark'
         ? 'light'
         : 'dark';
 
-    setTheme(theme);
+    set(theme);
 }
 
-function setTheme(theme, save = true) {
+function set(theme, save = true) {
     root.dataset.theme = theme;
     window.setFaviconTheme?.(theme);
 
@@ -30,21 +30,21 @@ function setTheme(theme, save = true) {
     }
 }
 
-function getTheme() {
+function get() {
     return localStorage.getItem(key)
-        || systemTheme();
+        || system();
 }
 
-function systemTheme() {
+function system() {
     return matchMedia(darkQuery).matches
         ? 'dark'
         : 'light';
 }
 
-function watchTheme() {
+function watch() {
     const query = matchMedia(darkQuery);
 
     on(query, 'change', () => {
-        setTheme(systemTheme());
+        set(system());
     });
 }
