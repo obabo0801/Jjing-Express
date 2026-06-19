@@ -82,6 +82,12 @@
     );
 }
 
+.icon-back {
+    --icon: url(
+        "/assets/icons/back.svg"
+    );
+}
+
 .theme-light {
     display: none;
 }

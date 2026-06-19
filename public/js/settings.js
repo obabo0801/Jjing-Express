@@ -150,10 +150,12 @@ function closeSettings() {
         return;
     }
 
+    const popup = $('.settings-popup');
+
     layer.classList.remove('is-open');
     layer.classList.add('is-close');
 
-    setTimeout(() => {
+    const done = () => {
         layer.hidden = true;
         layer.classList.remove(
             'is-close',
@@ -169,7 +171,18 @@ function closeSettings() {
         });
 
         lastFocus = null;
-    }, 160);
+    };
+
+    if (!popup) {
+        done();
+        return;
+    }
+
+    popup.addEventListener(
+        'animationend',
+        done,
+        { once: true }
+    );
 }
 
 function closeSettingsEscape(event) {
