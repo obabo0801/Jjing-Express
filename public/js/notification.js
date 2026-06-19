@@ -5,7 +5,9 @@ import {
     getOption
 } from './options.js';
 
-const STORE_KEY = 'jjing-notifications';
+const STORE_KEY = (
+    'jjing-notifications'
+);
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
