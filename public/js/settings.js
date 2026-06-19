@@ -298,13 +298,15 @@ function bindScreenScale() {
 }
 
 function getScreenScale() {
-    return localStorage.getItem(SCREEN_SCALE_KEY)
-        || DEFAULT_SCREEN_SCALE;
+    return getOption(
+        OPTION.screenScale,
+        DEFAULT_OPTION.screenScale
+    );
 }
 
 function saveScreenScale(value) {
     localStorage.setItem(
-        SCREEN_SCALE_KEY,
+        OPTION.screenScale,
         value
     );
 }
@@ -371,13 +373,15 @@ function bindFontScale() {
 }
 
 function getFontScale() {
-    return localStorage.getItem(FONT_SCALE_KEY)
-        || DEFAULT_FONT_SCALE;
+    return getOption(
+        OPTION.fontScale,
+        DEFAULT_OPTION.fontScale
+    );
 }
 
 function saveFontScale(value) {
     localStorage.setItem(
-        FONT_SCALE_KEY,
+        OPTION.fontScale,
         value
     );
 }
@@ -428,20 +432,20 @@ function closeSettingsDropdowns(event) {
 }
 
 function resetGeneralSettings() {
-    localStorage.removeItem(SCREEN_SCALE_KEY);
-    localStorage.removeItem(FONT_SCALE_KEY);
+    localStorage.removeItem(OPTION.screenScale);
+    localStorage.removeItem(OPTION.fontScale);
 
-    applyScreenScale(DEFAULT_SCREEN_SCALE);
-    applyFontScale(DEFAULT_FONT_SCALE);
+    applyScreenScale(DEFAULT_OPTION.screenScale);
+    applyFontScale(DEFAULT_OPTION.fontScale);
 
     updateScaleView(
         'screen',
-        DEFAULT_SCREEN_SCALE
+        DEFAULT_OPTION.screenScale
     );
 
     updateScaleView(
         'font',
-        DEFAULT_FONT_SCALE
+        DEFAULT_OPTION.fontScale
     );
 
     document.querySelectorAll(
@@ -475,14 +479,14 @@ function updateScaleView(type, value) {
 function bindNotificationSettings() {
     bindNotifyToggle(
         'enable',
-        NOTIFY_ENABLE_KEY,
-        DEFAULT_NOTIFY_ENABLE
+        OPTION.notifyEnable,
+        DEFAULT_OPTION.notifyEnable
     );
 
     bindNotifyToggle(
         'sound',
-        NOTIFY_SOUND_KEY,
-        DEFAULT_NOTIFY_SOUND
+        OPTION.notifySound,
+        DEFAULT_OPTION.notifySound
     );
 }
 
@@ -495,8 +499,10 @@ function bindNotifyToggle(type, key, defaultValue) {
         return;
     }
 
-    let value = localStorage.getItem(key)
-        || defaultValue;
+    let value = getOption(
+        key,
+        defaultValue
+    );
 
     updateNotifyToggle(button, value);
 
@@ -528,14 +534,15 @@ function updateNotifyToggle(button, value) {
 }
 
 function getSettingsType() {
-    return localStorage.getItem(
-        SETTINGS_TYPE_KEY
-    ) || DEFAULT_SETTINGS_TYPE;
+    return getOption(
+        OPTION.settingsType,
+        DEFAULT_OPTION.settingsType
+    );
 }
 
 function saveSettingsType(type) {
     localStorage.setItem(
-        SETTINGS_TYPE_KEY,
+        OPTION.settingsType,
         type
     );
 }
