@@ -8,7 +8,7 @@ export const OPTION = {
 
 export const DEFAULT_OPTION = {
     notifyEnable: '1',
-    notifySound: '1',
+    notifySound: '0',
     screenScale: '1',
     fontScale: '1',
     settingsType: 'general'

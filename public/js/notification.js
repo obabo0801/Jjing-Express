@@ -56,6 +56,12 @@ let length = (
     notifications.length
 );
 
+let notifyView = {
+    list: null,
+    badge: null,
+    tabs: null
+};
+
 export function initNotification() {
     const button = $('.notify-button');
     const panel = $('#notify-panel');
@@ -71,6 +77,12 @@ export function initNotification() {
     const searchBox = $('.notify-search');
     const searchInput = $('.notify-search-input');
     const searchClose = $('.notify-search-close');
+
+    notifyView = {
+        list,
+        badge,
+        tabs
+    };
 
     renderNotification(list, badge, tabs);
     startNotificationClock();
@@ -151,6 +163,19 @@ export function initNotification() {
     on(panel, 'keydown', event => {
         closeTabEnd(event, button, panel);
     });
+}
+
+export function pushNotification(data) {
+    if (!notifyView.list) {
+        return;
+    }
+
+    addNotification(
+        data,
+        notifyView.list,
+        notifyView.badge,
+        notifyView.tabs
+    );
 }
 
 function renderNotification(list, badge, tabs) {
