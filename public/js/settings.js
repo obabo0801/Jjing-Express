@@ -12,12 +12,12 @@ let lastFocus = null;
 export function initSettings() {
     const button = $('.settings-button');
 
-    applyScreenScale(
-        getScreenScale()
+    applyScreen(
+        getScreen()
     );
 
-    applyFontScale(
-        getFontScale()
+    applyFont(
+        getFont()
     );
 
     on(button, 'click', open);
@@ -117,7 +117,7 @@ async function change(type) {
     );
 
     if (type === 'general') {
-        bindGeneralSettings();
+        bindGeneral();
     }
 
     if (type === 'notification') {
@@ -241,13 +241,13 @@ async function getHtml(url) {
     return response.text();
 }
 
-function bindGeneralSettings() {
-    bindScreenScale();
-    bindFontScale();
-    bindResetSettings();
+function bindGeneral() {
+    bindScreen();
+    bindFont();
+    bindReset();
 }
 
-function bindScreenScale() {
+function bindScreen() {
     const dropdown = $('[data-screen-scale-dropdown]');
     const trigger = $('[data-screen-scale-trigger]');
     const text = $('[data-screen-scale-text]');
@@ -259,9 +259,9 @@ function bindScreenScale() {
         return;
     }
 
-    const current = getScreenScale();
+    const current = getScreen();
 
-    text.textContent = getScaleText(current);
+    text.textContent = scaleText(current);
 
     buttons.forEach(button => {
         const active = button.dataset.screenScale
@@ -275,10 +275,10 @@ function bindScreenScale() {
         on(button, 'click', () => {
             const value = button.dataset.screenScale;
 
-            saveScreenScale(value);
-            applyScreenScale(value);
+            saveScreen(value);
+            applyScreen(value);
 
-            text.textContent = getScaleText(value);
+            text.textContent = scaleText(value);
             dropdown.classList.remove('is-open');
 
             buttons.forEach(item => {
@@ -293,40 +293,40 @@ function bindScreenScale() {
     on(trigger, 'click', event => {
         event.stopPropagation();
 
-        toggleSettingsDropdown(dropdown);
+        toggleDrop(dropdown);
     });
 
     on(dropdown, 'keydown', event => {
-        closeDropdownTabEnd(event, dropdown);
+        closeDropTab(event, dropdown);
     });
 }
 
-function getScreenScale() {
+function getScreen() {
     return getOption(
         OPTION.screenScale,
         DEFAULT_OPTION.screenScale
     );
 }
 
-function saveScreenScale(value) {
+function saveScreen(value) {
     localStorage.setItem(
         OPTION.screenScale,
         value
     );
 }
 
-function applyScreenScale(value) {
+function applyScreen(value) {
     document.documentElement.style.setProperty(
         '--screen-scale',
         value
     );
 }
 
-function getScaleText(value) {
+function scaleText(value) {
     return `${Math.round(Number(value) * 100)}%`;
 }
 
-function bindFontScale() {
+function bindFont() {
     const dropdown = $('[data-font-scale-dropdown]');
     const trigger = $('[data-font-scale-trigger]');
     const text = $('[data-font-scale-text]');
@@ -338,9 +338,9 @@ function bindFontScale() {
         return;
     }
 
-    const current = getFontScale();
+    const current = getFont();
 
-    text.textContent = getScaleText(current);
+    text.textContent = scaleText(current);
 
     buttons.forEach(button => {
         const active = button.dataset.fontScale
@@ -354,10 +354,10 @@ function bindFontScale() {
         on(button, 'click', () => {
             const value = button.dataset.fontScale;
 
-            saveFontScale(value);
-            applyFontScale(value);
+            saveFont(value);
+            applyFont(value);
 
-            text.textContent = getScaleText(value);
+            text.textContent = scaleText(value);
             dropdown.classList.remove('is-open');
 
             buttons.forEach(item => {
@@ -372,42 +372,42 @@ function bindFontScale() {
     on(trigger, 'click', event => {
         event.stopPropagation();
 
-        toggleSettingsDropdown(dropdown);
+        toggleDrop(dropdown);
     });
 
     on(dropdown, 'keydown', event => {
-        closeDropdownTabEnd(event, dropdown);
+        closeDropTab(event, dropdown);
     });
 }
 
-function getFontScale() {
+function getFont() {
     return getOption(
         OPTION.fontScale,
         DEFAULT_OPTION.fontScale
     );
 }
 
-function saveFontScale(value) {
+function saveFont(value) {
     localStorage.setItem(
         OPTION.fontScale,
         value
     );
 }
 
-function applyFontScale(value) {
+function applyFont(value) {
     document.documentElement.style.setProperty(
         '--font-scale',
         value
     );
 }
 
-function bindResetSettings() {
+function bindReset() {
     const button = $('[data-settings-reset]');
 
-    on(button, 'click', resetGeneralSettings);
+    on(button, 'click', resetGeneral);
 }
 
-function toggleSettingsDropdown(dropdown) {
+function toggleDrop(dropdown) {
     const open = dropdown.classList.contains('is-open');
 
     closeDropdowns();
@@ -439,7 +439,7 @@ function closeDropdowns(event) {
     });
 }
 
-function closeDropdownTabEnd(event, dropdown) {
+function closeDropTab(event, dropdown) {
     if (
         event.key !== 'Tab'
         || event.shiftKey
@@ -468,19 +468,19 @@ function closeDropdownTabEnd(event, dropdown) {
     dropdown.classList.remove('is-open');
 }
 
-function resetGeneralSettings() {
+function resetGeneral() {
     localStorage.removeItem(OPTION.screenScale);
     localStorage.removeItem(OPTION.fontScale);
 
-    applyScreenScale(DEFAULT_OPTION.screenScale);
-    applyFontScale(DEFAULT_OPTION.fontScale);
+    applyScreen(DEFAULT_OPTION.screenScale);
+    applyFont(DEFAULT_OPTION.fontScale);
 
-    updateScaleView(
+    updateScale(
         'screen',
         DEFAULT_OPTION.screenScale
     );
 
-    updateScaleView(
+    updateScale(
         'font',
         DEFAULT_OPTION.fontScale
     );
@@ -492,7 +492,7 @@ function resetGeneralSettings() {
     });
 }
 
-function updateScaleView(type, value) {
+function updateScale(type, value) {
     const text = document.querySelector(
         `[data-${type}-scale-text]`
     );
@@ -502,7 +502,7 @@ function updateScaleView(type, value) {
     );
 
     if (text) {
-        text.textContent = getScaleText(value);
+        text.textContent = scaleText(value);
     }
 
     buttons.forEach(button => {
