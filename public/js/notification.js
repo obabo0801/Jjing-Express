@@ -9,9 +9,6 @@ const CLEAR_GRACE = 10000;
 const NOTIFY_ENABLE_KEY = 'jjing-notify-enable';
 const NOTIFY_SOUND_KEY = 'jjing-notify-sound';
 
-let notifyAudio = null;
-let notifySoundReady = false;
-
 const now = Date.now();
 
 let notifications = [
@@ -76,7 +73,6 @@ export function initNotification() {
     renderNotification(list, badge, tabs);
     startNotificationClock();
     startNotificationTest(list, badge, tabs);
-    readyNotifySound();
 
     on(button, 'click', () => {
         toggleNotification(button, panel);
@@ -1033,51 +1029,17 @@ function isNotifySoundEnabled() {
 }
 
 function playNotifySound() {
-    if (
-        !notifySoundReady
-        || !isNotifySoundEnabled()
-    ) {
+    if (!isNotifySoundEnabled()) {
         return;
     }
 
-    notifyAudio.currentTime = 0;
-
-    notifyAudio.play().catch(() => {});
-}
-
-function readyNotifySound() {
-    notifyAudio = new Audio(
+    const audio = new Audio(
         '/assets/sounds/notify.mp3'
     );
 
-    notifyAudio.volume = 0.35;
-    notifyAudio.preload = 'auto';
+    audio.volume = 0.35;
 
-    const unlock = () => {
-        notifySoundReady = true;
-
-        document.removeEventListener(
-            'pointerdown',
-            unlock
-        );
-
-        document.removeEventListener(
-            'keydown',
-            unlock
-        );
-    };
-
-    document.addEventListener(
-        'pointerdown',
-        unlock,
-        { once: true }
-    );
-
-    document.addEventListener(
-        'keydown',
-        unlock,
-        { once: true }
-    );
+    audio.play().catch(() => {});
 }
 
 function startNotificationTest(list, badge, tabs) {
