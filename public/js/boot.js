@@ -13,7 +13,7 @@ const theme = savedTheme
 
 root.dataset.theme = theme;
 
-let faviconUrls = {};
+let favicons = {};
 
 window.setFaviconTheme = (
     function setFaviconTheme(theme)
@@ -22,26 +22,26 @@ window.setFaviconTheme = (
         'link[rel="icon"]'
     );
 
-    if (!icon || !faviconUrls[theme]) {
+    if (!icon || !favicons[theme]) {
         return;
     }
 
-    icon.href = faviconUrls[theme];
+    icon.href = favicons[theme];
 });
 
-async function initFavicon() {
+async function init() {
     const response = await fetch('/favicon.svg');
     const svg = await response.text();
 
-    faviconUrls = {
-        dark: createFaviconUrl(svg, '#ffffff'),
-        light: createFaviconUrl(svg, '#c98e5f')
+    favicons = {
+        dark: createUrl(svg, '#ffffff'),
+        light: createUrl(svg, '#c98e5f')
     };
 
     window.setFaviconTheme(theme);
 }
 
-function createFaviconUrl(svg, color) {
+function createUrl(svg, color) {
     const favicon = svg.replace(
         '</svg>',
         `
@@ -61,4 +61,4 @@ function createFaviconUrl(svg, color) {
     return URL.createObjectURL(blob);
 }
 
-initFavicon();
+init();
