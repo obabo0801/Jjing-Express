@@ -628,6 +628,17 @@ button:active {
         #3b82f6;
 }
 
+.notify-item.is-read
+.notify-content {
+    color:
+        color-mix(
+            in srgb,
+            var(--text) 55%,
+            transparent
+        );
+    opacity: 0.6;
+}
+
 .notify-profile {
     width: 36px;
     height: 36px;

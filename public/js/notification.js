@@ -359,7 +359,7 @@ function createItem(item) {
     const wrap = document.createElement('div');
     wrap.className = item.unread
         ? 'notify-item is-unread'
-        : 'notify-item';
+        : 'notify-item is-read';
 
     if (item.isNew) {
         wrap.classList.add('is-new');
