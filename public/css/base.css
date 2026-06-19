@@ -44,6 +44,11 @@ body.is-ready {
     opacity: 1;
 }
 
+body.is-settings-open {
+    overflow:
+        hidden;
+}
+
 a {
     color: inherit;
     text-decoration: none;

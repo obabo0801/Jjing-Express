@@ -44,6 +44,9 @@ async function openSettings() {
     }
 
     layer.hidden = false;
+    document.body.classList.add(
+        'is-settings-open'
+    );
 
     await changeSettings(
         getSettingsType()
@@ -146,6 +149,10 @@ function closeSettings() {
 
     layer.hidden = true;
     layer.classList.remove('is-page');
+
+    document.body.classList.remove(
+        'is-settings-open'
+    );
 
     lastFocus?.focus?.({
         preventScroll: true
