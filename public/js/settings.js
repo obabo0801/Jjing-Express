@@ -74,6 +74,10 @@ function bindSettings() {
         on(button, 'click', closeSettings);
     });
 
+    on(document, 'click', event => {
+        closeSettingsDropdowns(event);
+    });
+
     const back = layer.querySelector(
         '[data-settings-mobile-back]'
     );
@@ -266,13 +270,7 @@ function bindScreenScale() {
     on(trigger, 'click', event => {
         event.stopPropagation();
 
-        dropdown.classList.toggle('is-open');
-    });
-
-    on(document, 'click', event => {
-        if (!dropdown.contains(event.target)) {
-            dropdown.classList.remove('is-open');
-        }
+        toggleSettingsDropdown(dropdown);
     });
 }
 
@@ -345,13 +343,7 @@ function bindFontScale() {
     on(trigger, 'click', event => {
         event.stopPropagation();
 
-        dropdown.classList.toggle('is-open');
-    });
-
-    on(document, 'click', event => {
-        if (!dropdown.contains(event.target)) {
-            dropdown.classList.remove('is-open');
-        }
+        toggleSettingsDropdown(dropdown);
     });
 }
 
@@ -378,6 +370,38 @@ function bindResetSettings() {
     const button = $('[data-settings-reset]');
 
     on(button, 'click', resetGeneralSettings);
+}
+
+function toggleSettingsDropdown(dropdown) {
+    const open = dropdown.classList.contains('is-open');
+
+    closeSettingsDropdowns();
+
+    dropdown.classList.toggle(
+        'is-open',
+        !open
+    );
+}
+
+function closeSettingsDropdowns(event) {
+    if (!layer || layer.hidden) {
+        return;
+    }
+
+    if (
+        event
+        && event.target.closest(
+            '.settings-size-dropdown'
+        )
+    ) {
+        return;
+    }
+
+    layer.querySelectorAll(
+        '.settings-size-dropdown.is-open'
+    ).forEach(dropdown => {
+        dropdown.classList.remove('is-open');
+    });
 }
 
 function resetGeneralSettings() {
