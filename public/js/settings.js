@@ -10,7 +10,9 @@ let layer = null;
 let lastFocus = null;
 
 export function initSettings() {
-    const button = $('.settings-button');
+    const button = $(
+        '.settings-button'
+    );
 
     applyScreen(
         getScreen()
@@ -44,7 +46,7 @@ async function open() {
     );
 
     await change(
-        getSettingsType()
+        getType()
     );
 
     $('.settings-popup')?.focus();
@@ -102,7 +104,7 @@ async function change(type) {
     const title = $('[data-settings-title]');
     const icon = $('[data-settings-title-icon]');
 
-    saveSettingsType(type);
+    saveType(type);
 
     const name = type === 'notification'
         ? '알림'
@@ -121,7 +123,7 @@ async function change(type) {
     }
 
     if (type === 'notification') {
-        bindNotificationSettings();
+        bindNotify();
     }
 
     title.textContent = name;
@@ -513,21 +515,21 @@ function updateScale(type, value) {
     });
 }
 
-function bindNotificationSettings() {
-    bindNotifyToggle(
+function bindNotify() {
+    bindToggle(
         'enable',
         OPTION.notifyEnable,
         DEFAULT_OPTION.notifyEnable
     );
 
-    bindNotifyToggle(
+    bindToggle(
         'sound',
         OPTION.notifySound,
         DEFAULT_OPTION.notifySound
     );
 }
 
-function bindNotifyToggle(type, key, defaultValue) {
+function bindToggle(type, key, defaultValue) {
     const button = document.querySelector(
         `[data-notify-toggle="${type}"]`
     );
@@ -541,7 +543,7 @@ function bindNotifyToggle(type, key, defaultValue) {
         defaultValue
     );
 
-    updateNotifyToggle(button, value);
+    updateToggle(button, value);
 
     on(button, 'click', () => {
         value = value === '1'
@@ -553,11 +555,11 @@ function bindNotifyToggle(type, key, defaultValue) {
             value
         );
 
-        updateNotifyToggle(button, value);
+        updateToggle(button, value);
     });
 }
 
-function updateNotifyToggle(button, value) {
+function updateToggle(button, value) {
     const off = value !== '1';
 
     button.classList.toggle(
@@ -570,14 +572,14 @@ function updateNotifyToggle(button, value) {
         : '켜짐';
 }
 
-function getSettingsType() {
+function getType() {
     return getOption(
         OPTION.settingsType,
         DEFAULT_OPTION.settingsType
     );
 }
 
-function saveSettingsType(type) {
+function saveType(type) {
     localStorage.setItem(
         OPTION.settingsType,
         type
