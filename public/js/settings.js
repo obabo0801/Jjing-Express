@@ -20,19 +20,19 @@ export function initSettings() {
         getFontScale()
     );
 
-    on(button, 'click', openSettings);
+    on(button, 'click', open);
 
     on(document, 'keydown', event => {
-        closeSettingsEscape(event);
-        trapSettingsFocus(event);
+        closeEsc(event);
+        trapFocus(event);
     });
 }
 
-async function openSettings() {
+async function open() {
     lastFocus = document.activeElement;
 
     if (!layer) {
-        await loadSettings();
+        await load();
     }
 
     layer.hidden = false;
@@ -43,14 +43,14 @@ async function openSettings() {
         'is-settings-open'
     );
 
-    await changeSettings(
+    await change(
         getSettingsType()
     );
 
     $('.settings-popup')?.focus();
 }
 
-async function loadSettings() {
+async function load() {
     const html = await getHtml(
         '/components/settings/popup.html'
     );
@@ -62,18 +62,18 @@ async function loadSettings() {
 
     layer = $('.settings-layer');
 
-    bindSettings();
+    bind();
 }
 
-function bindSettings() {
+function bind() {
     layer.querySelectorAll(
         '[data-settings-close]'
     ).forEach(button => {
-        on(button, 'click', closeSettings);
+        on(button, 'click', close);
     });
 
     on(document, 'click', event => {
-        closeSettingsDropdowns(event);
+        closeDropdowns(event);
     });
 
     const back = layer.querySelector(
@@ -88,7 +88,7 @@ function bindSettings() {
         '[data-settings-type]'
     ).forEach(tab => {
         on(tab, 'click', () => {
-            changeSettings(
+            change(
                 tab.dataset.settingsType
             );
 
@@ -97,7 +97,7 @@ function bindSettings() {
     });
 }
 
-async function changeSettings(type) {
+async function change(type) {
     const content = $('[data-settings-content]');
     const title = $('[data-settings-title]');
     const icon = $('[data-settings-title-icon]');
@@ -137,7 +137,7 @@ async function changeSettings(type) {
     });
 }
 
-function closeSettings() {
+function close() {
     if (!layer || layer.hidden) {
         return;
     }
@@ -177,15 +177,15 @@ function closeSettings() {
     );
 }
 
-function closeSettingsEscape(event) {
+function closeEsc(event) {
     if (event.key !== 'Escape') {
         return;
     }
 
-    closeSettings();
+    close();
 }
 
-function trapSettingsFocus(event) {
+function trapFocus(event) {
     if (
         event.key !== 'Tab'
         || !layer
@@ -410,7 +410,7 @@ function bindResetSettings() {
 function toggleSettingsDropdown(dropdown) {
     const open = dropdown.classList.contains('is-open');
 
-    closeSettingsDropdowns();
+    closeDropdowns();
 
     dropdown.classList.toggle(
         'is-open',
@@ -418,7 +418,7 @@ function toggleSettingsDropdown(dropdown) {
     );
 }
 
-function closeSettingsDropdowns(event) {
+function closeDropdowns(event) {
     if (!layer || layer.hidden) {
         return;
     }
