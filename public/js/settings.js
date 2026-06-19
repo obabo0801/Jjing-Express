@@ -15,6 +15,8 @@ const DEFAULT_NOTIFY_SOUND = '1';
 const SETTINGS_TYPE_KEY = 'jjing-settings-type';
 const DEFAULT_SETTINGS_TYPE = 'general';
 
+let lastFocus = null;
+
 export function initSettings() {
     const button = $('.settings-button');
 
@@ -29,13 +31,14 @@ export function initSettings() {
     on(button, 'click', openSettings);
 
     on(document, 'keydown', event => {
-        if (event.key === 'Escape') {
-            closeSettings();
-        }
+        closeSettingsEscape(event);
+        trapSettingsFocus(event);
     });
 }
 
 async function openSettings() {
+    lastFocus = document.activeElement;
+
     if (!layer) {
         await loadSettings();
     }
@@ -139,6 +142,66 @@ function closeSettings() {
 
     layer.hidden = true;
     layer.classList.remove('is-page');
+
+    lastFocus?.focus?.({
+        preventScroll: true
+    });
+
+    lastFocus = null;
+}
+
+function closeSettingsEscape(event) {
+    if (event.key !== 'Escape') {
+        return;
+    }
+
+    closeSettings();
+}
+
+function trapSettingsFocus(event) {
+    if (
+        event.key !== 'Tab'
+        || !layer
+        || layer.hidden
+    ) {
+        return;
+    }
+
+    const focusList = [
+        ...layer.querySelectorAll(
+            'button, a, input, textarea, select, '
+            + '[tabindex]:not([tabindex="-1"])'
+        )
+    ].filter(item => {
+        return !item.disabled
+            && item.offsetParent !== null;
+    });
+
+    if (!focusList.length) {
+        return;
+    }
+
+    const first = focusList[0];
+    const last = focusList[
+        focusList.length - 1
+    ];
+
+    if (
+        event.shiftKey
+        && document.activeElement === first
+    ) {
+        event.preventDefault();
+        last.focus();
+        return;
+    }
+
+    if (
+        !event.shiftKey
+        && document.activeElement === last
+    ) {
+        event.preventDefault();
+        first.focus();
+    }
 }
 
 async function getHtml(url) {
