@@ -96,7 +96,7 @@ export function initNotification() {
     startTest(list, badge, tabs);
 
     on(button, 'click', () => {
-        toggleNotification(button, panel);
+        togglePanel(button, panel);
     });
 
     on(clear, 'click', () => {
@@ -159,12 +159,12 @@ export function initNotification() {
     });
 
     on(document, 'click', event => {
-        closeOutside(event, button, panel);
+        closeOut(event, button, panel);
         closeMenus(event);
     });
 
     on(document, 'keydown', event => {
-        closeEscape(event, button, panel);
+        closeEsc(event, button, panel);
     });
 
     on(panel, 'keydown', event => {
@@ -1115,7 +1115,7 @@ function startTest(list, badge, tabs) {
     }, 3000);
 }
 
-function toggleNotification(button, panel) {
+function togglePanel(button, panel) {
     if (!button || !panel) {
         return;
     }
@@ -1130,7 +1130,7 @@ function toggleNotification(button, panel) {
     );
 }
 
-function closeNotification(button, panel) {
+function closePanel(button, panel) {
     if (!button || !panel) {
         return;
     }
@@ -1143,7 +1143,7 @@ function closeNotification(button, panel) {
     );
 }
 
-function closeOutside(event, button, panel) {
+function closeOut(event, button, panel) {
     if (!button || !panel || panel.hidden) {
         return;
     }
@@ -1157,15 +1157,15 @@ function closeOutside(event, button, panel) {
         return;
     }
 
-    closeNotification(button, panel);
+    closePanel(button, panel);
 }
 
-function closeEscape(event, button, panel) {
+function closeEsc(event, button, panel) {
     if (event.key !== 'Escape') {
         return;
     }
 
-    closeNotification(button, panel);
+    closePanel(button, panel);
 }
 
 function closeTabEnd(event, button, panel) {
@@ -1196,5 +1196,5 @@ function closeTabEnd(event, button, panel) {
         return;
     }
 
-    closeNotification(button, panel);
+    closePanel(button, panel);
 }
