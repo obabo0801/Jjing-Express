@@ -7,6 +7,12 @@ import {
 
 const STORE_KEY = 'jjing-notifications';
 
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
+const CLEAR_GRACE = 3000;
+
 let items = loadItems();
 
 let filter = 'all';
