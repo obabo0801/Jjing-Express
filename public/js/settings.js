@@ -295,6 +295,10 @@ function bindScreenScale() {
 
         toggleSettingsDropdown(dropdown);
     });
+
+    on(dropdown, 'keydown', event => {
+        closeDropdownTabEnd(event, dropdown);
+    });
 }
 
 function getScreenScale() {
@@ -370,6 +374,10 @@ function bindFontScale() {
 
         toggleSettingsDropdown(dropdown);
     });
+
+    on(dropdown, 'keydown', event => {
+        closeDropdownTabEnd(event, dropdown);
+    });
 }
 
 function getFontScale() {
@@ -429,6 +437,35 @@ function closeSettingsDropdowns(event) {
     ).forEach(dropdown => {
         dropdown.classList.remove('is-open');
     });
+}
+
+function closeDropdownTabEnd(event, dropdown) {
+    if (
+        event.key !== 'Tab'
+        || event.shiftKey
+        || !dropdown.classList.contains('is-open')
+    ) {
+        return;
+    }
+
+    const buttons = [
+        ...dropdown.querySelectorAll(
+            '.settings-size-menu button'
+        )
+    ].filter(button => {
+        return !button.disabled
+            && button.offsetParent !== null;
+    });
+
+    const last = buttons[
+        buttons.length - 1
+    ];
+
+    if (document.activeElement !== last) {
+        return;
+    }
+
+    dropdown.classList.remove('is-open');
 }
 
 function resetGeneralSettings() {
