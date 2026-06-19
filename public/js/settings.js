@@ -342,16 +342,16 @@ function scaleText(value) {
 
 function bindFont() {
     const drop = $(
-        '[data-screen-scale-dropdown]'
+        '[data-font-scale-dropdown]'
     );
     const btn = $(
-        '[data-screen-scale-trigger]'
+        '[data-font-scale-trigger]'
     );
     const text = $(
-        '[data-screen-scale-text]'
+        '[data-font-scale-text]'
     );
     const list = document.querySelectorAll(
-        '[data-screen-scale]'
+        '[data-font-scale]'
     );
 
     if (!drop || !btn || !text) {
