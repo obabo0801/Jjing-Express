@@ -127,6 +127,7 @@ async function getHtml(url) {
 function bindGeneralSettings() {
     bindScreenScale();
     bindFontScale();
+    bindResetSettings();
 }
 
 function bindScreenScale() {
@@ -281,4 +282,55 @@ function applyFontScale(value) {
         '--font-scale',
         value
     );
+}
+
+function bindResetSettings() {
+    const button = $('[data-settings-reset]');
+
+    on(button, 'click', resetGeneralSettings);
+}
+
+function resetGeneralSettings() {
+    localStorage.removeItem(SCREEN_SCALE_KEY);
+    localStorage.removeItem(FONT_SCALE_KEY);
+
+    applyScreenScale(DEFAULT_SCREEN_SCALE);
+    applyFontScale(DEFAULT_FONT_SCALE);
+
+    updateScaleView(
+        'screen',
+        DEFAULT_SCREEN_SCALE
+    );
+
+    updateScaleView(
+        'font',
+        DEFAULT_FONT_SCALE
+    );
+
+    document.querySelectorAll(
+        '.settings-size-dropdown'
+    ).forEach(dropdown => {
+        dropdown.classList.remove('is-open');
+    });
+}
+
+function updateScaleView(type, value) {
+    const text = document.querySelector(
+        `[data-${type}-scale-text]`
+    );
+
+    const buttons = document.querySelectorAll(
+        `[data-${type}-scale]`
+    );
+
+    if (text) {
+        text.textContent = getScaleText(value);
+    }
+
+    buttons.forEach(button => {
+        button.classList.toggle(
+            'is-active',
+            button.dataset[`${type}Scale`] === value
+        );
+    });
 }

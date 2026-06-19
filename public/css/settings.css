@@ -275,3 +275,26 @@ button.is-active {
     background-color:
         var(--hover);
 }
+
+.settings-reset-button {
+    height: 34px;
+    padding: 0 14px;
+
+    flex-shrink: 0;
+
+    border:
+        1px solid
+        var(--line);
+    border-radius: 12px;
+
+    background:
+        transparent;
+    color: var(--text);
+
+    cursor: pointer;
+}
+
+.settings-reset-button:hover {
+    background-color:
+        var(--hover);
+}
