@@ -92,8 +92,8 @@ export function initNotification() {
     };
 
     render(list, badge, tabs);
-    startNotificationClock();
-    startNotificationTest(list, badge, tabs);
+    startClock();
+    startTest(list, badge, tabs);
 
     on(button, 'click', () => {
         toggleNotification(button, panel);
@@ -109,12 +109,12 @@ export function initNotification() {
 
     tabs.forEach(tab => {
         on(tab, 'click', () => {
-            changeFilter(tab, list, badge, tabs);
+            setFilter(tab, list, badge, tabs);
         });
     });
 
     on(searchButton, 'click', () => {
-        popSearchButton(searchButton);
+        popSearch(searchButton);
         toggleSearch(searchBox, searchInput);
     });
 
@@ -151,11 +151,11 @@ export function initNotification() {
             return;
         }
 
-        if (openNotificationMain(event)) {
+        if (openMain(event)) {
             return;
         }
 
-        readNotification(event, list, badge, tabs);
+        readClick(event, list, badge, tabs);
     });
 
     on(document, 'click', event => {
@@ -309,7 +309,7 @@ function toggleSearch(searchBox, searchInput) {
     }
 }
 
-function popSearchButton(button) {
+function popSearch(button) {
     if (!button) {
         return;
     }
@@ -567,7 +567,7 @@ function formatDate(time) {
     return `${date.getMonth() + 1}월 ${date.getDate()}일`;
 }
 
-function startNotificationClock() {
+function startClock() {
     setInterval(updateTimes, 30 * SECOND);
 }
 
@@ -638,13 +638,13 @@ function updateTabs(tabs) {
     });
 }
 
-function changeFilter(tab, list, badge, tabs) {
+function setFilter(tab, list, badge, tabs) {
     filter = tab.dataset.filter || 'all';
 
     render(list, badge, tabs);
 }
 
-function readNotification(event, list, badge, tabs) {
+function readClick(event, list, badge, tabs) {
     const item = event.target.closest(
         '.notify-read'
     );
@@ -661,7 +661,7 @@ function readNotification(event, list, badge, tabs) {
     );
 }
 
-function openNotificationMain(event) {
+function openMain(event) {
     const item = event.target.closest(
         '.notify-item'
     );
@@ -990,7 +990,7 @@ function clearAll(list, badge, tabs) {
 }
 
 function addItem(data, list, badge, tabs) {
-    if (!isNotifyEnabled()) {
+    if (!canNotify()) {
         return;
     }
 
@@ -1036,11 +1036,11 @@ function addItem(data, list, badge, tabs) {
     restoreMenu(openMenuId);
 
     updateBadge(badge, true);
-    shakeNotifyButton();
-    playNotifySound();
+    shakeButton();
+    playSound();
 }
 
-function shakeNotifyButton() {
+function shakeButton() {
     const button = $('.notify-button');
 
     if (!button) {
@@ -1062,22 +1062,22 @@ function shakeNotifyButton() {
     );
 }
 
-function isNotifyEnabled() {
+function canNotify() {
     return getOption(
         OPTION.notifyEnable,
         DEFAULT_OPTION.notifyEnable
     ) === '1';
 }
 
-function isNotifySoundEnabled() {
+function canSound() {
     return getOption(
         OPTION.notifySound,
         DEFAULT_OPTION.notifySound
     ) === '1';
 }
 
-function playNotifySound() {
-    if (!isNotifySoundEnabled()) {
+function playSound() {
+    if (!canSound()) {
         return;
     }
 
@@ -1090,7 +1090,7 @@ function playNotifySound() {
     audio.play().catch(() => {});
 }
 
-function startNotificationTest(list, badge, tabs) {
+function startTest(list, badge, tabs) {
     if (!location.search.includes(
         'test'
     )) {
