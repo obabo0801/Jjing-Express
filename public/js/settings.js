@@ -7,6 +7,11 @@ const DEFAULT_SCREEN_SCALE = '1';
 const FONT_SCALE_KEY = 'jjing-font-scale';
 const DEFAULT_FONT_SCALE = '1';
 
+const NOTIFY_ENABLE_KEY = 'jjing-notify-enable';
+const DEFAULT_NOTIFY_ENABLE = '1';
+const NOTIFY_SOUND_KEY = 'jjing-notify-sound';
+const DEFAULT_NOTIFY_SOUND = '1';
+
 export function initSettings() {
     const button = $('.settings-button');
 
@@ -91,6 +96,10 @@ async function changeSettings(type) {
 
     if (type === 'general') {
         bindGeneralSettings();
+    }
+
+    if (type === 'notification') {
+        bindNotificationSettings();
     }
 
     title.textContent = name;
@@ -333,4 +342,59 @@ function updateScaleView(type, value) {
             button.dataset[`${type}Scale`] === value
         );
     });
+}
+
+function bindNotificationSettings() {
+    bindNotifyToggle(
+        'enable',
+        NOTIFY_ENABLE_KEY,
+        DEFAULT_NOTIFY_ENABLE
+    );
+
+    bindNotifyToggle(
+        'sound',
+        NOTIFY_SOUND_KEY,
+        DEFAULT_NOTIFY_SOUND
+    );
+}
+
+function bindNotifyToggle(type, key, defaultValue) {
+    const button = document.querySelector(
+        `[data-notify-toggle="${type}"]`
+    );
+
+    if (!button) {
+        return;
+    }
+
+    let value = localStorage.getItem(key)
+        || defaultValue;
+
+    updateNotifyToggle(button, value);
+
+    on(button, 'click', () => {
+        value = value === '1'
+            ? '0'
+            : '1';
+
+        localStorage.setItem(
+            key,
+            value
+        );
+
+        updateNotifyToggle(button, value);
+    });
+}
+
+function updateNotifyToggle(button, value) {
+    const off = value !== '1';
+
+    button.classList.toggle(
+        'is-off',
+        off
+    );
+
+    button.textContent = off
+        ? '꺼짐'
+        : '켜짐';
 }
