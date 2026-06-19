@@ -1111,13 +1111,46 @@ function playSound() {
         return;
     }
 
-    const audio = new Audio(
-        '/assets/sounds/notify.mp3'
-    );
+    const Context = window.AudioContext
+        || window.webkitAudioContext;
 
-    audio.volume = 0.35;
+    if (!Context) {
+        return;
+    }
 
-    audio.play().catch(() => {});
+    try {
+        const audio = new Context();
+        const sound = audio.createOscillator();
+        const volume = audio.createGain();
+
+        sound.type = 'sine';
+        sound.frequency.value = 880;
+
+        volume.gain.setValueAtTime(
+            0.001,
+            audio.currentTime
+        );
+
+        volume.gain.exponentialRampToValueAtTime(
+            0.18,
+            audio.currentTime + 0.01
+        );
+
+        volume.gain.exponentialRampToValueAtTime(
+            0.001,
+            audio.currentTime + 0.18
+        );
+
+        sound.connect(volume);
+        volume.connect(audio.destination);
+
+        sound.start();
+        sound.stop(audio.currentTime + 0.2);
+
+        sound.addEventListener('ended', () => {
+            audio.close();
+        }, { once: true });
+    } catch {}
 }
 
 function startTest(list, badge, tabs) {
