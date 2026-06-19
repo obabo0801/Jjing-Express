@@ -52,7 +52,8 @@
         0 18px 60px
         rgba(0, 0, 0, 0.32);
 
-    overflow: hidden;
+    overflow:
+        visible;
 
     transform:
         translate(-50%, -50%);
@@ -141,7 +142,8 @@
     min-height: 0;
     padding: 16px;
 
-    overflow-y: auto;
+    overflow:
+        visible;
 }
 
 .settings-section {
