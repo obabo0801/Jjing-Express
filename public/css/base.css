@@ -19,6 +19,9 @@ body {
     min-height: 100%;
     margin: 0;
 
+    zoom:
+        var(--screen-scale);
+
     background-color: var(--bg);
     color: var(--text);
 
@@ -26,15 +29,15 @@ body {
         "Malgun Gothic",
         sans-serif;
 
+    font-size:
+        calc(14px * var(--font-scale));
+
     opacity: 0;
     transition:
         background-color
             var(--motion),
         color var(--motion),
         opacity 0.2s ease;
-
-    zoom:
-        var(--screen-scale);
 }
 
 body.is-ready {

@@ -4,12 +4,18 @@ let layer = null;
 
 const SCREEN_SCALE_KEY = 'jjing-screen-scale';
 const DEFAULT_SCREEN_SCALE = '1';
+const FONT_SCALE_KEY = 'jjing-font-scale';
+const DEFAULT_FONT_SCALE = '1';
 
 export function initSettings() {
     const button = $('.settings-button');
 
     applyScreenScale(
         getScreenScale()
+    );
+
+    applyFontScale(
+        getFontScale()
     );
 
     on(button, 'click', openSettings);
@@ -120,6 +126,7 @@ async function getHtml(url) {
 
 function bindGeneralSettings() {
     bindScreenScale();
+    bindFontScale();
 }
 
 function bindScreenScale() {
@@ -199,4 +206,79 @@ function applyScreenScale(value) {
 
 function getScaleText(value) {
     return `${Math.round(Number(value) * 100)}%`;
+}
+
+function bindFontScale() {
+    const dropdown = $('[data-font-scale-dropdown]');
+    const trigger = $('[data-font-scale-trigger]');
+    const text = $('[data-font-scale-text]');
+    const buttons = document.querySelectorAll(
+        '[data-font-scale]'
+    );
+
+    if (!dropdown || !trigger || !text) {
+        return;
+    }
+
+    const current = getFontScale();
+
+    text.textContent = getScaleText(current);
+
+    buttons.forEach(button => {
+        const active = button.dataset.fontScale
+            === current;
+
+        button.classList.toggle(
+            'is-active',
+            active
+        );
+
+        on(button, 'click', () => {
+            const value = button.dataset.fontScale;
+
+            saveFontScale(value);
+            applyFontScale(value);
+
+            text.textContent = getScaleText(value);
+            dropdown.classList.remove('is-open');
+
+            buttons.forEach(item => {
+                item.classList.toggle(
+                    'is-active',
+                    item === button
+                );
+            });
+        });
+    });
+
+    on(trigger, 'click', event => {
+        event.stopPropagation();
+
+        dropdown.classList.toggle('is-open');
+    });
+
+    on(document, 'click', event => {
+        if (!dropdown.contains(event.target)) {
+            dropdown.classList.remove('is-open');
+        }
+    });
+}
+
+function getFontScale() {
+    return localStorage.getItem(FONT_SCALE_KEY)
+        || DEFAULT_FONT_SCALE;
+}
+
+function saveFontScale(value) {
+    localStorage.setItem(
+        FONT_SCALE_KEY,
+        value
+    );
+}
+
+function applyFontScale(value) {
+    document.documentElement.style.setProperty(
+        '--font-scale',
+        value
+    );
 }

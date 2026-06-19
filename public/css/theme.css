@@ -18,6 +18,7 @@
         var(--ease);
 
     --screen-scale: 1;
+    --font-scale: 1;
 }
 
 [data-theme="light"] {
