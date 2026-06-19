@@ -180,6 +180,17 @@ export function initNotification() {
         render(list, badge, tabs);
     });
 
+    on(sInput, 'keydown', event => {
+        closeSearchEsc(
+            event,
+            search,
+            sInput,
+            list,
+            badge,
+            tabs
+        );
+    });
+
     on(list, 'click', event => {
         event.stopPropagation();
 
@@ -387,6 +398,29 @@ function closeSearch(
     searchBox.hidden = true;
 
     render(list, badge, tabs);
+}
+
+function closeSearchEsc(
+    event,
+    searchBox,
+    searchInput,
+    list,
+    badge,
+    tabs
+) {
+    if (event.key !== 'Escape') {
+        return;
+    }
+
+    event.stopPropagation();
+
+    closeSearch(
+        searchBox,
+        searchInput,
+        list,
+        badge,
+        tabs
+    );
 }
 
 function getView() {
