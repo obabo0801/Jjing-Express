@@ -5,27 +5,19 @@ import {
     getOption
 } from './options.js';
 
-const NOTIFICATION_STORE_KEY = 'jjing-notifications';
+const STORE_KEY = 'jjing-items';
 
-const SECOND = 1000;
-const MINUTE = 60 * SECOND;
-const HOUR = 60 * MINUTE;
-const DAY = 24 * HOUR;
-const CLEAR_GRACE = 10000;
-
-const now = Date.now();
-
-let notifications = loadNotifications();
+let items = loadItems();
 
 let filter = 'all';
 let keyword = '';
 
-let length = getNotificationLength();
+let lastId = getLastId();
 
-function loadNotifications() {
+function loadItems() {
     try {
         const data = JSON.parse(
-            localStorage.getItem(NOTIFICATION_STORE_KEY)
+            localStorage.getItem(STORE_KEY)
             || '[]'
         );
 
@@ -44,8 +36,8 @@ function loadNotifications() {
     }
 }
 
-function saveNotifications() {
-    const data = notifications.map(item => {
+function saveItems() {
+    const data = items.map(item => {
         return {
             id: item.id,
             title: item.title,
@@ -60,13 +52,13 @@ function saveNotifications() {
     });
 
     localStorage.setItem(
-        NOTIFICATION_STORE_KEY,
+        STORE_KEY,
         JSON.stringify(data)
     );
 }
 
-function getNotificationLength() {
-    return notifications.reduce((max, item) => {
+function getLastId() {
+    return items.reduce((max, item) => {
         return Math.max(max, Number(item.id) || 0);
     }, 0);
 }
@@ -355,8 +347,8 @@ function closeSearch(
 
 function getFilteredNotifications() {
     let items = filter === 'unread'
-        ? notifications.filter(item => item.unread)
-        : notifications;
+        ? items.filter(item => item.unread)
+        : items;
 
     if (keyword) {
         items = items.filter(item => {
@@ -615,7 +607,7 @@ function updateBadge(badge, animate = false) {
         return;
     }
 
-    const count = notifications.filter(
+    const count = items.filter(
         item => item.unread
     ).length;
 
@@ -835,7 +827,7 @@ function readNotificationMenu(event, list, badge, tabs) {
 }
 
 function readNotificationById(id, list, badge, tabs) {
-    const notification = notifications.find(
+    const notification = items.find(
         item => item.id === id
     );
 
@@ -845,7 +837,7 @@ function readNotificationById(id, list, badge, tabs) {
 
     notification.unread = false;
 
-    saveNotifications();
+    saveItems();
 
     renderNotification(list, badge, tabs);
 }
@@ -868,11 +860,11 @@ function closeNotificationMenus(event) {
 }
 
 function readAll(list, badge, tabs) {
-    notifications.forEach(item => {
+    items.forEach(item => {
         item.unread = false;
     });
 
-    saveNotifications();
+    saveItems();
 
     renderNotification(list, badge, tabs);
 }
@@ -920,11 +912,11 @@ function deleteNotification(event, list, badge, tabs) {
     );
 
     if (!item) {
-        notifications = notifications.filter(
+        items = items.filter(
             item => item.id !== id
         );
 
-        saveNotifications();
+        saveItems();
 
         renderNotification(list, badge, tabs);
 
@@ -941,11 +933,11 @@ function deleteNotification(event, list, badge, tabs) {
     clearNotification(item);
 
     setTimeout(() => {
-        notifications = notifications.filter(
+        items = items.filter(
             item => item.id !== id
         );
 
-        saveNotifications();
+        saveItems();
 
         renderNotification(list, badge, tabs);
     }, 520);
@@ -956,7 +948,7 @@ function deleteNotification(event, list, badge, tabs) {
 function deleteAll(list, badge, tabs) {
     const limit = Date.now() - CLEAR_GRACE;
 
-    const ids = notifications
+    const ids = items
         .filter(item => item.time <= limit)
         .map(item => item.id);
 
@@ -987,11 +979,11 @@ function deleteAll(list, badge, tabs) {
     });
 
     setTimeout(() => {
-        notifications = notifications.filter(
+        items = items.filter(
             item => !ids.includes(item.id)
         );
 
-        saveNotifications();
+        saveItems();
 
         renderNotification(list, badge, tabs);
     }, 520);
@@ -1008,8 +1000,8 @@ function addNotification(data, list, badge, tabs) {
     const beforeTop = list.scrollTop;
     const beforeHeight = list.scrollHeight;
 
-    notifications.unshift({
-        id: ++length,
+    items.unshift({
+        id: ++lastId,
         title: data.title || '알림',
         message: data.message || '',
         href: data.href || '#',
@@ -1021,7 +1013,7 @@ function addNotification(data, list, badge, tabs) {
         isNew: true
     });
 
-    saveNotifications();
+    saveItems();
 
     if (holdScroll) {
         list.classList.add('is-hold');
