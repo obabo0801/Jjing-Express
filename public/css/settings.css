@@ -26,14 +26,8 @@
     top: 50%;
     left: 50%;
 
-    width: min(
-        720px,
-        calc(100vw - 32px)
-    );
-    height: min(
-        520px,
-        calc(100dvh - 32px)
-    );
+    width: 90%;
+    height: 90%;
 
     display: grid;
     grid-template-columns:
@@ -349,9 +343,6 @@ button.is-active {
 
 @media (max-width: 640px) {
     .settings-popup {
-        width: calc(100vw - 24px);
-        height: calc(100dvh - 24px);
-
         grid-template-columns:
             1fr;
 

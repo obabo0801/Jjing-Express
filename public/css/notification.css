@@ -31,25 +31,34 @@
 
 .notify-panel {
     position: fixed;
-    top: calc(
-        var(
-            --top-height
-        ) + 12px
-    );
-    right: 24px;
     z-index: 999;
-
-    width: min(
-        380px, calc(
-            100vw - 32px
-        )
-    );
     padding: 16px;
 
+    top: calc(
+        (
+            var(--top-height)
+            + 12px
+        ) / var(--screen-scale)
+    );
+    right: calc(
+        24px / var(--screen-scale)
+    );
+
+    width: min(
+        calc(380px / var(--screen-scale)),
+        calc(
+            (
+                100vw - 32px
+            ) / var(--screen-scale)
+        )
+    );
+
     max-height: calc(
-        100dvh - var(
-            --top-height
-        ) - 24px
+        (
+            100dvh
+            - var(--top-height)
+            - 24px
+        ) / var(--screen-scale)
     );
 
     display: flex;
