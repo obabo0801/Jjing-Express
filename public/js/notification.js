@@ -63,29 +63,51 @@ function getLastId() {
     }, 0);
 }
 
-let notifyView = {
+let viewBox = {
     list: null,
     badge: null,
     tabs: null
 };
 
 export function initNotification() {
-    const button = $('.notify-button');
-    const panel = $('#notify-panel');
-    const list = $('.notify-list');
-    const badge = $('.notify-badge');
-    const clear = $('.notify-clear');
-    const removeAll = $('.notify-remove-all');
-    const tabs = document.querySelectorAll(
-        '.notify-tab'
+    const btn = $(
+        '.notify-button'
+    );
+    const panel = $(
+        '#notify-panel'
+    );
+    const list = $(
+        '.notify-list'
+    );
+    const badge = $(
+        '.notify-badge'
+    );
+    const clear = $(
+        '.notify-clear'
+    );
+    const remove = $(
+        '.notify-remove-all'
     );
 
-    const searchButton = $('.notify-search-button');
-    const searchBox = $('.notify-search');
-    const searchInput = $('.notify-search-input');
-    const searchClose = $('.notify-search-close');
+    const sBtn = $(
+        '.notify-search-button'
+    );
+    const search = $(
+        '.notify-search'
+    );
+    const sInput = $(
+        '.notify-search-input'
+    );
+    const sClose = $(
+        '.notify-search-close'
+    );
 
-    notifyView = {
+    const tabs = (
+        document.querySelectorAll(
+        '.notify-tab'
+    ));
+
+    viewBox = {
         list,
         badge,
         tabs
@@ -95,15 +117,15 @@ export function initNotification() {
     startClock();
     startTest(list, badge, tabs);
 
-    on(button, 'click', () => {
-        togglePanel(button, panel);
+    on(btn, 'click', () => {
+        togglePanel(btn, panel);
     });
 
     on(clear, 'click', () => {
         readAll(list, badge, tabs);
     });
 
-    on(removeAll, 'click', () => {
+    on(remove, 'click', () => {
         clearAll(list, badge, tabs);
     });
 
@@ -113,23 +135,23 @@ export function initNotification() {
         });
     });
 
-    on(searchButton, 'click', () => {
-        popSearch(searchButton);
-        toggleSearch(searchBox, searchInput);
+    on(sBtn, 'click', () => {
+        popSearch(sBtn);
+        toggleSearch(search, sInput);
     });
 
-    on(searchClose, 'click', () => {
+    on(sClose, 'click', () => {
         closeSearch(
-            searchBox,
-            searchInput,
+            search,
+            sInput,
             list,
             badge,
             tabs
         );
     });
 
-    on(searchInput, 'input', () => {
-        keyword = searchInput.value
+    on(sInput, 'input', () => {
+        keyword = sInput.value
             .trim()
             .toLowerCase();
 
@@ -159,29 +181,29 @@ export function initNotification() {
     });
 
     on(document, 'click', event => {
-        closeOut(event, button, panel);
+        closeOut(event, btn, panel);
         closeMenus(event);
     });
 
     on(document, 'keydown', event => {
-        closeEsc(event, button, panel);
+        closeEsc(event, btn, panel);
     });
 
     on(panel, 'keydown', event => {
-        closeTabEnd(event, button, panel);
+        closeTabEnd(event, btn, panel);
     });
 }
 
 export function pushNotification(data) {
-    if (!notifyView.list) {
+    if (!viewBox.list) {
         return;
     }
 
     addItem(
         data,
-        notifyView.list,
-        notifyView.badge,
-        notifyView.tabs
+        viewBox.list,
+        viewBox.badge,
+        viewBox.tabs
     );
 }
 
