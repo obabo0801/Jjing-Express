@@ -91,7 +91,7 @@ export function initNotification() {
         tabs
     };
 
-    renderNotification(list, badge, tabs);
+    render(list, badge, tabs);
     startNotificationClock();
     startNotificationTest(list, badge, tabs);
 
@@ -133,7 +133,7 @@ export function initNotification() {
             .trim()
             .toLowerCase();
 
-        renderNotification(list, badge, tabs);
+        render(list, badge, tabs);
     });
 
     on(list, 'click', event => {
@@ -185,16 +185,16 @@ export function pushNotification(data) {
     );
 }
 
-function renderNotification(list, badge, tabs) {
+function render(list, badge, tabs) {
     if (!list) {
         return;
     }
 
-    const focus = getNotificationFocus();
+    const focus = getFocus();
 
     list.replaceChildren();
 
-    const view = getFilteredItems();
+    const view = getView();
 
     if (!view.length) {
         list.append(createEmpty());
@@ -213,16 +213,16 @@ function renderNotification(list, badge, tabs) {
         });
     }
 
-    items.forEach(item => {
+    view.forEach(item => {
         item.isNew = false;
     });
 
     updateBadge(badge);
     updateTabs(tabs);
-    restoreNotificationFocus(focus);
+    restoreFocus(focus);
 }
 
-function getNotificationFocus() {
+function getFocus() {
     const active = document.activeElement;
 
     if (!active?.closest?.('.notify-list')) {
@@ -265,7 +265,7 @@ function getNotificationFocus() {
     return null;
 }
 
-function restoreNotificationFocus(focus) {
+function restoreFocus(focus) {
     if (!focus) {
         return;
     }
@@ -342,10 +342,10 @@ function closeSearch(
     searchInput.value = '';
     searchBox.hidden = true;
 
-    renderNotification(list, badge, tabs);
+    render(list, badge, tabs);
 }
 
-function getFilteredItems() {
+function getView() {
     let list = filter === 'unread'
         ? items.filter(item => item.unread)
         : items;
@@ -641,7 +641,7 @@ function updateTabs(tabs) {
 function changeFilter(tab, list, badge, tabs) {
     filter = tab.dataset.filter || 'all';
 
-    renderNotification(list, badge, tabs);
+    render(list, badge, tabs);
 }
 
 function readNotification(event, list, badge, tabs) {
@@ -839,7 +839,7 @@ function readNotificationById(id, list, badge, tabs) {
 
     saveItems();
 
-    renderNotification(list, badge, tabs);
+    render(list, badge, tabs);
 }
 
 function closeNotificationMenus(event) {
@@ -866,7 +866,7 @@ function readAll(list, badge, tabs) {
 
     saveItems();
 
-    renderNotification(list, badge, tabs);
+    render(list, badge, tabs);
 }
 
 function clearNotification(item, index = 0) {
@@ -918,7 +918,7 @@ function deleteNotification(event, list, badge, tabs) {
 
         saveItems();
 
-        renderNotification(list, badge, tabs);
+        render(list, badge, tabs);
 
         return true;
     }
@@ -939,7 +939,7 @@ function deleteNotification(event, list, badge, tabs) {
 
         saveItems();
 
-        renderNotification(list, badge, tabs);
+        render(list, badge, tabs);
     }, 520);
 
     return true;
@@ -985,7 +985,7 @@ function deleteAll(list, badge, tabs) {
 
         saveItems();
 
-        renderNotification(list, badge, tabs);
+        render(list, badge, tabs);
     }, 520);
 }
 
@@ -1019,7 +1019,7 @@ function addNotification(data, list, badge, tabs) {
         list.classList.add('is-hold');
     }
 
-    renderNotification(list, badge, tabs);
+    render(list, badge, tabs);
 
     if (holdScroll) {
         const afterHeight = list.scrollHeight;
