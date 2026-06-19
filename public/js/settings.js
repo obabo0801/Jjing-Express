@@ -1,19 +1,11 @@
 import { $, on } from './dom.js';
+import {
+    OPTION,
+    DEFAULT_OPTION,
+    getOption
+} from './options.js';
 
 let layer = null;
-
-const SCREEN_SCALE_KEY = 'jjing-screen-scale';
-const DEFAULT_SCREEN_SCALE = '1';
-const FONT_SCALE_KEY = 'jjing-font-scale';
-const DEFAULT_FONT_SCALE = '1';
-
-const NOTIFY_ENABLE_KEY = 'jjing-notify-enable';
-const DEFAULT_NOTIFY_ENABLE = '1';
-const NOTIFY_SOUND_KEY = 'jjing-notify-sound';
-const DEFAULT_NOTIFY_SOUND = '0';
-
-const SETTINGS_TYPE_KEY = 'jjing-settings-type';
-const DEFAULT_SETTINGS_TYPE = 'general';
 
 let lastFocus = null;
 

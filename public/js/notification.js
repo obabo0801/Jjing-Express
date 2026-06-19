@@ -1,13 +1,15 @@
 import { $, on } from './dom.js';
+import {
+    OPTION,
+    DEFAULT_OPTION,
+    getOption
+} from './options.js';
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
 const DAY = 24 * HOUR;
 const CLEAR_GRACE = 10000;
-
-const NOTIFY_ENABLE_KEY = 'jjing-notify-enable';
-const NOTIFY_SOUND_KEY = 'jjing-notify-sound';
 
 const now = Date.now();
 
@@ -1017,15 +1019,17 @@ function shakeNotifyButton() {
 }
 
 function isNotifyEnabled() {
-    return localStorage.getItem(
-        NOTIFY_ENABLE_KEY
-    ) !== '0';
+    return getOption(
+        OPTION.notifyEnable,
+        DEFAULT_OPTION.notifyEnable
+    ) === '1';
 }
 
 function isNotifySoundEnabled() {
-    return localStorage.getItem(
-        NOTIFY_SOUND_KEY
-    ) !== '0';
+    return getOption(
+        OPTION.notifySound,
+        DEFAULT_OPTION.notifySound
+    ) === '1';
 }
 
 function playNotifySound() {
