@@ -10,7 +10,7 @@ let layer = null;
 let lastFocus = null;
 
 export function initSettings() {
-    const button = $(
+    const btn = $(
         '.settings-button'
     );
 
@@ -22,7 +22,7 @@ export function initSettings() {
         getFont()
     );
 
-    on(button, 'click', open);
+    on(btn, 'click', open);
 
     on(document, 'keydown', event => {
         closeEsc(event);
@@ -70,8 +70,8 @@ async function load() {
 function bind() {
     layer.querySelectorAll(
         '[data-settings-close]'
-    ).forEach(button => {
-        on(button, 'click', close);
+    ).forEach(btn => {
+        on(btn, 'click', close);
     });
 
     on(document, 'click', event => {
@@ -100,9 +100,15 @@ function bind() {
 }
 
 async function change(type) {
-    const content = $('[data-settings-content]');
-    const title = $('[data-settings-title]');
-    const icon = $('[data-settings-title-icon]');
+    const body = $(
+        '[data-settings-content]'
+    );
+    const title = $(
+        '[data-settings-title]'
+    );
+    const icon = $(
+        '[data-settings-title-icon]'
+    );
 
     saveType(type);
 
@@ -114,7 +120,7 @@ async function change(type) {
         ? 'icon icon-bell'
         : 'icon icon-setting';
 
-    content.innerHTML = await getHtml(
+    body.innerHTML = await getHtml(
         `/components/settings/${type}.html`
     );
 
@@ -250,14 +256,20 @@ function bindGeneral() {
 }
 
 function bindScreen() {
-    const dropdown = $('[data-screen-scale-dropdown]');
-    const trigger = $('[data-screen-scale-trigger]');
-    const text = $('[data-screen-scale-text]');
-    const buttons = document.querySelectorAll(
+    const drop = $(
+        '[data-screen-scale-dropdown]'
+    );
+    const btn = $(
+        '[data-screen-scale-trigger]'
+    );
+    const text = $(
+        '[data-screen-scale-text]'
+    );
+    const list = document.querySelectorAll(
         '[data-screen-scale]'
     );
 
-    if (!dropdown || !trigger || !text) {
+    if (!drop || !btn || !text) {
         return;
     }
 
@@ -265,7 +277,7 @@ function bindScreen() {
 
     text.textContent = scaleText(current);
 
-    buttons.forEach(button => {
+    list.forEach(button => {
         const active = button.dataset.screenScale
             === current;
 
@@ -281,9 +293,9 @@ function bindScreen() {
             applyScreen(value);
 
             text.textContent = scaleText(value);
-            dropdown.classList.remove('is-open');
+            drop.classList.remove('is-open');
 
-            buttons.forEach(item => {
+            list.forEach(item => {
                 item.classList.toggle(
                     'is-active',
                     item === button
@@ -292,14 +304,14 @@ function bindScreen() {
         });
     });
 
-    on(trigger, 'click', event => {
+    on(btn, 'click', event => {
         event.stopPropagation();
 
-        toggleDrop(dropdown);
+        toggleDrop(drop);
     });
 
-    on(dropdown, 'keydown', event => {
-        closeDropTab(event, dropdown);
+    on(drop, 'keydown', event => {
+        closeDropTab(event, drop);
     });
 }
 
@@ -329,14 +341,20 @@ function scaleText(value) {
 }
 
 function bindFont() {
-    const dropdown = $('[data-font-scale-dropdown]');
-    const trigger = $('[data-font-scale-trigger]');
-    const text = $('[data-font-scale-text]');
-    const buttons = document.querySelectorAll(
-        '[data-font-scale]'
+    const drop = $(
+        '[data-screen-scale-dropdown]'
+    );
+    const btn = $(
+        '[data-screen-scale-trigger]'
+    );
+    const text = $(
+        '[data-screen-scale-text]'
+    );
+    const list = document.querySelectorAll(
+        '[data-screen-scale]'
     );
 
-    if (!dropdown || !trigger || !text) {
+    if (!drop || !btn || !text) {
         return;
     }
 
@@ -344,7 +362,7 @@ function bindFont() {
 
     text.textContent = scaleText(current);
 
-    buttons.forEach(button => {
+    list.forEach(button => {
         const active = button.dataset.fontScale
             === current;
 
@@ -360,9 +378,9 @@ function bindFont() {
             applyFont(value);
 
             text.textContent = scaleText(value);
-            dropdown.classList.remove('is-open');
+            drop.classList.remove('is-open');
 
-            buttons.forEach(item => {
+            list.forEach(item => {
                 item.classList.toggle(
                     'is-active',
                     item === button
@@ -371,14 +389,14 @@ function bindFont() {
         });
     });
 
-    on(trigger, 'click', event => {
+    on(btn, 'click', event => {
         event.stopPropagation();
 
-        toggleDrop(dropdown);
+        toggleDrop(drop);
     });
 
-    on(dropdown, 'keydown', event => {
-        closeDropTab(event, dropdown);
+    on(drop, 'keydown', event => {
+        closeDropTab(event, drop);
     });
 }
 
@@ -404,9 +422,11 @@ function applyFont(value) {
 }
 
 function bindReset() {
-    const button = $('[data-settings-reset]');
+    const btn = $(
+        '[data-settings-reset]'
+    );
 
-    on(button, 'click', resetGeneral);
+    on(btn, 'click', resetGeneral);
 }
 
 function toggleDrop(dropdown) {
@@ -530,11 +550,11 @@ function bindNotify() {
 }
 
 function bindToggle(type, key, defaultValue) {
-    const button = document.querySelector(
+    const btn = document.querySelector(
         `[data-notify-toggle="${type}"]`
     );
 
-    if (!button) {
+    if (!btn) {
         return;
     }
 
@@ -543,9 +563,9 @@ function bindToggle(type, key, defaultValue) {
         defaultValue
     );
 
-    updateToggle(button, value);
+    updateToggle(btn, value);
 
-    on(button, 'click', () => {
+    on(btn, 'click', () => {
         value = value === '1'
             ? '0'
             : '1';
@@ -555,7 +575,7 @@ function bindToggle(type, key, defaultValue) {
             value
         );
 
-        updateToggle(button, value);
+        updateToggle(btn, value);
     });
 }
 
