@@ -104,7 +104,7 @@ export function initNotification() {
     });
 
     on(removeAll, 'click', () => {
-        deleteAll(list, badge, tabs);
+        clearAll(list, badge, tabs);
     });
 
     tabs.forEach(tab => {
@@ -139,15 +139,15 @@ export function initNotification() {
     on(list, 'click', event => {
         event.stopPropagation();
 
-        if (toggleNotificationMenu(event)) {
+        if (toggleMenu(event)) {
             return;
         }
 
-        if (readNotificationMenu(event, list, badge, tabs)) {
+        if (readMenu(event, list, badge, tabs)) {
             return;
         }
 
-        if (deleteNotification(event, list, badge, tabs)) {
+        if (deleteOne(event, list, badge, tabs)) {
             return;
         }
 
@@ -160,7 +160,7 @@ export function initNotification() {
 
     on(document, 'click', event => {
         closeOutside(event, button, panel);
-        closeNotificationMenus(event);
+        closeMenus(event);
     });
 
     on(document, 'keydown', event => {
@@ -177,7 +177,7 @@ export function pushNotification(data) {
         return;
     }
 
-    addNotification(
+    addItem(
         data,
         notifyView.list,
         notifyView.badge,
@@ -653,7 +653,7 @@ function readNotification(event, list, badge, tabs) {
         return;
     }
 
-    readNotificationById(
+    readById(
         Number(item.dataset.id),
         list,
         badge,
@@ -689,7 +689,7 @@ function openNotificationMain(event) {
     return true;
 }
 
-function toggleNotificationMenu(event) {
+function toggleMenu(event) {
     const button = event.target.closest(
         '.notify-more-button'
     );
@@ -698,7 +698,7 @@ function toggleNotificationMenu(event) {
         return false;
     }
 
-    popMoreButton(button);
+    popMore(button);
 
     const more = button.closest(
         '.notify-more'
@@ -740,7 +740,7 @@ function toggleNotificationMenu(event) {
     return true;
 }
 
-function popMoreButton(button) {
+function popMore(button) {
     button.classList.remove('is-pop');
 
     requestAnimationFrame(() => {
@@ -756,7 +756,7 @@ function popMoreButton(button) {
     );
 }
 
-function getOpenMenuId() {
+function getMenuId() {
     const more = document.querySelector(
         '.notify-more.is-open'
     );
@@ -766,7 +766,7 @@ function getOpenMenuId() {
         : '';
 }
 
-function restoreNotificationMenu(id) {
+function restoreMenu(id) {
     if (!id) {
         return;
     }
@@ -805,7 +805,7 @@ function restoreNotificationMenu(id) {
     });
 }
 
-function readNotificationMenu(event, list, badge, tabs) {
+function readMenu(event, list, badge, tabs) {
     const button = event.target.closest(
         '.notify-menu-read'
     );
@@ -814,19 +814,19 @@ function readNotificationMenu(event, list, badge, tabs) {
         return false;
     }
 
-    readNotificationById(
+    readById(
         Number(button.dataset.id),
         list,
         badge,
         tabs
     );
 
-    closeNotificationMenus();
+    closeMenus();
 
     return true;
 }
 
-function readNotificationById(id, list, badge, tabs) {
+function readById(id, list, badge, tabs) {
     const notification = items.find(
         item => item.id === id
     );
@@ -842,7 +842,7 @@ function readNotificationById(id, list, badge, tabs) {
     render(list, badge, tabs);
 }
 
-function closeNotificationMenus(event) {
+function closeMenus(event) {
     const target = event?.target;
 
     if (target?.closest?.('.notify-more')) {
@@ -869,7 +869,7 @@ function readAll(list, badge, tabs) {
     render(list, badge, tabs);
 }
 
-function clearNotification(item, index = 0) {
+function clearItem(item, index = 0) {
     const side = index % 2 === 0
         ? -1
         : 1;
@@ -897,7 +897,7 @@ function clearNotification(item, index = 0) {
     item.classList.add('is-clear');
 }
 
-function deleteNotification(event, list, badge, tabs) {
+function deleteOne(event, list, badge, tabs) {
     const button = event.target.closest(
         '.notify-remove'
     );
@@ -930,7 +930,7 @@ function deleteNotification(event, list, badge, tabs) {
         'is-up'
     );
 
-    clearNotification(item);
+    clearItem(item);
 
     setTimeout(() => {
         items = items.filter(
@@ -945,14 +945,14 @@ function deleteNotification(event, list, badge, tabs) {
     return true;
 }
 
-function deleteAll(list, badge, tabs) {
+function clearAll(list, badge, tabs) {
     const limit = Date.now() - CLEAR_GRACE;
 
     const ids = items
         .filter(item => item.time <= limit)
         .map(item => item.id);
 
-    const items = list.querySelectorAll(
+    const nodes = list.querySelectorAll(
         '.notify-item'
     );
 
@@ -960,7 +960,7 @@ function deleteAll(list, badge, tabs) {
         return;
     }
 
-    items.forEach((item, index) => {
+    nodes.forEach((item, index) => {
         const link = item.querySelector(
             '.notify-read'
         );
@@ -975,7 +975,7 @@ function deleteAll(list, badge, tabs) {
             return;
         }
 
-        clearNotification(item, index);
+        clearItem(item, index);
     });
 
     setTimeout(() => {
@@ -989,12 +989,12 @@ function deleteAll(list, badge, tabs) {
     }, 520);
 }
 
-function addNotification(data, list, badge, tabs) {
+function addItem(data, list, badge, tabs) {
     if (!isNotifyEnabled()) {
         return;
     }
 
-    const openMenuId = getOpenMenuId();
+    const openMenuId = getMenuId();
 
     const holdScroll = list.scrollTop > 0;
     const beforeTop = list.scrollTop;
@@ -1033,7 +1033,7 @@ function addNotification(data, list, badge, tabs) {
         });
     }
 
-    restoreNotificationMenu(openMenuId);
+    restoreMenu(openMenuId);
 
     updateBadge(badge, true);
     shakeNotifyButton();
@@ -1102,7 +1102,7 @@ function startNotificationTest(list, badge, tabs) {
     setInterval(() => {
         count += 1;
 
-        addNotification({
+        addItem({
             title: `테스트 알림 ${count}`,
             message: '새 알림 추가 효과 테스트입니다.',
             href: '#',
