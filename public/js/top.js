@@ -3,12 +3,12 @@ import { $, on } from './dom.js';
 export function initTop() {
     const top = $('.top');
 
-    on(top, 'click', popIcon);
-    on(top, 'contextmenu', blockMenu);
-    on(top, 'dragstart', blockDrag);
+    on(top, 'click', pop);
+    on(top, 'contextmenu', noMenu);
+    on(top, 'dragstart', noDrag);
 }
 
-function popIcon(event) {
+function pop(event) {
     const button = event.target.closest(
         '.icon-button'
     );
@@ -38,7 +38,7 @@ function popIcon(event) {
     );
 }
 
-function blockMenu(event) {
+function noMenu(event) {
     const image = event.target.closest(
         'img, .logo-icon, .icon-button'
     );
@@ -50,7 +50,7 @@ function blockMenu(event) {
     event.preventDefault();
 }
 
-function blockDrag(event) {
+function noDrag(event) {
     const image = event.target.closest(
         'img, .logo'
     );
