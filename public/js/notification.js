@@ -15,7 +15,7 @@ const CLEAR_GRACE = 10000;
 
 const now = Date.now();
 
-let notifications = loadNotifications();;
+let notifications = loadNotifications();
 
 let filter = 'all';
 let keyword = '';
@@ -29,18 +29,39 @@ function loadNotifications() {
             || '[]'
         );
 
-        return Array.isArray(data)
-            ? data
-            : [];
+        if (!Array.isArray(data)) {
+            return [];
+        }
+
+        return data.map(item => {
+            return {
+                ...item,
+                isNew: false
+            };
+        });
     } catch {
         return [];
     }
 }
 
 function saveNotifications() {
+    const data = notifications.map(item => {
+        return {
+            id: item.id,
+            title: item.title,
+            message: item.message,
+            href: item.href,
+            profileHref: item.profileHref,
+            profile: item.profile,
+            thumbnail: item.thumbnail,
+            time: item.time,
+            unread: item.unread
+        };
+    });
+
     localStorage.setItem(
         NOTIFICATION_STORE_KEY,
-        JSON.stringify(notifications)
+        JSON.stringify(data)
     );
 }
 
@@ -969,6 +990,8 @@ function deleteAll(list, badge, tabs) {
         notifications = notifications.filter(
             item => !ids.includes(item.id)
         );
+
+        saveNotifications();
 
         renderNotification(list, badge, tabs);
     }, 520);
