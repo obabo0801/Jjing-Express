@@ -12,6 +12,9 @@ const DEFAULT_NOTIFY_ENABLE = '1';
 const NOTIFY_SOUND_KEY = 'jjing-notify-sound';
 const DEFAULT_NOTIFY_SOUND = '1';
 
+const SETTINGS_TYPE_KEY = 'jjing-settings-type';
+const DEFAULT_SETTINGS_TYPE = 'general';
+
 export function initSettings() {
     const button = $('.settings-button');
 
@@ -39,7 +42,9 @@ async function openSettings() {
 
     layer.hidden = false;
 
-    await changeSettings('general');
+    await changeSettings(
+        getSettingsType()
+    );
 
     $('.settings-popup')?.focus();
 }
@@ -81,6 +86,8 @@ async function changeSettings(type) {
     const content = $('[data-settings-content]');
     const title = $('[data-settings-title]');
     const icon = $('[data-settings-title-icon]');
+
+    saveSettingsType(type);
 
     const name = type === 'notification'
         ? '알림'
@@ -397,4 +404,17 @@ function updateNotifyToggle(button, value) {
     button.textContent = off
         ? '꺼짐'
         : '켜짐';
+}
+
+function getSettingsType() {
+    return localStorage.getItem(
+        SETTINGS_TYPE_KEY
+    ) || DEFAULT_SETTINGS_TYPE;
+}
+
+function saveSettingsType(type) {
+    localStorage.setItem(
+        SETTINGS_TYPE_KEY,
+        type
+    );
 }
