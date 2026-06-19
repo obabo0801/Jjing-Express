@@ -5,6 +5,8 @@ import {
     getOption
 } from './options.js';
 
+const NOTIFICATION_STORE_KEY = 'jjing-notifications';
+
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;
@@ -13,48 +15,40 @@ const CLEAR_GRACE = 10000;
 
 const now = Date.now();
 
-let notifications = [
-    {
-        id: 1,
-        title: '알림 테스트',
-        message: '새로운 알림이 도착했습니다.',
-        href: '#',
-        profileHref: '#',
-        profile: '/favicon.svg',
-        thumbnail: '/favicon.svg',
-        time: now - DAY,
-        unread: true
-    },
-    {
-        id: 2,
-        title: '테마 변경',
-        message: '테마 버튼 효과가 적용되었습니다.',
-        href: '#',
-        profileHref: '',
-        profile: '/favicon.svg',
-        thumbnail: null,
-        time: now - MINUTE,
-        unread: true
-    },
-    {
-        id: 3,
-        title: 'Jjing Express',
-        message: '알림 패널 UI를 준비했습니다.',
-        href: '#',
-        profileHref: '',
-        profile: '',
-        thumbnail: null,
-        time: now - 3 * MINUTE,
-        unread: false
-    }
-];
+let notifications = loadNotifications();;
 
 let filter = 'all';
 let keyword = '';
 
-let length = (
-    notifications.length
-);
+let length = getNotificationLength();
+
+function loadNotifications() {
+    try {
+        const data = JSON.parse(
+            localStorage.getItem(NOTIFICATION_STORE_KEY)
+            || '[]'
+        );
+
+        return Array.isArray(data)
+            ? data
+            : [];
+    } catch {
+        return [];
+    }
+}
+
+function saveNotifications() {
+    localStorage.setItem(
+        NOTIFICATION_STORE_KEY,
+        JSON.stringify(notifications)
+    );
+}
+
+function getNotificationLength() {
+    return notifications.reduce((max, item) => {
+        return Math.max(max, Number(item.id) || 0);
+    }, 0);
+}
 
 let notifyView = {
     list: null,
@@ -830,6 +824,8 @@ function readNotificationById(id, list, badge, tabs) {
 
     notification.unread = false;
 
+    saveNotifications();
+
     renderNotification(list, badge, tabs);
 }
 
@@ -854,6 +850,8 @@ function readAll(list, badge, tabs) {
     notifications.forEach(item => {
         item.unread = false;
     });
+
+    saveNotifications();
 
     renderNotification(list, badge, tabs);
 }
@@ -905,6 +903,8 @@ function deleteNotification(event, list, badge, tabs) {
             item => item.id !== id
         );
 
+        saveNotifications();
+
         renderNotification(list, badge, tabs);
 
         return true;
@@ -923,6 +923,8 @@ function deleteNotification(event, list, badge, tabs) {
         notifications = notifications.filter(
             item => item.id !== id
         );
+
+        saveNotifications();
 
         renderNotification(list, badge, tabs);
     }, 520);
@@ -995,6 +997,8 @@ function addNotification(data, list, badge, tabs) {
         unread: true,
         isNew: true
     });
+
+    saveNotifications();
 
     if (holdScroll) {
         list.classList.add('is-hold');
@@ -1073,7 +1077,7 @@ function playNotifySound() {
 
 function startNotificationTest(list, badge, tabs) {
     if (!location.search.includes(
-        'test=notification'
+        'test'
     )) {
         return;
     }
