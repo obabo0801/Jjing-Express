@@ -135,7 +135,7 @@ export function initNotification() {
         tabs
     };
 
-    render(list, badge, tabs);
+    render();
     startClock();
     startTest(list, badge, tabs);
 
@@ -153,7 +153,7 @@ export function initNotification() {
 
     tabs.forEach(tab => {
         on(tab, 'click', () => {
-            setFilter(tab, list, badge, tabs);
+            setFilter(tab);
         });
     });
 
@@ -184,7 +184,7 @@ export function initNotification() {
             .trim()
             .toLowerCase();
 
-        render(list, badge, tabs);
+        render();
     });
 
     on(sInput, 'keydown', event => {
@@ -247,7 +247,13 @@ export function pushNotification(data) {
     );
 }
 
-function render(list, badge, tabs) {
+function render() {
+    const {
+        list,
+        badge,
+        tabs
+    } = viewBox;
+
     if (!list) {
         return;
     }
@@ -419,7 +425,7 @@ function closeSearch(
     searchInput.value = '';
     searchBox.hidden = true;
 
-    render(list, badge, tabs);
+    render();
 }
 
 function closeSearchEsc(
@@ -738,10 +744,10 @@ function updateTabs(tabs) {
     });
 }
 
-function setFilter(tab, list, badge, tabs) {
+function setFilter(tab) {
     filter = tab.dataset.filter || 'all';
 
-    render(list, badge, tabs);
+    render();
 }
 
 function readClick(event, list, badge, tabs) {
@@ -939,7 +945,7 @@ function readById(id, list, badge, tabs) {
 
     saveItems();
 
-    render(list, badge, tabs);
+    render();
 }
 
 function closeMenus(event) {
@@ -966,7 +972,7 @@ function readAll(list, badge, tabs) {
 
     saveItems();
 
-    render(list, badge, tabs);
+    render();
 }
 
 function clearItem(item, index = 0) {
@@ -1018,7 +1024,7 @@ function deleteOne(event, list, badge, tabs) {
 
         saveItems();
 
-        render(list, badge, tabs);
+        render();
 
         return true;
     }
@@ -1039,7 +1045,7 @@ function deleteOne(event, list, badge, tabs) {
 
         saveItems();
 
-        render(list, badge, tabs);
+        render();
     }, 520);
 
     return true;
@@ -1085,7 +1091,7 @@ function clearAll(list, badge, tabs) {
 
         saveItems();
 
-        render(list, badge, tabs);
+        render();
     }, 520);
 }
 
@@ -1112,7 +1118,7 @@ function addItem(data, list, badge, tabs) {
         list.classList.add('is-hold');
     }
 
-    render(list, badge, tabs);
+    render();
 
     if (holdScroll) {
         const afterHeight = list.scrollHeight;
