@@ -208,7 +208,7 @@ export function initNotification() {
             return;
         }
 
-        readClick(event, list, badge, tabs);
+        readClick(event);
     });
 
     on(document, 'click', event => {
@@ -721,7 +721,7 @@ function setFilter(tab) {
     render();
 }
 
-function readClick(event, list, badge, tabs) {
+function readClick(event) {
     const item = event.target.closest(
         '.notify-read'
     );
@@ -731,10 +731,7 @@ function readClick(event, list, badge, tabs) {
     }
 
     readById(
-        Number(item.dataset.id),
-        list,
-        badge,
-        tabs
+        Number(item.dataset.id)
     );
 }
 
