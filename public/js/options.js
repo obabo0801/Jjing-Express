@@ -15,11 +15,34 @@ export const DEFAULT_OPTION = {
 };
 
 export const OPTION_VALUE = {
-    notifyEnable: ['0', '1'],
-    notifySound: ['0', '1'],
-    screenScale: ['1', '1.1', '1.25', '1.5'],
-    fontScale: ['1', '1.1', '1.25', '1.5'],
-    settingsType: ['general', 'notification']
+    notifyEnable: [
+        '0', 
+        '1'
+    ],
+    notifySound: [
+        '0', 
+        '1'
+    ],
+    screenScale: [
+        '0.9',
+        '1',
+        '1.1',
+        '1.2',
+        '1.3',
+        '1.4',
+        '1.5'
+    ],
+    fontScale: [
+        '0.9',
+        '1',
+        '1.1',
+        '1.2',
+        '1.3'
+    ],
+    settingsType: [
+        'general', 
+        'notification'
+    ]
 };
 
 export function getOption(key, defaultValue) {

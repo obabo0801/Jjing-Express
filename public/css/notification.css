@@ -104,12 +104,9 @@
     display: none;
 }
 
-.notify button,
-.notify a {
-    appearance: none;
-}
-
 .notify button {
+    appearance: none;
+
     transition:
         transform
             0.16s ease,

@@ -10,11 +10,11 @@ import { initSettings }
 init();
 
 function init() {
-    ready();
     initTheme();
     initTop();
     initNotification();
     initSettings();
+    ready();
 }
 
 function ready() {
