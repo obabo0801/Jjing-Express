@@ -1235,6 +1235,8 @@ function togglePanel(button, panel) {
 
 function openPanel(panel) {
     panel.hidden = false;
+
+    updateTimes();
 }
 
 function closePanel(button, panel) {
