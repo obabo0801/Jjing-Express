@@ -831,7 +831,13 @@ function popMore(button) {
 }
 
 function getMenuId() {
-    const more = document.querySelector(
+    const list = viewBox.list;
+
+    if (!list) {
+        return '';
+    }
+
+    const more = list.querySelector(
         '.notify-more.is-open'
     );
 
