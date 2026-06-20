@@ -14,15 +14,14 @@ export const DEFAULT_OPTION = {
     settingsType: 'general'
 };
 
+const ON_OFF = [
+    '0',
+    '1'
+];
+
 export const OPTION_VALUE = {
-    notifyEnable: [
-        '0', 
-        '1'
-    ],
-    notifySound: [
-        '0', 
-        '1'
-    ],
+    notifyEnable: ON_OFF,
+    notifySound: ON_OFF,
     screenScale: [
         '0.9',
         '1',
@@ -47,28 +46,16 @@ export const OPTION_VALUE = {
 
 export function getOption(key, defaultValue) {
     const value = localStorage.getItem(key);
+    const values = OPTION_VALUE[key];
 
-    if (value === null) {
-        return defaultValue;
+    if (value !== null
+        && values?.includes(value)) {
+        return value;
     }
 
-    const name = Object
-        .entries(OPTION)
-        .find(([, optionKey]) => {
-            return optionKey === key;
-        })?.[0];
-
-    if (!name) {
-        return defaultValue;
-    }
-
-    const values = OPTION_VALUE[name];
-
-    if (!values.includes(value)) {
+    if (value !== null) {
         localStorage.removeItem(key);
-
-        return defaultValue;
     }
 
-    return value;
+    return defaultValue;
 }
