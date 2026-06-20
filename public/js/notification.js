@@ -847,11 +847,13 @@ function getMenuId() {
 }
 
 function restoreMenu(id) {
-    if (!id) {
+    const list = viewBox.list;
+
+    if (!id || !list) {
         return;
     }
 
-    const more = document.querySelector(
+    const more = list.querySelector(
         `.notify-more[data-id="${id}"]`
     );
 
@@ -864,9 +866,8 @@ function restoreMenu(id) {
     const menu = more.querySelector(
         '.notify-menu'
     );
-    const list = viewBox.list;
 
-    if (!menu || !list) {
+    if (!menu) {
         return;
     }
 
