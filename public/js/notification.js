@@ -162,20 +162,14 @@ export function initNotification() {
 
         toggleSearch(
             search,
-            sInput,
-            list,
-            badge,
-            tabs
+            sInput
         );
     });
 
     on(sClose, 'click', () => {
         closeSearch(
             search,
-            sInput,
-            list,
-            badge,
-            tabs
+            sInput
         );
     });
 
@@ -191,10 +185,7 @@ export function initNotification() {
         closeSearchEsc(
             event,
             search,
-            sInput,
-            list,
-            badge,
-            tabs
+            sInput
         );
     });
 
@@ -364,32 +355,26 @@ function restoreFocus(focus) {
 }
 
 function toggleSearch(
-    searchBox,
-    searchInput,
-    list,
-    badge,
-    tabs
+    search,
+    input
 ) {
-    if (!searchBox || !searchInput) {
+    if (!search || !input) {
         return;
     }
 
-    const open = searchBox.hidden;
+    const open = search.hidden;
 
     if (!open) {
         closeSearch(
-            searchBox,
-            searchInput,
-            list,
-            badge,
-            tabs
+            search,
+            input
         );
 
         return;
     }
 
-    searchBox.hidden = false;
-    searchInput.focus();
+    search.hidden = false;
+    input.focus();
 }
 
 function popSearch(button) {
@@ -411,30 +396,24 @@ function popSearch(button) {
 }
 
 function closeSearch(
-    searchBox,
-    searchInput,
-    list,
-    badge,
-    tabs
+    search,
+    input
 ) {
-    if (!searchBox || !searchInput) {
+    if (!search || !input) {
         return;
     }
 
     keyword = '';
-    searchInput.value = '';
-    searchBox.hidden = true;
+    input.value = '';
+    search.hidden = true;
 
     render();
 }
 
 function closeSearchEsc(
     event,
-    searchBox,
-    searchInput,
-    list,
-    badge,
-    tabs
+    search,
+    input
 ) {
     if (event.key !== 'Escape') {
         return;
@@ -443,11 +422,8 @@ function closeSearchEsc(
     event.stopPropagation();
 
     closeSearch(
-        searchBox,
-        searchInput,
-        list,
-        badge,
-        tabs
+        search,
+        input
     );
 }
 
@@ -1283,10 +1259,7 @@ function resetPanel() {
 
     closeSearch(
         $('.notify-search'),
-        $('.notify-search-input'),
-        viewBox.list,
-        viewBox.badge,
-        viewBox.tabs
+        $('.notify-search-input')
     );
 }
 
