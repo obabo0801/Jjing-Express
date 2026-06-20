@@ -1017,13 +1017,19 @@ function deleteOne(event) {
 }
 
 function clearAll() {
+    const list = viewBox.list;
+
+    if (!list) {
+        return;
+    }
+
     const limit = Date.now() - CLEAR_GRACE;
 
     const ids = items
         .filter(item => item.time <= limit)
         .map(item => item.id);
 
-    const nodes = viewBox.list.querySelectorAll(
+    const nodes = list.querySelectorAll(
         '.notify-item'
     );
 
