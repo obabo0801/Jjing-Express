@@ -49,7 +49,7 @@ async function open() {
         getType()
     );
 
-    $('.settings-popup')?.focus();
+    $('.settings-panel')?.focus();
 }
 
 async function load() {
@@ -62,7 +62,7 @@ async function load() {
         html
     );
 
-    layer = $('.settings-layer');
+    layer = $('.settings');
 
     bind();
 }
@@ -150,7 +150,7 @@ function close() {
         return;
     }
 
-    const popup = $('.settings-popup');
+    const popup = $('.settings-panel');
 
     layer.classList.remove('is-open');
     layer.classList.add('is-close');

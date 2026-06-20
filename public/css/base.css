@@ -40,7 +40,7 @@ body {
         opacity 0.2s ease;
 }
 
-body.is-ready {
+body.body {
     opacity: 1;
 }
 

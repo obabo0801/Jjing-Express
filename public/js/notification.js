@@ -96,7 +96,7 @@ export function initNotification() {
         '.notify-button'
     );
     const panel = $(
-        '#notify-panel'
+        '#notify'
     );
     const list = $(
         '.notify-list'
@@ -822,7 +822,7 @@ function toggleMenu(event) {
         '.notify-menu'
     );
     const panel = document.querySelector(
-        '.notify-panel'
+        '.notify'
     );
 
     if (!more?.classList.contains('is-open')) {
@@ -1292,7 +1292,7 @@ function closeOut(event, button, panel) {
     const target = event.target;
 
     if (
-        target.closest('.notify-panel')
+        target.closest('.notify')
         || target.closest('.notify-button')
     ) {
         return;

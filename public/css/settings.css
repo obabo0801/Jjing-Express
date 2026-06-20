@@ -1,10 +1,10 @@
-.settings-layer {
+.settings {
     position: fixed;
     inset: 0;
     z-index: 1000;
 }
 
-.settings-layer[hidden] {
+.settings[hidden] {
     display: none;
 }
 
@@ -21,7 +21,7 @@
         blur(4px);
 }
 
-.settings-popup {
+.settings-panel {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -53,12 +53,12 @@
         translate(-50%, -50%);
 }
 
-.settings-sidebar,
-.settings-main {
+.settings-side,
+.settings-page {
     min-height: 0;
 }
 
-.settings-sidebar {
+.settings-side {
     border-right:
         1px solid
         var(--line);
@@ -66,8 +66,8 @@
     padding: 16px;
 }
 
-.settings-sidebar-header,
-.settings-main-header {
+.settings-side-header,
+.settings-page-header {
     height: 42px;
 
     display: flex;
@@ -75,7 +75,7 @@
     gap: 10px;
 }
 
-.settings-sidebar-title,
+.settings-side-title,
 .settings-title {
     display: flex;
     align-items: center;
@@ -91,7 +91,7 @@
 
 .settings-tab,
 .settings-close,
-.settings-page-back {
+.settings-back {
     border: 0;
     background:
         transparent;
@@ -119,19 +119,19 @@
         var(--hover);
 }
 
-.settings-main {
+.settings-page {
     display: flex;
     flex-direction: column;
 }
 
-.settings-main-header {
+.settings-page-header {
     position: relative;
 
     height: 74px;
     padding: 16px;
 }
 
-.settings-main-header::after {
+.settings-page-header::after {
     content: "";
 
     position: absolute;
@@ -339,12 +339,12 @@ button.is-active {
         var(--text);
 }
 
-.settings-page-back {
+.settings-back {
     display: none;
 }
 
 @media (max-width: 640px) {
-    .settings-popup {
+    .settings-panel {
         inset: 12px;
 
         width: auto;
@@ -360,26 +360,26 @@ button.is-active {
             none;
     }
 
-    .settings-sidebar {
+    .settings-side {
         border-right: 0;
     }
 
-    .settings-main {
+    .settings-page {
         display: none;
         min-height: 0;
     }
 
-    .settings-layer.is-page
-    .settings-sidebar {
+    .settings.is-page
+    .settings-side {
         display: none;
     }
 
-    .settings-layer.is-page
-    .settings-main {
+    .settings.is-page
+    .settings-page {
         display: flex;
     }
 
-    .settings-page-back {
+    .settings-back {
         display: grid;
         place-items: center;
     }
@@ -412,29 +412,29 @@ button.is-active {
     }
 }
 
-.settings-layer.is-open
+.settings.is-open
 .settings-backdrop {
     animation:
         settings-backdrop-in
         0.18s ease;
 }
 
-.settings-layer.is-open
-.settings-popup {
+.settings.is-open
+.settings-panel {
     animation:
         settings-popup-in
         0.2s ease;
 }
 
-.settings-layer.is-close
+.settings.is-close
 .settings-backdrop {
     animation:
         settings-backdrop-out
         0.16s ease forwards;
 }
 
-.settings-layer.is-close
-.settings-popup {
+.settings.is-close
+.settings-panel {
     animation:
         settings-popup-out
         0.16s ease forwards;

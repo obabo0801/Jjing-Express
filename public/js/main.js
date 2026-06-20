@@ -22,6 +22,6 @@ function ready() {
         document
             .body
             .classList
-            .add('is-ready');
+            .add('body');
     });
 }
