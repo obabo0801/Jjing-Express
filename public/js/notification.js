@@ -137,18 +137,18 @@ export function initNotification() {
 
     render();
     startClock();
-    startTest(list, badge, tabs);
+    startTest();
 
     on(btn, 'click', () => {
         togglePanel(btn, panel);
     });
 
     on(clear, 'click', () => {
-        readAll(list, badge, tabs);
+        readAll();
     });
 
     on(remove, 'click', () => {
-        clearAll(list, badge, tabs);
+        clearAll(list);
     });
 
     tabs.forEach(tab => {
@@ -196,11 +196,11 @@ export function initNotification() {
             return;
         }
 
-        if (readMenu(event, list, badge, tabs)) {
+        if (readMenu(event)) {
             return;
         }
 
-        if (deleteOne(event, list, badge, tabs)) {
+        if (deleteOne(event)) {
             return;
         }
 
@@ -230,12 +230,7 @@ export function pushNotification(data) {
         return;
     }
 
-    addItem(
-        data,
-        viewBox.list,
-        viewBox.badge,
-        viewBox.tabs
-    );
+    addItem(data);
 }
 
 function render() {
@@ -887,7 +882,7 @@ function restoreMenu(id) {
     });
 }
 
-function readMenu(event, list, badge, tabs) {
+function readMenu(event) {
     const button = event.target.closest(
         '.notify-menu-read'
     );
@@ -897,10 +892,7 @@ function readMenu(event, list, badge, tabs) {
     }
 
     readById(
-        Number(button.dataset.id),
-        list,
-        badge,
-        tabs
+        Number(button.dataset.id)
     );
 
     closeMenus();
@@ -908,7 +900,7 @@ function readMenu(event, list, badge, tabs) {
     return true;
 }
 
-function readById(id, list, badge, tabs) {
+function readById(id) {
     const notification = items.find(
         item => item.id === id
     );
@@ -941,7 +933,7 @@ function closeMenus(event) {
     });
 }
 
-function readAll(list, badge, tabs) {
+function readAll() {
     items.forEach(item => {
         item.unread = false;
     });
@@ -979,7 +971,7 @@ function clearItem(item, index = 0) {
     item.classList.add('is-clear');
 }
 
-function deleteOne(event, list, badge, tabs) {
+function deleteOne(event) {
     const button = event.target.closest(
         '.notify-remove'
     );
@@ -1027,7 +1019,7 @@ function deleteOne(event, list, badge, tabs) {
     return true;
 }
 
-function clearAll(list, badge, tabs) {
+function clearAll(list) {
     const limit = Date.now() - CLEAR_GRACE;
 
     const ids = items
@@ -1071,8 +1063,13 @@ function clearAll(list, badge, tabs) {
     }, 520);
 }
 
-function addItem(data, list, badge, tabs) {
-    if (!canNotify()) {
+function addItem(data) {
+    const {
+        list,
+        badge
+    } = viewBox;
+
+    if (!list || !canNotify()) {
         return;
     }
 
@@ -1198,7 +1195,7 @@ function playSound() {
     } catch {}
 }
 
-function startTest(list, badge, tabs) {
+function startTest() {
     if (!location.search.includes(
         'test'
     )) {
@@ -1219,7 +1216,7 @@ function startTest(list, badge, tabs) {
             thumbnail: count % 2 === 0
                 ? '/favicon.svg'
                 : null
-        }, list, badge, tabs);
+        });
     }, 3000);
 }
 
