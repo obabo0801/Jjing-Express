@@ -29,7 +29,7 @@
         none;
 }
 
-.notify-panel {
+.notify {
     position: fixed;
     z-index: 999;
     padding: 16px;
@@ -94,22 +94,22 @@
         color var(--motion);
 }
 
-.notify-panel,
-.notify-panel * {
+.notify,
+.notify * {
     -webkit-tap-highlight-color:
         transparent;
 }
 
-.notify-panel[hidden] {
+.notify[hidden] {
     display: none;
 }
 
-.notify-panel button,
-.notify-panel a {
+.notify button,
+.notify a {
     appearance: none;
 }
 
-.notify-panel button {
+.notify button {
     transition:
         transform
             0.16s ease,
@@ -122,7 +122,7 @@
         color var(--motion);
 }
 
-.notify-panel
+.notify
 button:active {
     transform:
         scale(0.90);
@@ -833,7 +833,7 @@ button:active {
 }
 
 @media (max-width: 768px) {
-    .notify-panel {
+    .notify {
         top: calc(
             var(--top-height) + 10px
         );
