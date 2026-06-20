@@ -250,57 +250,68 @@ async function getHtml(url) {
 }
 
 function bindGeneral() {
-    bindScreen();
-    bindFont();
+    bindScale(
+        'screen',
+        OPTION.screenScale,
+        DEFAULT_OPTION.screenScale,
+        applyScreen
+    );
+
+    bindScale(
+        'font',
+        OPTION.fontScale,
+        DEFAULT_OPTION.fontScale,
+        applyFont
+    );
+
     bindReset();
 }
 
-function bindScreen() {
+function bindScale(
+    type, key, value, apply
+) {
     const drop = $(
-        '[data-screen-scale-dropdown]'
+        `[data-${type}-scale-dropdown]`
     );
     const btn = $(
-        '[data-screen-scale-trigger]'
+        `[data-${type}-scale-trigger]`
     );
     const text = $(
-        '[data-screen-scale-text]'
+        `[data-${type}-scale-text]`
     );
     const list = document.querySelectorAll(
-        '[data-screen-scale]'
+        `[data-${type}-scale]`
     );
 
     if (!drop || !btn || !text) {
         return;
     }
 
-    const current = getScreen();
+    const current = getOption(
+        key,
+        value
+    );
 
     text.textContent = scaleText(current);
+    updateScale(type, current);
 
     list.forEach(button => {
-        const active = button.dataset.screenScale
-            === current;
-
-        button.classList.toggle(
-            'is-active',
-            active
-        );
-
         on(button, 'click', () => {
-            const value = button.dataset.screenScale;
+            const data = button.dataset[
+                `${type}Scale`
+            ];
 
-            saveScreen(value);
-            applyScreen(value);
+            localStorage.setItem(
+                key,
+                data
+            );
 
-            text.textContent = scaleText(value);
+            apply(data);
+
+            text.textContent = scaleText(data);
             drop.classList.remove('is-open');
 
-            list.forEach(item => {
-                item.classList.toggle(
-                    'is-active',
-                    item === button
-                );
-            });
+            updateScale(type, data);
         });
     });
 
@@ -322,13 +333,6 @@ function getScreen() {
     );
 }
 
-function saveScreen(value) {
-    localStorage.setItem(
-        OPTION.screenScale,
-        value
-    );
-}
-
 function applyScreen(value) {
     document.documentElement.style.setProperty(
         '--screen-scale',
@@ -340,77 +344,10 @@ function scaleText(value) {
     return `${Math.round(Number(value) * 100)}%`;
 }
 
-function bindFont() {
-    const drop = $(
-        '[data-font-scale-dropdown]'
-    );
-    const btn = $(
-        '[data-font-scale-trigger]'
-    );
-    const text = $(
-        '[data-font-scale-text]'
-    );
-    const list = document.querySelectorAll(
-        '[data-font-scale]'
-    );
-
-    if (!drop || !btn || !text) {
-        return;
-    }
-
-    const current = getFont();
-
-    text.textContent = scaleText(current);
-
-    list.forEach(button => {
-        const active = button.dataset.fontScale
-            === current;
-
-        button.classList.toggle(
-            'is-active',
-            active
-        );
-
-        on(button, 'click', () => {
-            const value = button.dataset.fontScale;
-
-            saveFont(value);
-            applyFont(value);
-
-            text.textContent = scaleText(value);
-            drop.classList.remove('is-open');
-
-            list.forEach(item => {
-                item.classList.toggle(
-                    'is-active',
-                    item === button
-                );
-            });
-        });
-    });
-
-    on(btn, 'click', event => {
-        event.stopPropagation();
-
-        toggleDrop(drop);
-    });
-
-    on(drop, 'keydown', event => {
-        closeDropTab(event, drop);
-    });
-}
-
 function getFont() {
     return getOption(
         OPTION.fontScale,
         DEFAULT_OPTION.fontScale
-    );
-}
-
-function saveFont(value) {
-    localStorage.setItem(
-        OPTION.fontScale,
-        value
     );
 }
 
@@ -461,11 +398,11 @@ function closeDropdowns(event) {
     });
 }
 
-function closeDropTab(event, dropdown) {
+function closeDropTab(event, drop) {
     if (
         event.key !== 'Tab'
         || event.shiftKey
-        || !dropdown.classList.contains('is-open')
+        || !drop.classList.contains('is-open')
     ) {
         return;
     }
@@ -549,7 +486,7 @@ function bindNotify() {
     );
 }
 
-function bindToggle(type, key, defaultValue) {
+function bindToggle(type, key, value) {
     const btn = document.querySelector(
         `[data-notify-toggle="${type}"]`
     );
@@ -558,29 +495,29 @@ function bindToggle(type, key, defaultValue) {
         return;
     }
 
-    let value = getOption(
+    let data = getOption(
         key,
-        defaultValue
+        value
     );
 
-    updateToggle(btn, value);
+    updateToggle(btn, data);
 
     on(btn, 'click', () => {
-        value = value === '1'
+        data = data === '1'
             ? '0'
             : '1';
 
         localStorage.setItem(
             key,
-            value
+            data
         );
 
-        updateToggle(btn, value);
+        updateToggle(btn, data);
     });
 }
 
-function updateToggle(button, value) {
-    const off = value !== '1';
+function updateToggle(button, data) {
+    const off = data !== '1';
 
     button.classList.toggle(
         'is-off',
