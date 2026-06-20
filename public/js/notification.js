@@ -1247,6 +1247,7 @@ function closePanel(button, panel) {
 
     panel.hidden = true;
     resetPanel();
+    button.focus();
 }
 
 function resetPanel() {
