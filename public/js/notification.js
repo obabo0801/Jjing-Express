@@ -148,7 +148,7 @@ export function initNotification() {
     });
 
     on(remove, 'click', () => {
-        clearAll(list);
+        clearAll();
     });
 
     tabs.forEach(tab => {
@@ -1016,14 +1016,14 @@ function deleteOne(event) {
     return true;
 }
 
-function clearAll(list) {
+function clearAll() {
     const limit = Date.now() - CLEAR_GRACE;
 
     const ids = items
         .filter(item => item.time <= limit)
         .map(item => item.id);
 
-    const nodes = list.querySelectorAll(
+    const nodes = viewBox.list.querySelectorAll(
         '.notify-item'
     );
 
