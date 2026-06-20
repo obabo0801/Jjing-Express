@@ -159,7 +159,14 @@ export function initNotification() {
 
     on(sBtn, 'click', () => {
         popSearch(sBtn);
-        toggleSearch(search, sInput);
+
+        toggleSearch(
+            search,
+            sInput,
+            list,
+            badge,
+            tabs
+        );
     });
 
     on(sClose, 'click', () => {
@@ -350,18 +357,33 @@ function restoreFocus(focus) {
     });
 }
 
-function toggleSearch(searchBox, searchInput) {
+function toggleSearch(
+    searchBox,
+    searchInput,
+    list,
+    badge,
+    tabs
+) {
     if (!searchBox || !searchInput) {
         return;
     }
 
     const open = searchBox.hidden;
 
-    searchBox.hidden = !open;
+    if (!open) {
+        closeSearch(
+            searchBox,
+            searchInput,
+            list,
+            badge,
+            tabs
+        );
 
-    if (open) {
-        searchInput.focus();
+        return;
     }
+
+    searchBox.hidden = false;
+    searchInput.focus();
 }
 
 function popSearch(button) {
