@@ -20,9 +20,9 @@ const ON_OFF = [
 ];
 
 export const OPTION_VALUE = {
-    notifyEnable: ON_OFF,
-    notifySound: ON_OFF,
-    screenScale: [
+    [OPTION.notifyEnable]: ON_OFF,
+    [OPTION.notifySound]: ON_OFF,
+    [OPTION.screenScale]: [
         '0.9',
         '1',
         '1.1',
@@ -31,15 +31,15 @@ export const OPTION_VALUE = {
         '1.4',
         '1.5'
     ],
-    fontScale: [
+    [OPTION.fontScale]: [
         '0.9',
         '1',
         '1.1',
         '1.2',
         '1.3'
     ],
-    settingsType: [
-        'general', 
+    [OPTION.settingsType]: [
+        'general',
         'notification'
     ]
 };

@@ -11,5 +11,5 @@ const PUBLIC_PATH = file.get('public');
 app.use(express.static(PUBLIC_PATH));
 
 app.listen(PORT, () => {
-    log.info(`https://localhost:${PORT}/`);
+    log.info(`http://localhost:${PORT}/`);
 });
