@@ -408,7 +408,7 @@ function closeDropTab(event, drop) {
     }
 
     const buttons = [
-        ...dropdown.querySelectorAll(
+        ...drop.querySelectorAll(
             '.settings-size-menu button'
         )
     ].filter(button => {
@@ -424,7 +424,7 @@ function closeDropTab(event, drop) {
         return;
     }
 
-    dropdown.classList.remove('is-open');
+    drop.classList.remove('is-open');
 }
 
 function resetGeneral() {
