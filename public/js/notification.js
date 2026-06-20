@@ -858,9 +858,7 @@ function restoreMenu(id) {
     const menu = more.querySelector(
         '.notify-menu'
     );
-    const list = document.querySelector(
-        '.notify-list'
-    );
+    const list = viewBox.list;
 
     if (!menu || !list) {
         return;
