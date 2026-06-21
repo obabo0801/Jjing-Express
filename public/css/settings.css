@@ -343,75 +343,6 @@ button.is-active {
     display: none;
 }
 
-@media (max-width: 640px) {
-    .settings-panel {
-        inset: 12px;
-
-        width: auto;
-        height: auto;
-
-        grid-template-columns:
-            1fr;
-
-        overflow:
-            hidden;
-
-        transform:
-            none;
-    }
-
-    .settings-side {
-        border-right: 0;
-    }
-
-    .settings-page {
-        display: none;
-        min-height: 0;
-    }
-
-    .settings.is-page
-    .settings-side {
-        display: none;
-    }
-
-    .settings.is-page
-    .settings-page {
-        display: flex;
-    }
-
-    .settings-back {
-        display: grid;
-        place-items: center;
-    }
-
-    .settings-item {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .settings-size-dropdown,
-    .settings-size-trigger,
-    .settings-reset-button,
-    .settings-toggle {
-        width: 100%;
-    }
-
-    .settings-body {
-        flex: 1;
-        min-height: 0;
-
-        overflow-y:
-            auto;
-    }
-
-    .settings-size-menu {
-        position: static;
-
-        width: 100%;
-        margin-top: 6px;
-    }
-}
-
 .settings.is-open
 .settings-backdrop {
     animation:
@@ -519,5 +450,98 @@ button.is-active {
             transform:
                 scale(0.96);
         }
+    }
+}
+
+.settings-loading {
+    min-height: 160px;
+
+    display: grid;
+    place-items: center;
+}
+
+.settings-loading
+.icon {
+    width: 34px;
+    height: 34px;
+
+    animation:
+        settings-loading-spin
+        0.36s linear infinite;
+}
+
+@keyframes settings-loading-spin {
+    100% {
+        transform:
+            rotate(360deg);
+    }
+}
+
+@media (max-width: 640px) {
+    .settings-panel {
+        inset: 12px;
+
+        width: auto;
+        height: auto;
+
+        grid-template-columns:
+            1fr;
+
+        overflow:
+            hidden;
+
+        transform:
+            none;
+    }
+
+    .settings-side {
+        border-right: 0;
+    }
+
+    .settings-page {
+        display: none;
+        min-height: 0;
+    }
+
+    .settings.is-page
+    .settings-side {
+        display: none;
+    }
+
+    .settings.is-page
+    .settings-page {
+        display: flex;
+    }
+
+    .settings-back {
+        display: grid;
+        place-items: center;
+    }
+
+    .settings-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .settings-size-dropdown,
+    .settings-size-trigger,
+    .settings-reset-button,
+    .settings-toggle {
+        width: 100%;
+    }
+
+    .settings-body {
+        flex: 1;
+        min-height: 0;
+
+        overflow-y:
+            auto;
+    }
+
+    .settings-size-menu {
+        position: static;
+
+        width: 100%;
+        margin-top: 6px;
     }
 }
