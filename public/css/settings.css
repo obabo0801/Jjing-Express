@@ -318,7 +318,7 @@ button.is-active {
     border:
         1px solid
         var(--line);
-    border-radius: 999px;
+    border-radius: 12px;
 
     background-color:
         var(--text);
