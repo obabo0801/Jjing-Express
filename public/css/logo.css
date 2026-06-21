@@ -43,15 +43,3 @@
     user-select: none;
     -webkit-user-drag: none;
 }
-
-@media (max-width: 768px) {
-    .logo {
-        width: 48px;
-        height: 48x;
-    }
-
-    .logo-icon {
-        width: 64px;
-        height: 64x;
-    }
-}
