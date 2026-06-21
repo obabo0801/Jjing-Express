@@ -1,0 +1,54 @@
+.status {
+    min-height: 100dvh;
+    padding: 24px;
+
+    display: grid;
+    place-items: center;
+
+    text-align: center;
+}
+
+.status-box {
+    display: grid;
+    gap: 12px;
+}
+
+.status-box h1 {
+    margin: 0;
+
+    font-size:
+        clamp(
+            42px,
+            8vw,
+            96px
+        );
+}
+
+.status-box p {
+    margin: 0;
+
+    opacity: 0.72;
+}
+
+.status-box a {
+    justify-self: center;
+
+    margin-top: 10px;
+    padding: 9px 14px;
+
+    border:
+        1px solid
+        var(--line);
+    border-radius: 12px;
+
+    background:
+        transparent;
+    color: var(--text);
+
+    white-space: nowrap;
+}
+
+.status-box a:hover {
+    background-color:
+        var(--hover);
+}
