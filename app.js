@@ -10,6 +10,11 @@ const PORT = 3000;
 const PUBLIC_PATH = file.get('public');
 const CHECK = process.env.CHECK === '1';
 
+const BLOCK_HTML = [
+    '/check.html',
+    '/404.html'
+];
+
 const ASSET_DIRS = [
     '/css/',
     '/js/',
@@ -41,8 +46,9 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
     if (
-        !isDirectJs(req)
+        !isDirectHtml(req)
         && !isDirectCss(req)
+        && !isDirectJs(req)
     ) {
         return next();
     }
@@ -54,6 +60,12 @@ app.use((req, res, next) => {
 
 app.use(express.static(PUBLIC_PATH));
 
+app.use((req, res) => {
+    return res.status(404).sendFile(
+        file.get('public/404.html')
+    );
+});
+
 app.listen(PORT, () => {
     log.info(`http://localhost:${PORT}/`);
 });
@@ -64,6 +76,11 @@ function isAsset(path) {
             dir => path.startsWith(dir)
         ) || ASSET_FILES.includes(path)
     );
+}
+
+function isDirectHtml(req) {
+    return BLOCK_HTML
+        .includes(req.path);
 }
 
 function isDirectJs(req) {
