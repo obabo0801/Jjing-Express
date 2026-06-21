@@ -3,6 +3,22 @@ body {
     overflow: hidden;
 }
 
+.status {
+    position: fixed;
+    inset: 0;
+
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 12px;
+
+    text-align: center;
+    
+    user-select: none;
+    -webkit-user-select:
+        none;
+}
+
 .poop {
     display: grid;
     place-items: center;
@@ -37,18 +53,6 @@ body {
         );
 
     line-height: 1;
-}
-
-.status {
-    position: fixed;
-    inset: 0;
-
-    display: grid;
-    place-items: center;
-    align-content: center;
-    gap: 12px;
-
-    text-align: center;
 }
 
 .status h1 {
