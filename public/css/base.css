@@ -5,6 +5,9 @@
 html {
     min-height: 100%;
 
+    scrollbar-gutter:
+        stable;
+
     background-color:
         var(--bg);
     color: var(--text);
