@@ -105,6 +105,8 @@
 .notify button {
     appearance: none;
 
+    white-space: nowrap;
+
     transition:
         transform
             0.16s ease,
@@ -150,6 +152,11 @@ button:active {
     flex-shrink: 0;
 }
 
+.notify-head-title
+strong {
+    white-space: nowrap;
+}
+
 .notify-actions {
     display: flex;
     align-items: center;
@@ -171,13 +178,6 @@ button:active {
 
     cursor: pointer;
     opacity: 0.72;
-}
-
-.notify-head-title
-strong,
-.notify-clear,
-.notify-remove-all {
-    white-space: nowrap;
 }
 
 .notify-clear:hover,

@@ -4,8 +4,18 @@
     z-index: 1000;
 }
 
+.settings,
+.settings * {
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
 .settings[hidden] {
     display: none;
+}
+
+.settings button {
+    white-space: nowrap;
 }
 
 .settings-backdrop {
