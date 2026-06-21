@@ -135,7 +135,7 @@ async function change(type) {
     title.textContent = name;
     icon.className = iconName;
 
-    document.querySelectorAll(
+    layer.querySelectorAll(
         '.settings-tab'
     ).forEach(tab => {
         tab.classList.toggle(
@@ -279,7 +279,7 @@ function bindScale(
     const text = $(
         `[data-${type}-scale-text]`
     );
-    const list = document.querySelectorAll(
+    const list = layer.querySelectorAll(
         `[data-${type}-scale]`
     );
 
@@ -444,7 +444,7 @@ function resetGeneral() {
         DEFAULT_OPTION.fontScale
     );
 
-    document.querySelectorAll(
+    layer.querySelectorAll(
         '.settings-size-dropdown'
     ).forEach(dropdown => {
         dropdown.classList.remove('is-open');
@@ -452,11 +452,15 @@ function resetGeneral() {
 }
 
 function updateScale(type, value) {
-    const text = document.querySelector(
+    if (!layer) {
+        return;
+    }
+
+    const text = layer.querySelector(
         `[data-${type}-scale-text]`
     );
 
-    const buttons = document.querySelectorAll(
+    const buttons = layer.querySelectorAll(
         `[data-${type}-scale]`
     );
 
@@ -487,7 +491,7 @@ function bindNotify() {
 }
 
 function bindToggle(type, key, value) {
-    const btn = document.querySelector(
+    const btn = layer.querySelector(
         `[data-notify-toggle="${type}"]`
     );
 
