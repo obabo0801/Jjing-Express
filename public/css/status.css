@@ -1,6 +1,6 @@
 .status {
-    min-height: 100dvh;
-    padding: 24px;
+    position: fixed;
+    inset: 0;
 
     display: grid;
     place-items: center;
@@ -46,9 +46,23 @@
     color: var(--text);
 
     white-space: nowrap;
+
+    transition:
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
+        color var(--motion),
+        border-color
+            var(--motion);
 }
 
 .status-box a:hover {
     background-color:
         var(--hover);
+}
+
+.status-box a:active {
+    transform:
+        scale(0.92);
 }

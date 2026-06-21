@@ -5,10 +5,6 @@ document.addEventListener('contextmenu', event => {
     event.preventDefault();
 });
 
-window.addEventListener('load', () => {
-    document.body.classList.add('ready');
-});
-
 matchMedia(sysQuery).addEventListener('change', () => {
     if (root.dataset.themeMode !== 'system') {
         window.setFaviconTheme?.(sys());
