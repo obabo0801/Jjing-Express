@@ -485,10 +485,13 @@ button.is-active {
 
 @media (max-width: 640px) {
     .settings-panel {
-        inset: 12px;
+        inset: 0;
 
         width: auto;
         height: auto;
+
+        border: 0;
+        border-radius: 0;
 
         grid-template-columns:
             1fr;

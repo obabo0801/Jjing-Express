@@ -5,6 +5,8 @@ import {
     getOption
 } from './options.js';
 
+const pageCache = new Map();
+
 let layer = null;
 
 let lastFocus = null;
@@ -125,9 +127,7 @@ async function change(type) {
 
     body.replaceChildren();
 
-    body.innerHTML = await getHtml(
-        `/components/settings/${type}.html`
-    );
+    body.innerHTML = await getPage(type);
 
     if (type === 'general') {
         bindGeneral();
@@ -145,6 +145,20 @@ async function change(type) {
             tab.dataset.settingsType === type
         );
     });
+}
+
+async function getPage(type) {
+    if (pageCache.has(type)) {
+        return pageCache.get(type);
+    }
+
+    const html = await getHtml(
+        `/components/settings/${type}.html`
+    );
+
+    pageCache.set(type, html);
+
+    return html;
 }
 
 function close() {
@@ -373,10 +387,27 @@ function toggleDrop(dropdown) {
 
     closeDropdowns();
 
+    const next = !open;
+
     dropdown.classList.toggle(
         'is-open',
-        !open
+        next
     );
+
+    if (next) {
+        moveDrop(dropdown);
+    }
+}
+
+function moveDrop(dropdown) {
+    requestAnimationFrame(() => {
+        dropdown
+            .querySelector('.settings-size-menu')
+            ?.scrollIntoView({
+                block: 'nearest',
+                inline: 'nearest'
+            });
+    });
 }
 
 function closeDropdowns(event) {
