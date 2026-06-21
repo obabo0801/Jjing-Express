@@ -21,7 +21,10 @@ export function initTheme() {
 }
 
 function toggle() {
-    const now = root.dataset.themeMode || get();
+    const now = root.getAttribute(
+        'theme'
+    ) || get();
+
     const index = modes.indexOf(now);
 
     const next = modes[
@@ -32,7 +35,7 @@ function toggle() {
 }
 
 function set(mode, save = true) {
-    root.dataset.theme = mode;
+    root.setAttribute('theme', mode);
 
     window.setFaviconTheme?.(
         mode === 'system'

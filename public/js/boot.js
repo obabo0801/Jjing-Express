@@ -19,7 +19,7 @@ const theme = mode === 'system'
     ? sys()
     : mode;
 
-root.dataset.theme = theme;
+root.setAttribute('theme', mode);
 
 let favicons = {};
 
