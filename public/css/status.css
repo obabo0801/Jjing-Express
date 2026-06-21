@@ -3,6 +3,22 @@ body {
     overflow: hidden;
 }
 
+.poop {
+    display: grid;
+    place-items: center;
+}
+
+.emoji {
+    font-size:
+        clamp(
+            72px,
+            12vw,
+            128px
+        );
+
+    line-height: 1;
+}
+
 .status {
     position: fixed;
     inset: 0;
@@ -20,9 +36,9 @@ body {
 
     font-size:
         clamp(
-            42px,
-            8vw,
-            96px
+            32px,
+            5vw,
+            56px
         );
 }
 
