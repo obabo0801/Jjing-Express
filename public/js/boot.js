@@ -1,83 +1,79 @@
-const root = document.documentElement;
-const key = 'theme';
-const sysQuery = '(prefers-color-scheme: light)';
+(() => {
+    const root = document.documentElement;
+    const key = 'theme';
+    const sysQuery = '(prefers-color-scheme: light)';
 
-const modes = [
-    'light',
-    'dark',
-    'night',
-    'system'
-];
+    const modes = [
+        'light',
+        'dark',
+        'night',
+        'system'
+    ];
 
-const saved = localStorage.getItem(key);
+    const saved = localStorage.getItem(key);
 
-const mode = modes.includes(saved)
-    ? saved
-    : 'light';
+    const mode = modes.includes(saved)
+        ? saved
+        : 'light';
 
-const theme = mode === 'system'
-    ? sys()
-    : mode;
+    root.setAttribute('theme', mode);
 
-root.setAttribute('theme', mode);
+    let favicons = {};
 
-let favicons = {};
+    window.setFaviconTheme = function setFaviconTheme(theme) {
+        const icon = document.querySelector(
+            'link[rel="icon"]'
+        );
 
-window.setFaviconTheme = (
-    function setFaviconTheme(theme)
-{
-    const icon = document.querySelector(
-        'link[rel="icon"]'
-    );
+        if (!icon || !favicons[theme]) {
+            return;
+        }
 
-    if (!icon || !favicons[theme]) {
-        return;
-    }
-
-    icon.href = favicons[theme];
-});
-
-async function init() {
-    const response = await fetch('/favicon.svg');
-    const svg = await response.text();
-
-    favicons = {
-        light: createUrl(svg, '#c98e5f'),
-        dark: createUrl(svg, '#ffffff'),
-        night: createUrl(svg, '#ffffff')
+        icon.href = favicons[theme];
     };
 
-    window.setFaviconTheme(
-        mode === 'system'
-            ? sys()
-            : mode
-    );
-}
+    init();
 
-function sys() {
-    return matchMedia(sysQuery).matches
-        ? 'light'
-        : 'dark';
-}
+    async function init() {
+        const response = await fetch('/favicon.svg');
+        const svg = await response.text();
 
-function createUrl(svg, color) {
-    const favicon = svg.replace(
-        '</svg>',
-        `
-            <style>
-                .favicon {
-                    fill: ${color} !important;
-                }
-            </style>
-        </svg>`
-    );
+        favicons = {
+            light: createUrl(svg, '#c98e5f'),
+            dark: createUrl(svg, '#ffffff'),
+            night: createUrl(svg, '#ffffff')
+        };
 
-    const blob = new Blob(
-        [favicon],
-        { type: 'image/svg+xml' }
-    );
+        window.setFaviconTheme(
+            mode === 'system'
+                ? sys()
+                : mode
+        );
+    }
 
-    return URL.createObjectURL(blob);
-}
+    function sys() {
+        return matchMedia(sysQuery).matches
+            ? 'light'
+            : 'dark';
+    }
 
-init();
+    function createUrl(svg, color) {
+        const favicon = svg.replace(
+            '</svg>',
+            `
+                <style>
+                    .favicon {
+                        fill: ${color} !important;
+                    }
+                </style>
+            </svg>`
+        );
+
+        const blob = new Blob(
+            [favicon],
+            { type: 'image/svg+xml' }
+        );
+
+        return URL.createObjectURL(blob);
+    }
+})();
