@@ -66,6 +66,9 @@ function watch() {
     on(query, 'change', () => {
         if (root.dataset.themeMode === 'system') {
             set('system', false);
+            return;
         }
+
+        window.setFaviconTheme?.(sys());
     });
 }
