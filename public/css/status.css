@@ -8,6 +8,26 @@ body {
     place-items: center;
 }
 
+.check {
+    display: grid;
+    place-items: center;
+}
+
+.check .img {
+    width:
+        clamp(
+            180px,
+            38vw,
+            300px
+        );
+
+    height: auto;
+
+    user-select: none;
+    -webkit-user-drag:
+        none;
+}
+
 .emoji {
     font-size:
         clamp(
@@ -66,10 +86,13 @@ body {
     white-space: nowrap;
 
     transition:
-        transform 0.16s ease,
-        background-color var(--motion),
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
         color var(--motion),
-        border-color var(--motion);
+        border-color
+            var(--motion);
 }
 
 .status a:hover {

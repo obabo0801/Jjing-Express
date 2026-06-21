@@ -40,5 +40,6 @@ function isAsset(path) {
     return path.startsWith('/css/')
         || path.startsWith('/js/')
         || path.startsWith('/assets/')
-        || path === '/favicon.svg';
+        || path === '/favicon.svg'
+        || path === '/check.svg';
 }
