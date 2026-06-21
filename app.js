@@ -39,13 +39,17 @@ app.use((req, res, next) => {
     );
 });
 
-app.use(express.static(PUBLIC_PATH));
+app.use((req, res, next) => {
+    if (isDirectJs(req)) {
+        return res.status(404).sendFile(
+            file.get('public/404.html')
+        );
+    }
 
-app.use((req, res) => {
-    res.status(404).sendFile(
-        file.get('public/404.html')
-    );
+    next();
 });
+
+app.use(express.static(PUBLIC_PATH));
 
 app.listen(PORT, () => {
     log.info(`http://localhost:${PORT}/`);
@@ -56,5 +60,12 @@ function isAsset(path) {
         ASSET_DIRS.some(
             dir => path.startsWith(dir)
         ) || ASSET_FILES.includes(path)
+    );
+}
+
+function isDirectJs(req) {
+    return (
+        req.path.startsWith('/js/')
+        && req.get('sec-fetch-dest') !== 'script'
     );
 }
