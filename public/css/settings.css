@@ -453,30 +453,6 @@ button.is-active {
     }
 }
 
-.settings-loading {
-    min-height: 160px;
-
-    display: grid;
-    place-items: center;
-}
-
-.settings-loading
-.icon {
-    width: 34px;
-    height: 34px;
-
-    animation:
-        settings-loading-spin
-        0.36s linear infinite;
-}
-
-@keyframes settings-loading-spin {
-    100% {
-        transform:
-            rotate(360deg);
-    }
-}
-
 @media (max-width: 640px) {
     .settings-panel {
         inset: 12px;

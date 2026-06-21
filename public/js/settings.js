@@ -123,11 +123,7 @@ async function change(type) {
     title.textContent = name;
     icon.className = iconName;
 
-    body.innerHTML = `
-        <div class="settings-loading">
-            <span class="icon icon-setting"></span>
-        </div>
-    `;
+    body.replaceChildren();
 
     body.innerHTML = await getHtml(
         `/components/settings/${type}.html`
