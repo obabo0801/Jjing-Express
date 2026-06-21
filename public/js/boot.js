@@ -1,16 +1,25 @@
 const root = document.documentElement;
 const key = 'theme';
-const darkQuery = '(prefers-color-scheme: dark)';
+const sysQuery = '(prefers-color-scheme: light)';
 
-const savedTheme = localStorage.getItem(key);
+const modes = [
+    'light',
+    'dark',
+    'night',
+    'system'
+];
 
-const theme = savedTheme
-    || (
-        matchMedia(darkQuery).matches
-            ? 'dark'
-            : 'light'
-    );
+const saved = localStorage.getItem(key);
 
+const mode = modes.includes(saved)
+    ? saved
+    : 'light';
+
+const theme = mode === 'system'
+    ? sys()
+    : mode;
+
+root.dataset.themeMode = mode;
 root.dataset.theme = theme;
 
 let favicons = {};
@@ -34,11 +43,18 @@ async function init() {
     const svg = await response.text();
 
     favicons = {
+        light: createUrl(svg, '#c98e5f'),
         dark: createUrl(svg, '#ffffff'),
-        light: createUrl(svg, '#c98e5f')
+        night: createUrl(svg, '#ffffff')
     };
 
     window.setFaviconTheme(theme);
+}
+
+function sys() {
+    return matchMedia(sysQuery).matches
+        ? 'light'
+        : 'dark';
 }
 
 function createUrl(svg, color) {
