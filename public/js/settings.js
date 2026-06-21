@@ -108,9 +108,6 @@ async function change(type) {
     const title = $(
         '[data-settings-title]'
     );
-    const icon = $(
-        '[data-settings-title-icon]'
-    );
 
     saveType(type);
 
@@ -118,12 +115,7 @@ async function change(type) {
         ? '알림'
         : '일반';
 
-    const iconName = type === 'notification'
-        ? 'icon icon-bell'
-        : 'icon icon-setting';
-
     title.textContent = name;
-    icon.className = iconName;
 
     body.replaceChildren();
 
