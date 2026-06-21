@@ -32,14 +32,13 @@ function toggle() {
 }
 
 function set(mode, save = true) {
-    const theme = mode === 'system'
-        ? sys()
-        : mode;
+    root.dataset.theme = mode;
 
-    root.dataset.themeMode = mode;
-    root.dataset.theme = theme;
-
-    window.setFaviconTheme?.(theme);
+    window.setFaviconTheme?.(
+        mode === 'system'
+            ? sys()
+            : mode
+    );
 
     if (save) {
         localStorage.setItem(key, mode);
@@ -64,11 +63,6 @@ function watch() {
     const query = matchMedia(sysQuery);
 
     on(query, 'change', () => {
-        if (root.dataset.themeMode === 'system') {
-            set('system', false);
-            return;
-        }
-
         window.setFaviconTheme?.(sys());
     });
 }

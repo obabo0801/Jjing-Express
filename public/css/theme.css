@@ -45,3 +45,29 @@
     --hover: rgba(255, 255, 255, 0.13);
     --focus: #ffffff;
 }
+
+[data-theme="system"] {
+    color-scheme: light;
+
+    --logo: #c98e5f;
+    --bg: #ffffff;
+    --bar: #ffffff;
+    --text: #111111;
+    --line: rgba(0, 0, 0, 0.08);
+    --hover: rgba(0, 0, 0, 0.06);
+    --focus: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+    [data-theme="system"] {
+        color-scheme: dark;
+
+        --logo: #ffffff;
+        --bg: #121212;
+        --bar: #181818;
+        --text: #ffffff;
+        --line: rgba(255, 255, 255, 0.14);
+        --hover: rgba(255, 255, 255, 0.1);
+        --focus: #ffffff;
+    }
+}

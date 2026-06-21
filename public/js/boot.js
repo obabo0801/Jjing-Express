@@ -19,7 +19,6 @@ const theme = mode === 'system'
     ? sys()
     : mode;
 
-root.dataset.themeMode = mode;
 root.dataset.theme = theme;
 
 let favicons = {};
@@ -48,7 +47,11 @@ async function init() {
         night: createUrl(svg, '#ffffff')
     };
 
-    window.setFaviconTheme(theme);
+    window.setFaviconTheme(
+        mode === 'system'
+            ? sys()
+            : mode
+    );
 }
 
 function sys() {
