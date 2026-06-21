@@ -35,10 +35,8 @@
     padding: 16px;
 
     top: calc(
-        (
-            var(--top-height)
-            + 12px
-        ) / var(--screen-scale)
+        var(--top-height)
+        + 12px
     );
     right: calc(
         24px / var(--screen-scale)
