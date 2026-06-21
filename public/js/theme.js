@@ -23,7 +23,6 @@ export function initTheme() {
     watch();
 
     on(button, 'click', event => {
-        event.stopPropagation();
         menu.hidden = !menu.hidden;
     });
 

@@ -68,9 +68,11 @@ body {
 
 .theme-menu {
     position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    z-index: 20;
+    z-index: 999;
+    
+    top: calc(
+        100% + 20px
+    );
 
     min-width: 132px;
     padding: 6px;
