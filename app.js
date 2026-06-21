@@ -30,6 +30,10 @@ app.use((req, res, next) => {
         return next();
     }
 
+    if (req.path !== '/') {
+        return res.redirect(302, '/');
+    }
+
     res.status(503).sendFile(
         file.get('public/check.html')
     );
