@@ -2,7 +2,14 @@ import { $, on } from './dom.js';
 
 const root = document.documentElement;
 const key = 'theme';
-const darkQuery = '(prefers-color-scheme: dark)';
+const sysQuery = '(prefers-color-scheme: light)';
+
+const modes = [
+    'light',
+    'dark',
+    'night',
+    'system'
+];
 
 export function initTheme() {
     const button = $('.theme-button');
@@ -14,37 +21,51 @@ export function initTheme() {
 }
 
 function toggle() {
-    const theme = root.dataset.theme === 'dark'
-        ? 'light'
-        : 'dark';
+    const now = root.dataset.themeMode || get();
+    const index = modes.indexOf(now);
 
-    set(theme);
+    const next = modes[
+        (index + 1) % modes.length
+    ];
+
+    set(next);
 }
 
-function set(theme, save = true) {
+function set(mode, save = true) {
+    const theme = mode === 'system'
+        ? sys()
+        : mode;
+
+    root.dataset.themeMode = mode;
     root.dataset.theme = theme;
+
     window.setFaviconTheme?.(theme);
 
     if (save) {
-        localStorage.setItem(key, theme);
+        localStorage.setItem(key, mode);
     }
 }
 
 function get() {
-    return localStorage.getItem(key)
-        || system();
+    const mode = localStorage.getItem(key);
+
+    return modes.includes(mode)
+        ? mode
+        : 'light';
 }
 
-function system() {
-    return matchMedia(darkQuery).matches
+function sys() {
+    return matchMedia(sysQuery).matches
         ? 'dark'
         : 'light';
 }
 
 function watch() {
-    const query = matchMedia(darkQuery);
+    const query = matchMedia(sysQuery);
 
     on(query, 'change', () => {
-        set(system());
+        if (root.dataset.themeMode === 'system') {
+            set('system', false);
+        }
     });
 }
