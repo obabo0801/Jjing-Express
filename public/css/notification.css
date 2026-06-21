@@ -710,8 +710,7 @@ strong {
     font-size: 13px;
     opacity: 0.72;
 
-    white-space:
-        nowrap;
+    white-space: nowrap;
     text-overflow:
         ellipsis;
 }

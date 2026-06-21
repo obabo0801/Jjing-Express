@@ -1,19 +1,21 @@
+html,
+body {
+    overflow: hidden;
+}
+
 .status {
     position: fixed;
     inset: 0;
 
     display: grid;
     place-items: center;
+    align-content: center;
+    gap: 12px;
 
     text-align: center;
 }
 
-.status-box {
-    display: grid;
-    gap: 12px;
-}
-
-.status-box h1 {
+.status h1 {
     margin: 0;
 
     font-size:
@@ -24,13 +26,13 @@
         );
 }
 
-.status-box p {
+.status p {
     margin: 0;
 
     opacity: 0.72;
 }
 
-.status-box a {
+.status a {
     justify-self: center;
 
     margin-top: 10px;
@@ -48,21 +50,18 @@
     white-space: nowrap;
 
     transition:
-        transform
-            0.16s ease,
-        background-color
-            var(--motion),
+        transform 0.16s ease,
+        background-color var(--motion),
         color var(--motion),
-        border-color
-            var(--motion);
+        border-color var(--motion);
 }
 
-.status-box a:hover {
+.status a:hover {
     background-color:
         var(--hover);
 }
 
-.status-box a:active {
+.status a:active {
     transform:
         scale(0.92);
 }
