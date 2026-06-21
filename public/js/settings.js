@@ -120,6 +120,11 @@ async function change(type) {
         ? 'icon icon-bell'
         : 'icon icon-setting';
 
+    title.textContent = name;
+    icon.className = iconName;
+
+    body.replaceChildren();
+
     body.innerHTML = await getHtml(
         `/components/settings/${type}.html`
     );
@@ -131,9 +136,6 @@ async function change(type) {
     if (type === 'notification') {
         bindNotify();
     }
-
-    title.textContent = name;
-    icon.className = iconName;
 
     layer.querySelectorAll(
         '.settings-tab'
