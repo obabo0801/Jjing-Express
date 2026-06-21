@@ -81,12 +81,13 @@ body {
         transparent;
 
     transition:
+        transform
+            0.15s ease,
         background-color
             var(--motion),
         border-color
             var(--motion),
-        color var(--motion),
-        transform 0.15s ease;
+        color var(--motion);
 }
 
 .icon-button:hover {
@@ -95,7 +96,8 @@ body {
 }
 
 .icon-button:active {
-    transform: scale(0.90);
+    transform:
+        scale(0.90);
 }
 
 .icon-button:focus-visible {

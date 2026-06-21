@@ -18,7 +18,8 @@
         no-repeat;
     
     transition:
-        transform 0.15s ease;
+        transform
+            0.15s ease;
 }
 
 .icon-favicon {
