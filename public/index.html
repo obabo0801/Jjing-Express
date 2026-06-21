@@ -22,10 +22,30 @@
             </a>
 
             <div class="top-actions">
-                <button class="theme-button icon-button" type="button">
-                    <span class="icon icon-moon theme-dark"></span>
-                    <span class="icon icon-sun theme-light"></span>
-                </button>
+                <div class="theme-dropdown">
+                    <button class="theme-button icon-button" type="button">
+                        <span class="icon icon-moon theme-dark"></span>
+                        <span class="icon icon-sun theme-light"></span>
+                    </button>
+
+                    <div class="theme-menu" hidden>
+                        <button type="button" data-theme-value="system">
+                            시스템 테마
+                        </button>
+
+                        <button type="button" data-theme-value="light">
+                            밝은 테마
+                        </button>
+
+                        <button type="button" data-theme-value="dark">
+                            어두운 테마
+                        </button>
+
+                        <button type="button" data-theme-value="night">
+                            밤 테마
+                        </button>
+                    </div>
+                </div>
 
                 <button
                     class="notify-button icon-button"

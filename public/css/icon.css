@@ -93,14 +93,36 @@
     display: none;
 }
 
-[data-theme="light"]
+[theme="light"]
 .theme-dark {
     display: none;
 }
 
-[data-theme="light"]
+[theme="light"]
 .theme-light {
     display: block;
+}
+
+[theme="system"]
+.theme-dark {
+    display: none;
+}
+
+[theme="system"]
+.theme-light {
+    display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+    [theme="system"]
+    .theme-light {
+        display: none;
+    }
+
+    [theme="system"]
+    .theme-dark {
+        display: block;
+    }
 }
 
 .icon-button.is-pop

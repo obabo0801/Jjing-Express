@@ -62,6 +62,62 @@ body {
     gap: 10px;
 }
 
+.theme-dropdown {
+    position: relative;
+}
+
+.theme-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 20;
+
+    min-width: 132px;
+    padding: 6px;
+
+    display: grid;
+    gap: 4px;
+
+    border:
+        1px solid
+        var(--line);
+    border-radius: 14px;
+
+    background-color:
+        var(--bar);
+
+    box-shadow:
+        0 12px 28px
+        rgba(0, 0, 0, 0.24);
+}
+
+.theme-menu[hidden] {
+    display: none;
+}
+
+.theme-menu button {
+    height: 34px;
+    padding: 0 10px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background:
+        transparent;
+    color: var(--text);
+
+    cursor: pointer;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.theme-menu button:hover,
+.theme-menu button:focus-visible,
+.theme-menu button.is-active {
+    background-color:
+        var(--hover);
+}
+
 .icon-button {
     width: 48px;
     height: 48px;
