@@ -130,6 +130,8 @@ button:active {
     align-items: center;
     justify-content:
         space-between;
+    gap: 8px 12px;
+    flex-wrap: wrap;
 
     margin-bottom: 14px;
 }
@@ -171,6 +173,13 @@ button:active {
 
     cursor: pointer;
     opacity: 0.72;
+}
+
+.notify-head-title
+strong,
+.notify-clear,
+.notify-remove-all {
+    white-space: nowrap;
 }
 
 .notify-clear:hover,
