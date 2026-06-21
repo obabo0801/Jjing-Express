@@ -40,13 +40,16 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-    if (isDirectJs(req)) {
-        return res.status(404).sendFile(
-            file.get('public/404.html')
-        );
+    if (
+        !isDirectJs(req)
+        && !isDirectCss(req)
+    ) {
+        return next();
     }
 
-    next();
+    return res.status(404).sendFile(
+        file.get('public/404.html')
+    );
 });
 
 app.use(express.static(PUBLIC_PATH));
@@ -65,7 +68,22 @@ function isAsset(path) {
 
 function isDirectJs(req) {
     return (
-        req.path.startsWith('/js/')
-        && req.get('sec-fetch-dest') !== 'script'
+        req.path.startsWith(
+            '/js/'
+        )
+        && req.get(
+            'sec-fetch-dest'
+        ) !== 'script'
+    );
+}
+
+function isDirectCss(req) {
+    return (
+        req.path.startsWith(
+            '/css/'
+        )
+        && req.get(
+            'sec-fetch-dest'
+        ) !== 'style'
     );
 }
