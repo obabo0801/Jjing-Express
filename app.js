@@ -10,6 +10,17 @@ const PORT = 3000;
 const PUBLIC_PATH = file.get('public');
 const CHECK = process.env.CHECK === '1';
 
+const ASSET_DIRS = [
+    '/css/',
+    '/js/',
+    '/assets/'
+];
+
+const ASSET_FILES = [
+    '/favicon.svg',
+    '/check.svg'
+];
+
 app.use((req, res, next) => {
     if (!CHECK) {
         return next();
@@ -37,9 +48,9 @@ app.listen(PORT, () => {
 });
 
 function isAsset(path) {
-    return path.startsWith('/css/')
-        || path.startsWith('/js/')
-        || path.startsWith('/assets/')
-        || path === '/favicon.svg'
-        || path === '/check.svg';
+    return (
+        ASSET_DIRS.some(
+            dir => path.startsWith(dir)
+        ) || ASSET_FILES.includes(path)
+    );
 }
