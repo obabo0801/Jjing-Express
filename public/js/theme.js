@@ -56,8 +56,8 @@ function get() {
 
 function sys() {
     return matchMedia(sysQuery).matches
-        ? 'dark'
-        : 'light';
+        ? 'light'
+        : 'dark';
 }
 
 function watch() {
