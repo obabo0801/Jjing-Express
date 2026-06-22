@@ -34,17 +34,23 @@
     );
 }
 
-.icon-moon {
+.icon-light {
     --icon: url(
-        "/assets/icons/moon.svg"
+        "/assets/icons/light.svg"
+    );
+    color: #ffcc00;
+}
+
+.icon-dark {
+    --icon: url(
+        "/assets/icons/dark.svg"
     );
 }
 
-.icon-sun {
+.icon-night {
     --icon: url(
-        "/assets/icons/sun.svg"
+        "/assets/icons/night.svg"
     );
-    color: #ffcc00;
 }
 
 .icon-bell {

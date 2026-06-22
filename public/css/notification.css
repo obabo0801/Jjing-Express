@@ -39,7 +39,11 @@
         + 12px
     );
     right: calc(
-        24px / var(--screen-scale)
+        (
+            24px
+            + 48px
+            + 10px
+        ) / var(--screen-scale)
     );
 
     width: min(
