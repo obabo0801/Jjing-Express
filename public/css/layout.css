@@ -68,13 +68,13 @@ body {
 
 .theme-menu {
     position: absolute;
-    z-index: 999;
-    
     top: calc(
         100% + 20px
     );
+    right: 0;
+    z-index: 999;
 
-    min-width: 132px;
+    min-width: 160px;
     padding: 6px;
 
     display: grid;
@@ -87,6 +87,7 @@ body {
 
     background-color:
         var(--bar);
+    color: var(--text);
 
     box-shadow:
         0 12px 28px
@@ -95,6 +96,42 @@ body {
 
 .theme-menu[hidden] {
     display: none;
+}
+
+.theme-head {
+    display: none;
+}
+
+.theme-item {
+    height: 34px;
+    padding: 0 10px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background:
+        transparent;
+    color: var(--text);
+
+    cursor: pointer;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.theme-item .icon {
+    width: 18px;
+    height: 18px;
+}
+
+.theme-item:hover,
+.theme-item:focus-visible,
+.theme-item.is-active {
+    background-color:
+        var(--hover);
 }
 
 .theme-menu button {
@@ -195,5 +232,72 @@ body {
 
     .hero h1 {
         font-size: 38px;
+    }
+}
+
+@media (max-width: 640px) {
+    .theme-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 1200;
+
+        min-width: 0;
+        padding: 0;
+
+        align-content: start;
+
+        border: 0;
+        border-radius: 0;
+
+        box-shadow: none;
+    }
+
+    .theme-head {
+        height: var(--top-height);
+        padding: 0 16px;
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        border-bottom:
+            1px solid
+            var(--line);
+    }
+
+    .theme-close {
+        width: 42px;
+        height: 42px;
+        padding: 0;
+
+        display: grid;
+        place-items: center;
+
+        border: 0;
+        border-radius: 12px;
+
+        background:
+            transparent;
+        color: var(--text);
+
+        cursor: pointer;
+    }
+
+    .theme-close:hover,
+    .theme-close:focus-visible {
+        background-color:
+            var(--hover);
+    }
+
+    .theme-item {
+        height: 48px;
+        margin: 0 16px;
+        padding: 0 12px;
+
+        border-radius: 12px;
+    }
+
+    .theme-item:first-of-type {
+        margin-top: 16px;
     }
 }

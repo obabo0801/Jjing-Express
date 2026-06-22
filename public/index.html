@@ -29,20 +29,32 @@
                     </button>
 
                     <div class="theme-menu" hidden>
-                        <button type="button" data-theme-value="system">
-                            시스템 테마
+                        <div class="theme-head">
+                            <button class="theme-close" type="button" data-theme-close>
+                                <span class="icon icon-close"></span>
+                            </button>
+
+                            <strong>테마</strong>
+                        </div>
+
+                        <button class="theme-item" type="button" data-theme-value="system">
+                            <span class="icon icon-setting"></span>
+                            <span>시스템 테마</span>
                         </button>
 
-                        <button type="button" data-theme-value="light">
-                            밝은 테마
+                        <button class="theme-item" type="button" data-theme-value="light">
+                            <span class="icon icon-sun"></span>
+                            <span>밝은 테마</span>
                         </button>
 
-                        <button type="button" data-theme-value="dark">
-                            어두운 테마
+                        <button class="theme-item" type="button" data-theme-value="dark">
+                            <span class="icon icon-moon"></span>
+                            <span>어두운 테마</span>
                         </button>
 
-                        <button type="button" data-theme-value="night">
-                            밤 테마
+                        <button class="theme-item" type="button" data-theme-value="night">
+                            <span class="icon icon-moon"></span>
+                            <span>밤 테마</span>
                         </button>
                     </div>
                 </div>

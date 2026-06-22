@@ -15,6 +15,7 @@ export function initTheme() {
     const dropdown = $('.theme-dropdown');
     const button = $('.theme-button');
     const menu = $('.theme-menu');
+    const close = $('.theme-close');
     const items = document.querySelectorAll(
         '[data-theme-value]'
     );
@@ -24,6 +25,10 @@ export function initTheme() {
 
     on(button, 'click', event => {
         menu.hidden = !menu.hidden;
+    });
+
+    on(close, 'click', () => {
+        menu.hidden = true;
     });
 
     items.forEach(item => {
