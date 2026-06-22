@@ -23,32 +23,133 @@ export function initTheme() {
     set(get(), false);
     watch();
 
-    on(button, 'click', event => {
-        menu.hidden = !menu.hidden;
+    on(button, 'click', () => {
+        if (menu.hidden) {
+            openMenu(menu, close);
+            return;
+        }
+
+        closeMenu(menu, button);
     });
 
     on(close, 'click', () => {
-        menu.hidden = true;
+        closeMenu(menu, button);
     });
 
     items.forEach(item => {
         on(item, 'click', () => {
             set(item.dataset.themeValue);
-            menu.hidden = true;
+            closeMenu(menu, button);
         });
     });
 
     document.addEventListener('click', event => {
         if (!dropdown?.contains(event.target)) {
-            menu.hidden = true;
+            closeMenu(menu);
         }
     });
 
     document.addEventListener('keydown', event => {
         if (event.key === 'Escape') {
-            menu.hidden = true;
+            closeMenu(menu, button);
         }
     });
+
+    on(menu, 'keydown', event => {
+        tabEnd(event, menu, button);
+    });
+}
+
+function openMenu(menu, focus) {
+    if (!menu) {
+        return;
+    }
+
+    menu.hidden = false;
+    menu.classList.remove('is-close');
+    menu.classList.add('is-open');
+
+    if (!mobile()) {
+        return;
+    }
+
+    document.body.classList.add(
+        'is-theme-open'
+    );
+
+    requestAnimationFrame(() => {
+        focus?.focus?.({
+            preventScroll: true
+        });
+    });
+}
+
+function closeMenu(menu, focus) {
+    if (
+        !menu
+        || menu.hidden
+        || menu.classList.contains('is-close')
+    ) {
+        return;
+    }
+
+    menu.classList.remove('is-open');
+
+    if (!mobile()) {
+        menu.hidden = true;
+
+        focus?.focus?.({
+            preventScroll: true
+        });
+
+        return;
+    }
+
+    menu.classList.add('is-close');
+
+    menu.addEventListener('animationend', () => {
+        menu.hidden = true;
+        menu.classList.remove('is-close');
+
+        document.body.classList.remove(
+            'is-theme-open'
+        );
+
+        focus?.focus?.({
+            preventScroll: true
+        });
+    }, { once: true });
+}
+
+function tabEnd(event, menu, focus) {
+    if (
+        event.key !== 'Tab'
+        || event.shiftKey
+        || !menu
+        || menu.hidden
+    ) {
+        return;
+    }
+
+    const focusList = [
+        ...menu.querySelectorAll('button')
+    ].filter(item => {
+        return !item.hidden
+            && !item.disabled
+            && item.offsetParent !== null;
+    });
+
+    const last = focusList[
+        focusList.length - 1
+    ];
+
+    if (document.activeElement !== last) {
+        return;
+    }
+
+    event.preventDefault();
+
+    closeMenu(menu, focus);
 }
 
 function set(mode, save = true) {
@@ -101,4 +202,10 @@ function watch() {
 
         window.setFaviconTheme?.(sys());
     });
+}
+
+function mobile() {
+    return matchMedia(
+        '(max-width: 640px)'
+    ).matches;
 }

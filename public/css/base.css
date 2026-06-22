@@ -47,7 +47,8 @@ body.ready {
     opacity: 1;
 }
 
-body.is-settings-open {
+body.is-settings-open,
+body.is-theme-open {
     overflow:
         hidden;
 }
