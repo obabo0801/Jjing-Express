@@ -1,7 +1,7 @@
 .settings {
     position: fixed;
     inset: 0;
-    z-index: 1000;
+    z-index: 10;
 }
 
 .settings,
@@ -246,7 +246,7 @@
     position: absolute;
     top: calc(100% + 6px);
     right: 0;
-    z-index: 5;
+    z-index: 10;
 
     width: 100%;
     padding: 6px;

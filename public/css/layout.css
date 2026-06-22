@@ -7,7 +7,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 10;
 
     width: 100%;
     height: var(--top-height);
@@ -72,7 +72,7 @@ body {
         100% + 20px
     );
     right: 0;
-    z-index: 999;
+    z-index: 1000;
 
     min-width: 160px;
     padding: 6px;
@@ -239,7 +239,7 @@ body {
     .theme-menu {
         position: fixed;
         inset: 0;
-        z-index: 1200;
+        z-index: 1000;
 
         min-width: 0;
         padding: 0;
