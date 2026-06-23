@@ -796,7 +796,7 @@ function toggleMenu(event) {
         '.notify-menu'
     );
     const panel = document.querySelector(
-        '.notify'
+        '.notify-box'
     );
 
     if (!more?.classList.contains('is-open')) {
@@ -1273,12 +1273,7 @@ function closeOut(event, button, panel) {
         return;
     }
 
-    const target = event.target;
-
-    if (
-        target.closest('.notify')
-        || target.closest('.notify')
-    ) {
+    if (event.target.closest('.notify')) {
         return;
     }
 

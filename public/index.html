@@ -28,7 +28,7 @@
                         <span class="icon icon-dark theme-dark"></span>
                     </button>
 
-                    <div class="theme-menu" hidden>
+                    <div class="theme-box" hidden>
                         <div class="theme-head">
                             <button class="theme-close" type="button" data-theme-close>
                                 <span class="icon icon-close"></span>
@@ -61,8 +61,54 @@
                     </button>
 
                     <aside class="notify-box" id="notify" hidden>
-                        <span class="icon icon-bell"></span>
-                        <span class="notify-badge" hidden>0</span>
+                        <div class="notify-head">
+                            <div class="notify-head-title">
+                                <span class="icon icon-bell"></span>
+                                <strong>알림</strong>
+                            </div>
+
+                            <div class="notify-actions">
+                                <button class="notify-clear" type="button">
+                                    모두 읽음
+                                </button>
+
+                                <button class="notify-remove-all" type="button">
+                                    모두 지우기
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="notify-tabs">
+                            <button class="notify-tab is-active" type="button" data-filter="all">
+                                전체
+                            </button>
+
+                            <button class="notify-tab" type="button" data-filter="unread">
+                                미확인
+                            </button>
+
+                            <button class="notify-search-button" type="button">
+                                <span class="icon icon-search"></span>
+                            </button>
+                        </div>
+
+                        <div class="notify-search" hidden>
+                            <input
+                                class="notify-search-input"
+                                type="search"
+                                placeholder="검색"
+                            >
+
+                            <button class="notify-search-close" type="button">
+                                닫기
+                            </button>
+                        </div>
+
+                        <div class="notify-list">
+                            <p class="notify-empty">
+                                새로운 알림이 없습니다.
+                            </p>
+                        </div>
                     </aside>
                 </div>
 
@@ -74,57 +120,6 @@
             </div>
         </div>
     </header>
-
-    <aside class="notify" id="notify" hidden>
-        <div class="notify-head">
-            <div class="notify-head-title">
-                <span class="icon icon-bell"></span>
-                <strong>알림</strong>
-            </div>
-
-            <div class="notify-actions">
-                <button class="notify-clear" type="button">
-                    모두 읽음
-                </button>
-
-                <button class="notify-remove-all" type="button">
-                    모두 지우기
-                </button>
-            </div>
-        </div>
-
-        <div class="notify-tabs">
-            <button class="notify-tab is-active" type="button" data-filter="all">
-                전체
-            </button>
-
-            <button class="notify-tab" type="button" data-filter="unread">
-                미확인
-            </button>
-
-            <button class="notify-search-button" type="button">
-                <span class="icon icon-search"></span>
-            </button>
-        </div>
-
-        <div class="notify-search" hidden>
-            <input
-                class="notify-search-input"
-                type="search"
-                placeholder="검색"
-            >
-
-            <button class="notify-search-close" type="button">
-                닫기
-            </button>
-        </div>
-
-        <div class="notify-list">
-            <p class="notify-empty">
-                새로운 알림이 없습니다.
-            </p>
-        </div>
-    </aside>
 
     <main class="middle">
         <section class="hero">

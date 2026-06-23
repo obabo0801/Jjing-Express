@@ -1,20 +1,21 @@
-.settings {
+.settings-box {
     position: fixed;
     inset: 0;
     z-index: 10;
 }
 
-.settings,
-.settings * {
+.settings-box,
+.settings-box * {
     -webkit-tap-highlight-color:
         transparent;
 }
 
-.settings[hidden] {
+.settings-box[hidden] {
     display: none;
 }
 
-.settings button {
+.settings-box
+button {
     white-space: nowrap;
 }
 
@@ -272,7 +273,8 @@
     gap: 4px;
 }
 
-.settings-size-menu button {
+.settings-size-menu
+button {
     height: 30px;
     padding: 0 8px;
 
@@ -373,28 +375,28 @@ button.is-active {
     display: none;
 }
 
-.settings.is-open
+.settings-box.is-open
 .settings-backdrop {
     animation:
         settings-backdrop-in
         0.18s ease;
 }
 
-.settings.is-open
+.settings-box.is-open
 .settings-panel {
     animation:
         settings-popup-in
         0.2s ease;
 }
 
-.settings.is-close
+.settings-box.is-close
 .settings-backdrop {
     animation:
         settings-backdrop-out
         0.16s ease forwards;
 }
 
-.settings.is-close
+.settings-box.is-close
 .settings-panel {
     animation:
         settings-popup-out
@@ -504,12 +506,12 @@ button.is-active {
         min-height: 0;
     }
 
-    .settings.is-page
+    .settings-box.is-page
     .settings-side {
         display: none;
     }
 
-    .settings.is-page
+    .settings-box.is-page
     .settings-page {
         display: flex;
     }

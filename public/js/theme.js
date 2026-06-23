@@ -19,7 +19,7 @@ const icons = {
 export function initTheme() {
     const wrap = $('.theme');
     const button = $('.theme > .tool');
-    const menu = $('.theme-menu');
+    const box = $('.theme-box');
     const close = $('.theme-close');
     const items = document.querySelectorAll(
         '[data-theme-value]'
@@ -29,16 +29,16 @@ export function initTheme() {
     watch();
 
     on(button, 'click', () => {
-        if (menu.hidden) {
-            openMenu(menu, close);
+        if (box.hidden) {
+            openBox(box, close);
             return;
         }
 
-        closeMenu(menu, button);
+        closeBox(box, button);
     });
 
     on(close, 'click', () => {
-        closeMenu(menu, button);
+        closeBox(box, button);
     });
 
     items.forEach(item => {
@@ -46,7 +46,7 @@ export function initTheme() {
             const mode = item.dataset.themeValue;
 
             if (isMobile()) {
-                closeMenu(menu, button, () => {
+                closeBox(box, button, () => {
                     set(mode);
                 });
 
@@ -54,35 +54,35 @@ export function initTheme() {
             }
 
             set(mode);
-            closeMenu(menu, button);
+            closeBox(box, button);
         });
     });
 
     document.addEventListener('click', event => {
         if (!wrap?.contains(event.target)) {
-            closeMenu(menu);
+            closeBox(box);
         }
     });
 
     document.addEventListener('keydown', event => {
         if (event.key === 'Escape') {
-            closeMenu(menu, button);
+            closeBox(box, button);
         }
     });
 
-    on(menu, 'keydown', event => {
-        tabEnd(event, menu, button);
+    on(box, 'keydown', event => {
+        tabEnd(event, box, button);
     });
 }
 
-function openMenu(menu, focus) {
-    if (!menu) {
+function openBox(box, focus) {
+    if (!box) {
         return;
     }
 
-    menu.hidden = false;
-    menu.classList.remove('is-close');
-    menu.classList.add('is-open');
+    box.hidden = false;
+    box.classList.remove('is-close');
+    box.classList.add('is-open');
 
     if (!isMobile()) {
         return;
@@ -99,19 +99,19 @@ function openMenu(menu, focus) {
     });
 }
 
-function closeMenu(menu, focus, done) {
+function closeBox(box, focus, done) {
     if (
-        !menu
-        || menu.hidden
-        || menu.classList.contains('is-close')
+        !box
+        || box.hidden
+        || box.classList.contains('is-close')
     ) {
         return;
     }
 
-    menu.classList.remove('is-open');
+    box.classList.remove('is-open');
 
     if (!isMobile()) {
-        menu.hidden = true;
+        box.hidden = true;
         done?.();
 
         focus?.focus?.({
@@ -121,11 +121,11 @@ function closeMenu(menu, focus, done) {
         return;
     }
 
-    menu.classList.add('is-close');
+    box.classList.add('is-close');
 
-    menu.addEventListener('animationend', () => {
-        menu.hidden = true;
-        menu.classList.remove('is-close');
+    box.addEventListener('animationend', () => {
+        box.hidden = true;
+        box.classList.remove('is-close');
 
         document.body.classList.remove(
             'is-theme-open'
@@ -139,18 +139,18 @@ function closeMenu(menu, focus, done) {
     }, { once: true });
 }
 
-function tabEnd(event, menu, focus) {
+function tabEnd(event, box, focus) {
     if (
         event.key !== 'Tab'
         || event.shiftKey
-        || !menu
-        || menu.hidden
+        || !box
+        || box.hidden
     ) {
         return;
     }
 
     const focusList = [
-        ...menu.querySelectorAll('button')
+        ...box.querySelectorAll('button')
     ].filter(item => {
         return !item.hidden
             && !item.disabled
@@ -167,7 +167,7 @@ function tabEnd(event, menu, focus) {
 
     event.preventDefault();
 
-    closeMenu(menu, focus);
+    closeBox(box, focus);
 }
 
 function set(mode, save = true) {

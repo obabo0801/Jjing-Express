@@ -13,7 +13,7 @@ let lastFocus = null;
 
 export function initSettings() {
     const btn = $(
-        '.settings-button'
+        '.settings > .tool'
     );
 
     applyScreen(
@@ -64,7 +64,7 @@ async function load() {
         html
     );
 
-    layer = $('.settings');
+    layer = $('.settings-box');
 
     bind();
 }

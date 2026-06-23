@@ -99,12 +99,14 @@ body {
             var(--motion);
 }
 
-.status a:hover {
+.status
+a:hover {
     background-color:
         var(--hover);
 }
 
-.status a:active {
+.status
+a:active {
     transform:
         scale(0.92);
 }
