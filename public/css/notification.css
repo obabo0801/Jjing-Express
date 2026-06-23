@@ -1,3 +1,7 @@
+.notify > .tool {
+    position: relative;
+}
+
 .notify-badge {
     position: absolute;
     top: 7px;
@@ -25,11 +29,7 @@
         none;
 }
 
-.notify > .tool {
-    position: relative;
-}
-
-.notify-box {
+.notify-more {
     position: fixed;
     z-index: 100;
     padding: 16px;
@@ -511,7 +511,7 @@ strong {
         minmax(0, 1fr) 72px;
 }
 
-.notify-more {
+.notify-control  {
     position: relative;
 
     margin-right: 8px;
@@ -556,7 +556,7 @@ strong {
     position: relative;
 }
 
-.notify-box {
+.notify-more {
     position: absolute;
     top: calc(100% + 6px);
     right: 0;
@@ -579,23 +579,23 @@ strong {
         rgba(0, 0, 0, 0.28);
 }
 
-.notify-box-icon {
+.notify-more-icon {
     width: 14px;
     height: 14px;
 
     flex-shrink: 0;
 }
 
-.notify-more.is-up
-.notify-box {
+.notify-control.is-up
+.notify-more {
     top: auto;
     bottom: calc(
         100% + 6px
     );
 }
 
-.notify-more.is-open
-.notify-box {
+.notify-control.is-open
+.notify-more {
     display: grid;
     gap: 4px;
 }

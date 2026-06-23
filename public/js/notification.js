@@ -491,7 +491,7 @@ function createItem(item) {
     time.textContent = formatTime(item.time);
 
     const more = document.createElement('div');
-    more.className = 'notify-more';
+    more.className = 'notify-control';
     more.dataset.id = String(item.id);
 
     const moreButton = document.createElement('button');
@@ -505,10 +505,10 @@ function createItem(item) {
     moreButton.append(moreIcon);
 
     const menu = document.createElement('div');
-    menu.className = 'notify-menu';
+    menu.className = 'notify-more';
 
     const read = document.createElement('button');
-    read.className = 'notify-menu-read';
+    read.className = 'notify-more-read';
     read.type = 'button';
     read.dataset.id = String(item.id);
     read.append(
@@ -546,7 +546,7 @@ function createItem(item) {
 function createMenuIcon(name) {
     const icon = document.createElement('span');
 
-    icon.className = `icon icon-${name} notify-menu-icon`;
+    icon.className = `icon icon-${name} notify-more-icon`;
 
     return icon;
 }
@@ -745,7 +745,7 @@ function openMain(event) {
     }
 
     if (event.target.closest(
-        'a, button, .notify-menu'
+        'a, button, .notify-more'
     )) {
         return false;
     }
@@ -775,11 +775,11 @@ function toggleMenu(event) {
     popMore(button);
 
     const more = button.closest(
-        '.notify-more'
+        '.notify-control'
     );
 
     document.querySelectorAll(
-        '.notify-more.is-open'
+        '.notify-control.is-open'
     ).forEach(item => {
         if (item !== more) {
             item.classList.remove(
@@ -793,7 +793,7 @@ function toggleMenu(event) {
     more?.classList.toggle('is-open');
 
     const menu = more?.querySelector(
-        '.notify-menu'
+        '.notify-more'
     );
     const panel = document.querySelector(
         '.notify-box'
@@ -864,7 +864,7 @@ function restoreMenu(id) {
     more.classList.add('is-open');
 
     const menu = more.querySelector(
-        '.notify-menu'
+        '.notify-more'
     );
 
     if (!menu) {
@@ -886,7 +886,7 @@ function restoreMenu(id) {
 
 function readMenu(event) {
     const button = event.target.closest(
-        '.notify-menu-read'
+        '.notify-more-read'
     );
 
     if (!button) {
