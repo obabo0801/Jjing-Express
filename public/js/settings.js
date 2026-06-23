@@ -51,7 +51,7 @@ async function open() {
         getType()
     );
 
-    $('.settings-panel')?.focus();
+    $('.settings-box')?.focus();
 }
 
 async function load() {
@@ -64,12 +64,20 @@ async function load() {
         html
     );
 
-    layer = $('.settings-box');
+    layer = $('.settings-layer');
 
     bind();
 }
 
 function bind() {
+    on(layer, 'click', event => {
+        if (event.target !== layer) {
+            return;
+        }
+
+        close();
+    });
+
     layer.querySelectorAll(
         '[data-settings-close]'
     ).forEach(btn => {
@@ -158,7 +166,7 @@ function close() {
         return;
     }
 
-    const popup = $('.settings-panel');
+    const popup = $('.settings-box');
 
     layer.classList.remove('is-open');
     layer.classList.add('is-close');

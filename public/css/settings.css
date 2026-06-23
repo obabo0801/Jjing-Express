@@ -1,25 +1,12 @@
-.settings-box {
+.settings-layer {
     position: fixed;
     inset: 0;
     z-index: 10;
 }
 
-.settings-box,
-.settings-box * {
-    -webkit-tap-highlight-color:
-        transparent;
-}
+.settings-layer::before {
+    content: "";
 
-.settings-box[hidden] {
-    display: none;
-}
-
-.settings-box
-button {
-    white-space: nowrap;
-}
-
-.settings-backdrop {
     position: absolute;
     inset: 0;
 
@@ -32,10 +19,26 @@ button {
         blur(4px);
 }
 
-.settings-panel {
+.settings-layer,
+.settings-layer * {
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+.settings-layer[hidden] {
+    display: none;
+}
+
+.settings-layer
+button {
+    white-space: nowrap;
+}
+
+.settings-box {
     position: absolute;
     top: 50%;
     left: 50%;
+    z-index: 1;
 
     width: 90%;
     height: 90%;
@@ -64,8 +67,8 @@ button {
         translate(-50%, -50%);
 }
 
-.settings-panel:focus,
-.settings-panel:focus-visible {
+.settings-box:focus,
+.settings-box:focus-visible {
     outline: none;
 }
 
@@ -402,29 +405,15 @@ button.is-active {
     display: none;
 }
 
-.settings-box.is-open
-.settings-backdrop {
-    animation:
-        settings-backdrop-in
-        0.18s ease;
-}
-
-.settings-box.is-open
-.settings-panel {
+.settings-layer.is-open
+.settings-box {
     animation:
         settings-popup-in
         0.2s ease;
 }
 
-.settings-box.is-close
-.settings-backdrop {
-    animation:
-        settings-backdrop-out
-        0.16s ease forwards;
-}
-
-.settings-box.is-close
-.settings-panel {
+.settings-layer.is-close
+.settings-box {
     animation:
         settings-popup-out
         0.16s ease forwards;
@@ -505,7 +494,7 @@ button.is-active {
 }
 
 @media (max-width: 640px) {
-    .settings-panel {
+    .settings-box {
         inset: 0;
 
         width: auto;
@@ -533,12 +522,12 @@ button.is-active {
         min-height: 0;
     }
 
-    .settings-box.is-page
+    .settings-layer.is-page
     .settings-side {
         display: none;
     }
 
-    .settings-box.is-page
+    .settings-layer.is-page
     .settings-page {
         display: flex;
     }
