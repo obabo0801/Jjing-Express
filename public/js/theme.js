@@ -10,6 +10,12 @@ const modes = [
     'system'
 ];
 
+const icons = {
+    light: 'icon-light',
+    dark: 'icon-dark',
+    system: 'icon-setting'
+};
+
 export function initTheme() {
     const dropdown = $('.theme-dropdown');
     const button = $('.theme-button');
@@ -167,6 +173,7 @@ function tabEnd(event, menu, focus) {
 function set(mode, save = true) {
     root.setAttribute('theme', mode);
     active(mode);
+    icon(mode);
 
     window.setFaviconTheme?.(
         mode === 'system'
@@ -188,6 +195,16 @@ function active(mode) {
                 button.dataset.themeValue === mode
             );
         });
+}
+
+function icon(mode) {
+    const item = $('.theme-icon');
+
+    if (!item) {
+        return;
+    }
+
+    item.className = `icon theme-icon ${icons[mode]}`;
 }
 
 function get() {

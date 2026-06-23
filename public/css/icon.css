@@ -90,30 +90,6 @@
     );
 }
 
-.theme-light {
-    display: none;
-}
-
-[theme="light"]
-.theme-dark {
-    display: none;
-}
-
-[theme="light"]
-.theme-light {
-    display: block;
-}
-
-[theme="system"]
-.theme-dark {
-    display: none;
-}
-
-[theme="system"]
-.theme-light {
-    display: block;
-}
-
 [theme="dark"]
 .icon-light,
 [theme="dark"]
