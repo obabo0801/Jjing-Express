@@ -64,6 +64,11 @@ button {
         translate(-50%, -50%);
 }
 
+.settings-panel:focus,
+.settings-panel:focus-visible {
+    outline: none;
+}
+
 .settings-side,
 .settings-page {
     min-height: 0;
@@ -109,6 +114,26 @@ button {
     color: var(--text);
 
     cursor: pointer;
+}
+
+.settings-close,
+.settings-back {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+}
+
+.settings-close
+.icon,
+.settings-back
+.icon {
+    width: 24px;
+    height: 24px;
 }
 
 .settings-tab {
