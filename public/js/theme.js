@@ -78,13 +78,13 @@ function openBox(box, focus) {
     box.classList.remove('is-close');
     box.classList.add('is-open');
 
-    if (!isMobile()) {
-        return;
-    }
-
     document.body.classList.add(
         'is-theme-open'
     );
+
+    if (!isMobile()) {
+        return;
+    }
 
     requestAnimationFrame(() => {
         focus?.focus?.({
@@ -106,6 +106,11 @@ function closeBox(box, focus, done) {
 
     if (!isMobile()) {
         box.hidden = true;
+
+        document.body.classList.remove(
+            'is-theme-open'
+        );
+
         done?.();
 
         focus?.focus?.({
