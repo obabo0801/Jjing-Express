@@ -29,7 +29,7 @@
         none;
 }
 
-.notify-more {
+.notify-box {
     position: fixed;
     z-index: 100;
     padding: 16px;
@@ -552,10 +552,6 @@ strong {
         0.22s ease;
 }
 
-.notify > .tool {
-    position: relative;
-}
-
 .notify-more {
     position: absolute;
     top: calc(100% + 6px);
@@ -845,7 +841,7 @@ button:hover {
 }
 
 @media (max-width: 768px) {
-    .notify {
+    .notify-box {
         top: calc(
             var(--top-height) + 10px
         );

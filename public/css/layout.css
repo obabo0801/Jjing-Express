@@ -56,7 +56,7 @@ body {
         space-between;
 }
 
-.top-tools {
+.tools {
     display: flex;
     align-items: center;
     gap: 10px;

@@ -838,7 +838,7 @@ function getMenuId() {
     }
 
     const more = list.querySelector(
-        '.notify-more.is-open'
+        '.notify-control.is-open'
     );
 
     return more
@@ -854,7 +854,7 @@ function restoreMenu(id) {
     }
 
     const more = list.querySelector(
-        `.notify-more[data-id="${id}"]`
+        `.notify-control[data-id="${id}"]`
     );
 
     if (!more) {
@@ -926,7 +926,7 @@ function closeMenus(event) {
     }
 
     document.querySelectorAll(
-        '.notify-more.is-open'
+        '.notify-control.is-open'
     ).forEach(item => {
         item.classList.remove(
             'is-open',
