@@ -22,8 +22,8 @@
             </a>
 
             <div class="top-tools">
-                <div class="theme-dropdown">
-                    <button class="theme-button icon-button" type="button">
+                <div class="theme">
+                    <button class="tool" type="button">
                         <span class="icon icon-light theme-light"></span>
                         <span class="icon icon-dark theme-dark"></span>
                     </button>
@@ -54,14 +54,23 @@
                     </div>
                 </div>
 
-                <button class="notify-button icon-button" type="button">
-                    <span class="icon icon-bell"></span>
-                    <span class="notify-badge" hidden>0</span>
-                </button>
+                <div class="notify">
+                    <button class="tool" type="button">
+                        <span class="icon icon-bell"></span>
+                        <span class="notify-badge" hidden>0</span>
+                    </button>
 
-                <button class="settings-button icon-button" type="button">
-                    <span class="icon icon-setting"></span>
-                </button>
+                    <aside class="notify-box" id="notify" hidden>
+                        <span class="icon icon-bell"></span>
+                        <span class="notify-badge" hidden>0</span>
+                    </aside>
+                </div>
+
+                <div class="settings">
+                    <button class="tool" type="button">
+                        <span class="icon icon-setting"></span>
+                    </button>
+                </div>
             </div>
         </div>
     </header>

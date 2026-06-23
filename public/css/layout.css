@@ -62,7 +62,9 @@ body {
     gap: 10px;
 }
 
-.theme-dropdown {
+.theme,
+.notify,
+.settings {
     position: relative;
 }
 
@@ -157,7 +159,7 @@ body {
         var(--hover);
 }
 
-.icon-button {
+.tool {
     width: 48px;
     height: 48px;
     padding: 0;
@@ -185,17 +187,17 @@ body {
         color var(--motion);
 }
 
-.icon-button:hover {
+.tool:hover {
     background-color:
          var(--hover);
 }
 
-.icon-button:active {
+.tool:active {
     transform:
         scale(0.90);
 }
 
-.icon-button:focus-visible {
+.tool:focus-visible {
     box-shadow:
         0 0 0 2px var(--bg),
         0 0 0 4px var(--focus);

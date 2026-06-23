@@ -17,8 +17,8 @@ const icons = {
 };
 
 export function initTheme() {
-    const dropdown = $('.theme-dropdown');
-    const button = $('.theme-button');
+    const wrap = $('.theme');
+    const button = $('.theme > .tool');
     const menu = $('.theme-menu');
     const close = $('.theme-close');
     const items = document.querySelectorAll(
@@ -59,7 +59,7 @@ export function initTheme() {
     });
 
     document.addEventListener('click', event => {
-        if (!dropdown?.contains(event.target)) {
+        if (!wrap?.contains(event.target)) {
             closeMenu(menu);
         }
     });

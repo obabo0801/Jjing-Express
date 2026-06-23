@@ -93,7 +93,7 @@ let viewBox = {
 
 export function initNotification() {
     const btn = $(
-        '.notify-button'
+        '.notify > .tool'
     );
     const panel = $(
         '#notify'
@@ -1121,7 +1121,7 @@ function addItem(data) {
 }
 
 function shakeButton() {
-    const button = $('.notify-button');
+    const button = $('.notify > .tool');
 
     if (!button) {
         return;
@@ -1277,7 +1277,7 @@ function closeOut(event, button, panel) {
 
     if (
         target.closest('.notify')
-        || target.closest('.notify-button')
+        || target.closest('.notify')
     ) {
         return;
     }
