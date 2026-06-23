@@ -869,12 +869,6 @@ button:hover {
         cursor: pointer;
     }
 
-    .notify-close:hover,
-    .notify-close:focus-visible {
-        background-color:
-            var(--hover);
-    }
-
     .notify-close
     .icon {
         width: 24px;

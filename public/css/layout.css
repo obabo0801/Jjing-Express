@@ -319,12 +319,6 @@ button.is-active {
         cursor: pointer;
     }
 
-    .theme-close:hover,
-    .theme-close:focus-visible {
-        background-color:
-            var(--hover);
-    }
-
     .theme-item {
         height: 48px;
         margin: 0 16px;
