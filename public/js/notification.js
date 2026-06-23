@@ -1252,9 +1252,11 @@ function togglePanel(button, panel) {
 function openPanel(panel) {
     panel.hidden = false;
 
-    document.body.classList.add(
-        'is-notify-open'
-    );
+    if (isMobile()) {
+        document.body.classList.add(
+            'is-notify-open'
+        );
+    }
 
     updateTimes();
 }
@@ -1332,5 +1334,13 @@ function closeTabEnd(event, button, panel) {
         return;
     }
 
+    event.preventDefault();
+
     closePanel(button, panel);
+}
+
+function isMobile() {
+    return matchMedia(
+        '(max-width: 768px)'
+    ).matches;
 }

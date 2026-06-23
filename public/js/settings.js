@@ -28,7 +28,7 @@ export function initSettings() {
 
     on(document, 'keydown', event => {
         closeEsc(event);
-        trapFocus(event);
+        closeTabEnd(event);
     });
 }
 
@@ -201,9 +201,10 @@ function closeEsc(event) {
     close();
 }
 
-function trapFocus(event) {
+function closeTabEnd(event) {
     if (
         event.key !== 'Tab'
+        || event.shiftKey
         || !layer
         || layer.hidden
     ) {
@@ -212,39 +213,24 @@ function trapFocus(event) {
 
     const focusList = [
         ...layer.querySelectorAll(
-            'button, a, input, textarea, select, '
-            + '[tabindex]:not([tabindex="-1"])'
+            'button, a, input, textarea, select'
         )
     ].filter(item => {
         return !item.disabled
             && item.offsetParent !== null;
     });
 
-    if (!focusList.length) {
-        return;
-    }
-
-    const first = focusList[0];
     const last = focusList[
         focusList.length - 1
     ];
 
-    if (
-        event.shiftKey
-        && document.activeElement === first
-    ) {
-        event.preventDefault();
-        last.focus();
+    if (document.activeElement !== last) {
         return;
     }
 
-    if (
-        !event.shiftKey
-        && document.activeElement === last
-    ) {
-        event.preventDefault();
-        first.focus();
-    }
+    event.preventDefault();
+
+    close();
 }
 
 async function getHtml(url) {
