@@ -33,7 +33,9 @@ body {
         sans-serif;
 
     font-size:
-        calc(14px * var(--font-scale));
+        calc(
+            14px * var(--font-scale)
+        );
 
     opacity: 0;
     transition:
@@ -47,8 +49,9 @@ body.ready {
     opacity: 1;
 }
 
-body.is-settings-open,
-body.is-theme-open {
+body.is-theme-open,
+body.is-notify-open,
+body.is-settings-open {
     overflow:
         hidden;
 }

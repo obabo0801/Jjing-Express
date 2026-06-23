@@ -96,6 +96,12 @@ body {
         rgba(0, 0, 0, 0.24);
 }
 
+.theme-box,
+.theme-box * {
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
 .theme-box[hidden] {
     display: none;
 }

@@ -1245,6 +1245,10 @@ function togglePanel(button, panel) {
 function openPanel(panel) {
     panel.hidden = false;
 
+    document.body.classList.add(
+        'is-notify-open'
+    );
+
     updateTimes();
 }
 
@@ -1255,6 +1259,11 @@ function closePanel(button, panel) {
     }
 
     panel.hidden = true;
+
+    document.body.classList.remove(
+        'is-notify-open'
+    );
+
     resetPanel();
     button.focus();
 }
