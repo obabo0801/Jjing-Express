@@ -110,6 +110,9 @@ export function initNotification() {
     const remove = $(
         '.notify-remove-all'
     );
+    const close = $(
+        '.notify-close'
+    );
 
     const sBtn = $(
         '.notify-search-button'
@@ -149,6 +152,10 @@ export function initNotification() {
 
     on(remove, 'click', () => {
         clearAll();
+    });
+
+    on(close, 'click', () => {
+        closePanel(btn, panel);
     });
 
     tabs.forEach(tab => {
