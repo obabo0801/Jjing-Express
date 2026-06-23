@@ -34,18 +34,6 @@
     --focus: #ffffff;
 }
 
-[theme="night"] {
-    color-scheme: dark;
-
-    --logo: #ffffff;
-    --bg: #121212;
-    --bar: #181818;
-    --text: #ffffff;
-    --line: rgba(255, 255, 255, 0.14);
-    --hover: rgba(255, 255, 255, 0.1);
-    --focus: #ffffff;
-}
-
 [theme="system"] {
     color-scheme: light;
 

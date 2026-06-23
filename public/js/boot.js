@@ -6,7 +6,6 @@
     const modes = [
         'light',
         'dark',
-        'night',
         'system'
     ];
 
@@ -40,8 +39,7 @@
 
         favicons = {
             light: createUrl(svg, '#c98e5f'),
-            dark: createUrl(svg, '#ffffff'),
-            night: createUrl(svg, '#ffffff')
+            dark: createUrl(svg, '#ffffff')
         };
 
         window.setFaviconTheme(

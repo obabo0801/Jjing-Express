@@ -48,12 +48,6 @@
     color: #ffcc00;
 }
 
-.icon-night {
-    --icon: url(
-        "/assets/icons/night.svg"
-    );
-}
-
 .icon-bell {
     --icon: url(
         "/assets/icons/bell.svg"
@@ -123,10 +117,6 @@
 [theme="dark"]
 .icon-light,
 [theme="dark"]
-.icon-dark,
-[theme="night"]
-.icon-light,
-[theme="night"]
 .icon-dark {
     color: #ffffff;
 }

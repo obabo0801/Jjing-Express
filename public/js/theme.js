@@ -7,7 +7,6 @@ const sysQuery = '(prefers-color-scheme: light)';
 const modes = [
     'light',
     'dark',
-    'night',
     'system'
 ];
 
