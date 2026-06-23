@@ -90,6 +90,16 @@
     );
 }
 
+[theme="system"]
+.theme-dark {
+    display: none;
+}
+
+[theme="system"]
+.theme-light {
+    display: block;
+}
+
 [theme="dark"]
 .icon-light,
 [theme="dark"]
