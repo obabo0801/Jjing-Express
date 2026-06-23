@@ -600,7 +600,7 @@ strong {
     gap: 4px;
 }
 
-.notify-box
+.notify-more
 button {
     width: 100%;
     height: 30px;
@@ -621,7 +621,7 @@ button {
     gap: 6px;
 }
 
-.notify-box
+.notify-more
 button:hover {
     background-color:
         var(--hover);
