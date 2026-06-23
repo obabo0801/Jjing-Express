@@ -38,13 +38,14 @@
     --icon: url(
         "/assets/icons/light.svg"
     );
-    color: #ffcc00;
+    color: #ff0000;
 }
 
 .icon-dark {
     --icon: url(
         "/assets/icons/dark.svg"
     );
+    color: #ffcc00;
 }
 
 .icon-night {
@@ -119,6 +120,17 @@
     display: block;
 }
 
+[theme="dark"]
+.icon-light,
+[theme="dark"]
+.icon-dark,
+[theme="night"]
+.icon-light,
+[theme="night"]
+.icon-dark {
+    color: #ffffff;
+}
+
 @media (prefers-color-scheme: dark) {
     [theme="system"]
     .theme-light {
@@ -128,6 +140,13 @@
     [theme="system"]
     .theme-dark {
         display: block;
+    }
+
+    [theme="system"]
+    .icon-light,
+    [theme="system"]
+    .icon-dark {
+        color: #ffffff;
     }
 }
 

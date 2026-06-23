@@ -26,11 +26,11 @@
     color-scheme: dark;
 
     --logo: #ffffff;
-    --bg: #121212;
-    --bar: #181818;
-    --text: #ffffff;
-    --line: rgba(255, 255, 255, 0.14);
-    --hover: rgba(255, 255, 255, 0.1);
+    --bg: #000000;
+    --bar: #000000;
+    --text: #f4f7ff;
+    --line: rgba(255, 255, 255, 0.18);
+    --hover: rgba(255, 255, 255, 0.13);
     --focus: #ffffff;
 }
 
@@ -38,11 +38,11 @@
     color-scheme: dark;
 
     --logo: #ffffff;
-    --bg: #000000;
-    --bar: #000000;
-    --text: #f4f7ff;
-    --line: rgba(255, 255, 255, 0.18);
-    --hover: rgba(255, 255, 255, 0.13);
+    --bg: #121212;
+    --bar: #181818;
+    --text: #ffffff;
+    --line: rgba(255, 255, 255, 0.14);
+    --hover: rgba(255, 255, 255, 0.1);
     --focus: #ffffff;
 }
 
@@ -63,11 +63,11 @@
         color-scheme: dark;
 
         --logo: #ffffff;
-        --bg: #121212;
-        --bar: #181818;
-        --text: #ffffff;
-        --line: rgba(255, 255, 255, 0.14);
-        --hover: rgba(255, 255, 255, 0.1);
+        --bg: #000000;
+        --bar: #000000;
+        --text: #f4f7ff;
+        --line: rgba(255, 255, 255, 0.18);
+        --hover: rgba(255, 255, 255, 0.13);
         --focus: #ffffff;
     }
 }

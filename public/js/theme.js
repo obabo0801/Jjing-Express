@@ -38,7 +38,17 @@ export function initTheme() {
 
     items.forEach(item => {
         on(item, 'click', () => {
-            set(item.dataset.themeValue);
+            const mode = item.dataset.themeValue;
+
+            if (isMobile()) {
+                closeMenu(menu, button, () => {
+                    set(mode);
+                });
+
+                return;
+            }
+
+            set(mode);
             closeMenu(menu, button);
         });
     });
@@ -69,7 +79,7 @@ function openMenu(menu, focus) {
     menu.classList.remove('is-close');
     menu.classList.add('is-open');
 
-    if (!mobile()) {
+    if (!isMobile()) {
         return;
     }
 
@@ -84,7 +94,7 @@ function openMenu(menu, focus) {
     });
 }
 
-function closeMenu(menu, focus) {
+function closeMenu(menu, focus, done) {
     if (
         !menu
         || menu.hidden
@@ -95,8 +105,9 @@ function closeMenu(menu, focus) {
 
     menu.classList.remove('is-open');
 
-    if (!mobile()) {
+    if (!isMobile()) {
         menu.hidden = true;
+        done?.();
 
         focus?.focus?.({
             preventScroll: true
@@ -114,6 +125,8 @@ function closeMenu(menu, focus) {
         document.body.classList.remove(
             'is-theme-open'
         );
+
+        done?.();
 
         focus?.focus?.({
             preventScroll: true
@@ -204,7 +217,7 @@ function watch() {
     });
 }
 
-function mobile() {
+function isMobile() {
     return matchMedia(
         '(max-width: 640px)'
     ).matches;
