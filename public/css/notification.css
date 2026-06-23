@@ -25,7 +25,11 @@
         none;
 }
 
-.notify {
+.notify > .tool {
+    position: relative;
+}
+
+.notify-box {
     position: fixed;
     z-index: 100;
     padding: 16px;
@@ -61,7 +65,7 @@
 
     display: flex;
     flex-direction: column;
-    
+
     overflow:
         hidden;
 
@@ -71,6 +75,7 @@
     border:
         1px solid var(--line);
     border-radius: 22px;
+
     background-color:
         var(--bar);
     color: var(--text);
@@ -92,17 +97,17 @@
         color var(--motion);
 }
 
-.notify,
-.notify * {
+.notify-box,
+.notify-box * {
     -webkit-tap-highlight-color:
         transparent;
 }
 
-.notify[hidden] {
+.notify-box[hidden] {
     display: none;
 }
 
-.notify button {
+.notify-box button {
     appearance: none;
 
     white-space: nowrap;
@@ -119,7 +124,7 @@
         color var(--motion);
 }
 
-.notify
+.notify-box
 button:active {
     transform:
         scale(0.90);
@@ -595,7 +600,8 @@ strong {
     gap: 4px;
 }
 
-.notify-box button {
+.notify-box
+button {
     width: 100%;
     height: 30px;
     padding: 0 8px;
@@ -615,7 +621,8 @@ strong {
     gap: 6px;
 }
 
-.notify-box button:hover {
+.notify-box
+button:hover {
     background-color:
         var(--hover);
 }

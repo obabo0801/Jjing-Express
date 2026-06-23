@@ -136,7 +136,8 @@ body {
         var(--hover);
 }
 
-.theme-box button {
+.theme-box
+button {
     height: 34px;
     padding: 0 10px;
 
@@ -152,9 +153,12 @@ body {
     white-space: nowrap;
 }
 
-.theme-box button:hover,
-.theme-box button:focus-visible,
-.theme-box button.is-active {
+.theme-box
+button:hover,
+.theme-box
+button:focus-visible,
+.theme-box
+button.is-active {
     background-color:
         var(--hover);
 }
@@ -329,17 +333,17 @@ body {
 
     .theme-box.is-open {
         animation:
-            theme-menu-in
+            theme-box-in
             0.18s ease;
     }
 
     .theme-box.is-close {
         animation:
-            theme-menu-out
+            theme-box-out
             0.16s ease forwards;
     }
 
-    @keyframes theme-menu-in {
+    @keyframes theme-box-in {
         0% {
             opacity: 0;
         }
@@ -349,7 +353,7 @@ body {
         }
     }
 
-    @keyframes theme-menu-out {
+    @keyframes theme-box-out {
         0% {
             opacity: 1;
         }
