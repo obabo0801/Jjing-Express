@@ -37,6 +37,8 @@ export function initTheme() {
 
     items.forEach(item => {
         on(item, 'click', () => {
+            popItem(item);
+
             const mode = item.dataset.themeValue;
 
             if (isMobile()) {
@@ -51,6 +53,18 @@ export function initTheme() {
             closeBox(box, button);
         });
     });
+
+    function popItem(item) {
+        item.classList.remove('pop');
+
+        requestAnimationFrame(() => {
+            item.classList.add('pop');
+        });
+
+        item.addEventListener('animationend', () => {
+            item.classList.remove('pop');
+        }, { once: true });
+    }
 
     document.addEventListener('click', event => {
         if (!wrap?.contains(event.target)) {

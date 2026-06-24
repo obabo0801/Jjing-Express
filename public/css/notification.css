@@ -881,8 +881,12 @@ button:hover {
         inset: 0;
         z-index: 100;
 
-        width: 100vw;
-        height: 100dvh;
+        width: calc(
+            100vw / var(--screen-scale)
+        );
+        height: calc(
+            100dvh / var(--screen-scale)
+        );
         max-height: none;
         padding: 0;
 

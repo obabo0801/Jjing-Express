@@ -136,9 +136,17 @@ body {
     white-space: nowrap;
 }
 
-.theme-item .icon {
+.theme-item
+.icon {
     width: 18px;
     height: 18px;
+}
+
+.theme-item.pop
+.icon {
+    animation:
+        icon-pop
+        0.22s ease;
 }
 
 .theme-item:hover,

@@ -158,6 +158,19 @@ button {
     text-align: left;
 }
 
+.settings-tab
+.icon {
+    width: 18px;
+    height: 18px;
+}
+
+.settings-tab.pop
+.icon {
+    animation:
+        icon-pop
+        0.22s ease;
+}
+
 .settings-tab:hover,
 .settings-tab.active {
     background-color:

@@ -100,6 +100,8 @@ function bind() {
         '[data-settings-type]'
     ).forEach(tab => {
         on(tab, 'click', () => {
+            popTab(tab);
+
             change(
                 tab.dataset.settingsType
             );
@@ -107,6 +109,18 @@ function bind() {
             layer.classList.add('page');
         });
     });
+}
+
+function popTab(tab) {
+    tab.classList.remove('pop');
+
+    requestAnimationFrame(() => {
+        tab.classList.add('pop');
+    });
+
+    tab.addEventListener('animationend', () => {
+        tab.classList.remove('pop');
+    }, { once: true });
 }
 
 async function change(type) {
