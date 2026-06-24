@@ -447,6 +447,9 @@ strong {
     }
 
     &::-webkit-scrollbar-track {
+        margin:
+            0 0 0;
+
         background:
             transparent;
     }
