@@ -102,7 +102,7 @@ button {
 
 .settings-side-header,
 .settings-page-header {
-    height: 42px;
+    height: 32px;
 
     display: flex;
     align-items: center;
