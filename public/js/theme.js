@@ -39,24 +39,22 @@ export function initTheme() {
         on(item, 'click', () => {
             const mode = item.dataset.themeValue;
 
-            popItem(item, () => {
-                set(mode);
-                closeBox(box, button);
-            });
+            popItem(item);
+
+            set(mode);
+            closeBox(box, button);
         });
     });
 
-    function popItem(item, done) {
+    function popItem(item) {
         item.classList.remove('pop');
 
         requestAnimationFrame(() => {
             item.classList.add('pop');
         });
 
-        item.addEventListener(
-            'animationend', () => {
+        item.addEventListener('animationend', () => {
             item.classList.remove('pop');
-            done?.();
         }, { once: true });
     }
 

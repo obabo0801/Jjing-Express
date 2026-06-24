@@ -199,8 +199,7 @@ button {
     height: 18px;
 }
 
-.settings-tab.pop
-.icon {
+.settings-tab.pop {
     animation:
         icon-pop
         0.22s ease;

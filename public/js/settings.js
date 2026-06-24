@@ -401,12 +401,25 @@ function toggleDrop(dropdown) {
 
 function moveDrop(dropdown) {
     requestAnimationFrame(() => {
-        dropdown
-            .querySelector('.settings-size-menu')
-            ?.scrollIntoView({
-                block: 'nearest',
-                inline: 'nearest'
-            });
+        const parent = dropdown.closest(
+            '.settings-item'
+        );
+
+        parent?.scrollIntoView({
+            block: 'end',
+            inline: 'nearest',
+            behavior: 'smooth'
+        });
+
+        requestAnimationFrame(() => {
+            dropdown
+                .querySelector('.settings-size-menu')
+                ?.scrollIntoView({
+                    block: 'end',
+                    inline: 'nearest',
+                    behavior: 'smooth'
+                });
+        });
     });
 }
 

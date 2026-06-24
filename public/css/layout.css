@@ -148,8 +148,7 @@ body {
     height: 18px;
 }
 
-.theme-item.pop
-.icon {
+.theme-item.pop {
     animation:
         icon-pop
         0.22s ease;
