@@ -50,9 +50,9 @@ body.ready {
 }
 
 @media (max-width: 640px) {
-    body.is-theme-open,
-    body.is-notify-open,
-    body.is-settings-open {
+    body.theme-open,
+    body.notify-open,
+    body.settings-open {
         overflow:
             hidden;
     }

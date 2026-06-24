@@ -44,7 +44,7 @@ async function open() {
     layer.classList.add('open');
 
     document.body.classList.add(
-        'is-settings-open'
+        'settings-open'
     );
 
     await change(
@@ -93,7 +93,7 @@ function bind() {
     );
 
     on(back, 'click', () => {
-        layer.classList.remove('is-page');
+        layer.classList.remove('page');
     });
 
     layer.querySelectorAll(
@@ -104,7 +104,7 @@ function bind() {
                 tab.dataset.settingsType
             );
 
-            layer.classList.add('is-page');
+            layer.classList.add('page');
         });
     });
 }
@@ -141,7 +141,7 @@ async function change(type) {
         '.settings-tab'
     ).forEach(tab => {
         tab.classList.toggle(
-            'is-active',
+            'active',
             tab.dataset.settingsType === type
         );
     });
@@ -175,11 +175,11 @@ function close() {
         layer.hidden = true;
         layer.classList.remove(
             'close',
-            'is-page'
+            'page'
         );
 
         document.body.classList.remove(
-            'is-settings-open'
+            'settings-open'
         );
 
         lastFocus?.focus?.({
@@ -311,7 +311,7 @@ function bindScale(
             apply(data);
 
             text.textContent = scaleText(data);
-            drop.classList.remove('is-open');
+            drop.classList.remove('open');
 
             updateScale(type, data);
         });
@@ -369,14 +369,14 @@ function bindReset() {
 }
 
 function toggleDrop(dropdown) {
-    const open = dropdown.classList.contains('is-open');
+    const open = dropdown.classList.contains('open');
 
     closeDropdowns();
 
     const next = !open;
 
     dropdown.classList.toggle(
-        'is-open',
+        'open',
         next
     );
 
@@ -411,9 +411,9 @@ function closeDropdowns(event) {
     }
 
     layer.querySelectorAll(
-        '.settings-size-dropdown.is-open'
+        '.settings-size-dropdown.open'
     ).forEach(dropdown => {
-        dropdown.classList.remove('is-open');
+        dropdown.classList.remove('open');
     });
 }
 
@@ -421,7 +421,7 @@ function closeDropTab(event, drop) {
     if (
         event.key !== 'Tab'
         || event.shiftKey
-        || !drop.classList.contains('is-open')
+        || !drop.classList.contains('open')
     ) {
         return;
     }
@@ -443,7 +443,7 @@ function closeDropTab(event, drop) {
         return;
     }
 
-    drop.classList.remove('is-open');
+    drop.classList.remove('open');
 }
 
 function resetGeneral() {
@@ -466,7 +466,7 @@ function resetGeneral() {
     layer.querySelectorAll(
         '.settings-size-dropdown'
     ).forEach(dropdown => {
-        dropdown.classList.remove('is-open');
+        dropdown.classList.remove('open');
     });
 }
 
@@ -489,7 +489,7 @@ function updateScale(type, value) {
 
     buttons.forEach(button => {
         button.classList.toggle(
-            'is-active',
+            'active',
             button.dataset[`${type}Scale`] === value
         );
     });
@@ -543,7 +543,7 @@ function updateToggle(button, data) {
     const off = data !== '1';
 
     button.classList.toggle(
-        'is-off',
+        'off',
         off
     );
 

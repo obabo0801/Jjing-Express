@@ -79,7 +79,7 @@ function openBox(box, focus) {
     box.classList.add('open');
 
     document.body.classList.add(
-        'is-theme-open'
+        'theme-open'
     );
 
     if (!isMobile()) {
@@ -108,7 +108,7 @@ function closeBox(box, focus, done) {
         box.hidden = true;
 
         document.body.classList.remove(
-            'is-theme-open'
+            'theme-open'
         );
 
         done?.();
@@ -127,7 +127,7 @@ function closeBox(box, focus, done) {
         box.classList.remove('close');
 
         document.body.classList.remove(
-            'is-theme-open'
+            'theme-open'
         );
 
         done?.();
@@ -189,7 +189,7 @@ function active(mode) {
         .querySelectorAll('[data-theme-value]')
         .forEach(button => {
             button.classList.toggle(
-                'is-active',
+                'active',
                 button.dataset.themeValue === mode
             );
         });

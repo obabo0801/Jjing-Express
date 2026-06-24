@@ -384,14 +384,14 @@ function popSearch(button) {
         return;
     }
 
-    button.classList.remove('is-pop');
+    button.classList.remove('pop');
 
     requestAnimationFrame(() => {
-        button.classList.add('is-pop');
+        button.classList.add('pop');
     });
 
     button.addEventListener('animationend', () => {
-        button.classList.remove('is-pop');
+        button.classList.remove('pop');
     }, {
         once: true
     });
@@ -455,11 +455,11 @@ function getView() {
 function createItem(item) {
     const wrap = document.createElement('div');
     wrap.className = item.unread
-        ? 'notify-item is-unread'
-        : 'notify-item is-read';
+        ? 'notify-item unread'
+        : 'notify-item read';
 
     if (item.isNew) {
-        wrap.classList.add('is-new');
+        wrap.classList.add('new');
     }
 
     if (item.thumbnail) {
@@ -702,21 +702,21 @@ function updateBadge(badge, animate = false) {
         return;
     }
 
-    badge.classList.remove('is-pop');
+    badge.classList.remove('pop');
 
     requestAnimationFrame(() => {
-        badge.classList.add('is-pop');
+        badge.classList.add('pop');
     });
 
     badge.addEventListener('animationend', () => {
-        badge.classList.remove('is-pop');
+        badge.classList.remove('pop');
     }, { once: true });
 }
 
 function updateTabs(tabs) {
     tabs.forEach(tab => {
         tab.classList.toggle(
-            'is-active',
+            'active',
             tab.dataset.filter === filter
         );
     });
@@ -791,12 +791,12 @@ function toggleMenu(event) {
         if (item !== more) {
             item.classList.remove(
                 'open',
-                'is-up'
+                'up'
             );
         }
     });
 
-    more?.classList.remove('is-up');
+    more?.classList.remove('up');
     more?.classList.toggle('open');
 
     const menu = more?.querySelector(
@@ -815,23 +815,23 @@ function toggleMenu(event) {
     const gap = 14;
 
     if (menuRect.bottom + gap > panelRect.bottom) {
-        more.classList.add('is-up');
+        more.classList.add('up');
     }
 
     return true;
 }
 
 function popMore(button) {
-    button.classList.remove('is-pop');
+    button.classList.remove('pop');
 
     requestAnimationFrame(() => {
-        button.classList.add('is-pop');
+        button.classList.add('pop');
     });
 
     button.addEventListener(
         'animationend',
         () => {
-            button.classList.remove('is-pop');
+            button.classList.remove('pop');
         },
         { once: true }
     );
@@ -883,10 +883,10 @@ function restoreMenu(id) {
         const menuRect = menu.getBoundingClientRect();
         const listRect = list.getBoundingClientRect();
 
-        more.classList.remove('is-up');
+        more.classList.remove('up');
 
         if (menuRect.bottom + gap > listRect.bottom) {
-            more.classList.add('is-up');
+            more.classList.add('up');
         }
     });
 }
@@ -937,7 +937,7 @@ function closeMenus(event) {
     ).forEach(item => {
         item.classList.remove(
             'open',
-            'is-up'
+            'up'
         );
     });
 }
@@ -977,7 +977,7 @@ function clearItem(item, index = 0) {
         `${side * 12}deg`
     );
 
-    item.classList.add('is-clear');
+    item.classList.add('clear');
 }
 
 function deleteOne(event) {
@@ -1010,7 +1010,7 @@ function deleteOne(event) {
         '.notify-more'
     )?.classList.remove(
         'open',
-        'is-up'
+        'up'
     );
 
     clearItem(item);
@@ -1103,7 +1103,7 @@ function addItem(data) {
     saveItems();
 
     if (holdScroll) {
-        list.classList.add('is-hold');
+        list.classList.add('hold');
     }
 
     render();
@@ -1116,7 +1116,7 @@ function addItem(data) {
             - beforeHeight;
 
         requestAnimationFrame(() => {
-            list.classList.remove('is-hold');
+            list.classList.remove('hold');
         });
     }
 
@@ -1134,16 +1134,16 @@ function shakeButton() {
         return;
     }
 
-    button.classList.remove('is-shake');
+    button.classList.remove('shake');
 
     requestAnimationFrame(() => {
-        button.classList.add('is-shake');
+        button.classList.add('shake');
     });
 
     button.addEventListener(
         'animationend',
         () => {
-            button.classList.remove('is-shake');
+            button.classList.remove('shake');
         },
         { once: true }
     );
@@ -1253,7 +1253,7 @@ function openPanel(panel) {
     panel.hidden = false;
 
     document.body.classList.add(
-        'is-notify-open'
+        'notify-open'
     );
 
     updateTimes();
@@ -1268,7 +1268,7 @@ function closePanel(button, panel) {
     panel.hidden = true;
 
     document.body.classList.remove(
-        'is-notify-open'
+        'notify-open'
     );
 
     resetPanel();

@@ -20,8 +20,8 @@ function pop(event) {
     const effect = button.classList.contains(
         'notify-button'
     )
-        ? 'is-shake'
-        : 'is-pop';
+        ? 'shake'
+        : 'pop';
 
     button.classList.remove(effect);
 
