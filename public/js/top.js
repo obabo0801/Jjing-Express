@@ -17,9 +17,9 @@ function pop(event) {
         return;
     }
 
-    const effect = button.classList.contains(
-        'notify'
-    )
+    button.blur();
+
+    const effect = button.closest('.notify')
         ? 'shake'
         : 'pop';
 

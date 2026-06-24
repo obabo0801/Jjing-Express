@@ -30,8 +30,8 @@
 
 .logo:focus-visible {
     box-shadow:
-        0 0 0 2px var(--bg),
-        0 0 0 4px var(--focus);
+        0 0 0 2px
+        var(--focus);
 }
 
 .logo-icon {
