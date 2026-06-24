@@ -15,7 +15,8 @@ html {
     transition:
         background-color
             var(--motion),
-        color var(--motion);
+        color
+            var(--motion);
 }
 
 body {
@@ -41,8 +42,10 @@ body {
     transition:
         background-color
             var(--motion),
-        color var(--motion),
-        opacity 0.2s ease;
+        color
+            var(--motion),
+        opacity
+            0.2s ease;
 }
 
 body.ready {

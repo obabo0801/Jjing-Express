@@ -94,8 +94,9 @@ body {
             0.16s ease,
         background-color
             var(--motion),
-        color var(--motion),
         border-color
+            var(--motion),
+        color
             var(--motion);
 }
 

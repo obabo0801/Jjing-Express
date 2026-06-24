@@ -14,7 +14,8 @@
     transition:
         background-color
             var(--motion),
-        color var(--motion),
+        color
+            var(--motion),
         box-shadow
             var(--motion);
 

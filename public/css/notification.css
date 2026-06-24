@@ -96,7 +96,8 @@
             var(--motion),
         border-color
             var(--motion),
-        color var(--motion);
+        color
+            var(--motion);
 }
 
 .notify-box,
@@ -123,7 +124,8 @@
             var(--motion),
         border-color
             var(--motion),
-        color var(--motion);
+        color
+            var(--motion);
 }
 
 .notify-box
@@ -484,7 +486,8 @@ strong {
             var(--motion),
         border-color
             var(--motion),
-        color var(--motion);
+        color
+            var(--motion);
 }
 
 .notify-item:hover {
@@ -647,7 +650,7 @@ button:hover {
         #3b82f6;
 }
 
-.notify-item:not(.unread)
+.notify-item.read
 .notify-content {
     color:
         color-mix(

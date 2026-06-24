@@ -148,33 +148,6 @@ body {
         var(--hover);
 }
 
-.theme-box
-button {
-    height: 34px;
-    padding: 0 10px;
-
-    border: 0;
-    border-radius: 10px;
-
-    background:
-        transparent;
-    color: var(--text);
-
-    cursor: pointer;
-    text-align: left;
-    white-space: nowrap;
-}
-
-.theme-box
-button:hover,
-.theme-box
-button:focus-visible,
-.theme-box
-button.active {
-    background-color:
-        var(--hover);
-}
-
 .tool {
     width: 48px;
     height: 48px;
@@ -183,7 +156,7 @@ button.active {
     display: grid;
     place-items: center;
 
-    border: 1px solid var(--line);
+    border: 0;
     border-radius: 50%;
     background: transparent;
     color: var(--text);
@@ -198,9 +171,8 @@ button.active {
             0.15s ease,
         background-color
             var(--motion),
-        border-color
-            var(--motion),
-        color var(--motion);
+        color
+            var(--motion);
 }
 
 .tool:hover {
@@ -215,8 +187,8 @@ button.active {
 
 .tool:focus-visible {
     box-shadow:
-        0 0 0 2px var(--bg),
-        0 0 0 4px var(--focus);
+        inset 0 0 0 2px
+        var(--focus);
 }
 
 .middle {

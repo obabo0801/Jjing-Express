@@ -457,7 +457,7 @@ function createItem(item) {
 
     wrap.className = [
         'notify-item',
-        item.unread ? 'unread' : '',
+        item.unread ? 'unread' : 'read',
         item.isNew ? 'new' : ''
     ].filter(Boolean).join(' ');
 
