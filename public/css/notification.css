@@ -600,7 +600,7 @@ strong {
     );
 }
 
-.notify-control.is-open
+.notify-control.open
 .notify-more {
     display: grid;
     gap: 4px;

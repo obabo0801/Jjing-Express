@@ -786,18 +786,18 @@ function toggleMenu(event) {
     );
 
     document.querySelectorAll(
-        '.notify-control.is-open'
+        '.notify-control.open'
     ).forEach(item => {
         if (item !== more) {
             item.classList.remove(
-                'is-open',
+                'open',
                 'is-up'
             );
         }
     });
 
     more?.classList.remove('is-up');
-    more?.classList.toggle('is-open');
+    more?.classList.toggle('open');
 
     const menu = more?.querySelector(
         '.notify-more'
@@ -806,7 +806,7 @@ function toggleMenu(event) {
         '.notify-box'
     );
 
-    if (!more?.classList.contains('is-open')) {
+    if (!more?.classList.contains('open')) {
         return true;
     }
 
@@ -845,7 +845,7 @@ function getMenuId() {
     }
 
     const more = list.querySelector(
-        '.notify-control.is-open'
+        '.notify-control.open'
     );
 
     return more
@@ -868,7 +868,7 @@ function restoreMenu(id) {
         return;
     }
 
-    more.classList.add('is-open');
+    more.classList.add('open');
 
     const menu = more.querySelector(
         '.notify-more'
@@ -933,10 +933,10 @@ function closeMenus(event) {
     }
 
     document.querySelectorAll(
-        '.notify-control.is-open'
+        '.notify-control.open'
     ).forEach(item => {
         item.classList.remove(
-            'is-open',
+            'open',
             'is-up'
         );
     });
@@ -1009,7 +1009,7 @@ function deleteOne(event) {
     item.querySelector(
         '.notify-more'
     )?.classList.remove(
-        'is-open',
+        'open',
         'is-up'
     );
 

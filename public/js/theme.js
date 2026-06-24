@@ -75,8 +75,8 @@ function openBox(box, focus) {
     }
 
     box.hidden = false;
-    box.classList.remove('is-close');
-    box.classList.add('is-open');
+    box.classList.remove('close');
+    box.classList.add('open');
 
     document.body.classList.add(
         'is-theme-open'
@@ -97,12 +97,12 @@ function closeBox(box, focus, done) {
     if (
         !box
         || box.hidden
-        || box.classList.contains('is-close')
+        || box.classList.contains('close')
     ) {
         return;
     }
 
-    box.classList.remove('is-open');
+    box.classList.remove('open');
 
     if (!isMobile()) {
         box.hidden = true;
@@ -120,11 +120,11 @@ function closeBox(box, focus, done) {
         return;
     }
 
-    box.classList.add('is-close');
+    box.classList.add('close');
 
     box.addEventListener('animationend', () => {
         box.hidden = true;
-        box.classList.remove('is-close');
+        box.classList.remove('close');
 
         document.body.classList.remove(
             'is-theme-open'

@@ -340,13 +340,13 @@ button.is-active {
         margin-top: 16px;
     }
 
-    .theme-box.is-open {
+    .theme-box.open {
         animation:
             theme-box-in
             0.18s ease;
     }
 
-    .theme-box.is-close {
+    .theme-box.close {
         animation:
             theme-box-out
             0.16s ease forwards;
