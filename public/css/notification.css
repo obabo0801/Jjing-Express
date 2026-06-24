@@ -58,12 +58,12 @@
     );
 
     max-height: calc(
-        (
-            100dvh
-            - var(--top-height)
-            - 24px
-        ) / var(--screen-scale)
+        100dvh / var(--screen-scale)
+        - var(--top-height)
+        - 24px
     );
+
+    min-height: 0;
 
     display: flex;
     flex-direction: column;
@@ -885,7 +885,7 @@ button:hover {
             100vw / var(--screen-scale)
         );
         height: calc(
-            100dvh / var(--screen-scale)
+            100svh / var(--screen-scale)
         );
         max-height: none;
         padding: 0;
@@ -913,13 +913,14 @@ button:hover {
     }
 
     .notify-actions {
-        margin-left: auto;
+        width: 100%;
+        margin-left: 0;
 
         display: flex;
         flex: 0 1 auto;
         flex-wrap: wrap;
         justify-content:
-            flex-end;
+            flex-start;
     }
 
     .notify-head::after {

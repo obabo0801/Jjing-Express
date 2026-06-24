@@ -37,32 +37,26 @@ export function initTheme() {
 
     items.forEach(item => {
         on(item, 'click', () => {
-            popItem(item);
-
             const mode = item.dataset.themeValue;
 
-            if (isMobile()) {
-                closeBox(box, button, () => {
-                    set(mode);
-                });
-
-                return;
-            }
-
-            set(mode);
-            closeBox(box, button);
+            popItem(item, () => {
+                set(mode);
+                closeBox(box, button);
+            });
         });
     });
 
-    function popItem(item) {
+    function popItem(item, done) {
         item.classList.remove('pop');
 
         requestAnimationFrame(() => {
             item.classList.add('pop');
         });
 
-        item.addEventListener('animationend', () => {
+        item.addEventListener(
+            'animationend', () => {
             item.classList.remove('pop');
+            done?.();
         }, { once: true });
     }
 
