@@ -140,7 +140,7 @@
     }
 }
 
-.icon-button.is-pop
+.icon-button.pop
 .icon {
     animation:
         icon-pop 0.22s ease;
@@ -163,7 +163,7 @@
     }
 }
 
-.notify-button.is-shake
+.notify-button.shake
 .icon {
     animation:
         icon-shake 0.42s ease;

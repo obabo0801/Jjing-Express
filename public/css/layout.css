@@ -143,7 +143,7 @@ body {
 
 .theme-item:hover,
 .theme-item:focus-visible,
-.theme-item.is-active {
+.theme-item.active {
     background-color:
         var(--hover);
 }
@@ -170,7 +170,7 @@ button:hover,
 .theme-box
 button:focus-visible,
 .theme-box
-button.is-active {
+button.active {
     background-color:
         var(--hover);
 }

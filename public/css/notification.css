@@ -216,7 +216,7 @@ strong {
         var(--focus);
 }
 
-.notify-item.is-clear {
+.notify-item.clear {
     pointer-events: none;
 
     animation:
@@ -272,7 +272,7 @@ strong {
     cursor: pointer;
 }
 
-.notify-search-button.is-pop
+.notify-search-button.pop
 .icon {
     animation:
         icon-pop 0.22s ease;
@@ -392,7 +392,7 @@ strong {
     cursor: pointer;
 }
 
-.notify-tab.is-active {
+.notify-tab.active {
     background-color:
         var(--text);
     color: var(--bg);
@@ -434,7 +434,7 @@ strong {
         contain;
 }
 
-.notify-list.is-hold {
+.notify-list.hold {
     scroll-behavior:
         auto;
 }
@@ -553,7 +553,7 @@ strong {
     display: block;
 }
 
-.notify-more-button.is-pop
+.notify-more-button.pop
 .notify-more-icon {
     animation:
         icon-pop
@@ -592,7 +592,7 @@ strong {
     flex-shrink: 0;
 }
 
-.notify-control.is-up
+.notify-control.up
 .notify-more {
     top: auto;
     bottom: calc(
@@ -642,13 +642,13 @@ button:hover {
         transparent;
 }
 
-.notify-item.is-unread
+.notify-item.unread
 .notify-dot {
     background-color:
         #3b82f6;
 }
 
-.notify-item.is-read
+.notify-item.read
 .notify-content {
     color:
         color-mix(
@@ -756,7 +756,7 @@ button:hover {
     outline: none;
 }
 
-.notify-badge.is-pop {
+.notify-badge.pop {
     animation:
         notify-badge-pop
         0.32s ease;
@@ -779,7 +779,7 @@ button:hover {
     }
 }
 
-.notify-item.is-new {
+.notify-item.new {
     animation:
         notify-item-pop
         0.28s ease;
