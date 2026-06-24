@@ -243,47 +243,55 @@ body {
     }
 
     .theme-box {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 100;
 
-    width: calc(
-        100vw / var(--screen-scale)
-    );
-    height: calc(
-        100dvh / var(--screen-scale)
-    );
-    max-height: none;
-    min-width: 0;
-    padding: 0;
+        width: calc(
+            100vw / var(--screen-scale)
+        );
+        height: calc(
+            100dvh / var(--screen-scale)
+        );
+        max-height: none;
+        min-width: 0;
+        padding: 0;
 
-    display: flex;
-    flex-direction: column;
+        display: flex;
+        flex-direction: column;
 
-    overflow-y:
-        auto;
-    overscroll-behavior:
-        contain;
+        overflow-y:
+            auto;
+        overscroll-behavior:
+            contain;
 
-    border: 0;
-    border-radius: 0;
+        border: 0;
+        border-radius: 0;
 
-    background-color:
-        var(--bar);
-    color: var(--text);
+        background-color:
+            var(--bar);
+        color: var(--text);
 
-    box-shadow: none;
-}
+        box-shadow: none;
+    }
 
-.theme-box::after {
-    content: "";
+    .theme-head,
+    .theme-item {
+        flex:
+            0 0 auto;
+    }
 
-    flex: 1;
+    .theme-box::after {
+        content: "";
 
-    background-color:
-        var(--bar);
-}
+        flex:
+            1 1 auto;
+        min-height: 0;
+
+        background-color:
+            var(--bar);
+    }
 
     .theme-head {
         position: relative;
