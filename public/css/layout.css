@@ -82,6 +82,12 @@ body {
     display: grid;
     gap: 4px;
 
+    overflow:
+        hidden;
+
+    overscroll-behavior:
+        contain;
+
     border:
         1px solid
         var(--line);
