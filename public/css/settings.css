@@ -411,72 +411,6 @@ button.is-active {
     display: none;
 }
 
-.settings-layer.open
-.settings-box {
-    animation:
-        settings-popup-in
-        0.2s ease;
-}
-
-.settings-layer.close
-.settings-box {
-    animation:
-        settings-popup-out
-        0.16s ease forwards;
-}
-
-@keyframes settings-backdrop-in {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes settings-backdrop-out {
-    0% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-@keyframes settings-popup-in {
-    0% {
-        opacity: 0;
-        transform:
-            translate(-50%, -48%)
-            scale(0.96);
-    }
-
-    100% {
-        opacity: 1;
-        transform:
-            translate(-50%, -50%)
-            scale(1);
-    }
-}
-
-@keyframes settings-popup-out {
-    0% {
-        opacity: 1;
-        transform:
-            translate(-50%, -50%)
-            scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translate(-50%, -48%)
-            scale(0.96);
-    }
-}
-
 @media (max-width: 640px) {
     @keyframes settings-popup-in {
         0% {
@@ -528,14 +462,9 @@ button.is-active {
         min-height: 0;
     }
 
-    .settings-layer.is-page
-    .settings-side {
+    .settings-side[hidden],
+    .settings-page[hidden] {
         display: none;
-    }
-
-    .settings-layer.is-page
-    .settings-page {
-        display: flex;
     }
 
     .settings-back {
