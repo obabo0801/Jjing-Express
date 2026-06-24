@@ -150,10 +150,15 @@ body {
 }
 
 .theme-item:hover,
-.theme-item:focus-visible,
-.theme-item.active {
+.theme-item:focus-visible {
     background-color:
         var(--hover);
+}
+
+.theme-item.active {
+    background-color:
+        var(--text);
+    color: var(--bg);
 }
 
 .tool {
