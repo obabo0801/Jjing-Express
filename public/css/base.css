@@ -51,14 +51,8 @@ body.ready {
 
 @media (max-width: 640px) {
     body.is-theme-open,
+    body.is-notify-open,
     body.is-settings-open {
-        overflow:
-            hidden;
-    }
-}
-
-@media (max-width: 768px) {
-    body.is-notify-open {
         overflow:
             hidden;
     }

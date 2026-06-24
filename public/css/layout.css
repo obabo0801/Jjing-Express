@@ -236,8 +236,7 @@ button.is-active {
     letter-spacing: -2px;
 }
 
-@media (max-width: 768px) {
-
+@media (max-width: 640px) {
     .hero {
         padding: 64px 20px;
     }
@@ -245,9 +244,7 @@ button.is-active {
     .hero h1 {
         font-size: 38px;
     }
-}
 
-@media (max-width: 640px) {
     .theme-box {
         position: fixed;
         inset: 0;

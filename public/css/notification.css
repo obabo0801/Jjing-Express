@@ -850,7 +850,7 @@ button:hover {
         var(--focus);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .notify-close {
         width: 42px;
         height: 42px;
