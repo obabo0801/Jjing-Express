@@ -899,15 +899,28 @@ button:hover {
             100vw / var(--screen-scale)
         );
         height: calc(
-            100svh / var(--screen-scale)
+            100dvh / var(--screen-scale)
         );
         max-height: none;
         padding: 0;
+
+        overflow-x:
+            hidden;
+        overflow-y:
+            auto;
 
         border: 0;
         border-radius: 0;
 
         box-shadow: none;
+    }
+
+    .notify-head,
+    .notify-tabs,
+    .notify-search,
+    .notify-list {
+        flex:
+            0 0 auto;
     }
 
     .notify-head {
@@ -927,14 +940,15 @@ button:hover {
     }
 
     .notify-actions {
-        width: 100%;
-        margin-left: 0;
+        width: auto;
+        margin-left: auto;
 
         display: flex;
-        flex: 0 1 auto;
-        flex-wrap: wrap;
+        flex:
+            0 0 auto;
+        flex-wrap: nowrap;
         justify-content:
-            flex-start;
+            flex-end;
     }
 
     .notify-head::after {
@@ -962,14 +976,23 @@ button:hover {
     }
 
     .notify-list {
-        flex: 1;
-        min-height: 0;
+        min-height: auto;
 
         margin: 0;
         padding:
             8px 16px 16px;
 
-        overflow-y:
-            auto;
+        overflow:
+            visible;
+    }
+}
+
+@media (max-width: 390px) {
+    .notify-actions {
+        width: 100%;
+        margin-left: 52px;
+
+        justify-content:
+            flex-start;
     }
 }
