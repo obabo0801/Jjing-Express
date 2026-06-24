@@ -512,8 +512,7 @@ strong {
     cursor: pointer;
 }
 
-.notify-item.has-thumbnail
-.notify-main {
+.notify-main:has(.notify-thumbnail) {
     grid-template-columns:
         8px 36px
         minmax(0, 1fr) 72px;
@@ -648,7 +647,7 @@ button:hover {
         #3b82f6;
 }
 
-.notify-item.read
+.notify-item:not(.unread)
 .notify-content {
     color:
         color-mix(

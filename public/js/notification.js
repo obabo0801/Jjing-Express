@@ -454,17 +454,12 @@ function getView() {
 
 function createItem(item) {
     const wrap = document.createElement('div');
-    wrap.className = item.unread
-        ? 'notify-item unread'
-        : 'notify-item read';
 
-    if (item.isNew) {
-        wrap.classList.add('new');
-    }
-
-    if (item.thumbnail) {
-        wrap.classList.add('has-thumbnail');
-    }
+    wrap.className = [
+        'notify-item',
+        item.unread ? 'unread' : '',
+        item.isNew ? 'new' : ''
+    ].filter(Boolean).join(' ');
 
     const main = document.createElement('div');
     main.className = 'notify-main';
@@ -1007,7 +1002,7 @@ function deleteOne(event) {
     }
 
     item.querySelector(
-        '.notify-more'
+        '.notify-control'
     )?.classList.remove(
         'open',
         'up'
