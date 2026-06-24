@@ -82,8 +82,14 @@ body {
     display: grid;
     gap: 4px;
 
-    overflow:
-        hidden;
+    max-height: calc(
+        100dvh / var(--screen-scale)
+        - var(--top-height)
+        - 32px
+    );
+
+    overflow-y:
+        auto;
 
     overscroll-behavior:
         contain;
@@ -241,8 +247,12 @@ body {
         inset: 0;
         z-index: 100;
 
-        width: 100vw;
-        height: 100dvh;
+        width: calc(
+            100vw / var(--screen-scale)
+        );
+        height: calc(
+            100dvh / var(--screen-scale)
+        );
         min-width: 0;
         padding: 0;
 

@@ -46,8 +46,12 @@ button {
     left: 50%;
     z-index: 1;
 
-    width: 90%;
-    height: 90%;
+    width: calc(
+        90vw / var(--screen-scale)
+    );
+    height: calc(
+        90dvh / var(--screen-scale)
+    );
 
     display: grid;
     grid-template-columns:
@@ -67,7 +71,7 @@ button {
         rgba(0, 0, 0, 0.32);
 
     overflow:
-        visible;
+        hidden;
 
     transform:
         translate(-50%, -50%);
@@ -84,6 +88,11 @@ button {
 }
 
 .settings-side {
+    min-height: 0;
+
+    overflow-y:
+        auto;
+
     border-right:
         1px solid
         var(--line);
@@ -209,11 +218,12 @@ button {
 }
 
 .settings-body {
+    flex: 1;
     min-height: 0;
     padding: 16px;
 
-    overflow:
-        visible;
+    overflow-y:
+        auto;
 }
 
 .settings-section {
@@ -236,8 +246,18 @@ button {
 }
 
 .settings-item-info {
+    min-width: 0;
+
     display: grid;
     gap: 4px;
+}
+
+.settings-item-info strong,
+.settings-item-info span {
+    white-space:
+        normal;
+    word-break:
+        keep-all;
 }
 
 .settings-item-info span {
