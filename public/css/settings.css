@@ -411,14 +411,14 @@ button.is-active {
     display: none;
 }
 
-.settings-layer.is-open
+.settings-layer.open
 .settings-box {
     animation:
         settings-popup-in
         0.2s ease;
 }
 
-.settings-layer.is-close
+.settings-layer.close
 .settings-box {
     animation:
         settings-popup-out

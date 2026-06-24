@@ -40,8 +40,8 @@ async function open() {
     }
 
     layer.hidden = false;
-    layer.classList.remove('is-close');
-    layer.classList.add('is-open');
+    layer.classList.remove('close');
+    layer.classList.add('open');
 
     document.body.classList.add(
         'is-settings-open'
@@ -168,13 +168,13 @@ function close() {
 
     const popup = $('.settings-box');
 
-    layer.classList.remove('is-open');
-    layer.classList.add('is-close');
+    layer.classList.remove('open');
+    layer.classList.add('close');
 
     const done = () => {
         layer.hidden = true;
         layer.classList.remove(
-            'is-close',
+            'close',
             'is-page'
         );
 
