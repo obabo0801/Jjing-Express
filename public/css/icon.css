@@ -140,10 +140,11 @@
     }
 }
 
-.icon-button.pop
+.tool.pop
 .icon {
     animation:
-        icon-pop 0.22s ease;
+        icon-pop
+        0.22s ease;
 }
 
 @keyframes icon-pop {
@@ -163,10 +164,11 @@
     }
 }
 
-.notify-button.shake
+.tool.shake
 .icon {
     animation:
-        icon-shake 0.42s ease;
+        icon-shake
+        0.42s ease;
 }
 
 @keyframes icon-shake {

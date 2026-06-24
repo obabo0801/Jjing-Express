@@ -10,7 +10,7 @@ export function initTop() {
 
 function pop(event) {
     const button = event.target.closest(
-        '.icon-button'
+        '.tool'
     );
 
     if (!button) {
@@ -18,7 +18,7 @@ function pop(event) {
     }
 
     const effect = button.classList.contains(
-        'notify-button'
+        'notify'
     )
         ? 'shake'
         : 'pop';
@@ -40,7 +40,7 @@ function pop(event) {
 
 function noMenu(event) {
     const image = event.target.closest(
-        'img, .logo-icon, .icon-button'
+        'img, .logo-icon, .tool'
     );
 
     if (!image) {
