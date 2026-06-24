@@ -8,7 +8,6 @@ import {
 const pageCache = new Map();
 
 let layer = null;
-let pageOpen = false;
 
 let lastFocus = null;
 
@@ -41,6 +40,8 @@ async function open() {
     }
 
     layer.hidden = false;
+    layer.classList.remove('close');
+    layer.classList.add('open');
 
     document.body.classList.add(
         'is-settings-open'
@@ -49,9 +50,6 @@ async function open() {
     await change(
         getType()
     );
-
-    pageOpen = false;
-    syncPage();
 
     $('.settings-box')?.focus();
 }
@@ -95,8 +93,7 @@ function bind() {
     );
 
     on(back, 'click', () => {
-        pageOpen = false;
-        syncPage();
+        layer.classList.remove('is-page');
     });
 
     layer.querySelectorAll(
@@ -107,8 +104,7 @@ function bind() {
                 tab.dataset.settingsType
             );
 
-            pageOpen = true;
-            syncPage();
+            layer.classList.add('is-page');
         });
     });
 }
@@ -170,19 +166,39 @@ function close() {
         return;
     }
 
-    layer.hidden = true;
-    pageOpen = false;
-    syncPage();
+    const popup = $('.settings-box');
 
-    document.body.classList.remove(
-        'is-settings-open'
+    layer.classList.remove('open');
+    layer.classList.add('close');
+
+    const done = () => {
+        layer.hidden = true;
+        layer.classList.remove(
+            'close',
+            'is-page'
+        );
+
+        document.body.classList.remove(
+            'is-settings-open'
+        );
+
+        lastFocus?.focus?.({
+            preventScroll: true
+        });
+
+        lastFocus = null;
+    };
+
+    if (!popup) {
+        done();
+        return;
+    }
+
+    popup.addEventListener(
+        'animationend',
+        done,
+        { once: true }
     );
-
-    lastFocus?.focus?.({
-        preventScroll: true
-    });
-
-    lastFocus = null;
 }
 
 function closeEsc(event) {
@@ -548,36 +564,4 @@ function saveType(type) {
         OPTION.settingsType,
         type
     );
-}
-
-function syncPage() {
-    if (!layer) {
-        return;
-    }
-
-    const side = layer.querySelector(
-        '.settings-side'
-    );
-    const page = layer.querySelector(
-        '.settings-page'
-    );
-
-    if (!side || !page) {
-        return;
-    }
-
-    if (!isMobile()) {
-        side.hidden = false;
-        page.hidden = false;
-        return;
-    }
-
-    side.hidden = pageOpen;
-    page.hidden = !pageOpen;
-}
-
-function isMobile() {
-    return matchMedia(
-        '(max-width: 640px)'
-    ).matches;
 }
