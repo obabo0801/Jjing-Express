@@ -97,7 +97,7 @@ button {
         1px solid
         var(--line);
 
-    padding: 16px;
+    padding: 0;
 }
 
 .settings-side-header,
@@ -109,6 +109,31 @@ button {
     gap: 10px;
 }
 
+.settings-side-header {
+    position: relative;
+
+    height: 52px;
+    padding: 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-side-header::after {
+    content: "";
+
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 0;
+
+    height: 1px;
+
+    background-color:
+        var(--line);
+}
+
 .settings-side-title,
 .settings-title {
     display: flex;
@@ -117,7 +142,8 @@ button {
 }
 
 .settings-menu {
-    margin-top: 16px;
+    margin-top: 0;
+    padding: 16px;
 
     display: grid;
     gap: 8px;
@@ -199,8 +225,8 @@ button {
 .settings-page-header {
     position: relative;
 
-    height: 74px;
-    padding: 16px;
+    height: 52px;
+    padding: 10px 16px;
 }
 
 .settings-page-header::after {
@@ -580,6 +606,13 @@ button.active {
     .settings-back {
         display: grid;
         place-items: center;
+    }
+
+    .settings-tab {
+        height: 48px;
+        padding: 0 12px;
+
+        border-radius: 12px;
     }
 
     .settings-item {
