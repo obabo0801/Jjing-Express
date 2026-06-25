@@ -271,7 +271,9 @@ function render() {
     list.replaceChildren();
 
     const all = viewItems();
-    const view = all.slice(0, limit);
+    const view = opens.size
+        ? all.slice(0, limit)
+        : all;
     const counts = dateCounts(all);
 
     if (!all.length) {
@@ -428,9 +430,7 @@ function moreItems(
         }
 
         const all = viewItems();
-        const view = opens.size
-            ? all.slice(0, limit)
-            : all;
+        const view = all.slice(0, next);
         const counts = dateCounts(all);
 
         loads.forEach(item => {
