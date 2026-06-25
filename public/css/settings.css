@@ -198,7 +198,7 @@ button,
 }
 
 .settings-tab {
-    height: 34px;
+    height: 48px;
     padding: 0 10px;
 
     display: flex;
@@ -327,7 +327,7 @@ button,
 
 .settings-size-trigger {
     min-width: 92px;
-    height: 34px;
+    height: 48px;
     padding: 0 10px;
 
     display: flex;
@@ -408,7 +408,7 @@ button,
 
 .settings-size-menu
 button {
-    height: 34px;
+    height: 48px;
     padding: 0 8px;
 
     border: 0;
@@ -444,7 +444,7 @@ button.active {
 }
 
 .settings-reset-button {
-    height: 34px;
+    height: 48px;
     padding: 0 14px;
 
     flex-shrink: 0;
@@ -473,7 +473,7 @@ button.active {
 
 .settings-toggle {
     min-width: 64px;
-    height: 34px;
+    height: 48px;
     padding: 0 12px;
 
     flex-shrink: 0;
