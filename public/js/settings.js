@@ -1,13 +1,9 @@
 import {
-    $,
-    on,
-    esc,
-    lastTab
+    $, $$, on, esc, lastTab
 } from './dom.js';
 
 import {
-    OPTION,
-    DEFAULT_OPTION,
+    OPTION, DEFAULT_OPTION,
     opt
 } from './options.js';
 
@@ -17,24 +13,24 @@ let layer = null;
 
 let lastFocus = null;
 
-export function initSettings() {
+export function initSetting() {
     const btn = $(
         '.settings > .tool'
     );
 
-    applyScreen(
-        getScreen()
+    setScreen(
+        screen()
     );
 
-    applyFont(
-        getFont()
+    setFont(
+        font()
     );
 
     on(btn, 'click', open);
 
     on(document, 'keydown', event => {
-        closeEsc(event);
-        closeTabEnd(event);
+        escClose(event);
+        tabClose(event);
     });
 }
 
@@ -54,14 +50,14 @@ async function open() {
     );
 
     await change(
-        getType()
+        typeNow()
     );
 
     $('.settings-box')?.focus();
 }
 
 async function load() {
-    const html = await getHtml(
+    const html = await loadHtml(
         '/components/settings/popup.html'
     );
 
@@ -91,7 +87,7 @@ function bind() {
     });
 
     on(document, 'click', event => {
-        closeDropdowns(event);
+        dropClose(event);
     });
 
     const back = layer.querySelector(
@@ -134,14 +130,14 @@ async function change(type) {
 
     body.replaceChildren();
 
-    body.innerHTML = await getPage(type);
+    body.innerHTML = await loadPage(type);
 
     if (type === 'general') {
-        bindGeneral();
+        bindBase();
     }
 
     if (type === 'notification') {
-        bindNotify();
+        bindAlarm();
     }
 
     layer.querySelectorAll(
@@ -154,12 +150,12 @@ async function change(type) {
     });
 }
 
-async function getPage(type) {
+async function loadPage(type) {
     if (pageCache.has(type)) {
         return pageCache.get(type);
     }
 
-    const html = await getHtml(
+    const html = await loadHtml(
         `/components/settings/${type}.html`
     );
 
@@ -208,7 +204,7 @@ function close() {
     );
 }
 
-function closeEsc(event) {
+function escClose(event) {
     if (!esc(event)) {
         return;
     }
@@ -216,7 +212,7 @@ function closeEsc(event) {
     close();
 }
 
-function closeTabEnd(event) {
+function tabClose(event) {
     if (!lastTab(event, layer)) {
         return;
     }
@@ -226,7 +222,7 @@ function closeTabEnd(event) {
     close();
 }
 
-async function getHtml(url) {
+async function loadHtml(url) {
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -236,19 +232,19 @@ async function getHtml(url) {
     return response.text();
 }
 
-function bindGeneral() {
+function bindBase() {
     bindScale(
         'screen',
         OPTION.screenScale,
         DEFAULT_OPTION.screenScale,
-        applyScreen
+        setScreen
     );
 
     bindScale(
         'font',
         OPTION.fontScale,
         DEFAULT_OPTION.fontScale,
-        applyFont
+        setFont
     );
 
     bindReset();
@@ -279,8 +275,8 @@ function bindScale(
         value
     );
 
-    text.textContent = scaleText(current);
-    updateScale(type, current);
+    text.textContent = scaleLabel(current);
+    setScale(type, current);
 
     list.forEach(button => {
         on(button, 'click', () => {
@@ -295,12 +291,12 @@ function bindScale(
 
             apply(data);
 
-            text.textContent = scaleText(data);
+            text.textContent = scaleLabel(data);
             drop.classList.remove('open');
 
-            updateScale(type, data);
+            setScale(type, data);
 
-            moveParent(
+            parentMove(
                 button.closest('.settings-item')
             );
         });
@@ -309,40 +305,40 @@ function bindScale(
     on(btn, 'click', event => {
         event.stopPropagation();
 
-        toggleDrop(drop);
+        dropToggle(drop);
     });
 
     on(drop, 'keydown', event => {
-        closeDropTab(event, drop);
+        dropTabClose(event, drop);
     });
 }
 
-function getScreen() {
+function screen() {
     return opt(
         OPTION.screenScale,
         DEFAULT_OPTION.screenScale
     );
 }
 
-function applyScreen(value) {
+function setScreen(value) {
     document.documentElement.style.setProperty(
         '--screen-scale',
         value
     );
 }
 
-function scaleText(value) {
+function scaleLabel(value) {
     return `${Math.round(Number(value) * 100)}%`;
 }
 
-function getFont() {
+function font() {
     return opt(
         OPTION.fontScale,
         DEFAULT_OPTION.fontScale
     );
 }
 
-function applyFont(value) {
+function setFont(value) {
     document.documentElement.style.setProperty(
         '--font-scale',
         value
@@ -354,13 +350,13 @@ function bindReset() {
         '[data-settings-reset]'
     );
 
-    on(btn, 'click', resetGeneral);
+    on(btn, 'click', resetBase);
 }
 
-function toggleDrop(dropdown) {
+function dropToggle(dropdown) {
     const open = dropdown.classList.contains('open');
 
-    closeDropdowns();
+    dropClose();
 
     const next = !open;
 
@@ -370,11 +366,11 @@ function toggleDrop(dropdown) {
     );
 
     if (next) {
-        moveDrop(dropdown);
+        dropMove(dropdown);
     }
 }
 
-function moveDrop(dropdown) {
+function dropMove(dropdown) {
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             const body = dropdown.closest(
@@ -418,7 +414,7 @@ function moveDrop(dropdown) {
     });
 }
 
-function moveParent(parent) {
+function parentMove(parent) {
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             const body = parent?.closest(
@@ -442,7 +438,7 @@ function moveParent(parent) {
     });
 }
 
-function closeDropdowns(event) {
+function dropClose(event) {
     if (!layer || layer.hidden) {
         return;
     }
@@ -471,7 +467,7 @@ function closeDropdowns(event) {
     });
 }
 
-function closeDropTab(event, drop) {
+function dropTabClose(event, drop) {
     if (
         event.key !== 'Tab'
         || event.shiftKey
@@ -500,19 +496,19 @@ function closeDropTab(event, drop) {
     drop.classList.remove('open');
 }
 
-function resetGeneral() {
+function resetBase() {
     localStorage.removeItem(OPTION.screenScale);
     localStorage.removeItem(OPTION.fontScale);
 
-    applyScreen(DEFAULT_OPTION.screenScale);
-    applyFont(DEFAULT_OPTION.fontScale);
+    setScreen(DEFAULT_OPTION.screenScale);
+    setFont(DEFAULT_OPTION.fontScale);
 
-    updateScale(
+    setScale(
         'screen',
         DEFAULT_OPTION.screenScale
     );
 
-    updateScale(
+    setScale(
         'font',
         DEFAULT_OPTION.fontScale
     );
@@ -524,7 +520,7 @@ function resetGeneral() {
     });
 }
 
-function updateScale(type, value) {
+function setScale(type, value) {
     if (!layer) {
         return;
     }
@@ -538,7 +534,7 @@ function updateScale(type, value) {
     );
 
     if (text) {
-        text.textContent = scaleText(value);
+        text.textContent = scaleLabel(value);
     }
 
     buttons.forEach(button => {
@@ -549,7 +545,7 @@ function updateScale(type, value) {
     });
 }
 
-function bindNotify() {
+function bindAlarm() {
     bindToggle(
         'enable',
         OPTION.notifyEnable,
@@ -577,7 +573,7 @@ function bindToggle(type, key, value) {
         value
     );
 
-    updateToggle(btn, data);
+    setToggle(btn, data);
 
     on(btn, 'click', () => {
         data = data === '1'
@@ -589,11 +585,11 @@ function bindToggle(type, key, value) {
             data
         );
 
-        updateToggle(btn, data);
+        setToggle(btn, data);
     });
 }
 
-function updateToggle(button, data) {
+function setToggle(button, data) {
     const off = data !== '1';
 
     button.classList.toggle(
@@ -606,7 +602,7 @@ function updateToggle(button, data) {
         : '켜짐';
 }
 
-function getType() {
+function typeNow() {
     return opt(
         OPTION.settingsType,
         DEFAULT_OPTION.settingsType

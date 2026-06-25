@@ -4,7 +4,7 @@ import { initTop }
     from './top.js';
 import { initNotify }
     from './notification.js';
-import { initSettings }
+import { initSetting }
     from './settings.js';
 
 init();
@@ -13,7 +13,7 @@ function init() {
     initTheme();
     initTop();
     initNotify();
-    initSettings();
+    initSetting();
     ready();
 }
 
