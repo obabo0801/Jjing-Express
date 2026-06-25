@@ -203,6 +203,7 @@ button {
     .notify-search-button,
     .notify-search-input,
     .notify-search-close,
+    .notify-tab,
     .settings-size-trigger,
     .settings-reset-button,
     .settings-toggle
@@ -220,6 +221,7 @@ button {
 :where(
     .notify-search-button,
     .notify-search-close,
+    .notify-tab,
     .settings-size-trigger,
     .settings-reset-button,
     .settings-toggle
