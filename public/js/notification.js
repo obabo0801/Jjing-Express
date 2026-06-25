@@ -142,6 +142,15 @@ export function initNotification() {
         '.notify-actions'
     );
 
+    const update = () => {
+        syncHead(
+            panel,
+            head,
+            title,
+            actions
+        );
+    };
+
     viewBox = {
         list,
         badge,
@@ -152,21 +161,11 @@ export function initNotification() {
     startClock();
     startTest();
 
-    function checkHead() {
-        if (!head || !title || !actions) {
-            return;
-        }
-
-        const wrap = actions.offsetTop > title.offsetTop;
-
-        head.classList.toggle('wrap', wrap);
-    }
-
     on(btn, 'click', () => {
         togglePanel(btn, panel);
 
         requestAnimationFrame(() => {
-            checkHead();
+            update();
         });
     });
 
@@ -256,14 +255,31 @@ export function initNotification() {
     });
 
     on(window, 'resize', () => {
-        checkHead();
+        update();
     });
 
     if (head) {
         new ResizeObserver(() => {
-            checkHead();
+            update();
         }).observe(head);
     }
+}
+
+function syncHead(panel, head, title, actions) {
+    if (!panel || !head || !title || !actions) {
+        return;
+    }
+
+    head.classList.remove('wrap');
+
+    if (panel.hidden) {
+        return;
+    }
+
+    head.classList.toggle(
+        'wrap',
+        actions.offsetTop > title.offsetTop
+    );
 }
 
 export function pushNotification(data) {
