@@ -28,9 +28,8 @@ let word = '';
 let limit = STEP;
 let loading = false;
 let stamp = 0;
-
+let folds = new Set();
 let id = maxId();
-
 let ui = {
     list: null,
     badge: null,
@@ -176,6 +175,10 @@ export function initNotify() {
     on(list, 'click', event => {
         event.stopPropagation();
 
+        if (dateToggle(event)) {
+            return;
+        }
+
         if (menuToggle(event)) {
             return;
         }
@@ -269,11 +272,14 @@ function render() {
 
     const all = viewItems();
     const view = all.slice(0, limit);
+    const counts = dateCounts(all);
 
     if (!all.length) {
         list.append(makeEmpty());
     } else {
-        appendView(list, view);
+        appendView(
+            list, view, 0, counts
+        );
     }
 
     view.forEach(item => {
@@ -290,18 +296,28 @@ function render() {
 }
 
 function appendView(
-    list, view, from = 0
+    list, view, from = 0, counts = null
 ) {
     let lastDate = from > 0
         ? dateKey(view[from - 1].time)
         : '';
 
     view.slice(from).forEach(item => {
-        const date = dateKey(item.time);
+        const key = dateKey(item.time);
+        const folded = folds.has(key);
 
-        if (date !== lastDate) {
-            list.append(makeDate(item.time));
-            lastDate = date;
+        if (key !== lastDate) {
+            list.append(makeDate(
+                item.time,
+                counts?.get(key) || 0,
+                folded
+            ));
+
+            lastDate = key;
+        }
+
+        if (folded) {
+            return;
         }
 
         list.append(makeItem(item));
@@ -329,6 +345,21 @@ function viewItems() {
     return [...list].sort(
         (a, b) => b.time - a.time
     );
+}
+
+function dateCounts(list) {
+    const counts = new Map();
+
+    list.forEach(item => {
+        const key = dateKey(item.time);
+
+        counts.set(
+            key,
+            (counts.get(key) || 0) + 1
+        );
+    });
+
+    return counts;
 }
 
 function moreItems(list) {
@@ -381,12 +412,15 @@ function moreItems(list) {
 
         const all = viewItems();
         const view = all.slice(0, next);
+        const counts = dateCounts(all);
 
         loads.forEach(item => {
             item.remove();
         });
 
-        appendView(list, view, from);
+        appendView(
+            list, view, from, counts
+        );
 
         view.slice(from).forEach(item => {
             item.isNew = false;
@@ -725,17 +759,41 @@ function safeHref(href) {
 function makeEmpty() {
     const empty = document.createElement('p');
     empty.className = 'notify-empty';
-    empty.textContent = '새로운 알림이 없습니다.';
+
+    if (word) {
+        empty.textContent = '검색 결과가 없습니다.';
+    } else if (tab === 'unread') {
+        empty.textContent = '미확인 알림이 없습니다.';
+    } else {
+        empty.textContent = '새로운 알림이 없습니다.';
+    }
 
     return empty;
 }
 
-function makeDate(time) {
-    const date = document.createElement('div');
-    date.className = 'notify-date';
-    date.textContent = dateText(time);
+function makeDate(
+    time, count = 0, folded = false
+) {
+    const key = dateKey(time);
 
-    return date;
+    const button = document.createElement('button');
+    button.className = 'notify-date';
+    button.type = 'button';
+    button.dataset.date = key;
+
+    const title = document.createElement('span');
+    title.className = 'notify-date-title';
+    title.textContent = `${dateText(time)} (${count})`;
+
+    const state = document.createElement('span');
+    state.className = 'notify-date-state';
+    state.textContent = folded
+        ? '펼치기'
+        : '접기';
+
+    button.append(title, state);
+
+    return button;
 }
 
 function dateKey(time) {
@@ -833,6 +891,32 @@ function menuOff(item) {
         'open',
         'up'
     );
+}
+
+function dateToggle(event) {
+    const button = event.target.closest(
+        '.notify-date'
+    );
+
+    if (!button) {
+        return false;
+    }
+
+    const key = button.dataset.date;
+
+    if (!key) {
+        return true;
+    }
+
+    if (folds.has(key)) {
+        folds.delete(key);
+    } else {
+        folds.add(key);
+    }
+
+    render();
+
+    return true;
 }
 
 function menuToggle(event) {
