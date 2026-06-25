@@ -7,11 +7,12 @@ import {
     opt
 } from './options.js';
 
-let layer = null;
-let focus = null;
 const root = document.documentElement;
 const cache = new Map();
 const GAP = 32;
+
+let layer = null;
+let focus = null;
 
 export function initSetting() {
     const btn = $(

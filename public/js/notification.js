@@ -7,22 +7,22 @@ import {
     opt
 } from './options.js';
 
-const STORE_KEY = (
+const KEY = (
     'jjing-notifications'
 );
 
-const SECOND = 1000;
-const MINUTE = 60 * SECOND;
-const HOUR = 60 * MINUTE;
+const SEC = 1000;
+const MIN = 60 * SEC;
+const HOUR = 60 * MIN;
 const DAY = 24 * HOUR;
-const CLEAR_GRACE = 3000;
+const GRACE = 3000;
 
 let items = loadItems();
 
-let filter = 'all';
-let keyword = '';
+let tab = 'all';
+let word = '';
 
-let lastId = maxId();
+let id = maxId();
 
 let ui = {
     list: null,
@@ -142,7 +142,7 @@ export function initNotify() {
     });
 
     on(sInput, 'input', () => {
-        keyword = sInput.value
+        word = sInput.value
             .trim()
             .toLowerCase();
 
@@ -272,11 +272,11 @@ function render() {
 }
 
 function viewItems() {
-    let list = filter === 'unread'
+    let list = tab === 'unread'
         ? items.filter(item => item.unread)
         : items;
 
-    if (keyword) {
+    if (word) {
         list = list.filter(item => {
             const title = item.title
                 .toLowerCase();
@@ -284,8 +284,8 @@ function viewItems() {
             const message = item.message
                 .toLowerCase();
 
-            return title.includes(keyword)
-                || message.includes(keyword);
+            return title.includes(word)
+                || message.includes(word);
         });
     }
 
@@ -414,7 +414,7 @@ function searchClose(
         return;
     }
 
-    keyword = '';
+    word = '';
     input.value = '';
     search.hidden = true;
 
@@ -633,7 +633,7 @@ function dateText(time) {
 }
 
 function startClock() {
-    setInterval(updateTimes, 30 * SECOND);
+    setInterval(updateTimes, 30 * SEC);
 }
 
 function updateTimes() {
@@ -651,12 +651,12 @@ function timeText(time) {
         Date.now() - time
     );
 
-    if (diff < MINUTE) {
-        return `${Math.floor(diff / SECOND)}초 전`;
+    if (diff < MIN) {
+        return `${Math.floor(diff / SEC)}초 전`;
     }
 
     if (diff < HOUR) {
-        return `${Math.floor(diff / MINUTE)}분 전`;
+        return `${Math.floor(diff / MIN)}분 전`;
     }
 
     if (diff < DAY) {
@@ -1013,7 +1013,7 @@ function clearAll() {
         return;
     }
 
-    const limit = Date.now() - CLEAR_GRACE;
+    const limit = Date.now() - GRACE;
 
     const ids = items
         .filter(item => item.time <= limit)
@@ -1074,7 +1074,7 @@ function addItem(data) {
 
     items.unshift(toItem({
         ...data,
-        id: ++lastId,
+        id: ++id,
         unread: true
     }, true));
 
@@ -1295,7 +1295,7 @@ function tabClose(event, button, panel) {
 function loadItems() {
     try {
         const data = JSON.parse(
-            localStorage.getItem(STORE_KEY)
+            localStorage.getItem(KEY)
             || '[]'
         );
 
@@ -1315,7 +1315,7 @@ function saveItems() {
     const data = items.map(toSave);
 
     localStorage.setItem(
-        STORE_KEY,
+        KEY,
         JSON.stringify(data)
     );
 }
