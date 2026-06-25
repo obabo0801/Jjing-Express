@@ -160,6 +160,23 @@ button {
     cursor: pointer;
 }
 
+.settings-tab,
+.settings-size-trigger,
+.settings-size-menu
+button,
+.settings-reset-button,
+.settings-toggle {
+    transition:
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
+        border-color
+            var(--motion),
+        color
+            var(--motion);
+}
+
 .settings-close,
 .settings-back {
     width: 42px;
@@ -191,14 +208,6 @@ button {
     border-radius: 12px;
 
     text-align: left;
-
-    transition:
-        transform
-            0.16s ease,
-        background-color
-            var(--motion),
-        color
-            var(--motion);
 }
 
 .settings-tab:active {
@@ -337,16 +346,6 @@ button {
     color: var(--text);
 
     cursor: pointer;
-
-    transition:
-        transform
-            0.16s ease,
-        background-color
-            var(--motion),
-        border-color
-            var(--motion),
-        color
-            var(--motion);
 }
 
 .settings-size-trigger:active {
@@ -421,14 +420,6 @@ button {
 
     cursor: pointer;
     text-align: left;
-
-    transition:
-        transform
-            0.16s ease,
-        background-color
-            var(--motion),
-        color
-            var(--motion);
 }
 
 .settings-size-menu
@@ -468,16 +459,6 @@ button.active {
     color: var(--text);
 
     cursor: pointer;
-
-    transition:
-        transform
-            0.16s ease,
-        background-color
-            var(--motion),
-        border-color
-            var(--motion),
-        color
-            var(--motion);
 }
 
 .settings-reset-button:active {
@@ -507,16 +488,6 @@ button.active {
     color: var(--bg);
 
     cursor: pointer;
-
-    transition:
-        transform
-            0.16s ease,
-        background-color
-            var(--motion),
-        border-color
-            var(--motion),
-        color
-            var(--motion);
 }
 
 .settings-toggle:focus-visible {
