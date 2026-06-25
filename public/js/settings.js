@@ -7,7 +7,9 @@ import {
     opt
 } from './options.js';
 
+const root = document.documentElement;
 const pageCache = new Map();
+const DROP_GAP = 32;
 
 let layer = null;
 
@@ -339,7 +341,7 @@ function screen() {
 }
 
 function setScreen(value) {
-    document.documentElement.style.setProperty(
+    root.style.setProperty(
         '--screen-scale',
         value
     );
@@ -357,7 +359,7 @@ function font() {
 }
 
 function setFont(value) {
-    document.documentElement.style.setProperty(
+    root.style.setProperty(
         '--font-scale',
         value
     );
@@ -407,11 +409,9 @@ function dropMove(dropdown) {
             return;
         }
 
-        const gap = 32;
-
         body.style.setProperty(
             '--settings-drop-space',
-            `${menu.offsetHeight + gap}px`
+            `${menu.offsetHeight + DROP_GAP}px`
         );
 
         const bodyRect = body.getBoundingClientRect();
@@ -423,7 +423,11 @@ function dropMove(dropdown) {
             menuRect.bottom
         );
 
-        const move = bottom - bodyRect.bottom + gap;
+        const move = (
+            bottom
+            - bodyRect.bottom
+            + DROP_GAP
+        );
 
         if (move > 0) {
             body.scrollTop += move;
@@ -444,8 +448,11 @@ function parentMove(parent) {
         const bodyRect = body.getBoundingClientRect();
         const parentRect = parent.getBoundingClientRect();
 
-        const gap = 32;
-        const move = parentRect.bottom - bodyRect.bottom + gap;
+        const move = (
+            parentRect.bottom
+            - bodyRect.bottom
+            + DROP_GAP
+        );
 
         if (move > 0) {
             body.scrollTop += move;
