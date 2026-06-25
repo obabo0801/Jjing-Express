@@ -144,9 +144,15 @@ export function initNotify() {
     });
 
     on(sInput, 'input', () => {
-        word = sInput.value
+        const next = sInput.value
             .trim()
             .toLowerCase();
+
+        if (next === word) {
+            return;
+        }
+
+        word = next;
 
         render();
     });
@@ -213,8 +219,11 @@ export function pushNotify(data) {
     addItem(data);
 }
 
-function headSync(panel, head, title, actions) {
-    if (!panel || !head || !title || !actions) {
+function headSync(
+    panel, head, title, actions
+) {
+    if (!panel || !head
+        || !title || !actions) {
         return;
     }
 
@@ -547,14 +556,16 @@ function makeIcon(name) {
     return icon;
 }
 
-function makeImage(className, src, href = '', id = '') {
+function makeImage(
+    name, src, href = '', id = ''
+) {
     const isLink = Boolean(href);
 
     const wrap = isLink
         ? document.createElement('a')
         : document.createElement('span');
 
-    wrap.className = className;
+    wrap.className = name;
 
     if (isLink) {
         wrap.href = safeHref(href);
@@ -702,6 +713,13 @@ function setTabs(tabs) {
     });
 }
 
+function menuOff(item) {
+    item?.classList.remove(
+        'open',
+        'up'
+    );
+}
+
 function menuToggle(event) {
     const button = event.target.closest(
         '.notify-more-button'
@@ -720,10 +738,7 @@ function menuToggle(event) {
     $$('.notify-control.open')
         .forEach(item => {
             if (item !== more) {
-                item.classList.remove(
-                    'open',
-                    'up'
-                );
+                menuOff(item);
             }
         });
 
@@ -830,16 +845,17 @@ function menuClose(event) {
     }
 
     $$('.notify-control.open')
-        .forEach(item => {
-            item.classList.remove(
-                'open',
-                'up'
-            );
-        });
+        .forEach(menuOff);
 }
 
 function setFilter(button) {
-    tab = button.dataset.filter || 'all';
+    const next = button.dataset.filter || 'all';
+
+    if (next === tab) {
+        return;
+    }
+
+    tab = next;
 
     render();
 }
@@ -988,11 +1004,10 @@ function removeOne(event) {
         return true;
     }
 
-    item.querySelector(
-        '.notify-control'
-    )?.classList.remove(
-        'open',
-        'up'
+    menuOff(
+        item.querySelector(
+            '.notify-control'
+        )
     );
 
     clearNode(item);
