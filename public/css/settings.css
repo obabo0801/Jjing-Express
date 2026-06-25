@@ -397,26 +397,6 @@ button:active {
         0.16s ease forwards;
 }
 
-@keyframes settings-backdrop-in {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes settings-backdrop-out {
-    0% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
 @keyframes settings-popup-in {
     0% {
         opacity: 0;
