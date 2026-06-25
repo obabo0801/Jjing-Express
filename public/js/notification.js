@@ -28,6 +28,12 @@ let keyword = '';
 
 let lastId = getLastId();
 
+let viewBox = {
+    list: null,
+    badge: null,
+    tabs: null
+};
+
 export function initNotification() {
     const btn = $(
         '.notify > .tool'
@@ -208,92 +214,6 @@ export function pushNotification(data) {
     }
 
     addItem(data);
-}
-
-function loadItems() {
-    try {
-        const data = JSON.parse(
-            localStorage.getItem(STORE_KEY)
-            || '[]'
-        );
-
-        if (!Array.isArray(data)) {
-            return [];
-        }
-
-        return data
-            .map(item => toItem(item))
-            .filter(item => item.id > 0);
-    } catch {
-        return [];
-    }
-}
-
-function saveItems() {
-    const data = items.map(toSave);
-
-    localStorage.setItem(
-        STORE_KEY,
-        JSON.stringify(data)
-    );
-}
-
-function toItem(data = {}, isNew = false) {
-    return {
-        id: Number(data.id) || 0,
-        title: String(data.title || '알림'),
-        message: String(data.message || ''),
-        href: data.href || '#',
-        profileHref: data.profileHref || '',
-        profile: data.profile || '',
-        thumbnail: data.thumbnail || null,
-        time: Number(data.time) || Date.now(),
-        unread: data.unread !== false,
-        isNew
-    };
-}
-
-function toSave(item) {
-    return {
-        id: item.id,
-        title: item.title,
-        message: item.message,
-        href: item.href,
-        profileHref: item.profileHref,
-        profile: item.profile,
-        thumbnail: item.thumbnail,
-        time: item.time,
-        unread: item.unread
-    };
-}
-
-function getLastId() {
-    return items.reduce((max, item) => {
-        return Math.max(max, Number(item.id) || 0);
-    }, 0);
-}
-
-let viewBox = {
-    list: null,
-    badge: null,
-    tabs: null
-};
-
-function syncHead(panel, head, title, actions) {
-    if (!panel || !head || !title || !actions) {
-        return;
-    }
-
-    head.classList.remove('wrap');
-
-    if (panel.hidden) {
-        return;
-    }
-
-    head.classList.toggle(
-        'wrap',
-        actions.offsetTop > title.offsetTop
-    );
 }
 
 function render() {
@@ -485,29 +405,6 @@ function closeSearchEsc(
     );
 }
 
-function getView() {
-    let list = filter === 'unread'
-        ? items.filter(item => item.unread)
-        : items;
-
-    if (keyword) {
-        list = list.filter(item => {
-            const title = item.title
-                .toLowerCase();
-
-            const message = item.message
-                .toLowerCase();
-
-            return title.includes(keyword)
-                || message.includes(keyword);
-        });
-    }
-
-    return [...list].sort(
-        (a, b) => b.time - a.time
-    );
-}
-
 function createItem(item) {
     const wrap = document.createElement('div');
 
@@ -636,30 +533,6 @@ function createImage(className, src, href = '', id = '') {
     return wrap;
 }
 
-function safeHref(href) {
-    if (!href) {
-        return '#';
-    }
-
-    try {
-        const url = new URL(
-            href,
-            location.origin
-        );
-
-        if (
-            url.protocol !== 'http:'
-            && url.protocol !== 'https:'
-        ) {
-            return '#';
-        }
-
-        return url.href;
-    } catch {
-        return '#';
-    }
-}
-
 function createEmpty() {
     const empty = document.createElement('p');
     empty.className = 'notify-empty';
@@ -773,54 +646,6 @@ function updateTabs(tabs) {
     });
 }
 
-function setFilter(tab) {
-    filter = tab.dataset.filter || 'all';
-
-    render();
-}
-
-function readClick(event) {
-    const item = event.target.closest(
-        '.notify-read'
-    );
-
-    if (!item) {
-        return;
-    }
-
-    readById(
-        Number(item.dataset.id)
-    );
-}
-
-function openMain(event) {
-    const item = event.target.closest(
-        '.notify-item'
-    );
-
-    if (!item) {
-        return false;
-    }
-
-    if (event.target.closest(
-        'a, button, .notify-more'
-    )) {
-        return false;
-    }
-
-    const link = item.querySelector(
-        '.notify-content'
-    );
-
-    if (!link) {
-        return false;
-    }
-
-    link.click();
-
-    return true;
-}
-
 function toggleMenu(event) {
     const button = event.target.closest(
         '.notify-more-button'
@@ -870,22 +695,6 @@ function toggleMenu(event) {
     }
 
     return true;
-}
-
-function popMore(button) {
-    button.classList.remove('pop');
-
-    requestAnimationFrame(() => {
-        button.classList.add('pop');
-    });
-
-    button.addEventListener(
-        'animationend',
-        () => {
-            button.classList.remove('pop');
-        },
-        { once: true }
-    );
 }
 
 function getMenuId() {
@@ -960,22 +769,6 @@ function readMenu(event) {
     return true;
 }
 
-function readById(id) {
-    const notification = items.find(
-        item => item.id === id
-    );
-
-    if (!notification) {
-        return;
-    }
-
-    notification.unread = false;
-
-    saveItems();
-
-    render();
-}
-
 function closeMenus(event) {
     const target = event?.target;
 
@@ -991,6 +784,213 @@ function closeMenus(event) {
             'up'
         );
     });
+}
+
+function loadItems() {
+    try {
+        const data = JSON.parse(
+            localStorage.getItem(STORE_KEY)
+            || '[]'
+        );
+
+        if (!Array.isArray(data)) {
+            return [];
+        }
+
+        return data
+            .map(item => toItem(item))
+            .filter(item => item.id > 0);
+    } catch {
+        return [];
+    }
+}
+
+function saveItems() {
+    const data = items.map(toSave);
+
+    localStorage.setItem(
+        STORE_KEY,
+        JSON.stringify(data)
+    );
+}
+
+function toItem(data = {}, isNew = false) {
+    return {
+        id: Number(data.id) || 0,
+        title: String(data.title || '알림'),
+        message: String(data.message || ''),
+        href: data.href || '#',
+        profileHref: data.profileHref || '',
+        profile: data.profile || '',
+        thumbnail: data.thumbnail || null,
+        time: Number(data.time) || Date.now(),
+        unread: data.unread !== false,
+        isNew
+    };
+}
+
+function toSave(item) {
+    return {
+        id: item.id,
+        title: item.title,
+        message: item.message,
+        href: item.href,
+        profileHref: item.profileHref,
+        profile: item.profile,
+        thumbnail: item.thumbnail,
+        time: item.time,
+        unread: item.unread
+    };
+}
+
+function getLastId() {
+    return items.reduce((max, item) => {
+        return Math.max(max, Number(item.id) || 0);
+    }, 0);
+}
+
+function syncHead(panel, head, title, actions) {
+    if (!panel || !head || !title || !actions) {
+        return;
+    }
+
+    head.classList.remove('wrap');
+
+    if (panel.hidden) {
+        return;
+    }
+
+    head.classList.toggle(
+        'wrap',
+        actions.offsetTop > title.offsetTop
+    );
+}
+
+function getView() {
+    let list = filter === 'unread'
+        ? items.filter(item => item.unread)
+        : items;
+
+    if (keyword) {
+        list = list.filter(item => {
+            const title = item.title
+                .toLowerCase();
+
+            const message = item.message
+                .toLowerCase();
+
+            return title.includes(keyword)
+                || message.includes(keyword);
+        });
+    }
+
+    return [...list].sort(
+        (a, b) => b.time - a.time
+    );
+}
+
+function safeHref(href) {
+    if (!href) {
+        return '#';
+    }
+
+    try {
+        const url = new URL(
+            href,
+            location.origin
+        );
+
+        if (
+            url.protocol !== 'http:'
+            && url.protocol !== 'https:'
+        ) {
+            return '#';
+        }
+
+        return url.href;
+    } catch {
+        return '#';
+    }
+}
+
+function setFilter(tab) {
+    filter = tab.dataset.filter || 'all';
+
+    render();
+}
+
+function readClick(event) {
+    const item = event.target.closest(
+        '.notify-read'
+    );
+
+    if (!item) {
+        return;
+    }
+
+    readById(
+        Number(item.dataset.id)
+    );
+}
+
+function openMain(event) {
+    const item = event.target.closest(
+        '.notify-item'
+    );
+
+    if (!item) {
+        return false;
+    }
+
+    if (event.target.closest(
+        'a, button, .notify-more'
+    )) {
+        return false;
+    }
+
+    const link = item.querySelector(
+        '.notify-content'
+    );
+
+    if (!link) {
+        return false;
+    }
+
+    link.click();
+
+    return true;
+}
+
+function popMore(button) {
+    button.classList.remove('pop');
+
+    requestAnimationFrame(() => {
+        button.classList.add('pop');
+    });
+
+    button.addEventListener(
+        'animationend',
+        () => {
+            button.classList.remove('pop');
+        },
+        { once: true }
+    );
+}
+
+function readById(id) {
+    const notification = items.find(
+        item => item.id === id
+    );
+
+    if (!notification) {
+        return;
+    }
+
+    notification.unread = false;
+
+    saveItems();
+
+    render();
 }
 
 function readAll() {
