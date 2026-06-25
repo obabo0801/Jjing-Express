@@ -337,6 +337,21 @@ button {
     color: var(--text);
 
     cursor: pointer;
+
+    transition:
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
+        border-color
+            var(--motion),
+        color
+            var(--motion);
+}
+
+.settings-size-trigger:active {
+    transform:
+        scale(0.92);
 }
 
 .settings-size-trigger:hover {
@@ -461,6 +476,21 @@ button.active {
     color: var(--text);
 
     cursor: pointer;
+
+    transition:
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
+        border-color
+            var(--motion),
+        color
+            var(--motion);
+}
+
+.settings-reset-button:active {
+    transform:
+        scale(0.92);
 }
 
 .settings-reset-button:hover {
