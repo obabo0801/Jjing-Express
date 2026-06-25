@@ -176,6 +176,12 @@ function close() {
 
     const popup = $('.settings-box', layer);
 
+    if (layer.contains(
+        document.activeElement
+    )) {
+        document.activeElement.blur();
+    }
+
     layer.classList.remove('open');
     layer.classList.add('close');
 
@@ -406,9 +412,8 @@ function dropMove(dropdown) {
             return;
         }
 
-        body.style.setProperty(
-            '--settings-drop-space',
-            `${menu.offsetHeight + GAP}px`
+        body.style.removeProperty(
+            '--settings-drop-space'
         );
 
         const bodyRect = body.getBoundingClientRect();
@@ -426,9 +431,16 @@ function dropMove(dropdown) {
             + GAP
         );
 
-        if (move > 0) {
-            body.scrollTop += move;
+        if (move <= 0) {
+            return;
         }
+
+        body.style.setProperty(
+            '--settings-drop-space',
+            `${menu.offsetHeight + GAP}px`
+        );
+
+        body.scrollTop += move;
     });
 }
 
@@ -507,6 +519,12 @@ function dropTabClose(event, drop) {
     }
 
     drop.classList.remove('open');
+
+    drop.closest(
+        '.settings-body'
+    )?.style.removeProperty(
+        '--settings-drop-space'
+    );
 }
 
 function resetBase() {

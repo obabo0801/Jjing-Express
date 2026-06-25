@@ -97,7 +97,7 @@ body {
     border:
         1px solid
         var(--line);
-    border-radius: 14px;
+    border-radius: 12px;
 
     background-color:
         var(--bar);

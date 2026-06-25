@@ -1239,6 +1239,12 @@ function panelClose(button, panel) {
         || panel.hidden) {
         return;
     }
+    
+    if (panel.contains(
+        document.activeElement
+    )) {
+        document.activeElement.blur();
+    }
 
     panel.hidden = true;
 

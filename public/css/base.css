@@ -287,6 +287,10 @@ button {
 }
 
 :where(
+    .theme-close,
+    .notify-close,
+    .settings-close,
+    .settings-back,
     .notify-search-button,
     .notify-tab,
     .settings-toggle
@@ -297,7 +301,7 @@ button {
         0 0 0 2px
         var(--bar),
         0 0 0 4px
-        var(--text);
+        var(--focus);
 }
 
 :is(

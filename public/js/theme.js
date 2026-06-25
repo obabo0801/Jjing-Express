@@ -98,6 +98,12 @@ function close(box, focus, done) {
         return;
     }
 
+    if (box.contains(
+        document.activeElement
+    )) {
+        document.activeElement.blur();
+    }
+
     box.classList.remove('open');
 
     if (!mobile()) {

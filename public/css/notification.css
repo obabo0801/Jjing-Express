@@ -76,7 +76,7 @@
 
     border:
         1px solid var(--line);
-    border-radius: 22px;
+    border-radius: 12px;
 
     background-color:
         var(--bar);
@@ -255,6 +255,8 @@ strong {
 }
 
 .notify-search-button {
+    width: 34px;
+    min-width: 34px;
     margin-left: auto;
 }
 
@@ -722,6 +724,10 @@ button {
 }
 
 @media (max-width: 640px) {
+    .notify-close {
+        display: grid;
+    }
+
     .notify-close
     .icon {
         width: 24px;
@@ -741,10 +747,8 @@ button {
         max-height: none;
         padding: 0;
 
-        overflow-x:
+        overflow:
             hidden;
-        overflow-y:
-            auto;
 
         border: 0;
         border-radius: 0;
