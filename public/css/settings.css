@@ -191,18 +191,25 @@ button {
     border-radius: 12px;
 
     text-align: left;
+
+    transition:
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
+        color
+            var(--motion);
+}
+
+.settings-tab:active {
+    transform:
+        scale(0.92);
 }
 
 .settings-tab
 .icon {
     width: 18px;
     height: 18px;
-}
-
-.settings-tab.pop {
-    animation:
-        icon-pop
-        0.22s ease;
 }
 
 .settings-tab:hover {

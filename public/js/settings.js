@@ -100,7 +100,6 @@ function bind() {
         '[data-settings-type]'
     ).forEach(tab => {
         on(tab, 'click', () => {
-            popTab(tab);
 
             change(
                 tab.dataset.settingsType
@@ -109,18 +108,6 @@ function bind() {
             layer.classList.add('page');
         });
     });
-}
-
-function popTab(tab) {
-    tab.classList.remove('pop');
-
-    requestAnimationFrame(() => {
-        tab.classList.add('pop');
-    });
-
-    tab.addEventListener('animationend', () => {
-        tab.classList.remove('pop');
-    }, { once: true });
 }
 
 async function change(type) {
@@ -328,6 +315,10 @@ function bindScale(
             drop.classList.remove('open');
 
             updateScale(type, data);
+
+            moveParent(
+                button.closest('.settings-item')
+            );
         });
     });
 
@@ -401,24 +392,62 @@ function toggleDrop(dropdown) {
 
 function moveDrop(dropdown) {
     requestAnimationFrame(() => {
-        const parent = dropdown.closest(
-            '.settings-item'
-        );
-
-        parent?.scrollIntoView({
-            block: 'end',
-            inline: 'nearest',
-            behavior: 'smooth'
-        });
-
         requestAnimationFrame(() => {
-            dropdown
-                .querySelector('.settings-size-menu')
-                ?.scrollIntoView({
-                    block: 'end',
-                    inline: 'nearest',
-                    behavior: 'smooth'
-                });
+            const body = dropdown.closest(
+                '.settings-body'
+            );
+
+            const parent = dropdown.closest(
+                '.settings-item'
+            );
+
+            const menu = dropdown.querySelector(
+                '.settings-size-menu'
+            );
+
+            if (!body || !parent) {
+                return;
+            }
+
+            const bodyRect = body.getBoundingClientRect();
+            const parentRect = parent.getBoundingClientRect();
+            const menuRect = menu?.getBoundingClientRect();
+
+            const bottom = Math.max(
+                parentRect.bottom,
+                menuRect?.bottom ?? parentRect.bottom
+            );
+
+            const gap = 16;
+            const move = bottom - bodyRect.bottom + gap;
+
+            if (move > 0) {
+                body.scrollTop += move;
+            }
+        });
+    });
+}
+
+function moveParent(parent) {
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            const body = parent?.closest(
+                '.settings-body'
+            );
+
+            if (!body || !parent) {
+                return;
+            }
+
+            const bodyRect = body.getBoundingClientRect();
+            const parentRect = parent.getBoundingClientRect();
+
+            const gap = 16;
+            const move = parentRect.bottom - bodyRect.bottom + gap;
+
+            if (move > 0) {
+                body.scrollTop += move;
+            }
         });
     });
 }

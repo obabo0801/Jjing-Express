@@ -140,18 +140,25 @@ body {
     cursor: pointer;
     text-align: left;
     white-space: nowrap;
+
+    transition:
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
+        color
+            var(--motion);
+}
+
+.theme-item:active {
+    transform:
+        scale(0.92);
 }
 
 .theme-item
 .icon {
     width: 18px;
     height: 18px;
-}
-
-.theme-item.pop {
-    animation:
-        icon-pop
-        0.22s ease;
 }
 
 .theme-item:hover,

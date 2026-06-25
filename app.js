@@ -6,7 +6,7 @@ import * as log from '#utils/log';
 
 const app = express();
 
-const PORT = 3000;
+const PORT = 3001;
 const PUBLIC_PATH = file.get('public');
 const CHECK = process.env.CHECK === '1';
 
