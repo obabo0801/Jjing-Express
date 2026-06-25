@@ -290,24 +290,8 @@ function bindScale(
 
     list.forEach(button => {
         on(button, 'click', () => {
-            const data = button.dataset[
-                `${type}Scale`
-            ];
-
-            localStorage.setItem(
-                key,
-                data
-            );
-
-            apply(data);
-
-            text.textContent = scaleLabel(data);
-            drop.classList.remove('open');
-
-            setScale(type, data);
-
-            parentMove(
-                button.closest('.settings-item')
+            scalePick(
+                type, key, button, text, drop, apply
             );
         });
     });
@@ -321,6 +305,30 @@ function bindScale(
     on(drop, 'keydown', event => {
         dropTabClose(event, drop);
     });
+}
+
+function scalePick(
+    type, key, button, text, drop, apply
+) {
+    const data = button.dataset[
+        `${type}Scale`
+    ];
+
+    localStorage.setItem(
+        key,
+        data
+    );
+
+    apply(data);
+
+    text.textContent = scaleLabel(data);
+    drop.classList.remove('open');
+
+    setScale(type, data);
+
+    parentMove(
+        button.closest('.settings-item')
+    );
 }
 
 function screen() {
@@ -579,17 +587,25 @@ function bindToggle(type, key, value) {
     setToggle(btn, data);
 
     on(btn, 'click', () => {
-        data = data === '1'
-            ? '0'
-            : '1';
-
-        localStorage.setItem(
-            key,
-            data
+        data = togglePick(
+            key, btn, data
         );
-
-        setToggle(btn, data);
     });
+}
+
+function togglePick(key, button, data) {
+    const next = data === '1'
+        ? '0'
+        : '1';
+
+    localStorage.setItem(
+        key,
+        next
+    );
+
+    setToggle(button, next);
+
+    return next;
 }
 
 function setToggle(button, data) {
