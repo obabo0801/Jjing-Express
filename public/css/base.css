@@ -311,3 +311,23 @@ button {
         var(--text);
     color: var(--bg);
 }
+
+:where(
+    .theme-item,
+    .settings-tab
+) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    text-align: left;
+}
+
+:where(
+    .theme-item,
+    .settings-tab
+)
+.icon {
+    width: 18px;
+    height: 18px;
+}

@@ -181,24 +181,12 @@ button,
 .settings-tab {
     padding: 0 10px;
 
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
     border-radius: 12px;
-
-    text-align: left;
 }
 
 .settings-tab:active {
     transform:
         scale(var(--pop));
-}
-
-.settings-tab
-.icon {
-    width: 18px;
-    height: 18px;
 }
 
 .settings-tab:hover {

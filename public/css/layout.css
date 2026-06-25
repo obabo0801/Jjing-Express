@@ -125,10 +125,6 @@ body {
 .theme-item {
     padding: 0 10px;
 
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
     border: 0;
     border-radius: 10px;
 
@@ -137,7 +133,6 @@ body {
     color: var(--text);
 
     cursor: pointer;
-    text-align: left;
     white-space: nowrap;
 
     transition:
@@ -152,12 +147,6 @@ body {
 .theme-item:active {
     transform:
         scale(var(--pop));
-}
-
-.theme-item
-.icon {
-    width: 18px;
-    height: 18px;
 }
 
 .theme-item:hover,
