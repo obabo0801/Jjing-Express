@@ -4,7 +4,7 @@ import {
 
 import {
     OPTION, DEFAULT_OPTION,
-    getOption
+    opt
 } from './options.js';
 
 const STORE_KEY = (
@@ -22,7 +22,7 @@ let items = loadItems();
 let filter = 'all';
 let keyword = '';
 
-let lastId = getLastId();
+let lastId = maxId();
 
 let viewBox = {
     list: null,
@@ -30,7 +30,7 @@ let viewBox = {
     tabs: null
 };
 
-export function initNotification() {
+export function initNotify() {
     const btn = $(
         '.notify > .tool'
     );
@@ -81,7 +81,7 @@ export function initNotification() {
     );
 
     const update = () => {
-        syncHead(
+        headSync(
             panel,
             head,
             title,
@@ -203,7 +203,7 @@ export function initNotification() {
     }
 }
 
-export function pushNotification(data) {
+export function pushNotify(data) {
     if (!viewBox.list) {
         return;
     }
@@ -211,7 +211,7 @@ export function pushNotification(data) {
     addItem(data);
 }
 
-function syncHead(panel, head, title, actions) {
+function headSync(panel, head, title, actions) {
     if (!panel || !head || !title || !actions) {
         return;
     }
@@ -239,11 +239,11 @@ function render() {
         return;
     }
 
-    const focus = getFocus();
+    const focus = focusNow();
 
     list.replaceChildren();
 
-    const view = getView();
+    const view = viewItems();
 
     if (!view.length) {
         list.append(makeEmpty());
@@ -268,10 +268,10 @@ function render() {
 
     setBadge(badge);
     setTabs(tabs);
-    restoreFocus(focus);
+    focusBack(focus);
 }
 
-function getView() {
+function viewItems() {
     let list = filter === 'unread'
         ? items.filter(item => item.unread)
         : items;
@@ -294,7 +294,7 @@ function getView() {
     );
 }
 
-function getFocus() {
+function focusNow() {
     const active = document.activeElement;
 
     if (!active?.closest?.('.notify-list')) {
@@ -337,7 +337,7 @@ function getFocus() {
     return null;
 }
 
-function restoreFocus(focus) {
+function focusBack(focus) {
     if (!focus) {
         return;
     }
@@ -1128,14 +1128,14 @@ function shakeButton() {
 }
 
 function canNotify() {
-    return getOption(
+    return opt(
         OPTION.notifyEnable,
         DEFAULT_OPTION.notifyEnable
     ) === '1';
 }
 
 function canSound() {
-    return getOption(
+    return opt(
         OPTION.notifySound,
         DEFAULT_OPTION.notifySound
     ) === '1';
@@ -1349,7 +1349,7 @@ function toSave(item) {
     };
 }
 
-function getLastId() {
+function maxId() {
     return items.reduce((max, item) => {
         return Math.max(max, Number(item.id) || 0);
     }, 0);

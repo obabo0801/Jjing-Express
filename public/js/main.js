@@ -2,7 +2,7 @@ import { initTheme }
     from './theme.js';
 import { initTop }
     from './top.js';
-import { initNotification }
+import { initNotify }
     from './notification.js';
 import { initSettings }
     from './settings.js';
@@ -12,7 +12,7 @@ init();
 function init() {
     initTheme();
     initTop();
-    initNotification();
+    initNotify();
     initSettings();
     ready();
 }

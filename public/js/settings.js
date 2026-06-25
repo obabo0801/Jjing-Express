@@ -8,7 +8,7 @@ import {
 import {
     OPTION,
     DEFAULT_OPTION,
-    getOption
+    opt
 } from './options.js';
 
 const pageCache = new Map();
@@ -274,7 +274,7 @@ function bindScale(
         return;
     }
 
-    const current = getOption(
+    const current = opt(
         key,
         value
     );
@@ -318,7 +318,7 @@ function bindScale(
 }
 
 function getScreen() {
-    return getOption(
+    return opt(
         OPTION.screenScale,
         DEFAULT_OPTION.screenScale
     );
@@ -336,7 +336,7 @@ function scaleText(value) {
 }
 
 function getFont() {
-    return getOption(
+    return opt(
         OPTION.fontScale,
         DEFAULT_OPTION.fontScale
     );
@@ -572,7 +572,7 @@ function bindToggle(type, key, value) {
         return;
     }
 
-    let data = getOption(
+    let data = opt(
         key,
         value
     );
@@ -607,7 +607,7 @@ function updateToggle(button, data) {
 }
 
 function getType() {
-    return getOption(
+    return opt(
         OPTION.settingsType,
         DEFAULT_OPTION.settingsType
     );

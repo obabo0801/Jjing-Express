@@ -44,7 +44,7 @@ export const OPTION_VALUE = {
     ]
 };
 
-export function getOption(key, defaultValue) {
+export function opt(key, defaultValue) {
     const value = localStorage.getItem(key);
     const values = OPTION_VALUE[key];
 
