@@ -155,7 +155,91 @@ button {
     .settings-side,
     .settings-body
 )::-webkit-scrollbar {
-    width: 10px;
+    width:
+        calc(10px / var(
+            --screen-scale)
+        );
+}
+
+:where(
+    .theme-box,
+    .notify-list,
+    .settings-side,
+    .settings-body
+)::-webkit-scrollbar {
+    width:
+        calc(10px / var(--screen-scale));
+}
+
+:where(
+    .theme-box,
+    .notify-list,
+    .settings-side,
+    .settings-body
+)::-webkit-scrollbar-button:single-button {
+    display: block;
+
+    width:
+        calc(10px / var(--screen-scale));
+    height:
+        calc(14px / var(--screen-scale));
+
+    background-color:
+        color-mix(
+            in srgb,
+            var(--text) 42%,
+            transparent
+        );
+}
+
+:where(
+    .theme-box,
+    .notify-list,
+    .settings-side,
+    .settings-body
+)::-webkit-scrollbar-button:single-button:hover {
+    background-color:
+        color-mix(
+            in srgb,
+            var(--text) 62%,
+            transparent
+        );
+}
+
+:where(
+    .theme-box,
+    .notify-list,
+    .settings-side,
+    .settings-body
+)::-webkit-scrollbar-button:single-button:vertical:decrement {
+    -webkit-mask:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5 2 9 7H1z'/%3E%3C/svg%3E")
+        center /
+        calc(7px / var(--screen-scale))
+        no-repeat;
+    mask:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5 2 9 7H1z'/%3E%3C/svg%3E")
+        center /
+        calc(7px / var(--screen-scale))
+        no-repeat;
+}
+
+:where(
+    .theme-box,
+    .notify-list,
+    .settings-side,
+    .settings-body
+)::-webkit-scrollbar-button:single-button:vertical:increment {
+    -webkit-mask:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1 3h8L5 8z'/%3E%3C/svg%3E")
+        center /
+        calc(7px / var(--screen-scale))
+        no-repeat;
+    mask:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1 3h8L5 8z'/%3E%3C/svg%3E")
+        center /
+        calc(7px / var(--screen-scale))
+        no-repeat;
 }
 
 :where(
