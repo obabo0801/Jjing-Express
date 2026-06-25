@@ -131,16 +131,16 @@ export function initNotification() {
     });
 
     on(sBtn, 'click', () => {
-        popSearch(sBtn);
+        searchPop(sBtn);
 
-        toggleSearch(
+        searchToggle(
             search,
             sInput
         );
     });
 
     on(sClose, 'click', () => {
-        closeSearch(
+        searchClose(
             search,
             sInput
         );
@@ -155,7 +155,7 @@ export function initNotification() {
     });
 
     on(sInput, 'keydown', event => {
-        closeSearchEsc(
+        searchEsc(
             event,
             search,
             sInput
@@ -234,19 +234,19 @@ function render() {
     const view = getView();
 
     if (!view.length) {
-        list.append(createEmpty());
+        list.append(emptyEl());
     } else {
         let lastDate = '';
 
         view.forEach(item => {
-            const date = getDateKey(item.time);
+            const date = dateKey(item.time);
 
             if (date !== lastDate) {
-                list.append(createDate(item.time));
+                list.append(dateEl(item.time));
                 lastDate = date;
             }
 
-            list.append(createItem(item));
+            list.append(itemEl(item));
         });
     }
 
@@ -254,8 +254,8 @@ function render() {
         item.isNew = false;
     });
 
-    updateBadge(badge);
-    updateTabs(tabs);
+    setBadge(badge);
+    setTabs(tabs);
     restoreFocus(focus);
 }
 
@@ -332,7 +332,7 @@ function restoreFocus(focus) {
     });
 }
 
-function toggleSearch(
+function searchToggle(
     search,
     input
 ) {
@@ -343,7 +343,7 @@ function toggleSearch(
     const open = search.hidden;
 
     if (!open) {
-        closeSearch(
+        searchClose(
             search,
             input
         );
@@ -355,7 +355,7 @@ function toggleSearch(
     input.focus();
 }
 
-function popSearch(button) {
+function searchPop(button) {
     if (!button) {
         return;
     }
@@ -373,7 +373,7 @@ function popSearch(button) {
     });
 }
 
-function closeSearch(
+function searchClose(
     search,
     input
 ) {
@@ -388,7 +388,7 @@ function closeSearch(
     render();
 }
 
-function closeSearchEsc(
+function searchEsc(
     event,
     search,
     input
@@ -399,13 +399,13 @@ function closeSearchEsc(
 
     event.stopPropagation();
 
-    closeSearch(
+    searchClose(
         search,
         input
     );
 }
 
-function createItem(item) {
+function itemEl(item) {
     const wrap = document.createElement('div');
 
     wrap.className = [
@@ -420,7 +420,7 @@ function createItem(item) {
     const dot = document.createElement('span');
     dot.className = 'notify-dot';
 
-    const profile = createImage(
+    const profile = imageEl(
         'notify-profile',
         item.profile,
         item.profileHref,
@@ -443,7 +443,7 @@ function createItem(item) {
     const time = document.createElement('span');
     time.className = 'notify-time';
     time.dataset.time = String(item.time);
-    time.textContent = formatTime(item.time);
+    time.textContent = timeText(item.time);
 
     const more = document.createElement('div');
     more.className = 'notify-control';
@@ -467,7 +467,7 @@ function createItem(item) {
     read.type = 'button';
     read.dataset.id = String(item.id);
     read.append(
-        createMenuIcon('read'),
+        iconEl('read'),
         '읽음'
     );
 
@@ -476,7 +476,7 @@ function createItem(item) {
     remove.type = 'button';
     remove.dataset.id = String(item.id);
     remove.append(
-        createMenuIcon('delete'),
+        iconEl('delete'),
         '삭제'
     );
 
@@ -487,7 +487,7 @@ function createItem(item) {
     main.append(dot, profile, content);
 
     if (item.thumbnail) {
-        main.append(createImage(
+        main.append(imageEl(
             'notify-thumbnail',
             item.thumbnail
         ));
@@ -498,7 +498,7 @@ function createItem(item) {
     return wrap;
 }
 
-function createMenuIcon(name) {
+function iconEl(name) {
     const icon = document.createElement('span');
 
     icon.className = `icon icon-${name} notify-more-icon`;
@@ -506,7 +506,7 @@ function createMenuIcon(name) {
     return icon;
 }
 
-function createImage(className, src, href = '', id = '') {
+function imageEl(className, src, href = '', id = '') {
     const isLink = Boolean(href);
 
     const wrap = isLink
@@ -533,7 +533,7 @@ function createImage(className, src, href = '', id = '') {
     return wrap;
 }
 
-function createEmpty() {
+function emptyEl() {
     const empty = document.createElement('p');
     empty.className = 'notify-empty';
     empty.textContent = '새로운 알림이 없습니다.';
@@ -541,15 +541,15 @@ function createEmpty() {
     return empty;
 }
 
-function createDate(time) {
+function dateEl(time) {
     const date = document.createElement('div');
     date.className = 'notify-date';
-    date.textContent = formatDate(time);
+    date.textContent = dateText(time);
 
     return date;
 }
 
-function getDateKey(time) {
+function dateKey(time) {
     const date = new Date(time);
 
     return [
@@ -559,7 +559,7 @@ function getDateKey(time) {
     ].join('-');
 }
 
-function formatDate(time) {
+function dateText(time) {
     const date = new Date(time);
     const today = new Date();
 
@@ -583,13 +583,13 @@ function updateTimes() {
     document.querySelectorAll(
         '.notify-time'
     ).forEach(time => {
-        time.textContent = formatTime(
+        time.textContent = timeText(
             Number(time.dataset.time)
         );
     });
 }
 
-function formatTime(time) {
+function timeText(time) {
     const diff = Math.max(
         0,
         Date.now() - time
@@ -610,7 +610,7 @@ function formatTime(time) {
     return `${Math.floor(diff / DAY)}일 전`;
 }
 
-function updateBadge(badge, animate = false) {
+function setBadge(badge, animate = false) {
     if (!badge) {
         return;
     }
@@ -637,7 +637,7 @@ function updateBadge(badge, animate = false) {
     }, { once: true });
 }
 
-function updateTabs(tabs) {
+function setTabs(tabs) {
     tabs.forEach(tab => {
         tab.classList.toggle(
             'active',
@@ -784,69 +784,6 @@ function closeMenus(event) {
             'up'
         );
     });
-}
-
-function loadItems() {
-    try {
-        const data = JSON.parse(
-            localStorage.getItem(STORE_KEY)
-            || '[]'
-        );
-
-        if (!Array.isArray(data)) {
-            return [];
-        }
-
-        return data
-            .map(item => toItem(item))
-            .filter(item => item.id > 0);
-    } catch {
-        return [];
-    }
-}
-
-function saveItems() {
-    const data = items.map(toSave);
-
-    localStorage.setItem(
-        STORE_KEY,
-        JSON.stringify(data)
-    );
-}
-
-function toItem(data = {}, isNew = false) {
-    return {
-        id: Number(data.id) || 0,
-        title: String(data.title || '알림'),
-        message: String(data.message || ''),
-        href: data.href || '#',
-        profileHref: data.profileHref || '',
-        profile: data.profile || '',
-        thumbnail: data.thumbnail || null,
-        time: Number(data.time) || Date.now(),
-        unread: data.unread !== false,
-        isNew
-    };
-}
-
-function toSave(item) {
-    return {
-        id: item.id,
-        title: item.title,
-        message: item.message,
-        href: item.href,
-        profileHref: item.profileHref,
-        profile: item.profile,
-        thumbnail: item.thumbnail,
-        time: item.time,
-        unread: item.unread
-    };
-}
-
-function getLastId() {
-    return items.reduce((max, item) => {
-        return Math.max(max, Number(item.id) || 0);
-    }, 0);
 }
 
 function syncHead(panel, head, title, actions) {
@@ -1173,7 +1110,7 @@ function addItem(data) {
 
     restoreMenu(openMenuId);
 
-    updateBadge(badge, true);
+    setBadge(badge, true);
     shakeButton();
     playSound();
 }
@@ -1329,7 +1266,7 @@ function closePanel(button, panel) {
 function resetPanel() {
     closeMenus();
 
-    closeSearch(
+    searchClose(
         $('.notify-search'),
         $('.notify-search-input')
     );
@@ -1363,4 +1300,67 @@ function closeTabEnd(event, button, panel) {
     event.preventDefault();
 
     closePanel(button, panel);
+}
+
+function loadItems() {
+    try {
+        const data = JSON.parse(
+            localStorage.getItem(STORE_KEY)
+            || '[]'
+        );
+
+        if (!Array.isArray(data)) {
+            return [];
+        }
+
+        return data
+            .map(item => toItem(item))
+            .filter(item => item.id > 0);
+    } catch {
+        return [];
+    }
+}
+
+function saveItems() {
+    const data = items.map(toSave);
+
+    localStorage.setItem(
+        STORE_KEY,
+        JSON.stringify(data)
+    );
+}
+
+function toItem(data = {}, isNew = false) {
+    return {
+        id: Number(data.id) || 0,
+        title: String(data.title || '알림'),
+        message: String(data.message || ''),
+        href: data.href || '#',
+        profileHref: data.profileHref || '',
+        profile: data.profile || '',
+        thumbnail: data.thumbnail || null,
+        time: Number(data.time) || Date.now(),
+        unread: data.unread !== false,
+        isNew
+    };
+}
+
+function toSave(item) {
+    return {
+        id: item.id,
+        title: item.title,
+        message: item.message,
+        href: item.href,
+        profileHref: item.profileHref,
+        profile: item.profile,
+        thumbnail: item.thumbnail,
+        time: item.time,
+        unread: item.unread
+    };
+}
+
+function getLastId() {
+    return items.reduce((max, item) => {
+        return Math.max(max, Number(item.id) || 0);
+    }, 0);
 }
