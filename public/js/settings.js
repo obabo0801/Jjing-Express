@@ -7,13 +7,11 @@ import {
     opt
 } from './options.js';
 
-const root = document.documentElement;
-const pageCache = new Map();
-const DROP_GAP = 32;
-
 let layer = null;
-
-let lastFocus = null;
+let focus = null;
+const root = document.documentElement;
+const cache = new Map();
+const GAP = 32;
 
 export function initSetting() {
     const btn = $(
@@ -37,7 +35,7 @@ export function initSetting() {
 }
 
 async function open() {
-    lastFocus = document.activeElement;
+    focus = document.activeElement;
 
     if (!layer) {
         await load();
@@ -159,15 +157,15 @@ async function change(type) {
 }
 
 async function loadPage(type) {
-    if (pageCache.has(type)) {
-        return pageCache.get(type);
+    if (cache.has(type)) {
+        return cache.get(type);
     }
 
     const html = await loadHtml(
         `/components/settings/${type}.html`
     );
 
-    pageCache.set(type, html);
+    cache.set(type, html);
 
     return html;
 }
@@ -193,11 +191,11 @@ function close() {
             'settings-open'
         );
 
-        lastFocus?.focus?.({
+        focus?.focus?.({
             preventScroll: true
         });
 
-        lastFocus = null;
+        focus = null;
     };
 
     if (!popup) {
@@ -411,7 +409,7 @@ function dropMove(dropdown) {
 
         body.style.setProperty(
             '--settings-drop-space',
-            `${menu.offsetHeight + DROP_GAP}px`
+            `${menu.offsetHeight + GAP}px`
         );
 
         const bodyRect = body.getBoundingClientRect();
@@ -426,7 +424,7 @@ function dropMove(dropdown) {
         const move = (
             bottom
             - bodyRect.bottom
-            + DROP_GAP
+            + GAP
         );
 
         if (move > 0) {
@@ -451,7 +449,7 @@ function parentMove(parent) {
         const move = (
             parentRect.bottom
             - bodyRect.bottom
-            + DROP_GAP
+            + GAP
         );
 
         if (move > 0) {
