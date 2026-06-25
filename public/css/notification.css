@@ -505,17 +505,6 @@ strong {
     padding: 6px;
 
     display: none;
-
-    border:
-        1px solid
-        var(--line);
-    border-radius: 12px;
-    background-color:
-        var(--bar);
-
-    box-shadow:
-        0 12px 32px
-        rgba(0, 0, 0, 0.28);
 }
 
 .notify-more-icon {
@@ -545,25 +534,11 @@ button {
     height: 30px;
     padding: 0 8px;
 
-    border: 0;
-    border-radius: 8px;
-    background:
-        transparent;
-    color: var(--text);
-
-    cursor: pointer;
     font-size: 12px;
-    text-align: left;
 
     display: flex;
     align-items: center;
     gap: 6px;
-}
-
-.notify-more
-button:hover {
-    background-color:
-        var(--hover);
 }
 
 .notify-dot {

@@ -349,18 +349,6 @@ button,
     padding: 6px;
 
     display: none;
-
-    border:
-        1px solid
-        var(--line);
-    border-radius: 12px;
-
-    background-color:
-        var(--bar);
-
-    box-shadow:
-        0 12px 28px
-        rgba(0, 0, 0, 0.24);
 }
 
 .settings-size-dropdown.open
@@ -372,30 +360,12 @@ button,
 .settings-size-menu
 button {
     padding: 0 8px;
-
-    border: 0;
-    border-radius: 8px;
-
-    background:
-        transparent;
-    color: var(--text);
-
-    cursor: pointer;
-    text-align: left;
 }
 
 .settings-size-menu
 button:active {
     transform:
         scale(var(--pop));
-}
-
-.settings-size-menu
-button:hover,
-.settings-size-menu
-button:focus-visible {
-    background-color:
-        var(--hover);
 }
 
 .settings-size-menu

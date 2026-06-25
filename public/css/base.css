@@ -234,3 +234,51 @@ button {
     background-color:
         var(--hover);
 }
+
+:where(
+    .notify-more,
+    .settings-size-menu
+) {
+    border:
+        1px solid
+        var(--line);
+    border-radius: 12px;
+
+    background-color:
+        var(--bar);
+
+    box-shadow:
+        0 12px 28px
+        rgba(0, 0, 0, 0.24);
+}
+
+:where(
+    .notify-more
+    button,
+    .settings-size-menu
+    button
+) {
+    border: 0;
+    border-radius: 8px;
+
+    background:
+        transparent;
+    color: var(--text);
+
+    cursor: pointer;
+    text-align: left;
+}
+
+:where(
+    .notify-more
+    button:hover,
+    .notify-more
+    button:focus-visible,
+    .settings-size-menu
+    button:hover,
+    .settings-size-menu
+    button:focus-visible
+) {
+    background-color:
+        var(--hover);
+}
