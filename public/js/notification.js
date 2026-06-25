@@ -287,7 +287,7 @@ function render() {
     });
 
     requestAnimationFrame(() => {
-        moreItems(list);
+        moreItems(list, true);
     });
 
     setBadge(badge);
@@ -362,7 +362,9 @@ function dateCounts(list) {
     return counts;
 }
 
-function moreItems(list) {
+function moreItems(
+    list, auto = false
+) {
     const panel = list?.closest(
         '.notify-box'
     );
@@ -375,7 +377,18 @@ function moreItems(list) {
         return;
     }
 
-    const total = viewItems().length;
+    const all = viewItems();
+
+    if (
+        auto
+        && all.some(item => folds.has(
+            dateKey(item.time)
+        ))
+    ) {
+        return;
+    }
+
+    const total = all.length;
 
     if (limit >= total) {
         return;
@@ -1441,7 +1454,7 @@ function panelOpen(panel) {
     updateTimes();
 
     requestAnimationFrame(() => {
-        moreItems(ui.list);
+        moreItems(ui.list, true);
     });
 }
 
