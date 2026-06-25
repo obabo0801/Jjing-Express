@@ -1,3 +1,7 @@
+const FOCUSABLE = (
+    'button, a, input, textarea, select'
+);
+
 export function $(selector, parent = document) {
     return parent.querySelector(selector);
 }
@@ -16,9 +20,8 @@ export function esc(event) {
     return event.key === 'Escape';
 }
 
-function targets(
-    parent,
-    selector = 'button, a, input, textarea, select'
+function tabItems(
+    parent, selector = FOCUSABLE
 ) {
     if (!parent) {
         return [];
@@ -41,7 +44,7 @@ export function lastTab(event, parent, selector) {
         return false;
     }
 
-    const list = targets(parent, selector);
+    const list = tabItems(parent, selector);
     const last = list[
         list.length - 1
     ];
