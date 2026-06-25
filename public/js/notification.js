@@ -1421,7 +1421,9 @@ function startTest() {
     setInterval(() => {
         count += 1;
 
-        const day = count % 3;
+        const day = Math.floor(
+            (count - 1) / 5
+        ) % 3;
 
         addItem({
             title: `테스트 알림 ${count}`,
