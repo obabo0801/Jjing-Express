@@ -405,20 +405,26 @@ function moveDrop(dropdown) {
                 '.settings-size-menu'
             );
 
-            if (!body || !parent) {
+            if (!body || !parent || !menu) {
                 return;
             }
 
+            const gap = 32;
+
+            body.style.setProperty(
+                '--settings-drop-space',
+                `${menu.offsetHeight + gap}px`
+            );
+
             const bodyRect = body.getBoundingClientRect();
             const parentRect = parent.getBoundingClientRect();
-            const menuRect = menu?.getBoundingClientRect();
+            const menuRect = menu.getBoundingClientRect();
 
             const bottom = Math.max(
                 parentRect.bottom,
-                menuRect?.bottom ?? parentRect.bottom
+                menuRect.bottom
             );
 
-            const gap = 32;
             const move = bottom - bodyRect.bottom + gap;
 
             if (move > 0) {
@@ -470,6 +476,14 @@ function closeDropdowns(event) {
         '.settings-size-dropdown.open'
     ).forEach(dropdown => {
         dropdown.classList.remove('open');
+    });
+
+    layer.querySelectorAll(
+        '.settings-body'
+    ).forEach(body => {
+        body.style.removeProperty(
+            '--settings-drop-space'
+        );
     });
 }
 

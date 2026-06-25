@@ -252,19 +252,23 @@ button {
 .settings-body {
     flex: 1;
     min-height: 0;
-    padding:
-        16px
-        16px
-        40px;
 
-    padding-bottom:
-        40px;
+    padding: 16px;
 
     overflow-y:
         auto;
 
     scroll-padding-bottom:
-        40px;
+        var(--settings-drop-space, 0px);
+}
+
+.settings-body::after {
+    content: "";
+
+    display: block;
+
+    height:
+        var(--settings-drop-space, 0px);
 }
 
 .settings-section {
