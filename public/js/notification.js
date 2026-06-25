@@ -920,6 +920,12 @@ function readOne(id) {
 }
 
 function readAll() {
+    if (!items.some(
+        item => item.unread
+    )) {
+        return;
+    }
+
     items.forEach(item => {
         item.unread = false;
     });
