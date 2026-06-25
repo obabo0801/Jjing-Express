@@ -28,7 +28,7 @@ let word = '';
 let limit = STEP;
 let loading = false;
 let stamp = 0;
-let folds = new Set();
+let opens = new Set();
 let id = maxId();
 let ui = {
     list: null,
@@ -298,25 +298,29 @@ function render() {
 function appendView(
     list, view, from = 0, counts = null
 ) {
-    let lastDate = from > 0
-        ? dateKey(view[from - 1].time)
-        : '';
+    let lastDate = '';
+
+    if (from > 0 && view[from - 1]) {
+        lastDate = dateKey(
+            view[from - 1].time
+        );
+    }
 
     view.slice(from).forEach(item => {
         const key = dateKey(item.time);
-        const folded = folds.has(key);
+        const open = opens.has(key);
 
         if (key !== lastDate) {
             list.append(makeDate(
                 item.time,
                 counts?.get(key) || 0,
-                folded
+                !open
             ));
 
             lastDate = key;
         }
 
-        if (folded) {
+        if (!open) {
             return;
         }
 
@@ -381,7 +385,7 @@ function moreItems(
 
     if (
         auto
-        && all.some(item => folds.has(
+        && all.some(item => !opens.has(
             dateKey(item.time)
         ))
     ) {
@@ -424,7 +428,9 @@ function moreItems(
         }
 
         const all = viewItems();
-        const view = all.slice(0, next);
+        const view = opens.size
+            ? all.slice(0, limit)
+            : all;
         const counts = dateCounts(all);
 
         loads.forEach(item => {
@@ -921,10 +927,10 @@ function dateToggle(event) {
         return true;
     }
 
-    if (folds.has(key)) {
-        folds.delete(key);
+    if (opens.has(key)) {
+        opens.delete(key);
     } else {
-        folds.add(key);
+        opens.add(key);
     }
 
     render();
