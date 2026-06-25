@@ -1000,15 +1000,17 @@ function clearAll() {
 
     const limit = Date.now() - GRACE;
 
-    const ids = items
-        .filter(item => item.time <= limit)
-        .map(item => item.id);
+    const ids = new Set(
+        items
+            .filter(item => item.time <= limit)
+            .map(item => item.id)
+    );
 
     const nodes = list.querySelectorAll(
         '.notify-item'
     );
 
-    if (!ids.length) {
+    if (!ids.size) {
         return;
     }
 
@@ -1023,7 +1025,7 @@ function clearAll() {
 
         const id = Number(link.dataset.id);
 
-        if (!ids.includes(id)) {
+        if (!ids.has(id)) {
             return;
         }
 
