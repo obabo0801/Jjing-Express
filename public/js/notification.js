@@ -694,10 +694,10 @@ function setBadge(badge, animate = false) {
 }
 
 function setTabs(tabs) {
-    tabs.forEach(tab => {
-        tab.classList.toggle(
+    tabs.forEach(button => {
+        button.classList.toggle(
             'active',
-            tab.dataset.filter === filter
+            button.dataset.filter === tab
         );
     });
 }
@@ -840,8 +840,8 @@ function menuClose(event) {
         });
 }
 
-function setFilter(tab) {
-    filter = tab.dataset.filter || 'all';
+function setFilter(button) {
+    tab = button.dataset.filter || 'all';
 
     render();
 }
