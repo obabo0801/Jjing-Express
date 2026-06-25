@@ -26,15 +26,15 @@ export function initTheme() {
 
     on(button, 'click', () => {
         if (box.hidden) {
-            openBox(box, close);
+            boxOpen(box, close);
             return;
         }
 
-        closeBox(box, button);
+        boxClose(box, button);
     });
 
     on(close, 'click', () => {
-        closeBox(box, button);
+        boxClose(box, button);
     });
 
     items.forEach(item => {
@@ -42,13 +42,13 @@ export function initTheme() {
             const mode = item.dataset.themeValue;
 
             set(mode);
-            closeBox(box, button);
+            boxClose(box, button);
         });
     });
 
     document.addEventListener('click', event => {
         if (!wrap?.contains(event.target)) {
-            closeBox(box);
+            boxClose(box);
         }
     });
 
@@ -57,15 +57,15 @@ export function initTheme() {
             return;
         }
 
-        closeBox(box, button);
+        boxClose(box, button);
     });
 
     on(box, 'keydown', event => {
-        tabEnd(event, box, button);
+        tabClose(event, box, button);
     });
 }
 
-function openBox(box, focus) {
+function boxOpen(box, focus) {
     if (!box) {
         return;
     }
@@ -78,7 +78,7 @@ function openBox(box, focus) {
         'theme-open'
     );
 
-    if (!isMobile()) {
+    if (!mobile()) {
         return;
     }
 
@@ -89,7 +89,7 @@ function openBox(box, focus) {
     });
 }
 
-function closeBox(box, focus, done) {
+function boxClose(box, focus, done) {
     if (
         !box
         || box.hidden
@@ -100,7 +100,7 @@ function closeBox(box, focus, done) {
 
     box.classList.remove('open');
 
-    if (!isMobile()) {
+    if (!mobile()) {
         box.hidden = true;
 
         document.body.classList.remove(
@@ -134,14 +134,14 @@ function closeBox(box, focus, done) {
     }, { once: true });
 }
 
-function tabEnd(event, box, focus) {
+function tabClose(event, box, focus) {
     if (!lastTab(event, box, 'button')) {
         return;
     }
 
     event.preventDefault();
 
-    closeBox(box, focus);
+    boxClose(box, focus);
 }
 
 function set(mode, save = true) {
@@ -195,7 +195,7 @@ function watch() {
     });
 }
 
-function isMobile() {
+function mobile() {
     return matchMedia(
         '(max-width: 640px)'
     ).matches;
