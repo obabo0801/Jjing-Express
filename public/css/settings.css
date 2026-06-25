@@ -496,6 +496,10 @@ button.active {
         0.16s ease forwards;
 }
 
+.settings-content {
+    padding-bottom: 40px;
+}
+
 @keyframes settings-backdrop-in {
     0% {
         opacity: 0;

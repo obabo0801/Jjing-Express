@@ -418,7 +418,7 @@ function moveDrop(dropdown) {
                 menuRect?.bottom ?? parentRect.bottom
             );
 
-            const gap = 16;
+            const gap = 32;
             const move = bottom - bodyRect.bottom + gap;
 
             if (move > 0) {
@@ -442,7 +442,7 @@ function moveParent(parent) {
             const bodyRect = body.getBoundingClientRect();
             const parentRect = parent.getBoundingClientRect();
 
-            const gap = 16;
+            const gap = 32;
             const move = parentRect.bottom - bodyRect.bottom + gap;
 
             if (move > 0) {
