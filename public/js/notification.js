@@ -1,8 +1,8 @@
 import {
     $,
     on,
-    lastTab,
-    esc
+    esc,
+    lastTab
 } from './dom.js';
 
 import {
@@ -27,75 +27,6 @@ let filter = 'all';
 let keyword = '';
 
 let lastId = getLastId();
-
-function loadItems() {
-    try {
-        const data = JSON.parse(
-            localStorage.getItem(STORE_KEY)
-            || '[]'
-        );
-
-        if (!Array.isArray(data)) {
-            return [];
-        }
-
-        return data
-            .map(item => toItem(item))
-            .filter(item => item.id > 0);
-    } catch {
-        return [];
-    }
-}
-
-function saveItems() {
-    const data = items.map(toSave);
-
-    localStorage.setItem(
-        STORE_KEY,
-        JSON.stringify(data)
-    );
-}
-
-function toItem(data = {}, isNew = false) {
-    return {
-        id: Number(data.id) || 0,
-        title: String(data.title || '알림'),
-        message: String(data.message || ''),
-        href: data.href || '#',
-        profileHref: data.profileHref || '',
-        profile: data.profile || '',
-        thumbnail: data.thumbnail || null,
-        time: Number(data.time) || Date.now(),
-        unread: data.unread !== false,
-        isNew
-    };
-}
-
-function toSave(item) {
-    return {
-        id: item.id,
-        title: item.title,
-        message: item.message,
-        href: item.href,
-        profileHref: item.profileHref,
-        profile: item.profile,
-        thumbnail: item.thumbnail,
-        time: item.time,
-        unread: item.unread
-    };
-}
-
-function getLastId() {
-    return items.reduce((max, item) => {
-        return Math.max(max, Number(item.id) || 0);
-    }, 0);
-}
-
-let viewBox = {
-    list: null,
-    badge: null,
-    tabs: null
-};
 
 export function initNotification() {
     const btn = $(
@@ -271,6 +202,83 @@ export function initNotification() {
     }
 }
 
+export function pushNotification(data) {
+    if (!viewBox.list) {
+        return;
+    }
+
+    addItem(data);
+}
+
+function loadItems() {
+    try {
+        const data = JSON.parse(
+            localStorage.getItem(STORE_KEY)
+            || '[]'
+        );
+
+        if (!Array.isArray(data)) {
+            return [];
+        }
+
+        return data
+            .map(item => toItem(item))
+            .filter(item => item.id > 0);
+    } catch {
+        return [];
+    }
+}
+
+function saveItems() {
+    const data = items.map(toSave);
+
+    localStorage.setItem(
+        STORE_KEY,
+        JSON.stringify(data)
+    );
+}
+
+function toItem(data = {}, isNew = false) {
+    return {
+        id: Number(data.id) || 0,
+        title: String(data.title || '알림'),
+        message: String(data.message || ''),
+        href: data.href || '#',
+        profileHref: data.profileHref || '',
+        profile: data.profile || '',
+        thumbnail: data.thumbnail || null,
+        time: Number(data.time) || Date.now(),
+        unread: data.unread !== false,
+        isNew
+    };
+}
+
+function toSave(item) {
+    return {
+        id: item.id,
+        title: item.title,
+        message: item.message,
+        href: item.href,
+        profileHref: item.profileHref,
+        profile: item.profile,
+        thumbnail: item.thumbnail,
+        time: item.time,
+        unread: item.unread
+    };
+}
+
+function getLastId() {
+    return items.reduce((max, item) => {
+        return Math.max(max, Number(item.id) || 0);
+    }, 0);
+}
+
+let viewBox = {
+    list: null,
+    badge: null,
+    tabs: null
+};
+
 function syncHead(panel, head, title, actions) {
     if (!panel || !head || !title || !actions) {
         return;
@@ -286,14 +294,6 @@ function syncHead(panel, head, title, actions) {
         'wrap',
         actions.offsetTop > title.offsetTop
     );
-}
-
-export function pushNotification(data) {
-    if (!viewBox.list) {
-        return;
-    }
-
-    addItem(data);
 }
 
 function render() {

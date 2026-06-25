@@ -12,6 +12,10 @@ export function on(element, event, handler) {
     element?.addEventListener(event, handler);
 }
 
+export function esc(event) {
+    return event.key === 'Escape';
+}
+
 function targets(
     parent,
     selector = 'button, a, input, textarea, select'
@@ -43,8 +47,4 @@ export function lastTab(event, parent, selector) {
     ];
 
     return document.activeElement === last;
-}
-
-export function esc(event) {
-    return event.key === 'Escape';
 }

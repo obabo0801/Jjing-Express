@@ -1,8 +1,8 @@
 import {
     $,
     on,
-    lastTab,
-    esc
+    esc,
+    lastTab
 } from './dom.js';
 
 const root = document.documentElement;
