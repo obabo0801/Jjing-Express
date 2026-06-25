@@ -346,12 +346,6 @@ strong {
     cursor: pointer;
 }
 
-.notify-tab.active {
-    background-color:
-        var(--text);
-    color: var(--bg);
-}
-
 .notify-empty {
     margin: 0;
     padding: 28px 0;

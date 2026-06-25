@@ -166,12 +166,6 @@ body {
         var(--hover);
 }
 
-.theme-item.active {
-    background-color:
-        var(--text);
-    color: var(--bg);
-}
-
 .tool {
     border-radius: 50%;
 

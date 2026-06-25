@@ -206,12 +206,6 @@ button,
         var(--hover);
 }
 
-.settings-tab.active {
-    background-color:
-        var(--text);
-    color: var(--bg);
-}
-
 .settings-page {
     display: flex;
     flex-direction: column;
@@ -366,13 +360,6 @@ button {
 button:active {
     transform:
         scale(var(--pop));
-}
-
-.settings-size-menu
-button.active {
-    background-color:
-        var(--text);
-    color: var(--bg);
 }
 
 .settings-reset-button {

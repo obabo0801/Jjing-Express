@@ -297,3 +297,15 @@ button {
         0 0 0 4px
         var(--text);
 }
+
+:where(
+    .theme-item.active,
+    .notify-tab.active,
+    .settings-tab.active,
+    .settings-size-menu
+    button.active
+) {
+    background-color:
+        var(--text);
+    color: var(--bg);
+}
