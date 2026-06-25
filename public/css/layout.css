@@ -152,7 +152,7 @@ body {
 
 .theme-item:active {
     transform:
-        scale(0.92);
+        scale(--pop);
 }
 
 .theme-item
@@ -207,7 +207,7 @@ body {
 
 .tool:active {
     transform:
-        scale(0.90);
+        scale(--pop);
 }
 
 .tool:focus-visible {

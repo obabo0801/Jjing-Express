@@ -18,6 +18,8 @@
         var(--speed)
         var(--ease);
 
+    --pop: 0.90;
+
     --screen-scale: 1;
     --font-scale: 1;
 }
