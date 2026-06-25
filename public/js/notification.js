@@ -931,11 +931,29 @@ function dateToggle(event) {
         opens.delete(key);
     } else {
         opens.add(key);
+        openDate(key);
     }
 
     render();
 
     return true;
+}
+
+function openDate(key) {
+    const all = viewItems();
+
+    const start = all.findIndex(item => (
+        dateKey(item.time) === key
+    ));
+
+    if (start < 0) {
+        return;
+    }
+
+    limit = Math.max(
+        limit,
+        start + STEP
+    );
 }
 
 function menuToggle(event) {
