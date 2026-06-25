@@ -273,12 +273,13 @@ function render() {
 
     const all = viewItems();
     const counts = dateCounts(all);
+    const unread = unreadCounts(all);
 
     if (!all.length) {
         list.append(makeEmpty());
     } else {
         appendView(
-            list, all, counts
+            list, all, counts, unread
         );
     }
 
@@ -296,7 +297,7 @@ function render() {
 }
 
 function appendView(
-    list, view, counts = null
+    list, view, counts = null, unread = null
 ) {
     let last = '';
     const seen = new Map();
@@ -309,6 +310,7 @@ function appendView(
             list.append(makeDate(
                 item.time,
                 counts?.get(key) || 0,
+                unread?.get(key) || 0,
                 !open
             ));
 
@@ -362,6 +364,25 @@ function dateCounts(list) {
     const counts = new Map();
 
     list.forEach(item => {
+        const key = dateKey(item.time);
+
+        counts.set(
+            key,
+            (counts.get(key) || 0) + 1
+        );
+    });
+
+    return counts;
+}
+
+function unreadCounts(list) {
+    const counts = new Map();
+
+    list.forEach(item => {
+        if (!item.unread) {
+            return;
+        }
+
         const key = dateKey(item.time);
 
         counts.set(
@@ -777,12 +798,15 @@ function makeEmpty() {
 }
 
 function makeDate(
-    time, count = 0, folded = false
+    time, count = 0, unread = 0, folded = false
 ) {
     const key = dateKey(time);
 
     const button = document.createElement('button');
-    button.className = 'notify-date';
+    button.className = [
+        'notify-date',
+        unread > 0 ? 'unread' : 'read'
+    ].join(' ');
     button.type = 'button';
     button.dataset.date = key;
 

@@ -640,6 +640,29 @@ button {
     opacity: 0.72;
 }
 
+.notify-date.read {
+    opacity: 0.45;
+}
+
+.notify-date.unread {
+    opacity: 0.8;
+}
+
+.notify-date.unread
+.notify-date-title::before {
+    content: "";
+
+    width: 7px;
+    height: 7px;
+    margin-right: 6px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+    background-color:
+        #3b82f6;
+}
+
 .notify-date:hover {
     opacity: 1;
 }
