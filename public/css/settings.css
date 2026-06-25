@@ -203,7 +203,7 @@ button {
 
 .settings-tab:active {
     transform:
-        scale(--pop);
+        scale(var(--pop));
 }
 
 .settings-tab
@@ -351,7 +351,7 @@ button {
 
 .settings-size-trigger:active {
     transform:
-        scale(--pop);
+        scale(var(--pop));
 }
 
 .settings-size-trigger:hover {
@@ -434,7 +434,7 @@ button {
 .settings-size-menu
 button:active {
     transform:
-        scale(--pop);
+        scale(var(--pop));
 }
 
 .settings-size-menu
@@ -482,7 +482,7 @@ button.active {
 
 .settings-reset-button:active {
     transform:
-        scale(--pop);
+        scale(var(--pop));
 }
 
 .settings-reset-button:hover {
@@ -531,7 +531,7 @@ button.active {
 
 .settings-toggle:active {
     transform:
-        scale(--pop);
+        scale(var(--pop));
 }
 
 .settings-toggle.off {

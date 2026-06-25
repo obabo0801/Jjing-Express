@@ -131,7 +131,7 @@
 .notify-box
 button:active {
     transform:
-        scale(--pop);
+        scale(var(--pop));
 }
 
 .notify-head {
@@ -807,7 +807,7 @@ button:hover {
     0% {
         opacity: 0;
         transform:
-            scale(--pop);
+            scale(var(--pop));
     }
 
     65% {
