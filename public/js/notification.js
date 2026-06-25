@@ -350,8 +350,16 @@ function viewItems() {
             const message = item.message
                 .toLowerCase();
 
+            const date = dateText(item.time)
+                .toLowerCase();
+
+            const key = dateKey(item.time)
+                .toLowerCase();
+
             return title.includes(word)
-                || message.includes(word);
+                || message.includes(word)
+                || date.includes(word)
+                || key.includes(word);
         });
     }
 
@@ -1187,14 +1195,19 @@ function readOne(id) {
     sync();
 }
 
+function targets() {
+    return viewItems();
+}
+
 function readAll() {
-    if (!items.some(
-        item => item.unread
-    )) {
+    const list = targets()
+        .filter(item => item.unread);
+
+    if (!list.length) {
         return;
     }
 
-    items.forEach(item => {
+    list.forEach(item => {
         item.unread = false;
     });
 
@@ -1276,7 +1289,7 @@ function clearAll() {
     const limit = Date.now() - GRACE;
 
     const ids = new Set(
-        items
+        targets()
             .filter(item => item.time <= limit)
             .map(item => item.id)
     );
