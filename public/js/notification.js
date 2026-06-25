@@ -324,7 +324,7 @@ function focusNow() {
     }
 
     const more = active.closest(
-        '.notify-more'
+        '.notify-control'
     );
 
     if (more?.dataset.id) {
@@ -352,7 +352,7 @@ function focusBack(focus) {
             `.notify-profile[data-id="${id}"]`,
 
         more:
-            `.notify-more[data-id="${id}"] `
+            `.notify-control[data-id="${id}"] `
             + '.notify-more-button'
     };
 
