@@ -1293,11 +1293,11 @@ function addItem(data) {
         return;
     }
 
-    const openMenuId = menuId();
+    const menu = menuId();
 
-    const holdScroll = list.scrollTop > 0;
-    const beforeTop = list.scrollTop;
-    const beforeHeight = list.scrollHeight;
+    const hold = list.scrollTop > 0;
+    const top = list.scrollTop;
+    const height = list.scrollHeight;
 
     items.unshift(toItem({
         ...data,
@@ -1305,27 +1305,34 @@ function addItem(data) {
         unread: true
     }, true));
 
+    if (hold) {
+        limit = Math.min(
+            limit + 1,
+            items.length
+        );
+    }
+
     saveItems();
 
-    if (holdScroll) {
+    if (hold) {
         list.classList.add('hold');
     }
 
     render();
 
-    if (holdScroll) {
-        const afterHeight = list.scrollHeight;
+    if (hold) {
+        const next = list.scrollHeight;
 
-        list.scrollTop = beforeTop
-            + afterHeight
-            - beforeHeight;
+        list.scrollTop = top
+            + next
+            - height;
 
         requestAnimationFrame(() => {
             list.classList.remove('hold');
         });
     }
 
-    menuRestore(openMenuId);
+    menuRestore(menu);
 
     setBadge(badge, true);
     shakeButton();
