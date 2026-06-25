@@ -409,23 +409,7 @@ button {
 
 .settings-size-menu
 button {
-    height: 30px;
-    padding: 0 8px;
-
-    border: 0;
-    border-radius: 8px;
-
-    background:
-        transparent;
-    color: var(--text);
-
-    cursor: pointer;
-    text-align: left;
-}
-
-.settings-size-menu
-button {
-    height: 30px;
+    height: 34px;
     padding: 0 8px;
 
     border: 0;
@@ -439,10 +423,18 @@ button {
     text-align: left;
 
     transition:
+        transform
+            0.16s ease,
         background-color
             var(--motion),
         color
             var(--motion);
+}
+
+.settings-size-menu
+button:active {
+    transform:
+        scale(0.92);
 }
 
 .settings-size-menu
