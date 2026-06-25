@@ -1,13 +1,9 @@
 import {
-    $,
-    on,
-    esc,
-    lastTab
+    $, $$, on, esc, lastTab
 } from './dom.js';
 
 import {
-    OPTION,
-    DEFAULT_OPTION,
+    OPTION, DEFAULT_OPTION,
     getOption
 } from './options.js';
 
@@ -70,10 +66,9 @@ export function initNotification() {
         '.notify-search-close'
     );
 
-    const tabs = (
-        document.querySelectorAll(
+    const tabs = $$(
         '.notify-tab'
-    ));
+    );
 
     const head = $(
         '.notify-head'
@@ -233,29 +228,6 @@ function syncHead(panel, head, title, actions) {
     );
 }
 
-function getView() {
-    let list = filter === 'unread'
-        ? items.filter(item => item.unread)
-        : items;
-
-    if (keyword) {
-        list = list.filter(item => {
-            const title = item.title
-                .toLowerCase();
-
-            const message = item.message
-                .toLowerCase();
-
-            return title.includes(keyword)
-                || message.includes(keyword);
-        });
-    }
-
-    return [...list].sort(
-        (a, b) => b.time - a.time
-    );
-}
-
 function render() {
     const {
         list,
@@ -297,6 +269,29 @@ function render() {
     setBadge(badge);
     setTabs(tabs);
     restoreFocus(focus);
+}
+
+function getView() {
+    let list = filter === 'unread'
+        ? items.filter(item => item.unread)
+        : items;
+
+    if (keyword) {
+        list = list.filter(item => {
+            const title = item.title
+                .toLowerCase();
+
+            const message = item.message
+                .toLowerCase();
+
+            return title.includes(keyword)
+                || message.includes(keyword);
+        });
+    }
+
+    return [...list].sort(
+        (a, b) => b.time - a.time
+    );
 }
 
 function getFocus() {
@@ -620,13 +615,12 @@ function startClock() {
 }
 
 function updateTimes() {
-    document.querySelectorAll(
-        '.notify-time'
-    ).forEach(time => {
-        time.textContent = timeText(
-            Number(time.dataset.time)
-        );
-    });
+    $$('.notify-time')
+        .forEach(time => {
+            time.textContent = timeText(
+                Number(time.dataset.time)
+            );
+        });
 }
 
 function timeText(time) {
@@ -701,16 +695,15 @@ function menuToggle(event) {
         '.notify-control'
     );
 
-    document.querySelectorAll(
-        '.notify-control.open'
-    ).forEach(item => {
-        if (item !== more) {
-            item.classList.remove(
-                'open',
-                'up'
-            );
-        }
-    });
+    $$('.notify-control.open')
+        .forEach(item => {
+            if (item !== more) {
+                item.classList.remove(
+                    'open',
+                    'up'
+                );
+            }
+        });
 
     more?.classList.remove('up');
     more?.classList.toggle('open');
@@ -816,14 +809,13 @@ function menuClose(event) {
         return;
     }
 
-    document.querySelectorAll(
-        '.notify-control.open'
-    ).forEach(item => {
-        item.classList.remove(
-            'open',
-            'up'
-        );
-    });
+    $$('.notify-control.open')
+        .forEach(item => {
+            item.classList.remove(
+                'open',
+                'up'
+            );
+        });
 }
 
 function safeHref(href) {

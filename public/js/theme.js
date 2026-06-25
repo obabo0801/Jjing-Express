@@ -1,8 +1,5 @@
 import {
-    $,
-    on,
-    esc,
-    lastTab
+    $, $$, on, esc, lastTab
 } from './dom.js';
 
 const root = document.documentElement;
@@ -20,7 +17,7 @@ export function initTheme() {
     const button = $('.theme > .tool');
     const box = $('.theme-box');
     const close = $('.theme-close');
-    const items = document.querySelectorAll(
+    const items = $$(
         '[data-theme-value]'
     );
 
@@ -163,8 +160,7 @@ function set(mode, save = true) {
 }
 
 function active(mode) {
-    document
-        .querySelectorAll('[data-theme-value]')
+    $$('[data-theme-value]')
         .forEach(button => {
             button.classList.toggle(
                 'active',
