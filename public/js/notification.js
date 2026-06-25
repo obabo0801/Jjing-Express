@@ -898,9 +898,15 @@ function sync() {
 function removeIds(ids) {
     const set = new Set(ids);
 
-    items = items.filter(
+    const next = items.filter(
         item => !set.has(item.id)
     );
+
+    if (next.length === items.length) {
+        return;
+    }
+
+    items = next;
 
     sync();
 }
