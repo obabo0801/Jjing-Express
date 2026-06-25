@@ -890,6 +890,11 @@ function menuPop(button) {
     playClass(button, 'pop');
 }
 
+function sync() {
+    saveItems();
+    render();
+}
+
 function readOne(id) {
     const notification = items.find(
         item => item.id === id
@@ -901,9 +906,7 @@ function readOne(id) {
 
     notification.unread = false;
 
-    saveItems();
-
-    render();
+    sync();
 }
 
 function readAll() {
@@ -911,9 +914,7 @@ function readAll() {
         item.unread = false;
     });
 
-    saveItems();
-
-    render();
+    sync();
 }
 
 function clearNode(item, index = 0) {
@@ -963,9 +964,7 @@ function removeOne(event) {
             item => item.id !== id
         );
 
-        saveItems();
-
-        render();
+        sync();
 
         return true;
     }
@@ -984,9 +983,7 @@ function removeOne(event) {
             item => item.id !== id
         );
 
-        saveItems();
-
-        render();
+        sync();
     }, CLEAR);
 
     return true;
@@ -1036,9 +1033,7 @@ function clearAll() {
             item => !ids.includes(item.id)
         );
 
-        saveItems();
-
-        render();
+        sync();
     }, CLEAR);
 }
 
