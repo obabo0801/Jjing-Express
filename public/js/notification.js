@@ -1,7 +1,7 @@
 import {
     $,
     on,
-    isLastTab
+    lastTab
 } from './dom.js';
 
 import {
@@ -1355,7 +1355,7 @@ function closeEsc(event, button, panel) {
 }
 
 function closeTabEnd(event, button, panel) {
-    if (!isLastTab(event, panel, 'button, a, input')) {
+    if (!lastTab(event, panel, 'button, a, input')) {
         return;
     }
 

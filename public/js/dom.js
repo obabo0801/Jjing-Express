@@ -12,7 +12,7 @@ export function on(element, event, handler) {
     element?.addEventListener(event, handler);
 }
 
-export function focusList(
+export function targets(
     parent,
     selector = 'button, a, input, textarea, select'
 ) {
@@ -27,7 +27,7 @@ export function focusList(
     });
 }
 
-export function isLastTab(event, parent, selector) {
+export function lastTab(event, parent, selector) {
     if (
         event.key !== 'Tab'
         || event.shiftKey
@@ -37,7 +37,7 @@ export function isLastTab(event, parent, selector) {
         return false;
     }
 
-    const list = focusList(parent, selector);
+    const list = targets(parent, selector);
     const last = list[
         list.length - 1
     ];

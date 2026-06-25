@@ -1,7 +1,7 @@
 import {
     $,
     on,
-    isLastTab
+    lastTab
 } from './dom.js';
 
 const root = document.documentElement;
@@ -135,7 +135,7 @@ function closeBox(box, focus, done) {
 }
 
 function tabEnd(event, box, focus) {
-    if (!isLastTab(event, box, 'button')) {
+    if (!lastTab(event, box, 'button')) {
         return;
     }
 
