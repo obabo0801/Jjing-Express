@@ -125,14 +125,8 @@ body {
 .theme-item {
     padding: 0 10px;
 
-    border: 0;
     border-radius: 10px;
 
-    background:
-        transparent;
-    color: var(--text);
-
-    cursor: pointer;
     white-space: nowrap;
 
     transition:
