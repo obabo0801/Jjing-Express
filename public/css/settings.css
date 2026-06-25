@@ -149,15 +149,8 @@ button {
     gap: 8px;
 }
 
-.settings-tab,
-.settings-close,
-.settings-back {
-    border: 0;
-    background:
-        transparent;
+.settings-tab {
     color: var(--text);
-
-    cursor: pointer;
 }
 
 .settings-tab,
@@ -175,18 +168,6 @@ button,
             var(--motion),
         color
             var(--motion);
-}
-
-.settings-close,
-.settings-back {
-    width: 42px;
-    height: 42px;
-    padding: 0;
-
-    display: grid;
-    place-items: center;
-
-    border-radius: 12px;
 }
 
 .settings-close
