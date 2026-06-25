@@ -359,9 +359,7 @@ function restoreFocus(focus) {
     const selector = selectorMap[focus.type];
 
     requestAnimationFrame(() => {
-        document.querySelector(
-            selector
-        )?.focus({
+        $(selector)?.focus({
             preventScroll: true
         });
     });
@@ -711,7 +709,7 @@ function menuToggle(event) {
     const menu = more?.querySelector(
         '.notify-more'
     );
-    const panel = document.querySelector(
+    const panel = $(
         '.notify-box'
     );
 
