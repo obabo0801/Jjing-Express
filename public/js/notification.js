@@ -17,6 +17,7 @@ const HOUR = 60 * MIN;
 const DAY = 24 * HOUR;
 const GRACE = 3000;
 const GAP = 14;
+const CLEAR = 520;
 
 let items = loadItems();
 
@@ -986,7 +987,7 @@ function removeOne(event) {
         saveItems();
 
         render();
-    }, 520);
+    }, CLEAR);
 
     return true;
 }
@@ -1038,7 +1039,7 @@ function clearAll() {
         saveItems();
 
         render();
-    }, 520);
+    }, CLEAR);
 }
 
 function addItem(data) {
