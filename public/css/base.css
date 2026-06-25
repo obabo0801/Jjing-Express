@@ -69,3 +69,135 @@ a {
 button {
     font: inherit;
 }
+
+input,
+button {
+    font: inherit;
+}
+
+button {
+    color: inherit;
+}
+
+:where(
+    .tool,
+    .theme-close,
+    .notify-close,
+    .notify-search-button,
+    .notify-more-button,
+    .settings-close,
+    .settings-back
+) {
+    padding: 0;
+
+    display: grid;
+    place-items: center;
+
+    border: 0;
+    background:
+        transparent;
+    color: var(--text);
+
+    cursor: pointer;
+    outline: none;
+    -webkit-tap-highlight-color:
+        transparent;
+}
+
+:where(.tool) {
+    width: 48px;
+    height: 48px;
+}
+
+:where(
+    .theme-close,
+    .notify-close,
+    .settings-close,
+    .settings-back
+) {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+}
+
+:where(
+    .theme-item,
+    .notify-search-button,
+    .notify-search-input,
+    .notify-search-close,
+    .notify-tab,
+    .settings-tab,
+    .settings-size-trigger,
+    .settings-size-menu button,
+    .settings-reset-button,
+    .settings-toggle
+) {
+    height: 34px;
+}
+
+:where(.notify-more-button) {
+    width: 30px;
+    height: 30px;
+}
+
+:where(
+    .theme-box,
+    .notify-box,
+    .notify-list,
+    .settings-side,
+    .settings-body
+) {
+    overscroll-behavior:
+        contain;
+}
+
+:where(
+    .theme-box,
+    .notify-list,
+    .settings-side,
+    .settings-body
+)::-webkit-scrollbar {
+    width: 10px;
+}
+
+:where(
+    .theme-box,
+    .notify-list,
+    .settings-side,
+    .settings-body
+)::-webkit-scrollbar-track {
+    background:
+        transparent;
+}
+
+:where(
+    .theme-box,
+    .notify-list,
+    .settings-side,
+    .settings-body
+)::-webkit-scrollbar-thumb {
+    min-height: 56px;
+
+    border-radius: 999px;
+    background-color:
+        color-mix(
+            in srgb,
+            var(--text) 42%,
+            transparent
+        );
+}
+
+:where(
+    .theme-box,
+    .notify-list,
+    .settings-side,
+    .settings-body
+)::-webkit-scrollbar-thumb:hover {
+    background-color:
+        color-mix(
+            in srgb,
+            var(--text) 62%,
+            transparent
+        );
+}

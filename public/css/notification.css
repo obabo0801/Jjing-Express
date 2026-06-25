@@ -255,23 +255,12 @@ strong {
 }
 
 .notify-search-button {
-    width: 48px;
-    height: 48px;
-
     margin-left: auto;
-
-    display: grid;
-    place-items: center;
 
     border:
         1px solid
         var(--line);
     border-radius: 12px;
-    background:
-        transparent;
-    color: var(--text);
-
-    cursor: pointer;
 }
 
 .notify-search-button.pop
@@ -316,11 +305,12 @@ strong {
     min-width: 0;
     flex: 1;
 
+    padding: 0 11px;
+
     border:
         1px solid
         var(--line);
     border-radius: 12px;
-    padding: 9px 11px;
 
     background:
         transparent;
@@ -335,11 +325,12 @@ strong {
 }
 
 .notify-search-close {
+    padding: 0 10px;
+
     border:
         1px solid
         var(--line);
     border-radius: 12px;
-    padding: 0 10px;
 
     background:
         transparent;
@@ -381,12 +372,13 @@ strong {
 }
 
 .notify-tab {
+    padding: 0 12px;
+
     border:
         1px solid
         var(--line);
-    padding: 7px 12px;
-
     border-radius: 12px;
+
     background:
         transparent;
     color: var(--text);
@@ -542,17 +534,8 @@ strong {
 }
 
 .notify-more-button {
-    width: 30px;
-    height: 30px;
-    padding: 0;
-
-    border: 0;
     border-radius: 50%;
-    background:
-        transparent;
-    color: var(--text);
 
-    cursor: pointer;
     font-size: 20px;
     line-height: 1;
 
