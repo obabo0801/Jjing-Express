@@ -125,7 +125,8 @@ button {
     .notify-tab,
     .settings-tab,
     .settings-size-trigger,
-    .settings-size-menu button,
+    .settings-size-menu
+    button,
     .settings-reset-button,
     .settings-toggle
 ) {
@@ -281,4 +282,18 @@ button {
 ) {
     background-color:
         var(--hover);
+}
+
+:where(
+    .notify-search-button,
+    .notify-tab,
+    .settings-toggle
+):focus-visible {
+    outline: none;
+
+    box-shadow:
+        0 0 0 2px
+        var(--bar),
+        0 0 0 4px
+        var(--text);
 }

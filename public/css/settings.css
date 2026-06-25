@@ -397,16 +397,6 @@ button.active {
     color: var(--bg);
 }
 
-.settings-toggle:focus-visible {
-    outline: none;
-
-    box-shadow:
-        0 0 0 2px
-        var(--bar),
-        0 0 0 4px
-        var(--text);
-}
-
 .settings-toggle:active {
     transform:
         scale(var(--pop));

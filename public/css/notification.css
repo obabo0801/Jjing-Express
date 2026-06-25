@@ -264,16 +264,6 @@ strong {
         icon-pop 0.22s ease;
 }
 
-.notify-search-button:focus-visible {
-    outline: none;
-
-    box-shadow:
-        0 0 0 2px
-        var(--bar),
-        0 0 0 4px
-        var(--text);
-}
-
 .notify-search-button
 .icon {
     width: 16px;
@@ -360,16 +350,6 @@ strong {
     background-color:
         var(--text);
     color: var(--bg);
-}
-
-.notify-tab:focus-visible {
-    outline: none;
-
-    box-shadow:
-        0 0 0 2px
-        var(--bar),
-        0 0 0 4px
-        var(--text);
 }
 
 .notify-empty {
