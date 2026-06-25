@@ -256,22 +256,12 @@ strong {
 
 .notify-search-button {
     margin-left: auto;
-
-    border:
-        1px solid
-        var(--line);
-    border-radius: 12px;
 }
 
 .notify-search-button.pop
 .icon {
     animation:
         icon-pop 0.22s ease;
-}
-
-.notify-search-button:hover {
-    background-color:
-        var(--hover);
 }
 
 .notify-search-button:focus-visible {
@@ -307,15 +297,6 @@ strong {
 
     padding: 0 11px;
 
-    border:
-        1px solid
-        var(--line);
-    border-radius: 12px;
-
-    background:
-        transparent;
-    color: var(--text);
-
     outline: none;
 }
 
@@ -326,17 +307,6 @@ strong {
 
 .notify-search-close {
     padding: 0 10px;
-
-    border:
-        1px solid
-        var(--line);
-    border-radius: 12px;
-
-    background:
-        transparent;
-    color: var(--text);
-
-    cursor: pointer;
 }
 
 .notify-search-input { 

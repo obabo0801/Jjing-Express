@@ -314,27 +314,11 @@ button,
     justify-content:
         space-between;
     gap: 8px;
-
-    border:
-        1px solid
-        var(--line);
-    border-radius: 12px;
-
-    background:
-        transparent;
-    color: var(--text);
-
-    cursor: pointer;
 }
 
 .settings-size-trigger:active {
     transform:
         scale(var(--pop));
-}
-
-.settings-size-trigger:hover {
-    background-color:
-        var(--hover);
 }
 
 .settings-size-arrow {
@@ -425,27 +409,11 @@ button.active {
     padding: 0 14px;
 
     flex-shrink: 0;
-
-    border:
-        1px solid
-        var(--line);
-    border-radius: 12px;
-
-    background:
-        transparent;
-    color: var(--text);
-
-    cursor: pointer;
 }
 
 .settings-reset-button:active {
     transform:
         scale(var(--pop));
-}
-
-.settings-reset-button:hover {
-    background-color:
-        var(--hover);
 }
 
 .settings-toggle {
@@ -454,16 +422,9 @@ button.active {
 
     flex-shrink: 0;
 
-    border:
-        1px solid
-        var(--line);
-    border-radius: 12px;
-
     background-color:
         var(--text);
     color: var(--bg);
-
-    cursor: pointer;
 }
 
 .settings-toggle:focus-visible {

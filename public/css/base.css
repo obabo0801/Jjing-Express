@@ -197,3 +197,40 @@ button {
             transparent
         );
 }
+
+:where(
+    .notify-search-button,
+    .notify-search-input,
+    .notify-search-close,
+    .settings-size-trigger,
+    .settings-reset-button,
+    .settings-toggle
+) {
+    border:
+        1px solid
+        var(--line);
+    border-radius: 12px;
+
+    background:
+        transparent;
+    color: var(--text);
+}
+
+:where(
+    .notify-search-button,
+    .notify-search-close,
+    .settings-size-trigger,
+    .settings-reset-button,
+    .settings-toggle
+) {
+    cursor: pointer;
+}
+
+:where(
+    .notify-search-button,
+    .settings-size-trigger,
+    .settings-reset-button
+):hover {
+    background-color:
+        var(--hover);
+}
