@@ -16,7 +16,7 @@ export function initTheme() {
     const wrap = $('.theme');
     const button = $('.theme > .tool');
     const box = $('.theme-box');
-    const close = $('.theme-close');
+    const cls = $('.theme-close');
     const items = $$(
         '[data-theme-value]'
     );
@@ -26,15 +26,15 @@ export function initTheme() {
 
     on(button, 'click', () => {
         if (box.hidden) {
-            boxOpen(box, close);
+            open(box, cls);
             return;
         }
 
-        boxClose(box, button);
+        close(box, button);
     });
 
-    on(close, 'click', () => {
-        boxClose(box, button);
+    on(cls, 'click', () => {
+        close(box, button);
     });
 
     items.forEach(item => {
@@ -42,13 +42,13 @@ export function initTheme() {
             const mode = item.dataset.themeValue;
 
             set(mode);
-            boxClose(box, button);
+            close(box, button);
         });
     });
 
     document.addEventListener('click', event => {
         if (!wrap?.contains(event.target)) {
-            boxClose(box);
+            close(box);
         }
     });
 
@@ -57,7 +57,7 @@ export function initTheme() {
             return;
         }
 
-        boxClose(box, button);
+        close(box, button);
     });
 
     on(box, 'keydown', event => {
@@ -65,7 +65,7 @@ export function initTheme() {
     });
 }
 
-function boxOpen(box, focus) {
+function open(box, focus) {
     if (!box) {
         return;
     }
@@ -89,7 +89,7 @@ function boxOpen(box, focus) {
     });
 }
 
-function boxClose(box, focus, done) {
+function close(box, focus, done) {
     if (
         !box
         || box.hidden
@@ -141,7 +141,7 @@ function tabClose(event, box, focus) {
 
     event.preventDefault();
 
-    boxClose(box, focus);
+    close(box, focus);
 }
 
 function set(mode, save = true) {

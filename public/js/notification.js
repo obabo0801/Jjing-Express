@@ -49,7 +49,7 @@ export function initNotify() {
     const remove = $(
         '.notify-remove-all'
     );
-    const close = $(
+    const cls = $(
         '.notify-close'
     );
 
@@ -62,7 +62,7 @@ export function initNotify() {
     const sInput = $(
         '.notify-search-input'
     );
-    const sClose = $(
+    const sCls = $(
         '.notify-search-close'
     );
 
@@ -115,7 +115,7 @@ export function initNotify() {
         clearAll();
     });
 
-    on(close, 'click', () => {
+    on(cls, 'click', () => {
         panelClose(btn, panel);
     });
 
@@ -134,7 +134,7 @@ export function initNotify() {
         );
     });
 
-    on(sClose, 'click', () => {
+    on(sCls, 'click', () => {
         searchClose(
             search,
             sInput
