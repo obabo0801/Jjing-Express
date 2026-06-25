@@ -910,7 +910,8 @@ function readOne(id) {
         item => item.id === id
     );
 
-    if (!notification) {
+    if (!notification
+        || !notification.unread) {
         return;
     }
 
