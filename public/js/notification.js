@@ -26,6 +26,8 @@ let items = loadItems();
 let tab = 'all';
 let word = '';
 let limit = STEP;
+let loading = false;
+let stamp = 0;
 
 let id = maxId();
 
@@ -251,14 +253,15 @@ function headSync(
 
 function render() {
     const {
-        list,
-        badge,
-        tabs
+        list, badge, tabs
     } = ui;
 
     if (!list) {
         return;
     }
+
+    stamp += 1;
+    loading = false;
 
     const focus = focusNow();
 
@@ -270,18 +273,7 @@ function render() {
     if (!all.length) {
         list.append(makeEmpty());
     } else {
-        let lastDate = '';
-
-        view.forEach(item => {
-            const date = dateKey(item.time);
-
-            if (date !== lastDate) {
-                list.append(makeDate(item.time));
-                lastDate = date;
-            }
-
-            list.append(makeItem(item));
-        });
+        appendView(list, view);
     }
 
     view.forEach(item => {
@@ -295,6 +287,25 @@ function render() {
     setBadge(badge);
     setTabs(tabs);
     focusBack(focus);
+}
+
+function appendView(
+    list, view, from = 0
+) {
+    let lastDate = from > 0
+        ? dateKey(view[from - 1].time)
+        : '';
+
+    view.slice(from).forEach(item => {
+        const date = dateKey(item.time);
+
+        if (date !== lastDate) {
+            list.append(makeDate(item.time));
+            lastDate = date;
+        }
+
+        list.append(makeItem(item));
+    });
 }
 
 function viewItems() {
@@ -329,7 +340,7 @@ function moreItems(list) {
         return;
     }
 
-    if (list.clientHeight <= 0) {
+    if (list.clientHeight <= 0 || loading) {
         return;
     }
 
@@ -349,9 +360,45 @@ function moreItems(list) {
         return;
     }
 
-    limit += STEP;
+    loading = true;
 
-    render();
+    const mark = stamp;
+    const from = limit;
+    const next = Math.min(
+        limit + STEP,
+        total
+    );
+
+    const loads = makeLoads(next - from);
+
+    list.append(...loads);
+
+    requestAnimationFrame(() => {
+        if (mark !== stamp) {
+            loading = false;
+            return;
+        }
+
+        const all = viewItems();
+        const view = all.slice(0, next);
+
+        loads.forEach(item => {
+            item.remove();
+        });
+
+        appendView(list, view, from);
+
+        view.slice(from).forEach(item => {
+            item.isNew = false;
+        });
+
+        limit = next;
+        loading = false;
+
+        requestAnimationFrame(() => {
+            moreItems(list);
+        });
+    });
 }
 
 function focusNow() {
@@ -502,6 +549,22 @@ function searchEsc(
     searchClose(
         search,
         input
+    );
+}
+
+function makeLoad() {
+    const item = document
+        .createElement('div');
+
+    item.className = 'notify-item load';
+
+    return item;
+}
+
+function makeLoads(count) {
+    return Array.from(
+        { length: count },
+        makeLoad
     );
 }
 

@@ -395,6 +395,14 @@ strong {
             var(--motion);
 }
 
+.notify-item.load {
+    min-height: 68px;
+
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.45;
+}
+
 .notify-item:hover {
     background-color:
         var(--hover);
