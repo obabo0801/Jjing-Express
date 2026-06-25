@@ -165,28 +165,28 @@ export function initNotification() {
     on(list, 'click', event => {
         event.stopPropagation();
 
-        if (toggleMenu(event)) {
+        if (menuToggle(event)) {
             return;
         }
 
-        if (readMenu(event)) {
+        if (menuRead(event)) {
             return;
         }
 
-        if (deleteOne(event)) {
+        if (removeOne(event)) {
             return;
         }
 
-        if (openMain(event)) {
+        if (mainOpen(event)) {
             return;
         }
 
-        readClick(event);
+        readLink(event);
     });
 
     on(document, 'click', event => {
         outClose(event, btn, panel);
-        closeMenus(event);
+        menuClose(event);
     });
 
     on(document, 'keydown', event => {
@@ -393,7 +393,7 @@ function searchEsc(
     search,
     input
 ) {
-    if (event.key !== 'Escape') {
+    if (!esc(event)) {
         return;
     }
 
@@ -646,7 +646,7 @@ function setTabs(tabs) {
     });
 }
 
-function toggleMenu(event) {
+function menuToggle(event) {
     const button = event.target.closest(
         '.notify-more-button'
     );
@@ -655,7 +655,7 @@ function toggleMenu(event) {
         return false;
     }
 
-    popMore(button);
+    menuPop(button);
 
     const more = button.closest(
         '.notify-control'
@@ -697,7 +697,7 @@ function toggleMenu(event) {
     return true;
 }
 
-function getMenuId() {
+function menuId() {
     const list = viewBox.list;
 
     if (!list) {
@@ -713,7 +713,7 @@ function getMenuId() {
         : '';
 }
 
-function restoreMenu(id) {
+function menuRestore(id) {
     const list = viewBox.list;
 
     if (!id || !list) {
@@ -751,7 +751,7 @@ function restoreMenu(id) {
     });
 }
 
-function readMenu(event) {
+function menuRead(event) {
     const button = event.target.closest(
         '.notify-more-read'
     );
@@ -760,16 +760,16 @@ function readMenu(event) {
         return false;
     }
 
-    readById(
+    readOne(
         Number(button.dataset.id)
     );
 
-    closeMenus();
+    menuClose();
 
     return true;
 }
 
-function closeMenus(event) {
+function menuClose(event) {
     const target = event?.target;
 
     if (target?.closest?.('.notify-more')) {
@@ -856,7 +856,7 @@ function setFilter(tab) {
     render();
 }
 
-function readClick(event) {
+function readLink(event) {
     const item = event.target.closest(
         '.notify-read'
     );
@@ -865,12 +865,12 @@ function readClick(event) {
         return;
     }
 
-    readById(
+    readOne(
         Number(item.dataset.id)
     );
 }
 
-function openMain(event) {
+function mainOpen(event) {
     const item = event.target.closest(
         '.notify-item'
     );
@@ -898,7 +898,7 @@ function openMain(event) {
     return true;
 }
 
-function popMore(button) {
+function menuPop(button) {
     button.classList.remove('pop');
 
     requestAnimationFrame(() => {
@@ -914,7 +914,7 @@ function popMore(button) {
     );
 }
 
-function readById(id) {
+function readOne(id) {
     const notification = items.find(
         item => item.id === id
     );
@@ -940,7 +940,7 @@ function readAll() {
     render();
 }
 
-function clearItem(item, index = 0) {
+function clearNode(item, index = 0) {
     const side = index % 2 === 0
         ? -1
         : 1;
@@ -968,7 +968,7 @@ function clearItem(item, index = 0) {
     item.classList.add('clear');
 }
 
-function deleteOne(event) {
+function removeOne(event) {
     const button = event.target.closest(
         '.notify-remove'
     );
@@ -1001,7 +1001,7 @@ function deleteOne(event) {
         'up'
     );
 
-    clearItem(item);
+    clearNode(item);
 
     setTimeout(() => {
         items = items.filter(
@@ -1052,7 +1052,7 @@ function clearAll() {
             return;
         }
 
-        clearItem(item, index);
+        clearNode(item, index);
     });
 
     setTimeout(() => {
@@ -1076,7 +1076,7 @@ function addItem(data) {
         return;
     }
 
-    const openMenuId = getMenuId();
+    const openMenuId = menuId();
 
     const holdScroll = list.scrollTop > 0;
     const beforeTop = list.scrollTop;
@@ -1108,7 +1108,7 @@ function addItem(data) {
         });
     }
 
-    restoreMenu(openMenuId);
+    menuRestore(openMenuId);
 
     setBadge(badge, true);
     shakeButton();
@@ -1264,7 +1264,7 @@ function panelClose(button, panel) {
 }
 
 function panelReset() {
-    closeMenus();
+    menuClose();
 
     searchClose(
         $('.notify-search'),
