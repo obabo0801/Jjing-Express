@@ -389,22 +389,28 @@ function searchToggle(
     input.focus();
 }
 
-function searchPop(button) {
-    if (!button) {
+function playClass(node, name) {
+    if (!node) {
         return;
     }
 
-    button.classList.remove('pop');
+    node.classList.remove(name);
 
     requestAnimationFrame(() => {
-        button.classList.add('pop');
+        node.classList.add(name);
     });
 
-    button.addEventListener('animationend', () => {
-        button.classList.remove('pop');
-    }, {
-        once: true
-    });
+    node.addEventListener(
+        'animationend',
+        () => {
+            node.classList.remove(name);
+        },
+        { once: true }
+    );
+}
+
+function searchPop(button) {
+    playClass(button, 'pop');
 }
 
 function searchClose(
@@ -683,15 +689,7 @@ function setBadge(badge, animate = false) {
         return;
     }
 
-    badge.classList.remove('pop');
-
-    requestAnimationFrame(() => {
-        badge.classList.add('pop');
-    });
-
-    badge.addEventListener('animationend', () => {
-        badge.classList.remove('pop');
-    }, { once: true });
+    playClass(badge, 'pop');
 }
 
 function setTabs(tabs) {
@@ -888,19 +886,7 @@ function mainOpen(event) {
 }
 
 function menuPop(button) {
-    button.classList.remove('pop');
-
-    requestAnimationFrame(() => {
-        button.classList.add('pop');
-    });
-
-    button.addEventListener(
-        'animationend',
-        () => {
-            button.classList.remove('pop');
-        },
-        { once: true }
-    );
+    playClass(button, 'pop');
 }
 
 function readOne(id) {
@@ -1111,19 +1097,7 @@ function shakeButton() {
         return;
     }
 
-    button.classList.remove('shake');
-
-    requestAnimationFrame(() => {
-        button.classList.add('shake');
-    });
-
-    button.addEventListener(
-        'animationend',
-        () => {
-            button.classList.remove('shake');
-        },
-        { once: true }
-    );
+    playClass(button, 'shake');
 }
 
 function canNotify() {
