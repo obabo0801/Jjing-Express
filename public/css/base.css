@@ -300,12 +300,22 @@ button {
         var(--text);
 }
 
-:where(
+:is(
     .theme-item.active,
+    .theme-item.active:hover,
+    .theme-item.active:focus-visible,
     .notify-tab.active,
+    .notify-tab.active:hover,
+    .notify-tab.active:focus-visible,
     .settings-tab.active,
+    .settings-tab.active:hover,
+    .settings-tab.active:focus-visible,
     .settings-size-menu
-    button.active
+    button.active,
+    .settings-size-menu
+    button.active:hover,
+    .settings-size-menu
+    button.active:focus-visible
 ) {
     background-color:
         var(--text);

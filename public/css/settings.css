@@ -181,7 +181,13 @@ button,
 .settings-tab {
     padding: 0 10px;
 
+    border: 0;
     border-radius: 12px;
+
+    background:
+        transparent;
+
+    cursor: pointer;
 }
 
 .settings-tab:active {
