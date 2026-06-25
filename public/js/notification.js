@@ -1,4 +1,9 @@
-import { $, on } from './dom.js';
+import {
+    $,
+    on,
+    isLastTab
+} from './dom.js';
+
 import {
     OPTION,
     DEFAULT_OPTION,
@@ -1350,30 +1355,7 @@ function closeEsc(event, button, panel) {
 }
 
 function closeTabEnd(event, button, panel) {
-    if (
-        event.key !== 'Tab'
-        || event.shiftKey
-        || !panel
-        || panel.hidden
-    ) {
-        return;
-    }
-
-    const focusList = [
-        ...panel.querySelectorAll(
-            'button, a, input'
-        )
-    ].filter(item => {
-        return !item.hidden
-            && !item.disabled
-            && item.offsetParent !== null;
-    });
-
-    const last = focusList[
-        focusList.length - 1
-    ];
-
-    if (document.activeElement !== last) {
+    if (!isLastTab(event, panel, 'button, a, input')) {
         return;
     }
 

@@ -1,4 +1,8 @@
-import { $, on } from './dom.js';
+import {
+    $,
+    on,
+    isLastTab
+} from './dom.js';
 
 const root = document.documentElement;
 const key = 'theme';
@@ -131,28 +135,7 @@ function closeBox(box, focus, done) {
 }
 
 function tabEnd(event, box, focus) {
-    if (
-        event.key !== 'Tab'
-        || event.shiftKey
-        || !box
-        || box.hidden
-    ) {
-        return;
-    }
-
-    const focusList = [
-        ...box.querySelectorAll('button')
-    ].filter(item => {
-        return !item.hidden
-            && !item.disabled
-            && item.offsetParent !== null;
-    });
-
-    const last = focusList[
-        focusList.length - 1
-    ];
-
-    if (document.activeElement !== last) {
+    if (!isLastTab(event, box, 'button')) {
         return;
     }
 
