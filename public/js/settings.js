@@ -137,13 +137,11 @@ async function change(type) {
 
     body.innerHTML = await loadPage(type);
 
-    if (type === 'general') {
-        bindBase();
-    }
+    const bindPage = type === 'general'
+        ? bindBase
+        : bindAlarm;
 
-    if (type === 'notification') {
-        bindAlarm();
-    }
+    bindPage();
 
     $$(
         '.settings-tab',
