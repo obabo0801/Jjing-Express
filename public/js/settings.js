@@ -53,7 +53,7 @@ async function open() {
         typeNow()
     );
 
-    $('.settings-box')?.focus();
+    $('.settings-box', layer)?.focus();
 }
 
 async function load() {
@@ -117,10 +117,12 @@ function bind() {
 
 async function change(type) {
     const body = $(
-        '[data-settings-content]'
+        '[data-settings-content]',
+        layer
     );
     const title = $(
-        '[data-settings-title]'
+        '[data-settings-title]',
+        layer
     );
 
     saveType(type);
@@ -173,7 +175,7 @@ function close() {
         return;
     }
 
-    const popup = $('.settings-box');
+    const popup = $('.settings-box', layer);
 
     layer.classList.remove('open');
     layer.classList.add('close');
@@ -258,13 +260,16 @@ function bindScale(
     type, key, value, apply
 ) {
     const drop = $(
-        `[data-${type}-scale-dropdown]`
+        `[data-${type}-scale-dropdown]`,
+        layer
     );
     const btn = $(
-        `[data-${type}-scale-trigger]`
+        `[data-${type}-scale-trigger]`,
+        layer
     );
     const text = $(
-        `[data-${type}-scale-text]`
+        `[data-${type}-scale-text]`,
+        layer
     );
     const list = $$(
         `[data-${type}-scale]`,
@@ -352,7 +357,8 @@ function setFont(value) {
 
 function bindReset() {
     const btn = $(
-        '[data-settings-reset]'
+        '[data-settings-reset]',
+        layer
     );
 
     on(btn, 'click', resetBase);
