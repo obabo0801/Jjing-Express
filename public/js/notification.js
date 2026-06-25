@@ -105,7 +105,7 @@ export function initNotification() {
     startTest();
 
     on(btn, 'click', () => {
-        togglePanel(btn, panel);
+        panelToggle(btn, panel);
 
         requestAnimationFrame(() => {
             update();
@@ -121,7 +121,7 @@ export function initNotification() {
     });
 
     on(close, 'click', () => {
-        closePanel(btn, panel);
+        panelClose(btn, panel);
     });
 
     tabs.forEach(tab => {
@@ -185,16 +185,16 @@ export function initNotification() {
     });
 
     on(document, 'click', event => {
-        closeOut(event, btn, panel);
+        outClose(event, btn, panel);
         closeMenus(event);
     });
 
     on(document, 'keydown', event => {
-        closeEsc(event, btn, panel);
+        escClose(event, btn, panel);
     });
 
     on(panel, 'keydown', event => {
-        closeTabEnd(event, btn, panel);
+        tabClose(event, btn, panel);
     });
 
     on(window, 'resize', () => {
@@ -234,7 +234,7 @@ function render() {
     const view = getView();
 
     if (!view.length) {
-        list.append(emptyEl());
+        list.append(makeEmpty());
     } else {
         let lastDate = '';
 
@@ -242,11 +242,11 @@ function render() {
             const date = dateKey(item.time);
 
             if (date !== lastDate) {
-                list.append(dateEl(item.time));
+                list.append(makeDate(item.time));
                 lastDate = date;
             }
 
-            list.append(itemEl(item));
+            list.append(makeItem(item));
         });
     }
 
@@ -405,7 +405,7 @@ function searchEsc(
     );
 }
 
-function itemEl(item) {
+function makeItem(item) {
     const wrap = document.createElement('div');
 
     wrap.className = [
@@ -420,7 +420,7 @@ function itemEl(item) {
     const dot = document.createElement('span');
     dot.className = 'notify-dot';
 
-    const profile = imageEl(
+    const profile = makeImage(
         'notify-profile',
         item.profile,
         item.profileHref,
@@ -467,7 +467,7 @@ function itemEl(item) {
     read.type = 'button';
     read.dataset.id = String(item.id);
     read.append(
-        iconEl('read'),
+        makeIcon('read'),
         '읽음'
     );
 
@@ -476,7 +476,7 @@ function itemEl(item) {
     remove.type = 'button';
     remove.dataset.id = String(item.id);
     remove.append(
-        iconEl('delete'),
+        makeIcon('delete'),
         '삭제'
     );
 
@@ -487,7 +487,7 @@ function itemEl(item) {
     main.append(dot, profile, content);
 
     if (item.thumbnail) {
-        main.append(imageEl(
+        main.append(makeImage(
             'notify-thumbnail',
             item.thumbnail
         ));
@@ -498,7 +498,7 @@ function itemEl(item) {
     return wrap;
 }
 
-function iconEl(name) {
+function makeIcon(name) {
     const icon = document.createElement('span');
 
     icon.className = `icon icon-${name} notify-more-icon`;
@@ -506,7 +506,7 @@ function iconEl(name) {
     return icon;
 }
 
-function imageEl(className, src, href = '', id = '') {
+function makeImage(className, src, href = '', id = '') {
     const isLink = Boolean(href);
 
     const wrap = isLink
@@ -533,7 +533,7 @@ function imageEl(className, src, href = '', id = '') {
     return wrap;
 }
 
-function emptyEl() {
+function makeEmpty() {
     const empty = document.createElement('p');
     empty.className = 'notify-empty';
     empty.textContent = '새로운 알림이 없습니다.';
@@ -541,7 +541,7 @@ function emptyEl() {
     return empty;
 }
 
-function dateEl(time) {
+function makeDate(time) {
     const date = document.createElement('div');
     date.className = 'notify-date';
     date.textContent = dateText(time);
@@ -1223,21 +1223,21 @@ function startTest() {
     }, 3000);
 }
 
-function togglePanel(button, panel) {
+function panelToggle(button, panel) {
     if (!button || !panel) {
         return;
     }
 
     if (panel.hidden) {
-        openPanel(panel);
+        panelOpen(panel);
 
         return;
     }
 
-    closePanel(button, panel);
+    panelClose(button, panel);
 }
 
-function openPanel(panel) {
+function panelOpen(panel) {
     panel.hidden = false;
 
     document.body.classList.add(
@@ -1247,7 +1247,7 @@ function openPanel(panel) {
     updateTimes();
 }
 
-function closePanel(button, panel) {
+function panelClose(button, panel) {
     if (!button || !panel
         || panel.hidden) {
         return;
@@ -1259,11 +1259,11 @@ function closePanel(button, panel) {
         'notify-open'
     );
 
-    resetPanel();
+    panelReset();
     button.focus();
 }
 
-function resetPanel() {
+function panelReset() {
     closeMenus();
 
     searchClose(
@@ -1272,7 +1272,7 @@ function resetPanel() {
     );
 }
 
-function closeOut(event, button, panel) {
+function outClose(event, button, panel) {
     if (!button || !panel || panel.hidden) {
         return;
     }
@@ -1281,25 +1281,25 @@ function closeOut(event, button, panel) {
         return;
     }
 
-    closePanel(button, panel);
+    panelClose(button, panel);
 }
 
-function closeEsc(event, button, panel) {
+function escClose(event, button, panel) {
     if (!esc(event)) {
         return;
     }
 
-    closePanel(button, panel);
+    panelClose(button, panel);
 }
 
-function closeTabEnd(event, button, panel) {
+function tabClose(event, button, panel) {
     if (!lastTab(event, panel, 'button, a, input')) {
         return;
     }
 
     event.preventDefault();
 
-    closePanel(button, panel);
+    panelClose(button, panel);
 }
 
 function loadItems() {
