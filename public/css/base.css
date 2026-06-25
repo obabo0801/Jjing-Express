@@ -157,8 +157,28 @@ button {
 )::-webkit-scrollbar {
     width:
         calc(10px / var(
-            --screen-scale)
-        );
+            --screen-scale
+        ));
+}
+
+:where(
+    .theme-box,
+    .notify-list,
+    .settings-side,
+    .settings-body
+)::-webkit-scrollbar-button:single-button {
+    display: block;
+
+    width:
+        calc(
+            10px / var(
+            --screen-scale
+        ));
+    height:
+        calc(
+            14px / var(
+            --screen-scale
+        ));
 }
 
 :where(
@@ -177,7 +197,10 @@ button {
     .settings-side,
     .settings-body
 )::-webkit-scrollbar-thumb {
-    min-height: 56px;
+    min-height: calc(
+        56px / var(
+        --screen-scale
+    ));
 
     border-radius: 999px;
     background-color:
