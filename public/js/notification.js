@@ -566,6 +566,30 @@ function makeImage(className, src, href = '', id = '') {
     return wrap;
 }
 
+function safeHref(href) {
+    if (!href) {
+        return '#';
+    }
+
+    try {
+        const url = new URL(
+            href,
+            location.origin
+        );
+
+        if (
+            url.protocol !== 'http:'
+            && url.protocol !== 'https:'
+        ) {
+            return '#';
+        }
+
+        return url.href;
+    } catch {
+        return '#';
+    }
+}
+
 function makeEmpty() {
     const empty = document.createElement('p');
     empty.className = 'notify-empty';
@@ -814,30 +838,6 @@ function menuClose(event) {
                 'up'
             );
         });
-}
-
-function safeHref(href) {
-    if (!href) {
-        return '#';
-    }
-
-    try {
-        const url = new URL(
-            href,
-            location.origin
-        );
-
-        if (
-            url.protocol !== 'http:'
-            && url.protocol !== 'https:'
-        ) {
-            return '#';
-        }
-
-        return url.href;
-    } catch {
-        return '#';
-    }
 }
 
 function setFilter(tab) {
