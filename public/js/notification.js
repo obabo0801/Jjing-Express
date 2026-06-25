@@ -25,10 +25,11 @@ let items = loadItems();
 
 let tab = 'all';
 let word = '';
-let limit = STEP;
 let loading = false;
 let stamp = 0;
 let opens = new Set();
+let sizes = new Map();
+let active = '';
 let id = maxId();
 let ui = {
     list: null,
@@ -157,7 +158,7 @@ export function initNotify() {
         }
 
         word = next;
-        limit = STEP;
+        resetDates();
 
         list.scrollTop = 0;
 
@@ -271,20 +272,17 @@ function render() {
     list.replaceChildren();
 
     const all = viewItems();
-    const view = opens.size
-        ? all.slice(0, limit)
-        : all;
     const counts = dateCounts(all);
 
     if (!all.length) {
         list.append(makeEmpty());
     } else {
         appendView(
-            list, view, 0, counts
+            list, all, counts
         );
     }
 
-    view.forEach(item => {
+    all.forEach(item => {
         item.isNew = false;
     });
 
@@ -298,33 +296,40 @@ function render() {
 }
 
 function appendView(
-    list, view, from = 0, counts = null
+    list, view, counts = null
 ) {
-    let lastDate = '';
+    let last = '';
+    const seen = new Map();
 
-    if (from > 0 && view[from - 1]) {
-        lastDate = dateKey(
-            view[from - 1].time
-        );
-    }
-
-    view.slice(from).forEach(item => {
+    view.forEach(item => {
         const key = dateKey(item.time);
         const open = opens.has(key);
 
-        if (key !== lastDate) {
+        if (key !== last) {
             list.append(makeDate(
                 item.time,
                 counts?.get(key) || 0,
                 !open
             ));
 
-            lastDate = key;
+            last = key;
         }
 
         if (!open) {
             return;
         }
+
+        const count = seen.get(key) || 0;
+        const size = sizes.get(key) || STEP;
+
+        if (count >= size) {
+            return;
+        }
+
+        seen.set(
+            key,
+            count + 1
+        );
 
         list.append(makeItem(item));
     });
@@ -383,20 +388,19 @@ function moreItems(
         return;
     }
 
-    const all = viewItems();
-
-    if (
-        auto
-        && all.some(item => !opens.has(
-            dateKey(item.time)
-        ))
-    ) {
+    if (!active || !opens.has(active)) {
         return;
     }
 
-    const total = all.length;
+    if (auto) {
+        return;
+    }
 
-    if (limit >= total) {
+    const all = viewItems();
+    const total = dateCounts(all).get(active) || 0;
+    const size = sizes.get(active) || STEP;
+
+    if (size >= total) {
         return;
     }
 
@@ -412,45 +416,27 @@ function moreItems(
 
     loading = true;
 
-    const mark = stamp;
-    const from = limit;
     const next = Math.min(
-        limit + STEP,
+        size + STEP,
         total
     );
 
-    const loads = makeLoads(next - from);
+    const loads = makeLoads(
+        next - size
+    );
 
     list.append(...loads);
 
     requestAnimationFrame(() => {
-        if (mark !== stamp) {
-            loading = false;
-            return;
-        }
-
-        const all = viewItems();
-        const view = all.slice(0, next);
-        const counts = dateCounts(all);
+        sizes.set(active, next);
 
         loads.forEach(item => {
             item.remove();
         });
 
-        appendView(
-            list, view, from, counts
-        );
-
-        view.slice(from).forEach(item => {
-            item.isNew = false;
-        });
-
-        limit = next;
         loading = false;
 
-        requestAnimationFrame(() => {
-            moreItems(list);
-        });
+        render();
     });
 }
 
@@ -580,7 +566,7 @@ function searchClose(
     }
 
     word = '';
-    limit = STEP;
+    resetDates();
 
     input.value = '';
     search.hidden = true;
@@ -929,31 +915,20 @@ function dateToggle(event) {
 
     if (opens.has(key)) {
         opens.delete(key);
+        sizes.delete(key);
+
+        if (active === key) {
+            active = '';
+        }
     } else {
         opens.add(key);
-        openDate(key);
+        sizes.set(key, STEP);
+        active = key;
     }
 
     render();
 
     return true;
-}
-
-function openDate(key) {
-    const all = viewItems();
-
-    const start = all.findIndex(item => (
-        dateKey(item.time) === key
-    ));
-
-    if (start < 0) {
-        return;
-    }
-
-    limit = Math.max(
-        limit,
-        start + STEP
-    );
 }
 
 function menuToggle(event) {
@@ -1084,6 +1059,12 @@ function menuClose(event) {
         .forEach(menuOff);
 }
 
+function resetDates() {
+    opens.clear();
+    sizes.clear();
+    active = '';
+}
+
 function setFilter(button) {
     const next = button
         .dataset.filter || 'all';
@@ -1093,7 +1074,7 @@ function setFilter(button) {
     }
 
     tab = next;
-    limit = STEP;
+    resetDates();
 
     ui.list.scrollTop = 0;
 
@@ -1327,13 +1308,6 @@ function addItem(data) {
         id: ++id,
         unread: true
     }, true));
-
-    if (hold) {
-        limit = Math.min(
-            limit + 1,
-            items.length
-        );
-    }
 
     saveItems();
 
