@@ -409,13 +409,40 @@ button {
 }
 
 .settings-size-menu
+button {
+    height: 30px;
+    padding: 0 8px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background:
+        transparent;
+    color: var(--text);
+
+    cursor: pointer;
+    text-align: left;
+
+    transition:
+        background-color
+            var(--motion),
+        color
+            var(--motion);
+}
+
+.settings-size-menu
 button:hover,
 .settings-size-menu
-button:focus-visible,
+button:focus-visible {
+    background-color:
+        var(--hover);
+}
+
 .settings-size-menu
 button.active {
     background-color:
-        var(--hover);
+        var(--text);
+    color: var(--bg);
 }
 
 .settings-reset-button {
