@@ -38,8 +38,8 @@
         const svg = await response.text();
 
         favicons = {
-            light: createUrl(svg, '#c98e5f'),
-            dark: createUrl(svg, '#ffffff')
+            light: iconUrl(svg, '#c98e5f'),
+            dark: iconUrl(svg, '#ffffff')
         };
 
         window.setFaviconTheme(
@@ -55,7 +55,7 @@
             : 'dark';
     }
 
-    function createUrl(svg, color) {
+    function iconUrl(svg, color) {
         const favicon = svg.replace(
             '</svg>',
             `
