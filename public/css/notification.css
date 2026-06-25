@@ -940,14 +940,15 @@ button:hover {
     }
 
     .notify-actions {
-        width: 100%;
-        margin-left: 0;
+        width: auto;
+        margin-left: auto;
 
         display: flex;
-        flex: 0 1 auto;
-        flex-wrap: wrap;
+        flex:
+            0 0 auto;
+        flex-wrap: nowrap;
         justify-content:
-            flex-start;
+            flex-end;
     }
 
     .notify-head::after {
