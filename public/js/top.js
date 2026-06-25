@@ -4,8 +4,8 @@ export function initTop() {
     const top = $('.top');
 
     on(top, 'click', pop);
-    on(top, 'contextmenu', noMenu);
-    on(top, 'dragstart', noDrag);
+    on(top, 'contextmenu', menuStop);
+    on(top, 'dragstart', dragStop);
 }
 
 function pop(event) {
@@ -38,24 +38,24 @@ function pop(event) {
     );
 }
 
-function noMenu(event) {
-    const image = event.target.closest(
+function menuStop(event) {
+    const target = event.target.closest(
         'img, .logo-icon, .tool'
     );
 
-    if (!image) {
+    if (!target) {
         return;
     }
 
     event.preventDefault();
 }
 
-function noDrag(event) {
-    const image = event.target.closest(
+function dragStop(event) {
+    const target = event.target.closest(
         'img, .logo'
     );
 
-    if (!image) {
+    if (!target) {
         return;
     }
 
