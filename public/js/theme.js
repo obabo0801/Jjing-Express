@@ -1,7 +1,8 @@
 import {
     $,
     on,
-    lastTab
+    lastTab,
+    esc
 } from './dom.js';
 
 const root = document.documentElement;
@@ -55,9 +56,11 @@ export function initTheme() {
     });
 
     document.addEventListener('keydown', event => {
-        if (event.key === 'Escape') {
-            closeBox(box, button);
+        if (!esc(event)) {
+            return;
         }
+
+        closeBox(box, button);
     });
 
     on(box, 'keydown', event => {

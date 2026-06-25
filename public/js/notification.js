@@ -1,7 +1,8 @@
 import {
     $,
     on,
-    lastTab
+    lastTab,
+    esc
 } from './dom.js';
 
 import {
@@ -1347,7 +1348,7 @@ function closeOut(event, button, panel) {
 }
 
 function closeEsc(event, button, panel) {
-    if (event.key !== 'Escape') {
+    if (!esc(event)) {
         return;
     }
 
