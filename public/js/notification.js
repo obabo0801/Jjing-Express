@@ -895,6 +895,16 @@ function sync() {
     render();
 }
 
+function removeIds(ids) {
+    const set = new Set(ids);
+
+    items = items.filter(
+        item => !set.has(item.id)
+    );
+
+    sync();
+}
+
 function readOne(id) {
     const notification = items.find(
         item => item.id === id
@@ -960,11 +970,7 @@ function removeOne(event) {
     );
 
     if (!item) {
-        items = items.filter(
-            item => item.id !== id
-        );
-
-        sync();
+        removeIds([id]);
 
         return true;
     }
@@ -979,11 +985,7 @@ function removeOne(event) {
     clearNode(item);
 
     setTimeout(() => {
-        items = items.filter(
-            item => item.id !== id
-        );
-
-        sync();
+        removeIds([id]);
     }, CLEAR);
 
     return true;
@@ -1029,11 +1031,7 @@ function clearAll() {
     });
 
     setTimeout(() => {
-        items = items.filter(
-            item => !ids.includes(item.id)
-        );
-
-        sync();
+        removeIds(ids);
     }, CLEAR);
 }
 
