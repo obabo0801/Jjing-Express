@@ -7,21 +7,21 @@ import * as log from '#utils/log';
 const app = express();
 
 const PORT = 3001;
-const PUBLIC_PATH = file.get('public');
+const PUB = file.get('public');
 const CHECK = process.env.CHECK === '1';
 
-const BLOCK_HTML = [
+const BLOCK = [
     '/check.html',
     '/404.html'
 ];
 
-const ASSET_DIRS = [
+const DIRS = [
     '/css/',
     '/js/',
     '/assets/'
 ];
 
-const ASSET_FILES = [
+const FILES = [
     '/favicon.svg',
     '/check.svg'
 ];
@@ -31,7 +31,7 @@ app.use((req, res, next) => {
         return next();
     }
 
-    if (isAsset(req.path)) {
+    if (asset(req.path)) {
         return next();
     }
 
@@ -46,9 +46,9 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
     if (
-        !isDirectHtml(req)
-        && !isDirectCss(req)
-        && !isDirectJs(req)
+        !html(req)
+        && !css(req)
+        && !js(req)
     ) {
         return next();
     }
@@ -58,7 +58,7 @@ app.use((req, res, next) => {
     );
 });
 
-app.use(express.static(PUBLIC_PATH));
+app.use(express.static(PUB));
 
 app.use((req, res) => {
     return res.status(404).sendFile(
@@ -70,26 +70,27 @@ app.listen(PORT, () => {
     log.info(`http://localhost:${PORT}/`);
 });
 
-function hasReferer(req) {
+function ref(req) {
     return Boolean(
         req.get('referer')
     );
 }
 
-function isAsset(path) {
+function asset(path) {
     return (
-        ASSET_DIRS.some(
+        DIRS.some(
             dir => path.startsWith(dir)
-        ) || ASSET_FILES.includes(path)
+        ) || FILES.includes(path)
     );
 }
 
-function isDirectHtml(req) {
-    return BLOCK_HTML
-        .includes(req.path);
+function html(req) {
+    return BLOCK.includes(
+        req.path
+    );
 }
 
-function isDirectJs(req) {
+function js(req) {
     const dest = req.get(
         'sec-fetch-dest'
     );
@@ -99,11 +100,11 @@ function isDirectJs(req) {
             '/js/'
         )
         && dest !== 'script'
-        && !hasReferer(req)
+        && !ref(req)
     );
 }
 
-function isDirectCss(req) {
+function css(req) {
     const dest = req.get(
         'sec-fetch-dest'
     );
@@ -113,6 +114,6 @@ function isDirectCss(req) {
             '/css/'
         )
         && dest !== 'style'
-        && !hasReferer(req)
+        && !ref(req)
     );
 }
