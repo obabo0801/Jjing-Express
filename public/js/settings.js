@@ -80,8 +80,9 @@ function bind() {
         close();
     });
 
-    layer.querySelectorAll(
-        '[data-settings-close]'
+    $$(
+        '[data-settings-close]',
+        layer
     ).forEach(btn => {
         on(btn, 'click', close);
     });
@@ -90,16 +91,18 @@ function bind() {
         dropClose(event);
     });
 
-    const back = layer.querySelector(
-        '[data-settings-mobile-back]'
+    const back = $(
+        '[data-settings-mobile-back]',
+        layer
     );
 
     on(back, 'click', () => {
         layer.classList.remove('page');
     });
 
-    layer.querySelectorAll(
-        '[data-settings-type]'
+    $$(
+        '[data-settings-type]',
+        layer
     ).forEach(tab => {
         on(tab, 'click', () => {
 
@@ -140,8 +143,9 @@ async function change(type) {
         bindAlarm();
     }
 
-    layer.querySelectorAll(
-        '.settings-tab'
+    $$(
+        '.settings-tab',
+        layer
     ).forEach(tab => {
         tab.classList.toggle(
             'active',
@@ -262,8 +266,9 @@ function bindScale(
     const text = $(
         `[data-${type}-scale-text]`
     );
-    const list = layer.querySelectorAll(
-        `[data-${type}-scale]`
+    const list = $$(
+        `[data-${type}-scale]`,
+        layer
     );
 
     if (!drop || !btn || !text) {
@@ -452,14 +457,16 @@ function dropClose(event) {
         return;
     }
 
-    layer.querySelectorAll(
-        '.settings-size-dropdown.open'
+    $$(
+        '.settings-size-dropdown.open',
+        layer
     ).forEach(dropdown => {
         dropdown.classList.remove('open');
     });
 
-    layer.querySelectorAll(
-        '.settings-body'
+    $$(
+        '.settings-body',
+        layer
     ).forEach(body => {
         body.style.removeProperty(
             '--settings-drop-space'
@@ -469,27 +476,13 @@ function dropClose(event) {
 
 function dropTabClose(event, drop) {
     if (
-        event.key !== 'Tab'
-        || event.shiftKey
-        || !drop.classList.contains('open')
-    ) {
-        return;
-    }
-
-    const buttons = [
-        ...drop.querySelectorAll(
+        !drop?.classList.contains('open')
+        || !lastTab(
+            event,
+            drop,
             '.settings-size-menu button'
         )
-    ].filter(button => {
-        return !button.disabled
-            && button.offsetParent !== null;
-    });
-
-    const last = buttons[
-        buttons.length - 1
-    ];
-
-    if (document.activeElement !== last) {
+    ) {
         return;
     }
 
@@ -513,8 +506,9 @@ function resetBase() {
         DEFAULT_OPTION.fontScale
     );
 
-    layer.querySelectorAll(
-        '.settings-size-dropdown'
+    $$(
+        '.settings-size-dropdown',
+        layer
     ).forEach(dropdown => {
         dropdown.classList.remove('open');
     });
@@ -525,12 +519,14 @@ function setScale(type, value) {
         return;
     }
 
-    const text = layer.querySelector(
-        `[data-${type}-scale-text]`
+    const text = $(
+        `[data-${type}-scale-text]`,
+        layer
     );
 
-    const buttons = layer.querySelectorAll(
-        `[data-${type}-scale]`
+    const buttons = $$(
+        `[data-${type}-scale]`,
+        layer
     );
 
     if (text) {
@@ -560,8 +556,9 @@ function bindAlarm() {
 }
 
 function bindToggle(type, key, value) {
-    const btn = layer.querySelector(
-        `[data-notify-toggle="${type}"]`
+    const btn = $(
+        `[data-notify-toggle="${type}"]`,
+        layer
     );
 
     if (!btn) {
