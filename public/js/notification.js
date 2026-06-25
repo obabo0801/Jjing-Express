@@ -16,6 +16,7 @@ const MIN = 60 * SEC;
 const HOUR = 60 * MIN;
 const DAY = 24 * HOUR;
 const GRACE = 3000;
+const GAP = 14;
 
 let items = loadItems();
 
@@ -743,9 +744,8 @@ function menuToggle(event) {
 
     const menuRect = menu.getBoundingClientRect();
     const panelRect = panel.getBoundingClientRect();
-    const gap = 14;
 
-    if (menuRect.bottom + gap > panelRect.bottom) {
+    if (menuRect.bottom + GAP > panelRect.bottom) {
         more.classList.add('up');
     }
 
@@ -794,13 +794,12 @@ function menuRestore(id) {
     }
 
     requestAnimationFrame(() => {
-        const gap = 14;
         const menuRect = menu.getBoundingClientRect();
         const listRect = list.getBoundingClientRect();
 
         more.classList.remove('up');
 
-        if (menuRect.bottom + gap > listRect.bottom) {
+        if (menuRect.bottom + GAP > listRect.bottom) {
             more.classList.add('up');
         }
     });
