@@ -1303,11 +1303,22 @@ function addItem(data) {
     const top = list.scrollTop;
     const height = list.scrollHeight;
 
-    items.unshift(toItem({
+    const item = toItem({
         ...data,
         id: ++id,
         unread: true
-    }, true));
+    }, true);
+
+    items.unshift(item);
+
+    const key = dateKey(item.time);
+
+    if (hold && opens.has(key)) {
+        sizes.set(
+            key,
+            (sizes.get(key) || STEP) + 1
+        );
+    }
 
     saveItems();
 
