@@ -24,7 +24,7 @@ let keyword = '';
 
 let lastId = maxId();
 
-let viewBox = {
+let ui = {
     list: null,
     badge: null,
     tabs: null
@@ -89,7 +89,7 @@ export function initNotify() {
         );
     };
 
-    viewBox = {
+    ui = {
         list,
         badge,
         tabs
@@ -204,7 +204,7 @@ export function initNotify() {
 }
 
 export function pushNotify(data) {
-    if (!viewBox.list) {
+    if (!ui.list) {
         return;
     }
 
@@ -233,7 +233,7 @@ function render() {
         list,
         badge,
         tabs
-    } = viewBox;
+    } = ui;
 
     if (!list) {
         return;
@@ -753,7 +753,7 @@ function menuToggle(event) {
 }
 
 function menuId() {
-    const list = viewBox.list;
+    const list = ui.list;
 
     if (!list) {
         return '';
@@ -769,7 +769,7 @@ function menuId() {
 }
 
 function menuRestore(id) {
-    const list = viewBox.list;
+    const list = ui.list;
 
     if (!id || !list) {
         return;
@@ -1007,7 +1007,7 @@ function removeOne(event) {
 }
 
 function clearAll() {
-    const list = viewBox.list;
+    const list = ui.list;
 
     if (!list) {
         return;
@@ -1060,7 +1060,7 @@ function addItem(data) {
     const {
         list,
         badge
-    } = viewBox;
+    } = ui;
 
     if (!list || !canNotify()) {
         return;
