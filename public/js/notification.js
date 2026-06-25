@@ -321,7 +321,15 @@ function viewItems() {
 }
 
 function moreItems(list) {
-    if (!list) {
+    const panel = list?.closest(
+        '.notify-box'
+    );
+
+    if (!list || panel?.hidden) {
+        return;
+    }
+
+    if (list.clientHeight <= 0) {
         return;
     }
 
@@ -1284,6 +1292,10 @@ function panelOpen(panel) {
     );
 
     updateTimes();
+
+    requestAnimationFrame(() => {
+        moreItems(ui.list);
+    });
 }
 
 function panelClose(
@@ -1311,12 +1323,16 @@ function panelClose(
 }
 
 function panelReset() {
+    const search = $('.notify-search');
+    const input = $('.notify-search-input');
+
     menuClose();
 
-    searchClose(
-        $('.notify-search'),
-        $('.notify-search-input')
-    );
+    if (search?.hidden && !word) {
+        return;
+    }
+
+    searchClose(search, input);
 }
 
 function outClose(
