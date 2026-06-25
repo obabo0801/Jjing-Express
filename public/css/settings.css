@@ -252,10 +252,19 @@ button {
 .settings-body {
     flex: 1;
     min-height: 0;
-    padding: 16px;
+    padding:
+        16px
+        16px
+        40px;
+
+    padding-bottom:
+        40px;
 
     overflow-y:
         auto;
+
+    scroll-padding-bottom:
+        40px;
 }
 
 .settings-section {
@@ -494,10 +503,6 @@ button.active {
     animation:
         settings-popup-out
         0.16s ease forwards;
-}
-
-.settings-content {
-    padding-bottom: 40px;
 }
 
 @keyframes settings-backdrop-in {
