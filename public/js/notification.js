@@ -132,6 +132,16 @@ export function initNotification() {
         '.notify-tab'
     ));
 
+    const head = $(
+        '.notify-head'
+    );
+    const title = $(
+        '.notify-head-title'
+    );
+    const actions = $(
+        '.notify-actions'
+    );
+
     viewBox = {
         list,
         badge,
@@ -142,8 +152,22 @@ export function initNotification() {
     startClock();
     startTest();
 
+    function checkHead() {
+        if (!head || !title || !actions) {
+            return;
+        }
+
+        const wrap = actions.offsetTop > title.offsetTop;
+
+        head.classList.toggle('wrap', wrap);
+    }
+
     on(btn, 'click', () => {
         togglePanel(btn, panel);
+
+        requestAnimationFrame(() => {
+            checkHead();
+        });
     });
 
     on(clear, 'click', () => {
@@ -230,6 +254,16 @@ export function initNotification() {
     on(panel, 'keydown', event => {
         closeTabEnd(event, btn, panel);
     });
+
+    on(window, 'resize', () => {
+        checkHead();
+    });
+
+    if (head) {
+        new ResizeObserver(() => {
+            checkHead();
+        }).observe(head);
+    }
 }
 
 export function pushNotification(data) {

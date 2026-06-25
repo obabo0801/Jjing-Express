@@ -951,6 +951,15 @@ button:hover {
             flex-end;
     }
 
+    .notify-head.wrap
+    .notify-actions {
+        width: 100%;
+        margin-left: 0;
+
+        justify-content:
+            flex-start;
+    }
+
     .notify-head::after {
         content: "";
 
