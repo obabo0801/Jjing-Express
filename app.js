@@ -70,6 +70,12 @@ app.listen(PORT, () => {
     log.info(`http://localhost:${PORT}/`);
 });
 
+function hasReferer(req) {
+    return Boolean(
+        req.get('referer')
+    );
+}
+
 function isAsset(path) {
     return (
         ASSET_DIRS.some(
@@ -84,23 +90,29 @@ function isDirectHtml(req) {
 }
 
 function isDirectJs(req) {
+    const dest = req.get(
+        'sec-fetch-dest'
+    );
+
     return (
         req.path.startsWith(
             '/js/'
         )
-        && req.get(
-            'sec-fetch-dest'
-        ) !== 'script'
+        && dest !== 'script'
+        && !hasReferer(req)
     );
 }
 
 function isDirectCss(req) {
+    const dest = req.get(
+        'sec-fetch-dest'
+    );
+
     return (
         req.path.startsWith(
             '/css/'
         )
-        && req.get(
-            'sec-fetch-dest'
-        ) !== 'style'
+        && dest !== 'style'
+        && !hasReferer(req)
     );
 }
