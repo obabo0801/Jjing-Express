@@ -18,11 +18,14 @@ const DAY = 24 * HOUR;
 const GRACE = 3000;
 const GAP = 14;
 const CLEAR = 520;
+const STEP = 30;
+const EDGE = 120;
 
 let items = loadItems();
 
 let tab = 'all';
 let word = '';
+let limit = STEP;
 
 let id = maxId();
 
@@ -153,6 +156,9 @@ export function initNotify() {
         }
 
         word = next;
+        limit = STEP;
+
+        list.scrollTop = 0;
 
         render();
     });
@@ -185,6 +191,10 @@ export function initNotify() {
         }
 
         readLink(event);
+    });
+
+    on(list, 'scroll', () => {
+        moreItems(list);
     });
 
     on(document, 'click', event => {
@@ -254,9 +264,10 @@ function render() {
 
     list.replaceChildren();
 
-    const view = viewItems();
+    const all = viewItems();
+    const view = all.slice(0, limit);
 
-    if (!view.length) {
+    if (!all.length) {
         list.append(makeEmpty());
     } else {
         let lastDate = '';
@@ -275,6 +286,10 @@ function render() {
 
     view.forEach(item => {
         item.isNew = false;
+    });
+
+    requestAnimationFrame(() => {
+        moreItems(list);
     });
 
     setBadge(badge);
@@ -303,6 +318,32 @@ function viewItems() {
     return [...list].sort(
         (a, b) => b.time - a.time
     );
+}
+
+function moreItems(list) {
+    if (!list) {
+        return;
+    }
+
+    const total = viewItems().length;
+
+    if (limit >= total) {
+        return;
+    }
+
+    const nearBottom = (
+        list.scrollTop
+        + list.clientHeight
+        >= list.scrollHeight - EDGE
+    );
+
+    if (!nearBottom) {
+        return;
+    }
+
+    limit += STEP;
+
+    render();
 }
 
 function focusNow() {
@@ -424,24 +465,25 @@ function searchPop(button) {
 }
 
 function searchClose(
-    search,
-    input
+    search, input
 ) {
     if (!search || !input) {
         return;
     }
 
     word = '';
+    limit = STEP;
+
     input.value = '';
     search.hidden = true;
+
+    ui.list.scrollTop = 0;
 
     render();
 }
 
 function searchEsc(
-    event,
-    search,
-    input
+    event, search, input
 ) {
     if (!esc(event)) {
         return;
@@ -685,7 +727,9 @@ function timeText(time) {
     return `${Math.floor(diff / DAY)}일 전`;
 }
 
-function setBadge(badge, animate = false) {
+function setBadge(
+    badge, animate = false
+) {
     if (!badge) {
         return;
     }
@@ -849,13 +893,17 @@ function menuClose(event) {
 }
 
 function setFilter(button) {
-    const next = button.dataset.filter || 'all';
+    const next = button
+        .dataset.filter || 'all';
 
     if (next === tab) {
         return;
     }
 
     tab = next;
+    limit = STEP;
+
+    ui.list.scrollTop = 0;
 
     render();
 }
@@ -956,7 +1004,9 @@ function readAll() {
     sync();
 }
 
-function clearNode(item, index = 0) {
+function clearNode(
+    item, index = 0
+) {
     const side = index % 2 === 0
         ? -1
         : 1;
@@ -1210,7 +1260,9 @@ function startTest() {
     }, 3000);
 }
 
-function panelToggle(button, panel) {
+function panelToggle(
+    button, panel
+) {
     if (!button || !panel) {
         return;
     }
@@ -1234,7 +1286,9 @@ function panelOpen(panel) {
     updateTimes();
 }
 
-function panelClose(button, panel) {
+function panelClose(
+    button, panel
+) {
     if (!button || !panel
         || panel.hidden) {
         return;
@@ -1265,7 +1319,9 @@ function panelReset() {
     );
 }
 
-function outClose(event, button, panel) {
+function outClose(
+    event, button, panel
+) {
     if (!button || !panel || panel.hidden) {
         return;
     }
@@ -1277,7 +1333,9 @@ function outClose(event, button, panel) {
     panelClose(button, panel);
 }
 
-function escClose(event, button, panel) {
+function escClose(
+    event, button, panel
+) {
     if (!esc(event)) {
         return;
     }
@@ -1285,7 +1343,9 @@ function escClose(event, button, panel) {
     panelClose(button, panel);
 }
 
-function tabClose(event, button, panel) {
+function tabClose(
+    event, button, panel
+) {
     if (!lastTab(event, panel, 'button, a, input')) {
         return;
     }
@@ -1323,7 +1383,9 @@ function saveItems() {
     );
 }
 
-function toItem(data = {}, isNew = false) {
+function toItem(
+    data = {}, isNew = false
+) {
     return {
         id: Number(data.id) || 0,
         title: String(data.title || '알림'),
