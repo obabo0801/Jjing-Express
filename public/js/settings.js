@@ -390,70 +390,72 @@ function dropToggle(dropdown) {
 }
 
 function dropMove(dropdown) {
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            const body = dropdown.closest(
-                '.settings-body'
-            );
+    afterFrame(() => {
+        const body = dropdown.closest(
+            '.settings-body'
+        );
 
-            const parent = dropdown.closest(
-                '.settings-item'
-            );
+        const parent = dropdown.closest(
+            '.settings-item'
+        );
 
-            const menu = dropdown.querySelector(
-                '.settings-size-menu'
-            );
+        const menu = dropdown.querySelector(
+            '.settings-size-menu'
+        );
 
-            if (!body || !parent || !menu) {
-                return;
-            }
+        if (!body || !parent || !menu) {
+            return;
+        }
 
-            const gap = 32;
+        const gap = 32;
 
-            body.style.setProperty(
-                '--settings-drop-space',
-                `${menu.offsetHeight + gap}px`
-            );
+        body.style.setProperty(
+            '--settings-drop-space',
+            `${menu.offsetHeight + gap}px`
+        );
 
-            const bodyRect = body.getBoundingClientRect();
-            const parentRect = parent.getBoundingClientRect();
-            const menuRect = menu.getBoundingClientRect();
+        const bodyRect = body.getBoundingClientRect();
+        const parentRect = parent.getBoundingClientRect();
+        const menuRect = menu.getBoundingClientRect();
 
-            const bottom = Math.max(
-                parentRect.bottom,
-                menuRect.bottom
-            );
+        const bottom = Math.max(
+            parentRect.bottom,
+            menuRect.bottom
+        );
 
-            const move = bottom - bodyRect.bottom + gap;
+        const move = bottom - bodyRect.bottom + gap;
 
-            if (move > 0) {
-                body.scrollTop += move;
-            }
-        });
+        if (move > 0) {
+            body.scrollTop += move;
+        }
     });
 }
 
 function parentMove(parent) {
+    afterFrame(() => {
+        const body = parent?.closest(
+            '.settings-body'
+        );
+
+        if (!body || !parent) {
+            return;
+        }
+
+        const bodyRect = body.getBoundingClientRect();
+        const parentRect = parent.getBoundingClientRect();
+
+        const gap = 32;
+        const move = parentRect.bottom - bodyRect.bottom + gap;
+
+        if (move > 0) {
+            body.scrollTop += move;
+        }
+    });
+}
+
+function afterFrame(callback) {
     requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            const body = parent?.closest(
-                '.settings-body'
-            );
-
-            if (!body || !parent) {
-                return;
-            }
-
-            const bodyRect = body.getBoundingClientRect();
-            const parentRect = parent.getBoundingClientRect();
-
-            const gap = 32;
-            const move = parentRect.bottom - bodyRect.bottom + gap;
-
-            if (move > 0) {
-                body.scrollTop += move;
-            }
-        });
+        requestAnimationFrame(callback);
     });
 }
 
