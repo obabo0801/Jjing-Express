@@ -216,6 +216,46 @@ export function pushNotification(data) {
     addItem(data);
 }
 
+function syncHead(panel, head, title, actions) {
+    if (!panel || !head || !title || !actions) {
+        return;
+    }
+
+    head.classList.remove('wrap');
+
+    if (panel.hidden) {
+        return;
+    }
+
+    head.classList.toggle(
+        'wrap',
+        actions.offsetTop > title.offsetTop
+    );
+}
+
+function getView() {
+    let list = filter === 'unread'
+        ? items.filter(item => item.unread)
+        : items;
+
+    if (keyword) {
+        list = list.filter(item => {
+            const title = item.title
+                .toLowerCase();
+
+            const message = item.message
+                .toLowerCase();
+
+            return title.includes(keyword)
+                || message.includes(keyword);
+        });
+    }
+
+    return [...list].sort(
+        (a, b) => b.time - a.time
+    );
+}
+
 function render() {
     const {
         list,
@@ -784,46 +824,6 @@ function menuClose(event) {
             'up'
         );
     });
-}
-
-function syncHead(panel, head, title, actions) {
-    if (!panel || !head || !title || !actions) {
-        return;
-    }
-
-    head.classList.remove('wrap');
-
-    if (panel.hidden) {
-        return;
-    }
-
-    head.classList.toggle(
-        'wrap',
-        actions.offsetTop > title.offsetTop
-    );
-}
-
-function getView() {
-    let list = filter === 'unread'
-        ? items.filter(item => item.unread)
-        : items;
-
-    if (keyword) {
-        list = list.filter(item => {
-            const title = item.title
-                .toLowerCase();
-
-            const message = item.message
-                .toLowerCase();
-
-            return title.includes(keyword)
-                || message.includes(keyword);
-        });
-    }
-
-    return [...list].sort(
-        (a, b) => b.time - a.time
-    );
 }
 
 function safeHref(href) {
