@@ -1285,8 +1285,7 @@ function clearAll() {
 
 function addItem(data) {
     const {
-        list,
-        badge
+        list, badge
     } = ui;
 
     if (!list || !canNotify()) {
@@ -1422,6 +1421,8 @@ function startTest() {
     setInterval(() => {
         count += 1;
 
+        const day = count % 3;
+
         addItem({
             title: `테스트 알림 ${count}`,
             message: '새 알림 추가 효과 테스트입니다.',
@@ -1430,7 +1431,8 @@ function startTest() {
             profile: '/favicon.svg',
             thumbnail: count % 2 === 0
                 ? '/favicon.svg'
-                : null
+                : null,
+            time: Date.now() - day * DAY
         });
     }, 3000);
 }
