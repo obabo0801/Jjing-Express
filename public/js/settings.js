@@ -39,6 +39,14 @@ export function initSetting() {
     back.bind('settings', () => {
         close(true);
     });
+
+    back.bind('settings-page', () => {
+        pageClose(true);
+    });
+
+    back.bind('settings-drop', () => {
+        dropClose(null, true);
+    });
 }
 
 async function open() {
@@ -106,7 +114,7 @@ function bind() {
     );
 
     on(back, 'click', () => {
-        layer.classList.remove('page');
+        pageClose();
     });
 
     $$(
@@ -119,7 +127,7 @@ function bind() {
                 tab.dataset.settingsType
             );
 
-            layer.classList.add('page');
+            pageOpen();
         });
     });
 }
@@ -161,6 +169,27 @@ async function change(type) {
             tab.dataset.settingsType === type
         );
     });
+}
+
+function pageOpen() {
+    if (!layer || layer.classList.contains('page')) {
+        return;
+    }
+
+    layer.classList.add('page');
+    back.push('settings-page');
+}
+
+function pageClose(pop = false) {
+    if (!layer?.classList.contains('page')) {
+        return;
+    }
+
+    layer.classList.remove('page');
+
+    if (!pop) {
+        back.drop('settings-page');
+    }
 }
 
 async function loadPage(type) {
@@ -402,6 +431,7 @@ function dropToggle(dropdown) {
     );
 
     if (next) {
+        back.push('settings-drop');
         dropMove(dropdown);
     }
 }
@@ -487,7 +517,7 @@ function afterFrame(callback) {
     });
 }
 
-function dropClose(event) {
+function dropClose(event, pop = false) {
     if (!layer || layer.hidden) {
         return;
     }
@@ -516,6 +546,10 @@ function dropClose(event) {
             '--settings-drop-space'
         );
     });
+
+    if (!pop) {
+        back.drop('settings-drop');
+    }
 }
 
 function dropTabClose(event, drop) {
@@ -530,13 +564,8 @@ function dropTabClose(event, drop) {
         return;
     }
 
-    drop.classList.remove('open');
-
-    drop.closest(
-        '.settings-body'
-    )?.style.removeProperty(
-        '--settings-drop-space'
-    );
+    event.preventDefault();
+    dropClose();
 }
 
 function resetBase() {

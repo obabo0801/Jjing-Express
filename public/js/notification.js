@@ -138,15 +138,13 @@ export function initNotify() {
         searchPop(sBtn);
 
         searchToggle(
-            search,
-            sInput
+            search, sInput
         );
     });
 
     on(sCls, 'click', () => {
         searchClose(
-            search,
-            sInput
+            search, sInput
         );
     });
 
@@ -221,6 +219,12 @@ export function initNotify() {
     back.bind('notify', () => {
         panelClose(
             btn, panel, true
+        );
+    });
+
+    back.bind('notify-search', () => {
+        searchClose(
+            search, sInput, true
         );
     });
 
@@ -549,8 +553,7 @@ function focusBack(focus) {
 }
 
 function searchToggle(
-    search,
-    input
+    search, input
 ) {
     if (!search || !input) {
         return;
@@ -560,14 +563,16 @@ function searchToggle(
 
     if (!open) {
         searchClose(
-            search,
-            input
+            search, input
         );
 
         return;
     }
 
     search.hidden = false;
+    
+    back.push('notify-search');
+
     input.focus();
 }
 
@@ -596,7 +601,7 @@ function searchPop(button) {
 }
 
 function searchClose(
-    search, input
+    search, input, pop = false
 ) {
     if (!search || !input) {
         return;
@@ -611,6 +616,10 @@ function searchClose(
     ui.list.scrollTop = 0;
 
     render();
+
+    if (!pop) {
+        back.drop('notify-search');
+    }
 }
 
 function searchEsc(
@@ -623,8 +632,7 @@ function searchEsc(
     event.stopPropagation();
 
     searchClose(
-        search,
-        input
+        search, input
     );
 }
 
@@ -1554,8 +1562,12 @@ function panelClose(
 }
 
 function panelReset() {
-    const search = $('.notify-search');
-    const input = $('.notify-search-input');
+    const search = $(
+        '.notify-search'
+    );
+    const input = $(
+        '.notify-search-input'
+    );
 
     menuClose();
 
@@ -1563,7 +1575,9 @@ function panelReset() {
         return;
     }
 
-    searchClose(search, input);
+    searchClose(
+        search, input
+    );
 }
 
 function outClose(
