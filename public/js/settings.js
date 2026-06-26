@@ -7,6 +7,8 @@ import {
     opt
 } from './options.js';
 
+import * as back from './back.js';
+
 const root = document.documentElement;
 const cache = new Map();
 const GAP = 32;
@@ -33,6 +35,10 @@ export function initSetting() {
         escClose(event);
         tabClose(event);
     });
+
+    back.bind('settings', () => {
+        close(true);
+    });
 }
 
 async function open() {
@@ -49,6 +55,8 @@ async function open() {
     document.body.classList.add(
         'settings-open'
     );
+
+    back.push('settings');
 
     await change(
         typeNow()
@@ -169,7 +177,7 @@ async function loadPage(type) {
     return html;
 }
 
-function close() {
+function close(pop = false) {
     if (!layer || layer.hidden) {
         return;
     }
@@ -201,6 +209,10 @@ function close() {
         });
 
         focus = null;
+
+        if (!pop) {
+            back.drop('settings');
+        }
     };
 
     if (!popup) {

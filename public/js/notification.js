@@ -7,6 +7,8 @@ import {
     opt
 } from './options.js';
 
+import * as back from './back.js';
+
 const KEY = (
     'jjing-notifications'
 );
@@ -36,7 +38,6 @@ let ui = {
     badge: null,
     tabs: null
 };
-let back = false;
 
 export function initNotify() {
     const btn = $(
@@ -217,17 +218,9 @@ export function initNotify() {
         tabClose(event, btn, panel);
     });
 
-    on(window, 'popstate', () => {
-        if (!back || panel.hidden) {
-            return;
-        }
-
-        back = false;
-
+    back.bind('notify', () => {
         panelClose(
-            btn,
-            panel,
-            true
+            btn, panel, true
         );
     });
 
@@ -1516,33 +1509,6 @@ function panelToggle(
     panelClose(button, panel);
 }
 
-function mobile() {
-    return matchMedia(
-        '(max-width: 640px)'
-    ).matches;
-}
-
-function backPush() {
-    if (!mobile() || back) {
-        return;
-    }
-
-    back = true;
-
-    history.pushState({
-        notify: true
-    }, '');
-}
-
-function backClear() {
-    if (!back) {
-        return;
-    }
-
-    back = false;
-    history.back();
-}
-
 function panelOpen(panel) {
     panel.hidden = false;
 
@@ -1550,7 +1516,7 @@ function panelOpen(panel) {
         'notify-open'
     );
 
-    backPush();
+    back.push('notify');
 
     updateTimes();
 
@@ -1583,7 +1549,7 @@ function panelClose(
     button.focus();
 
     if (!pop) {
-        backClear();
+        back.drop('notify');
     }
 }
 
