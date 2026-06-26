@@ -36,6 +36,7 @@ let ui = {
     badge: null,
     tabs: null
 };
+let back = false;
 
 export function initNotify() {
     const btn = $(
@@ -214,6 +215,20 @@ export function initNotify() {
 
     on(panel, 'keydown', event => {
         tabClose(event, btn, panel);
+    });
+
+    on(window, 'popstate', () => {
+        if (!back || panel.hidden) {
+            return;
+        }
+
+        back = false;
+
+        panelClose(
+            btn,
+            panel,
+            true
+        );
     });
 
     on(window, 'resize', () => {
@@ -1501,12 +1516,41 @@ function panelToggle(
     panelClose(button, panel);
 }
 
+function mobile() {
+    return matchMedia(
+        '(max-width: 640px)'
+    ).matches;
+}
+
+function backPush() {
+    if (!mobile() || back) {
+        return;
+    }
+
+    back = true;
+
+    history.pushState({
+        notify: true
+    }, '');
+}
+
+function backClear() {
+    if (!back) {
+        return;
+    }
+
+    back = false;
+    history.back();
+}
+
 function panelOpen(panel) {
     panel.hidden = false;
 
     document.body.classList.add(
         'notify-open'
     );
+
+    backPush();
 
     updateTimes();
 
@@ -1516,7 +1560,7 @@ function panelOpen(panel) {
 }
 
 function panelClose(
-    button, panel
+    button, panel, pop = false
 ) {
     if (!button || !panel
         || panel.hidden) {
@@ -1537,6 +1581,10 @@ function panelClose(
 
     panelReset();
     button.focus();
+
+    if (!pop) {
+        backClear();
+    }
 }
 
 function panelReset() {

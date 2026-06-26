@@ -48,7 +48,7 @@
 
     width: min(
         calc(
-            380px / var(--screen-scale)
+            440px / var(--screen-scale)
         ),
         calc(
             (
@@ -411,6 +411,7 @@ strong {
 
 .notify-main {
     min-width: 0;
+    overflow: hidden;
     padding: 12px;
 
     display: grid;
@@ -432,7 +433,10 @@ strong {
 .notify-main:has(.notify-thumbnail) {
     grid-template-columns:
         8px 36px
-        minmax(0, 1fr) 72px;
+        minmax(0, 1fr)
+        clamp(
+            52px, 18vw, 72px
+        );
 }
 
 .notify-control  {
@@ -578,8 +582,12 @@ button {
 }
 
 .notify-thumbnail {
-    width: 72px;
-    height: 42px;
+    width: clamp(
+        52px, 18vw, 72px
+    );
+    height: clamp(
+        32px, 11vw, 42px
+    );
 
     display: block;
     overflow: hidden;

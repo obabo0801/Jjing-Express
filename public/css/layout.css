@@ -196,7 +196,9 @@ body {
 .hero h1 {
     margin: 0;
 
-    font-size: clamp(48px, 5vw, 88px);
+    font-size: clamp(
+        48px, 5vw, 88px
+    );
     letter-spacing: -2px;
 }
 

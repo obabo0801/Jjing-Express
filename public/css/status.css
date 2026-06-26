@@ -30,12 +30,9 @@ body {
 }
 
 .check .img {
-    width:
-        clamp(
-            180px,
-            38vw,
-            300px
-        );
+    width: clamp(
+        180px, 38vw, 300px
+    );
 
     height: auto;
 
@@ -45,12 +42,9 @@ body {
 }
 
 .emoji {
-    font-size:
-        clamp(
-            72px,
-            12vw,
-            128px
-        );
+    font-size: clamp(
+        72px, 12vw, 128px
+    );
 
     line-height: 1;
 }
@@ -58,12 +52,9 @@ body {
 .status h1 {
     margin: 0;
 
-    font-size:
-        clamp(
-            32px,
-            5vw,
-            56px
-        );
+    font-size: clamp(
+        32px, 5vw, 56px
+    );
 }
 
 .status p {
