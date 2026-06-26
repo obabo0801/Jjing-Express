@@ -41,3 +41,22 @@ export function bind(key, close) {
         close?.();
     });
 }
+
+export function clear(...keys) {
+    let count = 0;
+
+    keys.forEach(key => {
+        const index = stack.lastIndexOf(key);
+
+        if (index < 0) {
+            return;
+        }
+
+        stack.splice(index, 1);
+        count += 1;
+    });
+
+    if (count > 0) {
+        history.go(-count);
+    }
+}

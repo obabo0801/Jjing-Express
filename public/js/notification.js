@@ -125,7 +125,9 @@ export function initNotify() {
     });
 
     on(cls, 'click', () => {
-        panelClose(btn, panel);
+        panelClose(
+            btn, panel
+        );
     });
 
     tabs.forEach(tab => {
@@ -1514,7 +1516,9 @@ function panelToggle(
         return;
     }
 
-    panelClose(button, panel);
+    panelClose(
+        button, panel
+    );
 }
 
 function panelOpen(panel) {
@@ -1553,15 +1557,18 @@ function panelClose(
         'notify-open'
     );
 
-    panelReset();
+    panelReset(true);
     button.focus();
 
     if (!pop) {
-        back.drop('notify');
+        back.clear(
+            'notify-search',
+            'notify'
+        );
     }
 }
 
-function panelReset() {
+function panelReset(pop = false) {
     const search = $(
         '.notify-search'
     );
@@ -1576,7 +1583,7 @@ function panelReset() {
     }
 
     searchClose(
-        search, input
+        search, input, pop
     );
 }
 
@@ -1591,7 +1598,9 @@ function outClose(
         return;
     }
 
-    panelClose(button, panel);
+    panelClose(
+        button, panel
+    );
 }
 
 function escClose(
@@ -1601,7 +1610,9 @@ function escClose(
         return;
     }
 
-    panelClose(button, panel);
+    panelClose(
+        button, panel
+    );
 }
 
 function tabClose(
@@ -1613,7 +1624,9 @@ function tabClose(
 
     event.preventDefault();
 
-    panelClose(button, panel);
+    panelClose(
+        button, panel
+    );
 }
 
 function loadItems() {

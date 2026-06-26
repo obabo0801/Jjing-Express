@@ -185,10 +185,15 @@ function pageClose(pop = false) {
         return;
     }
 
+    dropClose(null, true);
+
     layer.classList.remove('page');
 
     if (!pop) {
-        back.drop('settings-page');
+        back.clear(
+            'settings-drop',
+            'settings-page'
+        );
     }
 }
 
@@ -219,6 +224,8 @@ function close(pop = false) {
         document.activeElement.blur();
     }
 
+    dropClose(null, true);
+
     layer.classList.remove('open');
     layer.classList.add('close');
 
@@ -240,7 +247,11 @@ function close(pop = false) {
         focus = null;
 
         if (!pop) {
-            back.drop('settings');
+            back.clear(
+                'settings-drop',
+                'settings-page',
+                'settings'
+            );
         }
     };
 
@@ -368,7 +379,7 @@ function scalePick(
     apply(data);
 
     text.textContent = scaleLabel(data);
-    drop.classList.remove('open');
+    dropClose();
 
     setScale(type, data);
 
@@ -585,12 +596,7 @@ function resetBase() {
         DEFAULT_OPTION.fontScale
     );
 
-    $$(
-        '.settings-size-dropdown',
-        layer
-    ).forEach(dropdown => {
-        dropdown.classList.remove('open');
-    });
+    dropClose();
 }
 
 function setScale(type, value) {
