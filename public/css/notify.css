@@ -1,3 +1,7 @@
+.notify {
+    position: relative;
+}
+
 .notify > .tool {
     position: relative;
 }

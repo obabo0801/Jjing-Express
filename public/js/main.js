@@ -3,7 +3,7 @@ import { initTheme }
 import { initTop }
     from './top.js';
 import { initNotify }
-    from './notification.js';
+    from './notify.js';
 import { initSetting }
     from './settings.js';
 
