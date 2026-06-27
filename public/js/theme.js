@@ -46,13 +46,13 @@ export function initTheme() {
         });
     });
 
-    document.addEventListener('click', event => {
+    on(document, 'click', event => {
         if (!wrap?.contains(event.target)) {
             close(box);
         }
     });
 
-    document.addEventListener('keydown', event => {
+    on(document, 'keydown', event => {
         if (!esc(event)) {
             return;
         }
