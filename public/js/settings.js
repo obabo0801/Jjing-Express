@@ -220,15 +220,7 @@ function close(keep = true) {
             'settings-open'
         );
 
-        if (keep) {
-            focus?.focus?.({
-                preventScroll: true
-            });
-        } else {
-            focus?.blur?.();
-        }
-
-        focus = null;
+        focusEnd(keep);
     };
 
     if (!popup) {
@@ -241,6 +233,18 @@ function close(keep = true) {
         done,
         { once: true }
     );
+}
+
+function focusEnd(keep) {
+    if (keep) {
+        focus?.focus?.({
+            preventScroll: true
+        });
+    } else {
+        focus?.blur?.();
+    }
+
+    focus = null;
 }
 
 function tabClose(event) {
