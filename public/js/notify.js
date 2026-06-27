@@ -1541,12 +1541,16 @@ function panelClose(
     );
 
     panelReset();
+    focusEnd(button, keep);
+}
 
+function focusEnd(button, keep) {
     if (keep) {
         button.focus();
-    } else {
-        button.blur();
+        return;
     }
+
+    button.blur();
 }
 
 function panelReset() {
