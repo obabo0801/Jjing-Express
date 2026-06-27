@@ -214,7 +214,7 @@ export function initNotify() {
         }
 
         panelClose(
-            btn, panel
+            btn, panel, false
         );
     });
 

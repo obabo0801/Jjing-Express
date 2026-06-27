@@ -57,7 +57,9 @@ export function initTheme() {
             return;
         }
 
-        close(box, button);
+        close(
+            box, button, null, false
+        );
     });
 
     on(box, 'keydown', event => {
