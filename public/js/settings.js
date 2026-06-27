@@ -96,12 +96,12 @@ function bind() {
         dropClose(event);
     });
 
-    const back = $(
+    const prev = $(
         '[data-settings-mobile-back]',
         layer
     );
 
-    on(back, 'click', () => {
+    on(prev, 'click', () => {
         pageClose();
     });
 
