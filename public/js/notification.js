@@ -7,8 +7,6 @@ import {
     opt
 } from './options.js';
 
-import * as back from './back.js';
-
 const KEY = (
     'jjing-notifications'
 );
@@ -211,23 +209,11 @@ export function initNotify() {
     });
 
     on(document, 'keydown', event => {
-        escClose(event, btn, panel);
+        back.esc(event);
     });
 
     on(panel, 'keydown', event => {
         tabClose(event, btn, panel);
-    });
-
-    back.bind('notify', () => {
-        panelClose(
-            btn, panel, true
-        );
-    });
-
-    back.bind('notify-search', () => {
-        searchClose(
-            search, sInput, true
-        );
     });
 
     on(window, 'resize', () => {
@@ -572,9 +558,6 @@ function searchToggle(
     }
 
     search.hidden = false;
-    
-    back.push('notify-search');
-
     input.focus();
 }
 
@@ -603,7 +586,7 @@ function searchPop(button) {
 }
 
 function searchClose(
-    search, input, pop = false
+    search, input
 ) {
     if (!search || !input) {
         return;
@@ -618,10 +601,6 @@ function searchClose(
     ui.list.scrollTop = 0;
 
     render();
-
-    if (!pop) {
-        back.drop('notify-search');
-    }
 }
 
 function searchEsc(
@@ -1528,8 +1507,6 @@ function panelOpen(panel) {
         'notify-open'
     );
 
-    back.push('notify');
-
     updateTimes();
 
     requestAnimationFrame(() => {
@@ -1538,7 +1515,7 @@ function panelOpen(panel) {
 }
 
 function panelClose(
-    button, panel, pop = false
+    button, panel
 ) {
     if (!button || !panel
         || panel.hidden) {
@@ -1559,16 +1536,9 @@ function panelClose(
 
     panelReset(true);
     button.focus();
-
-    if (!pop) {
-        back.clear(
-            'notify-search',
-            'notify'
-        );
-    }
 }
 
-function panelReset(pop = false) {
+function panelReset() {
     const search = $(
         '.notify-search'
     );
@@ -1583,7 +1553,7 @@ function panelReset(pop = false) {
     }
 
     searchClose(
-        search, input, pop
+        search, input
     );
 }
 
@@ -1595,18 +1565,6 @@ function outClose(
     }
 
     if (event.target.closest('.notify')) {
-        return;
-    }
-
-    panelClose(
-        button, panel
-    );
-}
-
-function escClose(
-    event, button, panel
-) {
-    if (!esc(event)) {
         return;
     }
 

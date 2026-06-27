@@ -1,13 +1,11 @@
 import {
-    $, $$, on, esc, lastTab
+    $, $$, on, lastTab
 } from './dom.js';
 
 import {
     OPTION, DEFAULT_OPTION,
     opt
 } from './options.js';
-
-import * as back from './back.js';
 
 const root = document.documentElement;
 const cache = new Map();
@@ -32,20 +30,11 @@ export function initSetting() {
     on(btn, 'click', open);
 
     on(document, 'keydown', event => {
-        escClose(event);
+        if (back.esc(event)) {
+            return;
+        }
+
         tabClose(event);
-    });
-
-    back.bind('settings', () => {
-        close(true);
-    });
-
-    back.bind('settings-page', () => {
-        pageClose(true);
-    });
-
-    back.bind('settings-drop', () => {
-        dropClose(null, true);
     });
 }
 
@@ -63,8 +52,6 @@ async function open() {
     document.body.classList.add(
         'settings-open'
     );
-
-    back.push('settings');
 
     await change(
         typeNow()
@@ -177,10 +164,9 @@ function pageOpen() {
     }
 
     layer.classList.add('page');
-    back.push('settings-page');
 }
 
-function pageClose(pop = false) {
+function pageClose() {
     if (!layer?.classList.contains('page')) {
         return;
     }
@@ -188,13 +174,6 @@ function pageClose(pop = false) {
     dropClose(null, true);
 
     layer.classList.remove('page');
-
-    if (!pop) {
-        back.clear(
-            'settings-drop',
-            'settings-page'
-        );
-    }
 }
 
 async function loadPage(type) {
@@ -211,7 +190,7 @@ async function loadPage(type) {
     return html;
 }
 
-function close(pop = false) {
+function close() {
     if (!layer || layer.hidden) {
         return;
     }
@@ -224,7 +203,7 @@ function close(pop = false) {
         document.activeElement.blur();
     }
 
-    dropClose(null, true);
+    dropClose();
 
     layer.classList.remove('open');
     layer.classList.add('close');
@@ -245,14 +224,6 @@ function close(pop = false) {
         });
 
         focus = null;
-
-        if (!pop) {
-            back.clear(
-                'settings-drop',
-                'settings-page',
-                'settings'
-            );
-        }
     };
 
     if (!popup) {
@@ -265,14 +236,6 @@ function close(pop = false) {
         done,
         { once: true }
     );
-}
-
-function escClose(event) {
-    if (!esc(event)) {
-        return;
-    }
-
-    close();
 }
 
 function tabClose(event) {
@@ -442,7 +405,6 @@ function dropToggle(dropdown) {
     );
 
     if (next) {
-        back.push('settings-drop');
         dropMove(dropdown);
     }
 }
@@ -528,7 +490,7 @@ function afterFrame(callback) {
     });
 }
 
-function dropClose(event, pop = false) {
+function dropClose(event) {
     if (!layer || layer.hidden) {
         return;
     }
@@ -557,10 +519,6 @@ function dropClose(event, pop = false) {
             '--settings-drop-space'
         );
     });
-
-    if (!pop) {
-        back.drop('settings-drop');
-    }
 }
 
 function dropTabClose(event, drop) {

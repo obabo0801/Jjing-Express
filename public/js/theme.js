@@ -2,8 +2,6 @@ import {
     $, $$, on, esc, lastTab
 } from './dom.js';
 
-import * as back from './back.js';
-
 const root = document.documentElement;
 const key = 'theme';
 const sysQuery = '(prefers-color-scheme: light)';
@@ -65,12 +63,6 @@ export function initTheme() {
     on(box, 'keydown', event => {
         tabClose(event, box, button);
     });
-
-    back.bind('theme', () => {
-        close(
-            box, button, null, true
-        );
-    });
 }
 
 function open(box, focus) {
@@ -86,8 +78,6 @@ function open(box, focus) {
         'theme-open'
     );
 
-    back.push('theme');
-
     if (!mobile()) {
         return;
     }
@@ -100,7 +90,7 @@ function open(box, focus) {
 }
 
 function close(
-    box, focus, done, pop = false
+    box, focus, done
 ) {
     if (
         !box
@@ -131,10 +121,6 @@ function close(
             preventScroll: true
         });
 
-        if (!pop) {
-            back.drop('theme');
-        }
-
         return;
     }
 
@@ -153,10 +139,6 @@ function close(
         focus?.focus?.({
             preventScroll: true
         });
-
-        if (!pop) {
-            back.drop('theme');
-        }
     }, { once: true });
 }
 
