@@ -58,7 +58,7 @@ export function initTheme() {
         }
 
         close(
-            box, button, null, false
+            box, button, false
         );
     });
 
@@ -92,11 +92,10 @@ function open(box, focus) {
 }
 
 function close(
-    box, focus, done, keep = true
+    box, focus, keep = true
 ) {
     if (
-        !box
-        || box.hidden
+        !box || box.hidden
         || box.classList.contains('close')
     ) {
         return;
@@ -110,29 +109,7 @@ function close(
 
     box.classList.remove('open');
 
-    if (!mobile()) {
-        box.hidden = true;
-
-        document.body.classList.remove(
-            'theme-open'
-        );
-
-        done?.();
-
-        if (keep) {
-            focus?.focus?.({
-                preventScroll: true
-            });
-        } else {
-            focus?.blur?.();
-        }
-
-        return;
-    }
-
-    box.classList.add('close');
-
-    box.addEventListener('animationend', () => {
+    const finish = () => {
         box.hidden = true;
         box.classList.remove('close');
 
@@ -140,16 +117,32 @@ function close(
             'theme-open'
         );
 
-        done?.();
+        focusEnd(focus, keep);
+    };
 
-        if (keep) {
-            focus?.focus?.({
-                preventScroll: true
-            });
-        } else {
-            focus?.blur?.();
-        }
-    }, { once: true });
+    if (!mobile()) {
+        finish();
+        return;
+    }
+
+    box.classList.add('close');
+
+    box.addEventListener(
+        'animationend',
+        finish,
+        { once: true }
+    );
+}
+
+function focusEnd(focus, keep) {
+    if (keep) {
+        focus?.focus?.({
+            preventScroll: true
+        });
+        return;
+    }
+
+    focus?.blur?.();
 }
 
 function tabClose(event, box, focus) {
