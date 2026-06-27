@@ -1,7 +1,10 @@
 import { on } from './dom.js';
 
 const stack = [];
+const binds = new Map();
+
 let skip = 0;
+let ready = false;
 
 export function mob() {
     return matchMedia(
@@ -34,22 +37,6 @@ export function drop(key) {
     history.back();
 }
 
-export function bind(key, close) {
-    on(window, 'popstate', () => {
-        if (skip > 0) {
-            skip -= 1;
-            return;
-        }
-
-        if (stack.at(-1) !== key) {
-            return;
-        }
-
-        stack.pop();
-        close?.();
-    });
-}
-
 export function clear(...keys) {
     let count = 0;
 
@@ -64,7 +51,38 @@ export function clear(...keys) {
         count += 1;
     });
 
-    if (count > 0) {
-        history.go(-count);
+    if (count <= 0) {
+        return;
     }
+
+    skip += count;
+    history.go(-count);
+}
+
+export function bind(key, close) {
+    binds.set(key, close);
+    listen();
+}
+
+function listen() {
+    if (ready) {
+        return;
+    }
+
+    ready = true;
+
+    on(window, 'popstate', () => {
+        if (skip > 0) {
+            skip -= 1;
+            return;
+        }
+
+        const key = stack.pop();
+
+        if (!key) {
+            return;
+        }
+
+        binds.get(key)?.();
+    });
 }
