@@ -1521,7 +1521,7 @@ function panelOpen(panel) {
 }
 
 function panelClose(
-    button, panel
+    button, panel, keep = true
 ) {
     if (!button || !panel
         || panel.hidden) {
@@ -1541,7 +1541,12 @@ function panelClose(
     );
 
     panelReset();
-    button.focus();
+
+    if (keep) {
+        button.focus();
+    } else {
+        button.blur();
+    }
 }
 
 function panelReset() {
@@ -1575,7 +1580,7 @@ function outClose(
     }
 
     panelClose(
-        button, panel
+        button, panel, false
     );
 }
 

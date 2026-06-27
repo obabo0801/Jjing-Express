@@ -90,7 +90,7 @@ function open(box, focus) {
 }
 
 function close(
-    box, focus, done
+    box, focus, done, keep = true
 ) {
     if (
         !box
@@ -117,9 +117,13 @@ function close(
 
         done?.();
 
-        focus?.focus?.({
-            preventScroll: true
-        });
+        if (keep) {
+            focus?.focus?.({
+                preventScroll: true
+            });
+        } else {
+            focus?.blur?.();
+        }
 
         return;
     }
@@ -136,9 +140,13 @@ function close(
 
         done?.();
 
-        focus?.focus?.({
-            preventScroll: true
-        });
+        if (keep) {
+            focus?.focus?.({
+                preventScroll: true
+            });
+        } else {
+            focus?.blur?.();
+        }
     }, { once: true });
 }
 

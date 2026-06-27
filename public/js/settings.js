@@ -31,11 +31,11 @@ export function initSetting() {
 
     on(document, 'keydown', event => {
         if (esc(event)) {
-            close();
+            close(false);
             return;
         }
 
-        tabClose(event)
+        tabClose(event);
     });
 }
 
@@ -191,7 +191,7 @@ async function loadPage(type) {
     return html;
 }
 
-function close() {
+function close(keep = true) {
     if (!layer || layer.hidden) {
         return;
     }
@@ -220,9 +220,13 @@ function close() {
             'settings-open'
         );
 
-        focus?.focus?.({
-            preventScroll: true
-        });
+        if (keep) {
+            focus?.focus?.({
+                preventScroll: true
+            });
+        } else {
+            focus?.blur?.();
+        }
 
         focus = null;
     };
