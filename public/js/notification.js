@@ -209,7 +209,13 @@ export function initNotify() {
     });
 
     on(document, 'keydown', event => {
-        back.esc(event);
+        if (!esc(event)) {
+            return;
+        }
+
+        panelClose(
+            btn, panel
+        );
     });
 
     on(panel, 'keydown', event => {
@@ -1534,7 +1540,7 @@ function panelClose(
         'notify-open'
     );
 
-    panelReset(true);
+    panelReset();
     button.focus();
 }
 

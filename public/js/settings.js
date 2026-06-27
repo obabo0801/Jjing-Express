@@ -1,5 +1,5 @@
 import {
-    $, $$, on, lastTab
+    $, $$, on, esc, lastTab
 } from './dom.js';
 
 import {
@@ -30,11 +30,12 @@ export function initSetting() {
     on(btn, 'click', open);
 
     on(document, 'keydown', event => {
-        if (back.esc(event)) {
+        if (esc(event)) {
+            close();
             return;
         }
 
-        tabClose(event);
+        tabClose(event)
     });
 }
 
@@ -171,7 +172,7 @@ function pageClose() {
         return;
     }
 
-    dropClose(null, true);
+    dropClose();
 
     layer.classList.remove('page');
 }
