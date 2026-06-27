@@ -1,6 +1,7 @@
 import { on } from './dom.js';
 
 const stack = [];
+let skip = 0;
 
 export function mob() {
     return matchMedia(
@@ -28,11 +29,18 @@ export function drop(key) {
     }
 
     stack.splice(index, 1);
+    skip += 1;
+
     history.back();
 }
 
 export function bind(key, close) {
     on(window, 'popstate', () => {
+        if (skip > 0) {
+            skip -= 1;
+            return;
+        }
+
         if (stack.at(-1) !== key) {
             return;
         }
