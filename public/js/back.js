@@ -6,14 +6,8 @@ const binds = new Map();
 let skip = 0;
 let ready = false;
 
-export function mob() {
-    return matchMedia(
-        '(max-width: 640px)'
-    ).matches;
-}
-
 export function push(key) {
-    if (!mob() || stack.includes(key)) {
+    if (stack.includes(key)) {
         return;
     }
 
