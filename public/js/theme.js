@@ -4,7 +4,6 @@ import {
 
 const root = document.documentElement;
 const key = 'theme';
-const sysQuery = '(prefers-color-scheme: light)';
 
 const modes = [
     'light',
@@ -156,7 +155,8 @@ function tabClose(event, box, focus) {
 }
 
 function set(mode, save = true) {
-    root.setAttribute('theme', mode);
+    document.documentElement
+        .setAttribute('theme', mode);
     active(mode);
 
     window.setFaviconTheme?.(
@@ -189,16 +189,25 @@ function get() {
 }
 
 function sys() {
-    return matchMedia(sysQuery).matches
+    return matchMedia(
+        '(prefers-color-scheme: light)'
+    ).matches
         ? 'light'
         : 'dark';
 }
 
 function watch() {
-    const query = matchMedia(sysQuery);
+    const query = matchMedia(
+        '(prefers-color-scheme: light)'
+    );
 
     on(query, 'change', () => {
-        if (root.getAttribute('theme') !== 'system') {
+        if (
+            document.documentElement
+                .getAttribute(
+                    'theme'
+                ) !== 'system'
+        ) {
             return;
         }
 

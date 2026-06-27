@@ -32,9 +32,12 @@ let sizes = new Map();
 let active = '';
 let id = maxId();
 let ui = {
+    btn: null,
     list: null,
     badge: null,
-    tabs: null
+    tabs: null,
+    search: null,
+    input: null
 };
 
 export function initNotify() {
@@ -107,7 +110,7 @@ export function initNotify() {
     startTest();
 
     on(btn, 'click', () => {
-        panelToggle(btn, panel);
+        toggle(btn, panel);
 
         requestAnimationFrame(() => {
             update();
@@ -123,7 +126,7 @@ export function initNotify() {
     });
 
     on(cls, 'click', () => {
-        panelClose(
+        close(
             btn, panel
         );
     });
@@ -213,7 +216,7 @@ export function initNotify() {
             return;
         }
 
-        panelClose(
+        close(
             btn, panel, false
         );
     });
@@ -1488,7 +1491,7 @@ function startTest() {
     }, 3000);
 }
 
-function panelToggle(
+function toggle(
     button, panel
 ) {
     if (!button || !panel) {
@@ -1496,17 +1499,17 @@ function panelToggle(
     }
 
     if (panel.hidden) {
-        panelOpen(panel);
+        open(panel);
 
         return;
     }
 
-    panelClose(
+    close(
         button, panel
     );
 }
 
-function panelOpen(panel) {
+function open(panel) {
     panel.hidden = false;
 
     document.body.classList.add(
@@ -1520,7 +1523,7 @@ function panelOpen(panel) {
     });
 }
 
-function panelClose(
+function close(
     button, panel, keep = true
 ) {
     if (!button || !panel
@@ -1540,7 +1543,7 @@ function panelClose(
         'notify-open'
     );
 
-    panelReset();
+    reset();
     focusEnd(button, keep);
 }
 
@@ -1553,7 +1556,7 @@ function focusEnd(button, keep) {
     button.blur();
 }
 
-function panelReset() {
+function reset() {
     const search = $(
         '.notify-search'
     );
@@ -1583,7 +1586,7 @@ function outClose(
         return;
     }
 
-    panelClose(
+    close(
         button, panel, false
     );
 }
@@ -1597,7 +1600,7 @@ function tabClose(
 
     event.preventDefault();
 
-    panelClose(
+    close(
         button, panel
     );
 }
