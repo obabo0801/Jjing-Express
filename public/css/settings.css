@@ -163,15 +163,6 @@ button {
         auto;
 }
 
-.settings-body::after {
-    content: "";
-
-    display: block;
-
-    height:
-        var(--settings-drop-space, 0px);
-}
-
 .settings-loading {
     min-height: 160px;
 
@@ -525,5 +516,32 @@ button:active {
         100% {
             opacity: 0;
         }
+    }
+}
+
+.settings-size-trigger.pop,
+.settings-size-menu
+button.pop,
+.settings-reset-button.pop,
+.settings-toggle.pop {
+    animation:
+        settings-button-pop
+        0.22s ease;
+}
+
+@keyframes settings-button-pop {
+    0% {
+        transform:
+            scale(1);
+    }
+
+    45% {
+        transform:
+            scale(var(--pop));
+    }
+
+    100% {
+        transform:
+            scale(1);
     }
 }
