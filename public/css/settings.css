@@ -398,25 +398,6 @@ button:active {
         display: none;
     }
 
-    .settings-box {
-        inset: 0;
-
-        width: auto;
-        height: auto;
-
-        border: 0;
-        border-radius: 0;
-
-        grid-template-columns:
-            1fr;
-
-        overflow:
-            hidden;
-
-        transform:
-            none;
-    }
-
     .settings-side {
         border-right: 0;
     }
