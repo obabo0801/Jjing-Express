@@ -26,13 +26,13 @@ let items = loadItems();
 let tab = 'all';
 let word = '';
 let loading = false;
-let stamp = 0;
 let opens = new Set();
 let sizes = new Map();
 let active = '';
 let id = maxId();
 let ui = {
     btn: null,
+    panel: null,
     list: null,
     badge: null,
     tabs: null,
@@ -286,10 +286,6 @@ function open(panel) {
     );
 
     updateTimes();
-
-    requestAnimationFrame(() => {
-        moreItems(ui.list, true);
-    });
 }
 
 function close(
@@ -361,7 +357,6 @@ function render() {
         return;
     }
 
-    stamp += 1;
     loading = false;
 
     const focus = focusNow();
@@ -382,10 +377,6 @@ function render() {
 
     all.forEach(item => {
         item.isNew = false;
-    });
-
-    requestAnimationFrame(() => {
-        moreItems(list, true);
     });
 
     setBadge(badge);
@@ -454,9 +445,7 @@ function headSync(
     );
 }
 
-function moreItems(
-    list, auto = false
-) {
+function moreItems(list) {
     const panel = list?.closest(
         '.notify-box'
     );
@@ -470,10 +459,6 @@ function moreItems(
     }
 
     if (!active || !opens.has(active)) {
-        return;
-    }
-
-    if (auto) {
         return;
     }
 
