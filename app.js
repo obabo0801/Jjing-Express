@@ -39,7 +39,7 @@ const DIRS = [
 const FILES = [
     '/favicon.svg',
     '/check.svg' ,
-    '/assets/embed.png'
+    '/embed.png'
 ];
 
 app.use((req, res, next) => {
