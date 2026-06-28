@@ -76,10 +76,6 @@ async function open() {
 
         $('.settings-box', layer)?.focus();
 
-        if (mobile()) {
-            pageOpen();
-        }
-
         await change(type);
 
         return;
@@ -95,11 +91,7 @@ async function open() {
         'settings-open'
     );
 
-    $('.settings-box', layer)?.focus()
-
-    if (mobile()) {
-        pageOpen();
-    }
+    $('.settings-box', layer)?.focus();
 }
 
 function bind() {

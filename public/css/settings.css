@@ -31,7 +31,7 @@
     );
 
     overflow:
-        hidden;
+        visible;
 
     overscroll-behavior:
         contain;
@@ -277,14 +277,10 @@ button {
 }
 
 .settings-size-menu {
-    position: absolute;
-    top: calc(
-        100% + 6px
-    );
-    right: 0;
-    z-index: 10;
+    position: static;
 
     width: 100%;
+    margin-top: 6px;
     padding: 6px;
 
     display: none;
@@ -375,6 +371,9 @@ button:active {
             100dvh / var(--screen-scale)
         );
         max-height: none;
+
+        overflow:
+            hidden;
     }
 
     .settings-box {
@@ -488,13 +487,6 @@ button:active {
 
         overflow-y:
             auto;
-    }
-
-    .settings-size-menu {
-        position: static;
-
-        width: 100%;
-        margin-top: 6px;
     }
 
     .settings-layer.open
