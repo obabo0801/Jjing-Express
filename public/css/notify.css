@@ -555,7 +555,13 @@ button {
     width: 7px;
     height: 7px;
 
-    margin-top: 7px;
+    justify-self: center;
+    align-self: start;
+
+    margin-top:
+        calc(
+            (48px - 7px) / 2
+        );
 
     border-radius: 50%;
     background-color:
