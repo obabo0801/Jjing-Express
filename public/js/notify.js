@@ -100,9 +100,13 @@ export function initNotify() {
     };
 
     ui = {
+        btn,
+        panel,
         list,
         badge,
-        tabs
+        tabs,
+        search,
+        input: sInput
     };
 
     render();
@@ -114,7 +118,13 @@ export function initNotify() {
     startTest();
 
     on(btn, 'click', () => {
-        toggle(btn, panel);
+        if (panel.hidden) {
+            open(panel);
+        } else {
+            close(
+                btn, panel
+            );
+        }
 
         requestAnimationFrame(() => {
             update();
@@ -173,10 +183,14 @@ export function initNotify() {
     });
 
     on(sInput, 'keydown', event => {
-        searchEsc(
-            event,
-            search,
-            sInput
+        if (!esc(event)) {
+            return;
+        }
+
+        event.stopPropagation();
+
+        searchClose(
+            search, sInput
         );
     });
 
@@ -199,11 +213,19 @@ export function initNotify() {
             return;
         }
 
-        if (mainOpen(event)) {
+        if (itemOpen(event)) {
             return;
         }
 
-        readLink(event);
+        const read = event.target.closest(
+            '.notify-read'
+        );
+
+        if (read) {
+            readOne(
+                Number(read.dataset.id)
+            );
+        }
     });
 
     on(list, 'scroll', () => {
@@ -256,24 +278,6 @@ export function pushNotify(data) {
     addItem(data);
 }
 
-function toggle(
-    button, panel
-) {
-    if (!button || !panel) {
-        return;
-    }
-
-    if (panel.hidden) {
-        open(panel);
-
-        return;
-    }
-
-    close(
-        button, panel
-    );
-}
-
 function open(panel) {
     panel.hidden = false;
 
@@ -319,12 +323,9 @@ function close(
 }
 
 function reset() {
-    const search = $(
-        '.notify-search'
-    );
-    const input = $(
-        '.notify-search-input'
-    );
+    const {
+        search, input
+    } = ui;
 
     menuClose();
 
@@ -646,20 +647,6 @@ function searchClose(
     render();
 }
 
-function searchEsc(
-    event, search, input
-) {
-    if (!esc(event)) {
-        return;
-    }
-
-    event.stopPropagation();
-
-    searchClose(
-        search, input
-    );
-}
-
 function viewItems() {
     let list = tab === 'unread'
         ? items.filter(item => item.unread)
@@ -976,9 +963,7 @@ function menuToggle(event) {
     const menu = more?.querySelector(
         '.notify-more'
     );
-    const panel = $(
-        '.notify-box'
-    );
+    const panel = ui.panel;
 
     if (!more?.classList.contains('open')) {
         return true;
@@ -1054,21 +1039,7 @@ function menuRestore(id) {
     });
 }
 
-function readLink(event) {
-    const item = event.target.closest(
-        '.notify-read'
-    );
-
-    if (!item) {
-        return;
-    }
-
-    readOne(
-        Number(item.dataset.id)
-    );
-}
-
-function mainOpen(event) {
+function itemOpen(event) {
     const item = event.target.closest(
         '.notify-item'
     );
@@ -1294,7 +1265,7 @@ function addItem(data) {
     menuRestore(menu);
 
     setBadge(badge, true);
-    shakeButton();
+    playClass(ui.btn, 'shake');
     playSound();
 }
 
@@ -1523,16 +1494,6 @@ function playSound() {
             audio.close();
         }, { once: true });
     } catch {}
-}
-
-function shakeButton() {
-    const button = $('.notify > .tool');
-
-    if (!button) {
-        return;
-    }
-
-    playClass(button, 'shake');
 }
 
 function playClass(node, name) {
