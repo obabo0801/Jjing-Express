@@ -705,7 +705,7 @@ function makeItem(item) {
     main.className = 'notify-main';
 
     const dot = document.createElement('span');
-    dot.className = 'notify-dot';
+    dot.className = 'notify-new';
 
     const profile = makeImage(
         'notify-profile',
@@ -769,15 +769,17 @@ function makeItem(item) {
     menu.append(read, remove);
     more.append(moreButton, menu);
 
-    content.append(title, message, time);
-    main.append(dot, profile, content);
+    content.append(title, message);
 
     if (item.thumbnail) {
-        main.append(makeImage(
+        content.append(makeImage(
             'notify-thumbnail',
             item.thumbnail
         ));
     }
+
+    content.append(time);
+    main.append(dot, profile, content);
 
     wrap.append(main, more);
 

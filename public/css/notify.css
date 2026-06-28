@@ -443,13 +443,6 @@ strong {
     cursor: pointer;
 }
 
-.notify-main:has(.notify-thumbnail) {
-    grid-template-columns:
-        8px 48px
-        minmax(0, 1fr)
-        72px;
-}
-
 .notify-control  {
     position: relative;
 
@@ -558,7 +551,7 @@ button {
     gap: 6px;
 }
 
-.notify-dot {
+.notify-new {
     width: 7px;
     height: 7px;
 
@@ -568,7 +561,7 @@ button {
 }
 
 .notify-item.unread
-.notify-dot {
+.notify-new {
     background-color:
         #3b82f6;
 }
@@ -620,8 +613,12 @@ button {
 }
 
 .notify-thumbnail {
-    width: 72px;
-    height: 72px;
+    width: min(
+        220px,
+        100%
+    );
+    aspect-ratio:
+        16 / 9;
 
     display: block;
     overflow: hidden;
