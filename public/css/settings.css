@@ -4,8 +4,31 @@
 
 .settings-layer {
     position: fixed;
-    inset: 0;
-    z-index: 10;
+    top: calc(
+        var(--top-height)
+        + 12px
+    );
+    right: calc(
+        24px / var(--screen-scale)
+    );
+    z-index: 100;
+
+    width: min(
+        calc(
+            400px / var(--screen-scale)
+        ),
+        calc(
+            (
+                100vw - 32px
+            ) / var(--screen-scale)
+        )
+    );
+
+    max-height: calc(
+        100dvh / var(--screen-scale)
+        - var(--top-height)
+        - 24px
+    );
 
     overflow:
         hidden;
@@ -14,21 +37,12 @@
         contain;
 }
 
+.settings-layer[hidden] {
+    display: none;
+}
+
 .settings-layer::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    opacity: 0;
-
-    background-color:
-        rgba(0, 0, 0, 0.35);
-
-    backdrop-filter:
-        blur(4px);
-    -webkit-backdrop-filter:
-        blur(4px);
+    display: none;
 }
 
 .settings-layer.open::before {
@@ -59,40 +73,35 @@ button {
 }
 
 .settings-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 1;
+    width: 100%;
+    max-height: inherit;
 
-    width: calc(
-        90vw / var(--screen-scale)
-    );
-    height: calc(
-        90dvh / var(--screen-scale)
-    );
-
-    display: grid;
-    grid-template-columns:
-        200px minmax(0, 1fr);
+    display: flex;
+    flex-direction: column;
 
     border:
         1px solid
         var(--line);
-    border-radius: 22px;
+    border-radius: 12px;
 
     background-color:
         var(--bar);
     color: var(--text);
 
     box-shadow:
-        0 18px 60px
-        rgba(0, 0, 0, 0.32);
+        0 18px 50px
+        rgba(0, 0, 0, 0.22);
 
     overflow:
         hidden;
 
-    transform:
-        translate(-50%, -50%);
+    backdrop-filter:
+        blur(12px);
+    -webkit-backdrop-filter:
+        blur(12px);
+
+    transform-origin:
+        top right;
 }
 
 .settings-box:focus,
@@ -106,35 +115,23 @@ button {
 }
 
 .settings-side {
-    min-height: 0;
+    overflow:
+        visible;
 
-    overflow-y:
-        auto;
-
-    border-right:
-        1px solid
-        var(--line);
-
-    padding: 0;
-}
-
-.settings-side-header,
-.settings-page-header {
-    height: 32px;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    border-right: 0;
 }
 
 .settings-side-header {
     position: relative;
 
-    height: 64px;
-    padding: 16px;
+    height: auto;
+    min-height: 42px;
+    padding: 12px 16px;
 
     display: flex;
     align-items: center;
+    justify-content:
+        space-between;
     gap: 10px;
 }
 
@@ -152,58 +149,21 @@ button {
         var(--line);
 }
 
-.settings-side-title,
-.settings-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
 .settings-menu {
-    margin-top: 0;
-    padding: 16px;
+    padding: 12px 16px;
 
-    display: grid;
-    gap: 8px;
-}
-
-.settings-tab,
-.settings-size-trigger,
-.settings-size-menu
-button,
-.settings-reset-button,
-.settings-toggle {
-    transition:
-        transform
-            0.16s ease,
-        background-color
-            var(--motion),
-        border-color
-            var(--motion),
-        color
-            var(--motion);
-}
-
-.settings-close
-.icon,
-.settings-back
-.icon {
-    width: 24px;
-    height: 24px;
+    display: flex;
+    gap: 6px;
 }
 
 .settings-tab {
-    padding: 0 10px;
+    height: 34px;
+    padding: 0 12px;
 
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
-.settings-tab:active {
-    transform:
-        scale(var(--pop));
-}
-
-.settings-tab:hover {
+.settings-tab.active {
     background-color:
         var(--hover);
 }
@@ -211,40 +171,21 @@ button,
 .settings-page {
     display: flex;
     flex-direction: column;
+
+    min-height: 0;
 }
 
 .settings-page-header {
-    position: relative;
-
-    height: 64px;
-    padding: 10px 16px;
-}
-
-.settings-page-header::after {
-    content: "";
-
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: 0;
-
-    height: 1px;
-
-    background-color:
-        var(--line);
+    display: none;
 }
 
 .settings-body {
     flex: 1;
     min-height: 0;
-
-    padding: 16px;
+    padding: 0 16px 16px;
 
     overflow-y:
         auto;
-
-    scroll-padding-bottom:
-        var(--settings-drop-space, 0px);
 }
 
 .settings-body::after {
@@ -482,6 +423,33 @@ button:active {
 }
 
 @media (max-width: 640px) {
+    .settings-layer {
+        inset: 0;
+
+        width: auto;
+        max-height: none;
+    }
+
+    .settings-box {
+        width: auto;
+        height: 100%;
+        max-height: none;
+
+        border: 0;
+        border-radius: 0;
+
+        box-shadow: none;
+    }
+
+    .settings-page-header {
+        display: flex;
+    }
+
+    .settings-menu {
+        display: grid;
+        gap: 8px;
+    }
+
     .settings-layer::before {
         display: none;
     }

@@ -30,7 +30,16 @@ export function initSetting() {
 
     bind();
 
-    on(btn, 'click', open);
+    on(btn, 'click', event => {
+        event.stopPropagation();
+
+        if (!layer.hidden) {
+            close();
+            return;
+        }
+
+        open();
+    });
 }
 
 async function open() {
@@ -103,6 +112,15 @@ function bind() {
 
     on(document, 'click', event => {
         dropClose(event);
+
+        if (
+            layer.hidden
+            || event.target.closest('.settings')
+        ) {
+            return;
+        }
+
+        close(false);
     });
 
     const prev = $(
