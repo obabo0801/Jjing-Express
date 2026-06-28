@@ -106,7 +106,11 @@ export function initNotify() {
     };
 
     render();
-    startClock();
+
+    setInterval(
+        updateTimes, 30 * SEC
+    );
+
     startTest();
 
     on(btn, 'click', () => {
@@ -138,7 +142,7 @@ export function initNotify() {
     });
 
     on(sBtn, 'click', () => {
-        searchPop(sBtn);
+        playClass(sBtn, 'pop');
 
         searchToggle(
             search, sInput
@@ -667,10 +671,6 @@ function searchEsc(
     );
 }
 
-function searchPop(button) {
-    playClass(button, 'pop');
-}
-
 function viewItems() {
     let list = tab === 'unread'
         ? items.filter(item => item.unread)
@@ -881,19 +881,19 @@ function makeDate(
     return button;
 }
 
-function makeLoad() {
-    const item = document
-        .createElement('div');
-
-    item.className = 'notify-item load';
-
-    return item;
-}
-
 function makeLoads(count) {
     return Array.from(
         { length: count },
-        makeLoad
+        () => {
+            const item = document
+                .createElement('div');
+
+            item.className = (
+                'notify-item load'
+            );
+
+            return item;
+        }
     );
 }
 
@@ -968,7 +968,7 @@ function menuToggle(event) {
         return false;
     }
 
-    menuPop(button);
+    playClass(button, 'pop');
 
     const more = button.closest(
         '.notify-control'
@@ -1065,10 +1065,6 @@ function menuRestore(id) {
     });
 }
 
-function menuPop(button) {
-    playClass(button, 'pop');
-}
-
 function readLink(event) {
     const item = event.target.closest(
         '.notify-read'
@@ -1123,7 +1119,8 @@ function readOne(id) {
 
     notification.unread = false;
 
-    sync();
+    saveItems();
+    render();
 }
 
 function readAll() {
@@ -1138,7 +1135,8 @@ function readAll() {
         item.unread = false;
     });
 
-    sync();
+    saveItems();
+    render();
 }
 
 function removeOne(event) {
@@ -1324,16 +1322,8 @@ function removeIds(ids) {
 
     items = next;
 
-    sync();
-}
-
-function sync() {
     saveItems();
     render();
-}
-
-function startClock() {
-    setInterval(updateTimes, 30 * SEC);
 }
 
 function updateTimes() {
