@@ -109,10 +109,11 @@ function bind() {
         layer
     ).forEach(tab => {
         on(tab, 'click', () => {
+            const type = tab.dataset.settingsType;
 
-            change(
-                tab.dataset.settingsType
-            );
+            if (type !== typeNow()) {
+                change(type);
+            }
 
             pageOpen();
         });
@@ -191,7 +192,10 @@ async function loadPage(type) {
 }
 
 function close(keep = true) {
-    if (!layer || layer.hidden) {
+    if (
+        !layer || layer.hidden
+        || layer.classList.contains('close')
+    ) {
         return;
     }
 
@@ -510,10 +514,16 @@ function dropClose(event) {
         return;
     }
 
-    $$(
+    const opened = $$(
         '.settings-size-dropdown.open',
         layer
-    ).forEach(dropdown => {
+    );
+
+    if (!opened.length) {
+        return;
+    }
+
+    opened.forEach(dropdown => {
         dropdown.classList.remove('open');
     });
 
