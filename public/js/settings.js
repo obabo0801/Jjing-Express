@@ -76,9 +76,7 @@ async function open() {
 
         $('.settings-box', layer)?.focus();
 
-        if (matchMedia(
-            '(max-width: 640px)'
-        ).matches) {
+        if (mobile()) {
             pageOpen();
         }
 
@@ -97,7 +95,11 @@ async function open() {
         'settings-open'
     );
 
-    $('.settings-box', layer)?.focus();
+    $('.settings-box', layer)?.focus()
+
+    if (mobile()) {
+        pageOpen();
+    }
 }
 
 function bind() {
@@ -267,11 +269,7 @@ function close(keep = true) {
         focus = null;
     };
 
-    if (
-        !matchMedia(
-            '(max-width: 640px)'
-        ).matches
-    ) {
+    if (!mobile()) {
         done();
         return;
     }
