@@ -597,7 +597,6 @@ button {
 }
 
 .notify-title,
-.notify-message,
 .notify-time {
     min-width: 0;
     overflow: hidden;
@@ -638,14 +637,20 @@ button {
 }
 
 .notify-message {
+    min-width: 0;
     overflow: hidden;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient:
+        vertical;
 
     font-size: 13px;
     opacity: 0.72;
 
-    white-space: nowrap;
-    text-overflow:
-        ellipsis;
+    white-space: normal;
+    word-break:
+        keep-all;
 }
 
 .notify-time {
