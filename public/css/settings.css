@@ -103,6 +103,9 @@ button {
 }
 
 .settings-side {
+    flex:
+        0 0 auto;
+
     overflow:
         visible;
 
@@ -157,10 +160,14 @@ button {
 }
 
 .settings-page {
+    flex: 1;
+    min-height: 0;
+
     display: flex;
     flex-direction: column;
 
-    min-height: 0;
+    overflow:
+        hidden;
 }
 
 .settings-page-header {
@@ -479,7 +486,7 @@ button:active {
     .settings-page {
         flex-direction:
             column;
-}
+    }
 
     .settings-body {
         flex: 1;
