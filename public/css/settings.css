@@ -20,6 +20,8 @@
     position: absolute;
     inset: 0;
 
+    opacity: 0;
+
     background-color:
         rgba(0, 0, 0, 0.35);
 
@@ -27,6 +29,18 @@
         blur(4px);
     -webkit-backdrop-filter:
         blur(4px);
+}
+
+.settings-layer.open::before {
+    animation:
+        settings-backdrop-in
+        0.18s ease forwards;
+}
+
+.settings-layer.close::before {
+    animation:
+        settings-backdrop-out
+        0.16s ease forwards;
 }
 
 .settings-layer,
@@ -401,6 +415,26 @@ button:active {
         0.16s ease forwards;
 }
 
+@keyframes settings-backdrop-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes settings-backdrop-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 @keyframes settings-popup-in {
     0% {
         opacity: 0;
@@ -434,28 +468,10 @@ button:active {
 }
 
 @media (max-width: 640px) {
-    @keyframes settings-popup-in {
-        0% {
-            opacity: 0;
-        }
-
-        100% {
-            opacity: 1;
-        }
+    .settings-layer::before {
+        display: none;
     }
 
-    @keyframes settings-popup-out {
-        0% {
-            opacity: 1;
-        }
-
-        100% {
-            opacity: 0;
-        }
-    }
-}
-
-@media (max-width: 640px) {
     .settings-box {
         inset: 0;
 
@@ -533,5 +549,25 @@ button:active {
 
         width: 100%;
         margin-top: 6px;
+    }
+
+    @keyframes settings-popup-in {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes settings-popup-out {
+        0% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
     }
 }

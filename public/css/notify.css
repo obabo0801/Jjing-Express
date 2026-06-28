@@ -914,7 +914,7 @@ button {
             auto;
     }
 
-        .notify-box.open {
+    .notify-box.open {
         animation:
             notify-box-in
             0.18s ease;
