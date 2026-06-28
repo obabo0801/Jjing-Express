@@ -741,7 +741,7 @@ function makeItem(item) {
     moreButton.type = 'button';
 
     const moreIcon = document.createElement('span');
-    moreIcon.className = 'notify-more-icon';
+    moreIcon.className = 'notify-more-dots';
 
     moreButton.append(moreIcon);
 
@@ -787,7 +787,7 @@ function makeItem(item) {
 function makeIcon(name) {
     const icon = document.createElement('span');
 
-    icon.className = `icon icon-${name} notify-more-icon`;
+    icon.className = `icon icon-${name} notify-menu-icon`;
 
     return icon;
 }
@@ -1150,37 +1150,57 @@ function clearAll() {
 
     const limit = Date.now() - GRACE;
 
-    const ids = new Set(
-        viewItems()
-            .filter(item => item.time <= limit)
-            .map(item => item.id)
-    );
+    const targets = viewItems().filter(item => {
+        return item.time <= limit;
+    });
 
-    const nodes = list.querySelectorAll(
-        '.notify-item'
+    const ids = new Set(
+        targets.map(item => item.id)
     );
 
     if (!ids.size) {
         return;
     }
 
-    nodes.forEach((item, index) => {
-        const link = item.querySelector(
-            '.notify-read'
-        );
+    const dates = new Set(
+        targets.map(item => dateKey(item.time))
+    );
 
-        if (!link) {
-            return;
-        }
+    let index = 0;
 
-        const id = Number(link.dataset.id);
+    list.querySelectorAll('.notify-date')
+        .forEach(button => {
+            const key = button.dataset.date;
 
-        if (!ids.has(id)) {
-            return;
-        }
+            if (!key || !dates.has(key)) {
+                return;
+            }
 
-        clearNode(item, index);
-    });
+            if (opens.has(key)) {
+                return;
+            }
+
+            clearNode(button, index++);
+        });
+
+    list.querySelectorAll('.notify-item')
+        .forEach(item => {
+            const link = item.querySelector(
+                '.notify-read'
+            );
+
+            if (!link) {
+                return;
+            }
+
+            const id = Number(link.dataset.id);
+
+            if (!ids.has(id)) {
+                return;
+            }
+
+            clearNode(item, index++);
+        });
 
     setTimeout(() => {
         removeIds(ids);

@@ -135,7 +135,7 @@
 .notify-box
 button:active {
     transform:
-        scale(var(--pop));
+        none;
 }
 
 .notify-head {
@@ -222,7 +222,8 @@ strong {
         var(--focus);
 }
 
-.notify-item.clear {
+.notify-item.clear,
+.notify-date.clear {
     pointer-events: none;
 
     animation:
@@ -463,7 +464,7 @@ strong {
 }
 
 .notify-more-button.pop
-.notify-more-icon {
+.notify-more-dots {
     animation:
         icon-pop
         0.22s ease;
@@ -483,7 +484,7 @@ strong {
     display: none;
 }
 
-.notify-more-icon {
+.notify-more-dots {
     width: 4px;
     height: 18px;
 
