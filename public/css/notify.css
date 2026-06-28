@@ -79,7 +79,8 @@
         contain;
 
     border:
-        1px solid var(--line);
+        1px solid
+            var(--line);
     border-radius: 12px;
 
     background-color:
