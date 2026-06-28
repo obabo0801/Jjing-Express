@@ -8,7 +8,7 @@
     --text: #111111;
     --line: rgba(0, 0, 0, 0.08);
     --hover: rgba(0, 0, 0, 0.06);
-    --focus: #000000;
+    --focus: #161616;
 
     --top-height: 64px;
 
@@ -45,7 +45,7 @@
     --text: #111111;
     --line: rgba(0, 0, 0, 0.08);
     --hover: rgba(0, 0, 0, 0.06);
-    --focus: #000000;
+    --focus: #161616;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -37,8 +37,9 @@ export function initTheme() {
         on(item, 'click', () => {
             const mode = item.dataset.themeValue;
 
-            set(mode);
-            close(box, button);
+            close(box, button, true, () => {
+                set(mode);
+            });
         });
     });
 
@@ -88,7 +89,7 @@ function open(box, focus) {
 }
 
 function close(
-    box, focus, keep = true
+    box, focus, keep = true, after
 ) {
     if (
         !box || box.hidden
@@ -117,10 +118,11 @@ function close(
             focus?.focus?.({
                 preventScroll: true
             });
-            return;
+        } else {
+            focus?.blur?.();
         }
 
-        focus?.blur?.();
+        after?.();
     };
 
     if (!mobile()) {

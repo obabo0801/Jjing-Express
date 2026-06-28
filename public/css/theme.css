@@ -83,6 +83,12 @@
         var(--hover);
 }
 
+.theme-item.active
+.icon {
+    color:
+        inherit;
+}
+
 @media (max-width: 640px) {
     .theme-box {
         position: fixed;
