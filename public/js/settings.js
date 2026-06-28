@@ -7,7 +7,6 @@ import {
     opt
 } from './options.js';
 
-const root = document.documentElement;
 const cache = new Map();
 const GAP = 32;
 
@@ -368,7 +367,8 @@ function screen() {
 }
 
 function setScreen(value) {
-    root.style.setProperty(
+    document.documentElement
+        .style.setProperty(
         '--screen-scale',
         value
     );
@@ -386,7 +386,8 @@ function font() {
 }
 
 function setFont(value) {
-    root.style.setProperty(
+    document.documentElement
+        .style.setProperty(
         '--font-scale',
         value
     );

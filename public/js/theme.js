@@ -2,9 +2,6 @@ import {
     $, $$, on, esc, lastTab
 } from './dom.js';
 
-const root = document.documentElement;
-const key = 'theme';
-
 const modes = [
     'light',
     'dark',
@@ -166,7 +163,7 @@ function set(mode, save = true) {
     );
 
     if (save) {
-        localStorage.setItem(key, mode);
+        localStorage.setItem('theme', mode);
     }
 }
 
@@ -181,7 +178,7 @@ function active(mode) {
 }
 
 function get() {
-    const mode = localStorage.getItem(key);
+    const mode = localStorage.getItem('theme');
 
     return modes.includes(mode)
         ? mode
