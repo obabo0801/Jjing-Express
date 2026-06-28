@@ -396,6 +396,7 @@ button:active {
             hidden;
     }
 
+    .settings-side-header,
     .settings-page-header {
         position: relative;
 
@@ -408,6 +409,7 @@ button:active {
         gap: 10px;
     }
 
+    .settings-side-header::after,
     .settings-page-header::after {
         content: "";
 
