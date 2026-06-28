@@ -301,10 +301,7 @@ function close(
     );
 
     reset();
-    focusEnd(button, keep);
-}
-
-function focusEnd(button, keep) {
+    
     if (keep) {
         button.focus();
         return;

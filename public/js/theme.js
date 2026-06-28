@@ -113,7 +113,14 @@ function close(
             'theme-open'
         );
 
-        focusEnd(focus, keep);
+        if (keep) {
+            focus?.focus?.({
+                preventScroll: true
+            });
+            return;
+        }
+
+        focus?.blur?.();
     };
 
     if (!mobile()) {
@@ -128,17 +135,6 @@ function close(
         finish,
         { once: true }
     );
-}
-
-function focusEnd(focus, keep) {
-    if (keep) {
-        focus?.focus?.({
-            preventScroll: true
-        });
-        return;
-    }
-
-    focus?.blur?.();
 }
 
 function tabClose(event, box, focus) {
