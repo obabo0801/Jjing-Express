@@ -464,10 +464,6 @@ strong {
     opacity: 1;
 }
 
-.notify-more-icon {
-    display: block;
-}
-
 .notify-more-button.pop
 .notify-more-icon {
     animation:
@@ -493,6 +489,10 @@ strong {
     width: 14px;
     height: 14px;
 
+    display: grid;
+    place-items: center;
+
+    line-height: 1;
     flex-shrink: 0;
 }
 
