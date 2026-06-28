@@ -784,7 +784,53 @@ function makeItem(item) {
 
     wrap.append(main, more);
 
+    itemWait(wrap);
+
     return wrap;
+}
+
+function itemWait(item) {
+    const images = $$(
+        'img',
+        item
+    );
+
+    if (!images.length) {
+        return;
+    }
+
+    item.classList.add('wait');
+
+    let count = images.length;
+
+    const done = () => {
+        count -= 1;
+
+        if (count > 0) {
+            return;
+        }
+
+        item.classList.remove('wait');
+    };
+
+    images.forEach(image => {
+        if (image.complete) {
+            done();
+            return;
+        }
+
+        image.addEventListener(
+            'load',
+            done,
+            { once: true }
+        );
+
+        image.addEventListener(
+            'error',
+            done,
+            { once: true }
+        );
+    });
 }
 
 function makeIcon(name) {

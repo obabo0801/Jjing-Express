@@ -45,17 +45,17 @@ async function open() {
         await load();
     }
 
-    await change(typeNow());
+    const type = typeNow();
 
-    layer.hidden = false;
-    layer.classList.remove('close');
-    layer.classList.add('open');
+    if (!cache.has(type)) {
+        loadingView();
+        show();
+        await change(type);
+        return;
+    }
 
-    document.body.classList.add(
-        'settings-open'
-    );
-
-    $('.settings-box', layer)?.focus();
+    await change(type);
+    show();
 }
 
 async function load() {
@@ -78,6 +78,45 @@ async function load() {
     );
 
     bind();
+}
+
+function show() {
+    layer.hidden = false;
+    layer.classList.remove('close');
+    layer.classList.add('open');
+
+    document.body.classList.add(
+        'settings-open'
+    );
+
+    $('.settings-box', layer)?.focus();
+}
+
+function loadingView() {
+    const title = $(
+        '[data-settings-title]',
+        layer
+    );
+    const body = $(
+        '[data-settings-content]',
+        layer
+    );
+
+    if (title) {
+        title.textContent = '설정';
+    }
+
+    if (!body) {
+        return;
+    }
+
+    body.innerHTML = (
+        '<div class="settings-loading">'
+        + '<img class="settings-throbber" '
+        + 'src="/assets/icons/throbber.svg" '
+        + 'draggable="false">'
+        + '</div>'
+    );
 }
 
 function bind() {

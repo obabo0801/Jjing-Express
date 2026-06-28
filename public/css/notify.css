@@ -232,7 +232,8 @@ strong {
 
 .notify-item.clear,
 .notify-date.clear {
-    pointer-events: none;
+    pointer-events:
+        none;
 
     animation:
         notify-clear
@@ -409,10 +410,27 @@ strong {
             var(--motion);
 }
 
+.notify-item.wait {
+    pointer-events:
+        none;
+
+    background-color:
+        var(--hover);
+}
+
+.notify-item.wait
+.notify-main,
+.notify-item.wait
+.notify-control {
+    visibility:
+        hidden;
+}
+
 .notify-item.load {
     min-height: 68px;
 
-    pointer-events: none;
+    pointer-events:
+        none;
     cursor: default;
     opacity: 0.45;
 }

@@ -256,6 +256,20 @@ button,
         var(--settings-drop-space, 0px);
 }
 
+.settings-loading {
+    min-height: 160px;
+
+    display: grid;
+    place-items: center;
+}
+
+.settings-throbber {
+    width: 28px;
+    height: 28px;
+
+    display: block;
+}
+
 .settings-section {
     display: grid;
     gap: 12px;
