@@ -132,6 +132,14 @@ button {
     padding: 0 12px;
 
     border-radius: 10px;
+
+    transition:
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
+        color
+            var(--motion);
 }
 
 .settings-tab.active {
@@ -236,6 +244,14 @@ button {
     justify-content:
         space-between;
     gap: 8px;
+
+    transition:
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
+        color
+            var(--motion);
 }
 
 .settings-size-trigger:active {
@@ -278,6 +294,14 @@ button {
 .settings-size-menu
 button {
     padding: 0 8px;
+
+    transition:
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
+        color
+            var(--motion);
 }
 
 .settings-size-menu
@@ -290,6 +314,14 @@ button:active {
     padding: 0 14px;
 
     flex-shrink: 0;
+
+    transition:
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
+        color
+            var(--motion);
 }
 
 .settings-reset-button:active {
@@ -306,6 +338,14 @@ button:active {
     background-color:
         var(--text);
     color: var(--bg);
+
+    transition:
+        transform
+            0.16s ease,
+        background-color
+            var(--motion),
+        color
+            var(--motion);
 }
 
 .settings-toggle:active {
