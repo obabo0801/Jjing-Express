@@ -742,7 +742,6 @@ function makeItem(item) {
 
     const moreIcon = document.createElement('span');
     moreIcon.className = 'notify-more-icon';
-    moreIcon.textContent = '⋮';
 
     moreButton.append(moreIcon);
 

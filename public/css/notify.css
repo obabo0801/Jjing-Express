@@ -385,7 +385,7 @@ strong {
 
     border:
         1px solid
-        var(--line);
+        transparent;
     border-radius: 16px;
     background:
         transparent;
@@ -420,7 +420,7 @@ strong {
 
     display: grid;
     grid-template-columns:
-        8px 36px
+        8px 48px
         minmax(0, 1fr);
     gap: 10px;
     align-items: center;
@@ -436,11 +436,9 @@ strong {
 
 .notify-main:has(.notify-thumbnail) {
     grid-template-columns:
-        8px 36px
+        8px 48px
         minmax(0, 1fr)
-        clamp(
-            52px, 18vw, 72px
-        );
+        72px;
 }
 
 .notify-control  {
@@ -486,14 +484,42 @@ strong {
 }
 
 .notify-more-icon {
-    width: 14px;
-    height: 14px;
+    width: 4px;
+    height: 18px;
 
-    display: grid;
-    place-items: center;
-
-    line-height: 1;
+    display: block;
     flex-shrink: 0;
+
+    background:
+        radial-gradient(
+            circle,
+            currentColor
+                2px,
+            transparent
+                2.5px
+        )
+        center top / 4px 4px
+        no-repeat,
+
+        radial-gradient(
+            circle,
+            currentColor
+                2px,
+            transparent
+                2.5px
+        )
+        center center / 4px 4px
+        no-repeat,
+
+        radial-gradient(
+            circle,
+            currentColor
+                2px,
+            transparent
+                2.5px
+        )
+        center bottom / 4px 4px
+        no-repeat;
 }
 
 .notify-control.up
@@ -550,8 +576,8 @@ button {
 }
 
 .notify-profile {
-    width: 36px;
-    height: 36px;
+    width: 48px;
+    height: 48px;
 
     display: block;
     overflow: hidden;
@@ -586,12 +612,8 @@ button {
 }
 
 .notify-thumbnail {
-    width: clamp(
-        52px, 18vw, 72px
-    );
-    height: clamp(
-        32px, 11vw, 42px
-    );
+    width: 72px;
+    height: 72px;
 
     display: block;
     overflow: hidden;

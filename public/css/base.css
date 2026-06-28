@@ -134,8 +134,8 @@ button {
 }
 
 :where(.notify-more-button) {
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
 }
 
 :where(
