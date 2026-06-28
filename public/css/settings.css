@@ -45,18 +45,6 @@
     display: none;
 }
 
-.settings-layer.open::before {
-    animation:
-        settings-backdrop-in
-        0.18s ease forwards;
-}
-
-.settings-layer.close::before {
-    animation:
-        settings-backdrop-out
-        0.16s ease forwards;
-}
-
 .settings-layer,
 .settings-layer * {
     -webkit-tap-highlight-color:
