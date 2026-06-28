@@ -414,6 +414,8 @@ button:active {
 
     .settings-layer.page
     .settings-page {
+        flex: 1;
+
         display: flex;
     }
 
@@ -443,6 +445,11 @@ button:active {
         width: 100%;
     }
 
+    .settings-page {
+        flex-direction:
+            column;
+}
+
     .settings-body {
         flex: 1;
         min-height: 0;
@@ -456,5 +463,39 @@ button:active {
 
         width: 100%;
         margin-top: 6px;
+    }
+
+    .settings-layer.open
+    .settings-box {
+        animation:
+            settings-popup-in
+            0.18s ease;
+    }
+
+    .settings-layer.close
+    .settings-box {
+        animation:
+            settings-popup-out
+            0.16s ease forwards;
+    }
+
+    @keyframes settings-popup-in {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes settings-popup-out {
+        0% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
     }
 }

@@ -76,6 +76,12 @@ async function open() {
 
         $('.settings-box', layer)?.focus();
 
+        if (matchMedia(
+            '(max-width: 640px)'
+        ).matches) {
+            pageOpen();
+        }
+
         await change(type);
 
         return;
