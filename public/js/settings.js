@@ -30,9 +30,7 @@ export function initSetting() {
 
     bind();
 
-    on(btn, 'click', event => {
-        event.stopPropagation();
-
+    on(btn, 'click', () => {
         if (!layer.hidden) {
             close();
             return;
