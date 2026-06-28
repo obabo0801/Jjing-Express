@@ -569,12 +569,6 @@ button {
 }
 
 .notify-item.read
-.notify-profile
-img {
-    opacity: 0.6;
-}
-
-.notify-item.read
 .notify-content {
     color:
         color-mix(
@@ -582,6 +576,11 @@ img {
             var(--text) 55%,
             transparent
         );
+    opacity: 0.6;
+}
+
+.notify-item.read
+.notify-profile {
     opacity: 0.6;
 }
 
@@ -595,6 +594,10 @@ img {
     border-radius: 50%;
     background-color:
         var(--hover);
+
+    transition:
+        opacity
+            var(--motion);
 }
 
 .notify-content {
