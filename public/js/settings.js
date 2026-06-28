@@ -45,16 +45,14 @@ async function open() {
         await load();
     }
 
+    await change(typeNow());
+
     layer.hidden = false;
     layer.classList.remove('close');
     layer.classList.add('open');
 
     document.body.classList.add(
         'settings-open'
-    );
-
-    await change(
-        typeNow()
     );
 
     $('.settings-box', layer)?.focus();
