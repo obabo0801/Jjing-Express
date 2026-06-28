@@ -238,7 +238,6 @@ function close(keep = true) {
     dropClose();
 
     layer.classList.remove('open');
-    layer.classList.add('close');
 
     const done = () => {
         layer.hidden = true;
@@ -262,10 +261,21 @@ function close(keep = true) {
         focus = null;
     };
 
+    if (
+        !matchMedia(
+            '(max-width: 640px)'
+        ).matches
+    ) {
+        done();
+        return;
+    }
+
     if (!popup) {
         done();
         return;
     }
+
+    layer.classList.add('close');
 
     popup.addEventListener(
         'animationend',

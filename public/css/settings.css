@@ -119,7 +119,7 @@ button {
     display: flex;
     align-items: center;
     justify-content:
-        space-between;
+        flex-start;
     gap: 10px;
 }
 
@@ -344,20 +344,6 @@ button:active {
     display: none;
 }
 
-.settings-layer.open
-.settings-box {
-    animation:
-        settings-popup-in
-        0.18s ease;
-}
-
-.settings-layer.close
-.settings-box {
-    animation:
-        settings-popup-out
-        0.16s ease forwards;
-}
-
 @keyframes settings-backdrop-in {
     0% {
         opacity: 0;
@@ -378,38 +364,6 @@ button:active {
     }
 }
 
-@keyframes settings-popup-in {
-    0% {
-        opacity: 0;
-        transform:
-            translate(-50%, -48%)
-            scale(0.96);
-    }
-
-    100% {
-        opacity: 1;
-        transform:
-            translate(-50%, -50%)
-            scale(1);
-    }
-}
-
-@keyframes settings-popup-out {
-    0% {
-        opacity: 1;
-        transform:
-            translate(-50%, -50%)
-            scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translate(-50%, -48%)
-            scale(0.96);
-    }
-}
-
 @media (max-width: 640px) {
     .settings-layer {
         inset: 0;
@@ -420,13 +374,15 @@ button:active {
 
     .settings-box {
         width: auto;
-        height: 100%;
+        height: 100dvh;
         max-height: none;
 
         border: 0;
         border-radius: 0;
 
         box-shadow: none;
+        overflow:
+            hidden;
     }
 
     .settings-page-header {
@@ -519,25 +475,5 @@ button:active {
 
         width: 100%;
         margin-top: 6px;
-    }
-
-    @keyframes settings-popup-in {
-        0% {
-            opacity: 0;
-        }
-
-        100% {
-            opacity: 1;
-        }
-    }
-
-    @keyframes settings-popup-out {
-        0% {
-            opacity: 1;
-        }
-
-        100% {
-            opacity: 0;
-        }
     }
 }
