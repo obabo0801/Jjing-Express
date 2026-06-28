@@ -913,4 +913,36 @@ button {
         overflow-y:
             auto;
     }
+
+        .notify-box.open {
+        animation:
+            notify-box-in
+            0.18s ease;
+    }
+
+    .notify-box.close {
+        animation:
+            notify-box-out
+            0.16s ease forwards;
+    }
+
+    @keyframes notify-box-in {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @keyframes notify-box-out {
+        0% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
 }

@@ -280,6 +280,8 @@ export function pushNotify(data) {
 
 function open(panel) {
     panel.hidden = false;
+    panel.classList.remove('close');
+    panel.classList.add('open');
 
     document.body.classList.add(
         'notify-open'
@@ -291,8 +293,11 @@ function open(panel) {
 function close(
     button, panel, keep = true
 ) {
-    if (!button || !panel
-        || panel.hidden) {
+    if (
+        !button || !panel
+        || panel.hidden
+        || panel.classList.contains('close')
+    ) {
         return;
     }
     
@@ -302,20 +307,38 @@ function close(
         document.activeElement.blur();
     }
 
-    panel.hidden = true;
+    panel.classList.remove('open');
 
-    document.body.classList.remove(
-        'notify-open'
-    );
+    const done = () => {
+        panel.hidden = true;
+        panel.classList.remove('close');
 
-    reset();
-    
-    if (keep) {
-        button.focus();
+        document.body.classList.remove(
+            'notify-open'
+        );
+
+        reset();
+        
+        if (keep) {
+            button.focus();
+            return;
+        }
+
+        button.blur();
+    };
+
+    if (!mobile()) {
+        done();
         return;
     }
 
-    button.blur();
+    panel.classList.add('close');
+
+    panel.addEventListener(
+        'animationend',
+        done,
+        { once: true }
+    );
 }
 
 function reset() {
@@ -1589,4 +1612,10 @@ function unreadCounts(list) {
     });
 
     return counts;
+}
+
+function mobile() {
+    return matchMedia(
+        '(max-width: 640px)'
+    ).matches;
 }

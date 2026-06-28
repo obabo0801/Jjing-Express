@@ -391,7 +391,7 @@ button:active {
 .settings-box {
     animation:
         settings-popup-in
-        0.2s ease;
+        0.18s ease;
 }
 
 .settings-layer.close
