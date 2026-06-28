@@ -43,6 +43,21 @@ export function initSetting() {
 async function open() {
     focus = document.activeElement;
 
+    layer.hidden = false;
+    layer.classList.remove('close');
+    layer.classList.add('open');
+
+    document.body.classList.add(
+        'settings-open'
+    );
+
+    $('.settings-box', layer)?.focus();
+
+    if (mobile()) {
+        sideReset();
+        return;
+    }
+
     const type = typeNow();
     const body = $(
         '[data-settings-content]',
@@ -63,33 +78,20 @@ async function open() {
             + 'draggable="false">'
             + '</div>'
         );
-
-        layer.hidden = false;
-        layer.classList.remove('close');
-        layer.classList.add('open');
-
-        document.body.classList.add(
-            'settings-open'
-        );
-
-        $('.settings-box', layer)?.focus();
-
-        await change(type);
-
-        return;
     }
 
     await change(type);
+}
 
-    layer.hidden = false;
-    layer.classList.remove('close');
-    layer.classList.add('open');
+function sideReset() {
+    pageClose();
 
-    document.body.classList.add(
-        'settings-open'
-    );
-
-    $('.settings-box', layer)?.focus();
+    $$(
+        '.settings-tab.active',
+        layer
+    ).forEach(tab => {
+        tab.classList.remove('active');
+    });
 }
 
 function bind() {
@@ -134,12 +136,10 @@ function bind() {
         '[data-settings-type]',
         layer
     ).forEach(tab => {
-        on(tab, 'click', () => {
+        on(tab, 'click', async () => {
             const type = tab.dataset.settingsType;
 
-            if (type !== typeNow()) {
-                change(type);
-            }
+            await change(type);
 
             pageOpen();
         });
@@ -494,7 +494,7 @@ function dropMove(dropdown) {
 
         body.style.setProperty(
             '--settings-drop-space',
-            `${menu.offsetHeight + GAP}px`
+            `${move}px`
         );
 
         body.scrollTop += move;

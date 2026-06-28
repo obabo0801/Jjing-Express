@@ -193,6 +193,8 @@ button {
 
 .settings-item {
     display: flex;
+    align-items:
+        flex-start;
     justify-content:
         space-between;
     gap: 16px;
@@ -228,10 +230,13 @@ button {
 .settings-size-dropdown {
     position: relative;
 
+    width: 92px;
+
     flex-shrink: 0;
 }
 
 .settings-size-trigger {
+    width: 100%;
     min-width: 92px;
     padding: 0 10px;
 
