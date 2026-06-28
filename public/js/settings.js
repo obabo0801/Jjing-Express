@@ -69,6 +69,13 @@ async function load() {
     );
 
     layer = $('.settings-layer');
+    layer.hidden = true;
+
+    layer.classList.remove(
+        'open',
+        'close',
+        'page'
+    );
 
     bind();
 }
