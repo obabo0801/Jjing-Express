@@ -211,7 +211,15 @@ export function initNotify() {
     });
 
     on(document, 'click', event => {
-        outClose(event, btn, panel);
+        if (
+            !panel.hidden
+            && !event.target.closest('.notify')
+        ) {
+            close(
+                btn, panel, false
+            );
+        }
+
         menuClose(event);
     });
 
@@ -326,22 +334,6 @@ function reset() {
 
     searchClose(
         search, input
-    );
-}
-
-function outClose(
-    event, button, panel
-) {
-    if (!button || !panel || panel.hidden) {
-        return;
-    }
-
-    if (event.target.closest('.notify')) {
-        return;
-    }
-
-    close(
-        button, panel, false
     );
 }
 
