@@ -432,7 +432,7 @@ strong {
         8px 48px
         minmax(0, 1fr);
     gap: 10px;
-    align-items: center;
+    align-items: start;
 
     border: 0;
     background:
@@ -555,6 +555,8 @@ button {
     width: 7px;
     height: 7px;
 
+    margin-top: 7px;
+
     border-radius: 50%;
     background-color:
         transparent;
@@ -564,6 +566,12 @@ button {
 .notify-new {
     background-color:
         #3b82f6;
+}
+
+.notify-item.read
+.notify-profile
+img {
+    opacity: 0.6;
 }
 
 .notify-item.read

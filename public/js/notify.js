@@ -30,6 +30,7 @@ let opens = new Set();
 let sizes = new Map();
 let active = '';
 let id = maxId();
+
 let ui = {
     btn: null,
     panel: null,
