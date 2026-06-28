@@ -180,7 +180,14 @@ button {
 }
 
 :where(
+    .theme-close,
+    .notify-close,
     .notify-search-button,
+    .notify-search-close,
+    .notify-tab,
+    .settings-close,
+    .settings-back,
+    .settings-tab,
     .settings-size-trigger,
     .settings-reset-button
 ):hover {

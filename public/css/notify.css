@@ -172,6 +172,8 @@ button:active {
 
 .notify-head-title
 strong {
+    font-size: 16px;
+    font-weight: 800;
     white-space: nowrap;
 }
 
@@ -704,8 +706,8 @@ button {
 
 .notify-date {
     width: 100%;
-    margin: 10px 2px 4px;
-    padding: 0;
+    margin: 8px 0 4px;
+    padding: 8px 10px;
 
     display: flex;
     justify-content: space-between;
@@ -746,7 +748,11 @@ button {
         #3b82f6;
 }
 
-.notify-date:hover {
+.notify-date:hover,
+.notify-date:focus-visible {
+    outline: none;
+    background-color:
+        var(--hover);
     opacity: 1;
 }
 

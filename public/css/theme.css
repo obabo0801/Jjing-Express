@@ -56,6 +56,12 @@
     display: none;
 }
 
+.theme-head
+strong {
+    font-size: 16px;
+    font-weight: 800;
+}
+
 .theme-item {
     padding: 0 10px;
 
