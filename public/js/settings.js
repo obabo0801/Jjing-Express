@@ -126,6 +126,8 @@ function bind() {
         close(false);
     });
 
+    on(window, 'resize', syncMode);
+
     const prev = $(
         '[data-settings-mobile-back]',
         layer
@@ -208,6 +210,21 @@ function pageClose() {
     if (mobile()) {
         tabReset();
     }
+}
+
+async function syncMode() {
+    if (
+        !layer
+        || layer.hidden
+        || mobile()
+        || $('.settings-tab.active', layer)
+    ) {
+        return;
+    }
+
+    await change(
+        typeNow()
+    );
 }
 
 async function loadPage(type) {
