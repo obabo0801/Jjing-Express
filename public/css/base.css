@@ -195,6 +195,11 @@ button {
         var(--hover);
 }
 
+.settings-toggle.off:hover {
+    background-color:
+        var(--hover);
+}
+
 :where(
     .notify-more,
     .settings-size-menu

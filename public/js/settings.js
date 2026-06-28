@@ -167,9 +167,20 @@ async function change(type) {
         ? '알림'
         : '일반';
 
-    title.textContent = name;
+    const cached = cache.has(type);
 
+    title.textContent = name;
     body.replaceChildren();
+
+    if (!cached) {
+        body.innerHTML = (
+            '<div class="settings-loading">'
+            + '<img class="settings-throbber" '
+            + 'src="/assets/icons/throbber.svg" '
+            + 'draggable="false">'
+            + '</div>'
+        );
+    }
 
     body.innerHTML = await loadPage(type);
 
