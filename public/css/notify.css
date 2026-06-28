@@ -200,13 +200,34 @@ strong {
     opacity: 0.72;
 }
 
-.notify-clear:hover,
-.notify-remove-all:hover {
-    border-bottom-color:
-        currentColor;
-    background:
-        transparent;
+.notify-date:focus-visible {
+    outline: none;
+    background-color:
+        var(--hover);
     opacity: 1;
+}
+
+@media (hover: hover)
+and (pointer: fine) {
+    .notify-clear:hover,
+    .notify-remove-all:hover {
+        border-bottom-color:
+            currentColor;
+        background:
+            transparent;
+        opacity: 1;
+    }
+
+    .notify-item:hover,
+    .notify-more-button:hover,
+    .notify-date:hover {
+        background-color:
+            var(--hover);
+    }
+
+    .notify-more-button:hover {
+        opacity: 1;
+    }
 }
 
 .notify-box

@@ -83,10 +83,17 @@ strong {
         scale(var(--pop));
 }
 
-.theme-item:hover,
 .theme-item:focus-visible {
     background-color:
         var(--hover);
+}
+
+@media (hover: hover)
+and (pointer: fine) {
+    .theme-item:hover {
+        background-color:
+            var(--hover);
+    }
 }
 
 .theme-item.active

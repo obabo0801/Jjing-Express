@@ -144,9 +144,9 @@ function bind() {
         on(tab, 'click', async () => {
             const type = tab.dataset.settingsType;
 
-            await change(type);
-
             pageOpen();
+
+            await change(type);
         });
     });
 }

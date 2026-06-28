@@ -179,25 +179,38 @@ button {
     cursor: pointer;
 }
 
-:where(
-    .theme-close,
-    .notify-close,
-    .notify-search-button,
-    .notify-search-close,
-    .notify-tab,
-    .settings-close,
-    .settings-back,
-    .settings-tab,
-    .settings-size-trigger,
-    .settings-reset-button
-):hover {
-    background-color:
-        var(--hover);
-}
+@media (hover: hover)
+and (pointer: fine) {
+    :where(
+        .theme-close,
+        .notify-close,
+        .notify-search-button,
+        .notify-search-close,
+        .notify-tab,
+        .settings-close,
+        .settings-back,
+        .settings-tab,
+        .settings-size-trigger,
+        .settings-reset-button
+    ):hover {
+        background-color:
+            var(--hover);
+    }
 
-.settings-toggle.off:hover {
-    background-color:
-        var(--hover);
+    .settings-toggle.off:hover {
+        background-color:
+            var(--hover);
+    }
+
+    :where(
+        .notify-more
+        button:hover,
+        .settings-size-menu
+        button:hover
+    ) {
+        background-color:
+            var(--hover);
+    }
 }
 
 :where(
@@ -236,11 +249,7 @@ button {
 
 :where(
     .notify-more
-    button:hover,
-    .notify-more
     button:focus-visible,
-    .settings-size-menu
-    button:hover,
     .settings-size-menu
     button:focus-visible
 ) {
