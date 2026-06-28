@@ -85,7 +85,10 @@ async function open() {
 
 function sideReset() {
     pageClose();
+    tabReset();
+}
 
+function tabReset() {
     $$(
         '.settings-tab.active',
         layer
@@ -201,6 +204,10 @@ function pageClose() {
     dropClose();
 
     layer.classList.remove('page');
+
+    if (mobile()) {
+        tabReset();
+    }
 }
 
 async function loadPage(type) {

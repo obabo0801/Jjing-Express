@@ -142,9 +142,15 @@ button {
             var(--motion);
 }
 
+.settings-tab:active {
+    transform:
+        scale(var(--pop));
+}
+
 .settings-tab.active {
     background-color:
         var(--hover);
+        
 }
 
 .settings-page {
