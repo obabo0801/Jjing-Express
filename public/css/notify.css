@@ -135,7 +135,7 @@
 .notify-box
 button:active {
     transform:
-        none;
+        scale(var(--pop));
 }
 
 .notify-head {
@@ -707,6 +707,12 @@ button {
 
 .notify-date:hover {
     opacity: 1;
+}
+
+.notify-box
+.notify-date:active {
+    transform:
+        none;
 }
 
 .notify-date-title,
