@@ -741,7 +741,7 @@ function makeItem(item) {
     moreButton.type = 'button';
 
     const moreIcon = document.createElement('span');
-    moreIcon.className = 'notify-more-dots';
+    moreIcon.className = 'notify-more-list';
 
     moreButton.append(moreIcon);
 

@@ -206,6 +206,14 @@ strong {
     opacity: 1;
 }
 
+.notify-box
+.notify-clear:active,
+.notify-box
+.notify-remove-all:active {
+    transform:
+        none;
+}
+
 .notify-clear:focus-visible,
 .notify-remove-all:focus-visible {
     outline: none;
@@ -464,7 +472,7 @@ strong {
 }
 
 .notify-more-button.pop
-.notify-more-dots {
+.notify-more-list {
     animation:
         icon-pop
         0.22s ease;
@@ -484,7 +492,7 @@ strong {
     display: none;
 }
 
-.notify-more-dots {
+.notify-more-list {
     width: 4px;
     height: 18px;
 
