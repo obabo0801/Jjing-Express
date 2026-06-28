@@ -527,6 +527,77 @@ function moreItems(
     });
 }
 
+function focusNow() {
+    const active = document.activeElement;
+
+    if (!active?.closest?.('.notify-list')) {
+        return null;
+    }
+
+    const content = active.closest(
+        '.notify-content'
+    );
+
+    if (content?.dataset.id) {
+        return {
+            type: 'content',
+            id: content.dataset.id
+        };
+    }
+
+    const profile = active.closest(
+        '.notify-profile'
+    );
+
+    if (profile?.dataset.id) {
+        return {
+            type: 'profile',
+            id: profile.dataset.id
+        };
+    }
+
+    const more = active.closest(
+        '.notify-control'
+    );
+
+    if (more?.dataset.id) {
+        return {
+            type: 'more',
+            id: more.dataset.id
+        };
+    }
+
+    return null;
+}
+
+function focusBack(focus) {
+    if (!focus) {
+        return;
+    }
+
+    const id = focus.id;
+
+    const selectorMap = {
+        content:
+            `.notify-content[data-id="${id}"]`,
+
+        profile:
+            `.notify-profile[data-id="${id}"]`,
+
+        more:
+            `.notify-control[data-id="${id}"] `
+            + '.notify-more-button'
+    };
+
+    const selector = selectorMap[focus.type];
+
+    requestAnimationFrame(() => {
+        $(selector)?.focus({
+            preventScroll: true
+        });
+    });
+}
+
 function setFilter(button) {
     const next = button
         .dataset.filter || 'all';
