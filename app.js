@@ -16,14 +16,17 @@ const CHECK = (
 );
 
 const PAGE_CHECK = file.get(
-    'public/check2.html'
+    'public/check.html'
 );
 const PAGE_SORRY = file.get(
     'public/sorry.html'
 );
+const PAGE_ERROR = file.get(
+    'public/error.html'
+);
 
 const BLOCK = [
-    '/check1.html',
+    '/check.html',
     '/sorry.html'
 ];
 
@@ -96,7 +99,7 @@ function page(res, status, target) {
         }
 
         res.status(500).sendFile(
-            PAGE_SORRY, error => {
+            PAGE_ERROR, error => {
             if (!error) {
                 return;
             }
