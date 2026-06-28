@@ -430,12 +430,72 @@ strong {
 }
 
 .notify-item.load {
-    min-height: 68px;
-
     pointer-events:
         none;
     cursor: default;
-    opacity: 0.45;
+}
+
+.notify-load-profile,
+.notify-load-title,
+.notify-load-message,
+.notify-load-thumb,
+.notify-load-time {
+    display: block;
+
+    background-color:
+        color-mix(
+            in srgb,
+            var(--text) 14%,
+            var(--bg)
+        );
+}
+
+.notify-load-profile {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+}
+
+.notify-load-content {
+    min-width: 0;
+
+    display: grid;
+    gap: 7px;
+}
+
+.notify-load-title {
+    width: 72%;
+    height: 14px;
+
+    border-radius: 8px;
+}
+
+.notify-load-message {
+    width: 92%;
+    height: 12px;
+
+    border-radius: 8px;
+}
+
+.notify-load-thumb {
+    width: min(
+        220px,
+        100%
+    );
+    aspect-ratio:
+        16 / 9;
+
+    border-radius: 12px;
+}
+
+.notify-load-time {
+    width: 46px;
+    height: 10px;
+
+    border-radius: 8px;
+
+    opacity: 0.75;
 }
 
 .notify-item:hover {

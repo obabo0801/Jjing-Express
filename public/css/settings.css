@@ -197,6 +197,28 @@ strong {
     height: 28px;
 
     display: block;
+
+    border:
+        3px solid
+        color-mix(
+            in srgb,
+            var(--text) 18%,
+            transparent
+        );
+    border-top-color:
+        var(--text);
+    border-radius: 50%;
+
+    animation:
+        settings-throbber
+        0.8s linear infinite;
+}
+
+@keyframes settings-throbber {
+    100% {
+        transform:
+            rotate(360deg);
+    }
 }
 
 .settings-section {

@@ -920,9 +920,74 @@ function makeLoads(count) {
             const item = document
                 .createElement('div');
 
-            item.className = (
-                'notify-item load'
+            item.className = 'notify-item load';
+
+            const main = document
+                .createElement('div');
+
+            main.className = 'notify-main';
+
+            const dot = document
+                .createElement('span');
+
+            dot.className = 'notify-new';
+
+            const profile = document
+                .createElement('span');
+
+            profile.className = (
+                'notify-load-profile'
             );
+
+            const content = document
+                .createElement('span');
+
+            content.className = (
+                'notify-load-content'
+            );
+
+            const title = document
+                .createElement('span');
+
+            title.className = (
+                'notify-load-title'
+            );
+
+            const message = document
+                .createElement('span');
+
+            message.className = (
+                'notify-load-message'
+            );
+
+            const thumb = document
+                .createElement('span');
+
+            thumb.className = (
+                'notify-load-thumb'
+            );
+
+            const time = document
+                .createElement('span');
+
+            time.className = (
+                'notify-load-time'
+            );
+
+            content.append(
+                title,
+                message,
+                thumb,
+                time
+            );
+
+            main.append(
+                dot,
+                profile,
+                content
+            );
+
+            item.append(main);
 
             return item;
         }
