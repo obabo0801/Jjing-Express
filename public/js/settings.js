@@ -359,7 +359,6 @@ function bindScale(
     on(btn, 'click', event => {
         event.stopPropagation();
 
-        pop(btn);
         dropToggle(drop);
     });
 
@@ -371,8 +370,6 @@ function bindScale(
 function scalePick(
     type, key, button, text, drop, apply
 ) {
-    pop(button);
-
     const data = button.dataset[
         `${type}Scale`
     ];
@@ -435,7 +432,6 @@ function bindReset() {
     );
 
     on(btn, 'click', () => {
-        pop(btn);
         resetBase();
     });
 }
@@ -665,8 +661,6 @@ function bindToggle(type, key, value) {
     setToggle(btn, data);
 
     on(btn, 'click', () => {
-        pop(btn);
-
         data = togglePick(
             key, btn, data
         );
@@ -719,24 +713,4 @@ function mobile() {
     return matchMedia(
         '(max-width: 640px)'
     ).matches;
-}
-
-function pop(node) {
-    if (!node) {
-        return;
-    }
-
-    node.classList.remove('pop');
-
-    requestAnimationFrame(() => {
-        node.classList.add('pop');
-    });
-
-    node.addEventListener(
-        'animationend',
-        () => {
-            node.classList.remove('pop');
-        },
-        { once: true }
-    );
 }
