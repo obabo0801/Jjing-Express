@@ -491,6 +491,7 @@ button:active {
     .settings-body {
         flex: 1;
         min-height: 0;
+        padding: 12px 16px 16px;
 
         overflow-y:
             auto;
