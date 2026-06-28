@@ -18,6 +18,11 @@ body {
     -webkit-user-select:
         none;
 }
+.status,
+.status * {
+    -webkit-tap-highlight-color:
+        transparent;
+}
 
 .poop {
     display: grid;

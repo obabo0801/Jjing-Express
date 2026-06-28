@@ -7,19 +7,24 @@ import * as log from '#utils/log';
 const app = express();
 
 const PORT = 3000;
-const PUB = file.get(
+const PUBLIC = file.get(
     'public'
 );
-const CHECK = file.get(
-    'public/check.html'
+
+const CHECK = (
+    process.env.CHECK === '1'
 );
-const NO = file.get(
-    'public/404.html'
+
+const PAGE_CHECK = file.get(
+    'public/check2.html'
+);
+const PAGE_SORRY = file.get(
+    'public/sorry.html'
 );
 
 const BLOCK = [
-    '/check.html',
-    '/404.html'
+    '/check1.html',
+    '/sorry.html'
 ];
 
 const DIRS = [
@@ -34,7 +39,7 @@ const FILES = [
 ];
 
 app.use((req, res, next) => {
-    if (!process.env.CHECK === 1) {
+    if (!CHECK) {
         return next();
     }
 
@@ -46,7 +51,9 @@ app.use((req, res, next) => {
         return res.redirect(302, '/');
     }
 
-    res.status(503).sendFile(CHECK);
+    return page(
+        res, 503, PAGE_CHECK
+    );
 });
 
 app.use((req, res, next) => {
@@ -58,18 +65,46 @@ app.use((req, res, next) => {
         return next();
     }
 
-    return res.status(404).sendFile(NO);
+    return page(
+        res, 404, PAGE_SORRY
+    );
 });
 
-app.use(express.static(PUB));
+app.use(express.static(PUBLIC));
 
 app.use((req, res) => {
-    return res.status(404).sendFile(NO);
+    return page(
+        res, 404, PAGE_SORRY
+    );
 });
 
 app.listen(PORT, () => {
     log.info(`http://localhost:${PORT}/`);
 });
+
+function page(res, status, target) {
+    return res.status(status)
+        .sendFile(target, err => {
+        if (!err) {
+            return;
+        }
+
+        log.error(err);
+
+        if (res.headersSent) {
+            return;
+        }
+
+        res.status(500).sendFile(
+            PAGE_SORRY, error => {
+            if (!error) {
+                return;
+            }
+
+            log.error(error);
+        });
+    });
+}
 
 function ref(req) {
     return Boolean(
