@@ -18,6 +18,8 @@ export function initSetting() {
         '.settings > .tool'
     );
 
+    layer = $('.settings-layer');
+
     setScreen(
         screen()
     );
@@ -26,61 +28,52 @@ export function initSetting() {
         font()
     );
 
+    bind();
+
     on(btn, 'click', open);
-
-    on(document, 'keydown', event => {
-        if (esc(event)) {
-            close(false);
-            return;
-        }
-
-        tabClose(event);
-    });
 }
 
 async function open() {
     focus = document.activeElement;
 
-    if (!layer) {
-        await load();
-    }
-
     const type = typeNow();
+    const body = $(
+        '[data-settings-content]',
+        layer
+    );
+    const title = $(
+        '[data-settings-title]',
+        layer
+    );
 
     if (!cache.has(type)) {
-        loadingView();
-        show();
+        title.textContent = '설정';
+
+        body.innerHTML = (
+            '<div class="settings-loading">'
+            + '<img class="settings-throbber" '
+            + 'src="/assets/icons/throbber.svg" '
+            + 'draggable="false">'
+            + '</div>'
+        );
+
+        layer.hidden = false;
+        layer.classList.remove('close');
+        layer.classList.add('open');
+
+        document.body.classList.add(
+            'settings-open'
+        );
+
+        $('.settings-box', layer)?.focus();
+
         await change(type);
+
         return;
     }
 
     await change(type);
-    show();
-}
 
-async function load() {
-    const html = await loadHtml(
-        '/components/settings/popup.html'
-    );
-
-    document.body.insertAdjacentHTML(
-        'beforeend',
-        html
-    );
-
-    layer = $('.settings-layer');
-    layer.hidden = true;
-
-    layer.classList.remove(
-        'open',
-        'close',
-        'page'
-    );
-
-    bind();
-}
-
-function show() {
     layer.hidden = false;
     layer.classList.remove('close');
     layer.classList.add('open');
@@ -90,33 +83,6 @@ function show() {
     );
 
     $('.settings-box', layer)?.focus();
-}
-
-function loadingView() {
-    const title = $(
-        '[data-settings-title]',
-        layer
-    );
-    const body = $(
-        '[data-settings-content]',
-        layer
-    );
-
-    if (title) {
-        title.textContent = '설정';
-    }
-
-    if (!body) {
-        return;
-    }
-
-    body.innerHTML = (
-        '<div class="settings-loading">'
-        + '<img class="settings-throbber" '
-        + 'src="/assets/icons/throbber.svg" '
-        + 'draggable="false">'
-        + '</div>'
-    );
 }
 
 function bind() {
